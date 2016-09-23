@@ -1,0 +1,68 @@
+==================================================================
+https://keybase.io/flake
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://flake.org
+  * I am flake (https://keybase.io/flake) on keybase.
+  * I have a public key with fingerprint 3465 1C6F CDC2 4B58 1D19  0E1E 09CA CE54 D407 BF36
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "0101e9c5de773e5804391d3d6c0aa31285556ac11ad0b63ff31a2d479334d45c5e8a0a",
+            "fingerprint": "34651c6fcdc24b581d190e1e09cace54d407bf36",
+            "host": "keybase.io",
+            "key_id": "09cace54d407bf36",
+            "kid": "0101e9c5de773e5804391d3d6c0aa31285556ac11ad0b63ff31a2d479334d45c5e8a0a",
+            "uid": "db7305da2ffd7621771096aeba4e9819",
+            "username": "flake"
+        },
+        "service": {
+            "hostname": "flake.org",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1474652988,
+    "expire_in": 157680000,
+    "prev": "a9cadc5d12f6236069e1b94fe55c90d5189480925d34c8284ecb4121b2e43857",
+    "seqno": 6,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.56
+Comment: https://keybase.io/crypto
+
+yMIkAnicrVJtSBRBGL4rs1Tsm4QSiiUs6rCd3Z39OKTILupXJhGmGdfszuy5nN1e
+d6vndUlRQRRRYUVFZkRpJKEEfZgKfaCCBVkSh6WYkWmFVgb+UAmbtYKgv82fYd55
+nud93oe3JXW6I9mZljH56fj4dYfz2ePTJY68D/6sGKOaOMq4Y4yfTF2kGJOw5fUb
+mHEzLGABUTSIiSTxBMqswCsA81jUWIR4wMkQQhFpACDMqiKv6zxAHBYkhecFLEAN
+EhmxiHExuhHwkVAwZAQsKssLIgSaqGtY4wQVygADhSWAsIqGNAIplZVUnRcpscgM
+2wxqTkVhkmmYtEYf3l/2/sX/Z98lU3JYlXgWYsTpOpZEDkgSYBURERUJRJGBYgPD
+JBRAewhF68XIT5hyF0NLpYZG7FTtMf7+zjRDPsoKhkzL1MxiWi6yrKDbZlnRoA2L
+ENX7W8CrGgFMA6SEUhIKG2aAcQOK1CzDVgSCRPPkFFl2MaQsaISI17ARUBJllh67
+DSmlkojGhWkogNNFjhdZUSFAVQSdQKgpLIZAVgSZVTiIeUGTOVkgmioADqgcEXgZ
+Sow90t6AybhFahP5qGTY8AWQVRKi8z55VJjgcCY7EmdMsxfLkZw098+6tVXOnDyQ
+37F5bVNcTBO+bG3pnOPpquidWNxca/m2HK5oUjojg677s+7cip5p63Hu2lST69/2
+Lue8IzueXnAub//ODn1NSsGJFfHwyNN7g615i2KrujxzklfHTqQXnlpuXkrcXdka
+exWZ8ZEL9t0c8Ea66t+euxxPWlg+dHuy4eZLZ2N2e+RhT93RjPpjdWQi9XNR4uZD
+8c6+q7VDCe/bskfJwbFgjvta2feBsaQl3cP6i8Tmr0fmXUiB+9bndzX08y0br0vq
+j+pld3u7m0fOMm+is1OXDo96XucbVxpP1jyvit6Y8JTXp7harfnVKz01/aUZ1euq
+HmzYsb3929Xmi7meBVkrxkt+AjAFRNw=
+=uT0r
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/flake
+
+==================================================================
