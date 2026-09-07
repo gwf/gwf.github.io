@@ -1,0 +1,323 @@
+<!DOCTYPE html><html><head>
+<title>sipd</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  sipd - the spatial iterated Prisoner's Dilemma, from "The Computational
+//  Beauty of Nature" (src/sipd.c).
+//
+//  Every cell plays `rounds` rounds of the Prisoner's Dilemma against its
+//  eight neighbors, then adopts the strategy of the highest-scoring cell
+//  in its 3x3 neighborhood.  The port keeps sipd.c's machinery: ipd()
+//  plays each cell against only its W, NW, N and NE neighbors so that one
+//  sweep over the grid plays every pair exactly once; the last move made
+//  against each neighbor is stored as one bit of a byte indexed by
+//  pos2int (and the opponent's bit by pos2int of the negated offset);
+//  the act / lastact bytes are swapped after each round; the five
+//  strategies pd() (ALLC, TFT, RAND with rcp .5, PAV = win-stay
+//  lose-shift, ALLD) start from an all-cooperate history; pay() with
+//  CC 3, CD 0, DC 5, DD 1; beststrat() scans the 3x3 block in k, l order
+//  and, on an exact tie, only switches to the tied cell when it plays the
+//  same strategy as the center; noise substitutes a random move, and
+//  mutation replaces the copied strategy with a random one.
+//
+//  Curated parameters: rounds 5 (default), all five strategies seeded in
+//  equal proportion, noise 0.05 and mute 0.01.  These were chosen by
+//  scanning headlessly: with little noise Tit-for-Tat takes 97% of the
+//  plane within 200 generations and only mutant specks flicker; above
+//  ~0.06 noise Pavlov takes over instead.  At 0.05 the two share the
+//  plane about 50/50 for thousands of generations, with 3-5% defectors
+//  blooming and being sealed off, and roughly 10% of cells change
+//  strategy each generation, so the picture keeps churning.  The grid is
+//  the viewport aspect at ~5 css px per cell, capped at 240x160; the six
+//  sub-steps of a generation (5 rounds + selection) are spread two per
+//  frame, so one generation every 3 frames (one per frame if a sub-step
+//  is measured to take more than 3.5 ms).  As a safety net, if a
+//  single strategy holds more than 97% of the grid for 20 s a small disc
+//  of another strategy is dropped in.
+//
+//  Modernization beyond the C source: rendering only.  Each strategy has
+//  a fixed color (ALLC pale sand, TFT blue, PAV teal, RAND grey, ALLD deep
+//  red) and each cell's displayed color eases toward its strategy's color
+//  over several frames, then the cell grid is drawn scaled up with
+//  bilinear filtering, so changes bleed like watercolor instead of
+//  stepping.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+var SIPD = (function() {
+
+  var ALLC = 0, TFT = 1, RAND = 2, PAV = 3, ALLD = 4, NUMSTRATS = 5;
+  var int2pos = [[-1, 0], [-1, 1], [0, 1], [1, 1]];
+  var pos2int = [[5, 3, 0], [6, -1, 1], [7, 4, 2]];
+
+  function make(width, height, opts, rng) {
+    rng = rng || Math.random;
+    opts = opts || {};
+    var rounds = 5, CC = 3, CD = 0, DC = 5, DD = 1, rcp = 0.5;
+    var noise = opts.noise !== undefined ? opts.noise : 0.05;
+    var mute = opts.mute !== undefined ? opts.mute : 0.01;
+    var n = width * height;
+    var strat = new Uint8Array(n), newstrat = new Uint8Array(n);
+    var act = new Uint8Array(n), lastact = new Uint8Array(n);
+    var score = new Float64Array(n);
+    var pop = new Int32Array(NUMSTRATS);
+    var t = 0;
+
+    // Roulette initial configuration, equal shares, in sipd.c's order
+    // (ALLC, ALLD, TFT, RAND, PAV).
+    var init = opts.init || [0.2, 0.2, 0.2, 0.2, 0.2];   // Iallc, Ialld, Itft, Irand, Ipav
+    var tot = init[0] + init[1] + init[2] + init[3] + init[4];
+    var Iallc = init[0] / tot, Ialld = Iallc + init[1] / tot, Itft = Ialld + init[2] / tot,
+        Irand = Itft + init[3] / tot;
+    for (var c = 0; c < n; c++) {
+      var u = rng();
+      strat[c] = (u < Iallc) ? ALLC : (u < Ialld) ? ALLD : (u < Itft) ? TFT : (u < Irand) ? RAND : PAV;
+    }
+
+    function pd(s, last_him, last_me) {
+      if (s === ALLC) return 0;
+      if (s === TFT) return last_him;
+      if (s === RAND) return (rng() < rcp) ? 0 : 1;
+      if (s === PAV) return last_him ? (last_me ? 0 : 1) : last_me;
+      if (s === ALLD) return 1;
+      return 0;
+    }
+    function pay(s1, s2) {
+      if (s1) return s2 ? DD : DC;
+      return s2 ? CD : CC;
+    }
+
+    // Noise is a Bernoulli trial per move in sipd.c.  Here the gap until
+    // the next noisy move is drawn geometrically instead, which is the
+    // same process with one random number per noise event instead of
+    // two per game.
+    var noiseGap = -1, lnq = (noise > 0 && noise < 1) ? Math.log(1 - noise) : 0;
+    function nextGap() {
+      if (noise >= 1) return 0;
+      return Math.floor(Math.log(1 - rng()) / lnq);
+    }
+    if (noise > 0) noiseGap = nextGap();
+
+    // Precomputed cell indices of the W, NW, N, NE neighbors (int2pos
+    // order) and the bit positions pos2int(k,l) / pos2int(-k,-l) for each,
+    // so the inner loop has no modulo arithmetic.
+    var nb = new Int32Array(n * 4), bit1 = new Uint8Array(4), bit2 = new Uint8Array(4);
+    for (var wi = 0; wi < 4; wi++) {
+      var k = int2pos[wi][0], l = int2pos[wi][1];
+      bit1[wi] = pos2int[k + 1][l + 1]; bit2[wi] = pos2int[-k + 1][-l + 1];
+    }
+    for (var i = 0; i < width; i++)
+      for (var j = 0; j < height; j++)
+        for (var wi = 0; wi < 4; wi++) {
+          var ii = (i + width + int2pos[wi][0]) % width, jj = (j + height + int2pos[wi][1]) % height;
+          nb[(i * height + j) * 4 + wi] = ii * height + jj;
+        }
+
+    // pd() and pay() as lookup tables for the inner loop: PD[strat*4 +
+    // last_him*2 + last_me] (RAND is the one strategy that needs a random
+    // number and is handled inline), PAY[s1*2 + s2].
+    var PD = new Uint8Array(NUMSTRATS * 4);
+    for (var st = 0; st < NUMSTRATS; st++)
+      for (var hm = 0; hm < 2; hm++)
+        for (var me = 0; me < 2; me++)
+          PD[st * 4 + hm * 2 + me] = (st === RAND) ? 0 : pd(st, hm, me);
+    var PAY = new Float64Array([CC, CD, DC, DD]);
+
+    // One round: ipd(i, j) for every cell in sipd.c's i-then-j order.
+    function playRound() {
+      var gap = noiseGap, hasNoise = noise > 0;
+      for (var c = 0; c < n; c++) {
+        var sc = strat[c], la = lastact[c], a = act[c];
+        for (var wi = 0; wi < 4; wi++) {
+          var cc = nb[c * 4 + wi], b1 = bit1[wi], b2 = bit2[wi];
+          var prev1 = (la >> b1) & 1;
+          var prev2 = (lastact[cc] >> b2) & 1;
+          var act1, act2;
+          if (hasNoise && gap === 0) { gap = nextGap(); act1 = (rng() < 0.5) ? 0 : 1; }
+          else {
+            gap--;
+            act1 = (sc === RAND) ? ((rng() < rcp) ? 0 : 1) : PD[sc * 4 + prev2 * 2 + prev1];
+          }
+          var so = strat[cc];
+          if (hasNoise && gap === 0) { gap = nextGap(); act2 = (rng() < 0.5) ? 0 : 1; }
+          else {
+            gap--;
+            act2 = (so === RAND) ? ((rng() < rcp) ? 0 : 1) : PD[so * 4 + prev1 * 2 + prev2];
+          }
+          score[c] += PAY[act1 * 2 + act2];
+          score[cc] += PAY[act2 * 2 + act1];
+          a = act1 ? (a | (1 << b1)) : (a & ~(1 << b1));
+          act[cc] = act2 ? (act[cc] | (1 << b2)) : (act[cc] & ~(1 << b2));
+        }
+        act[c] = a;
+      }
+      noiseGap = gap;
+    }
+
+    function beststrat(i, j) {
+      var c = i * height + j, best = -1, bestc = 0;
+      for (var k = -1; k <= 1; k++)
+        for (var l = -1; l <= 1; l++) {
+          var ii = (i + width + k) % width, jj = (j + height + l) % height;
+          var cc = ii * height + jj;
+          if (score[cc] >= best) {
+            if (score[cc] > best) { bestc = cc; best = score[cc]; }
+            else if (strat[cc] === strat[c]) { bestc = cc; best = score[cc]; }
+          }
+        }
+      return strat[bestc];
+    }
+
+    // A generation is rounds + 1 sub-steps: `rounds` rounds of play, then
+    // selection.  substep() performs one of them so the display can spread
+    // a generation over several frames; step() runs a whole generation.
+    var sub = 0;
+    function substep() {
+      var i, j, c;
+      if (sub === 0)
+        for (c = 0; c < n; c++) { act[c] = 0; lastact[c] = 0; score[c] = 0; }
+      if (sub < rounds) {
+        playRound();
+        var tmp = act; act = lastact; lastact = tmp;
+        sub++;
+        return 0;
+      }
+      pop.fill(0);
+      for (j = 0; j < height; j++)
+        for (i = 0; i < width; i++) {
+          c = i * height + j;
+          if (mute === 0 || rng() > mute) newstrat[c] = beststrat(i, j);
+          else newstrat[c] = Math.floor(rng() * NUMSTRATS);
+          pop[strat[c]]++;
+        }
+      var t2 = strat; strat = newstrat; newstrat = t2;
+      t++; sub = 0;
+      return 1;
+    }
+    function step() { while (!substep()) {} }
+
+    // Drop a disc of strategy s (safety net against a frozen monoculture).
+    function seedDisc(cx, cy, r, s) {
+      for (var i = 0; i < width; i++)
+        for (var j = 0; j < height; j++) {
+          var dx = Math.min(Math.abs(i - cx), width - Math.abs(i - cx));
+          var dy = Math.min(Math.abs(j - cy), height - Math.abs(j - cy));
+          if (dx * dx + dy * dy <= r * r) strat[i * height + j] = s;
+        }
+    }
+
+    return { width: width, height: height, step: step, substep: substep, seedDisc: seedDisc, pop: pop,
+             get strat() { return strat; }, get t() { return t; }, NUMSTRATS: NUMSTRATS };
+  }
+
+  return { make: make, ALLC: ALLC, TFT: TFT, RAND: RAND, PAV: PAV, ALLD: ALLD };
+})();
+
+if (typeof window !== "undefined") window.onload = function() {
+
+  var canvas = document.getElementById("viewport");
+  var ctx = canvas.getContext("2d");
+  var off = document.createElement("canvas");
+  var octx = off.getContext("2d");
+  var done = 0;
+  var W, H, cw, ch, sim, img, pix, cur;
+  var BLEND = 0.12;
+  // Two of the six sub-steps per frame (a generation every 3 frames) when
+  // the machine keeps up; one per frame when a sub-step takes longer than
+  // SUBMS, so slow machines drop to one generation every 6 frames instead
+  // of dropping frames.
+  var SUBMS = 3.5;
+  var monoSince = 0, born = 0, FADEIN = 2000;
+
+  // ALLC pale sand, TFT blue, RAND grey, PAV teal, ALLD deep red.
+  var COL = [
+    [196, 186, 160],
+    [34, 62, 128],
+    [58, 60, 68],
+    [38, 118, 112],
+    [128, 26, 34]
+  ];
+
+  function init() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    if (canvas.width === 0 || canvas.height === 0) return;
+    cw = Math.max(16, Math.min(240, Math.round(W / 5)));
+    ch = Math.max(16, Math.min(160, Math.round(H / 5)));
+    off.width = cw; off.height = ch;
+    img = octx.createImageData(cw, ch); pix = img.data;
+    for (var i = 3; i < pix.length; i += 4) pix[i] = 255;
+    sim = SIPD.make(cw, ch);
+    cur = new Float32Array(cw * ch * 3);
+    var s = sim.strat;
+    for (var c = 0; c < cw * ch; c++) {
+      var k = COL[s[c]];
+      cur[c * 3] = k[0]; cur[c * 3 + 1] = k[1]; cur[c * 3 + 2] = k[2];
+    }
+    ctx.fillStyle = "#000"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    monoSince = 0; born = performance.now();
+  }
+
+  function render() {
+    var s = sim.strat, n = cw * ch;
+    // sim cells are indexed [i * ch + j] (i along width); image rows are y.
+    for (var y = 0, p = 0; y < ch; y++)
+      for (var x = 0; x < cw; x++, p += 4) {
+        var c = x * ch + y, k = COL[s[c]], q = c * 3;
+        cur[q] += (k[0] - cur[q]) * BLEND;
+        cur[q + 1] += (k[1] - cur[q + 1]) * BLEND;
+        cur[q + 2] += (k[2] - cur[q + 2]) * BLEND;
+        pix[p] = cur[q]; pix[p + 1] = cur[q + 1]; pix[p + 2] = cur[q + 2];
+      }
+    octx.putImageData(img, 0, 0);
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(off, 0, 0, cw, ch, 0, 0, canvas.width, canvas.height);
+  }
+
+  var lastT = 0;
+  function loop(now) {
+    window.requestAnimationFrame(loop);
+    if (done) { if (monoSince) monoSince += now - lastT; born += now - lastT; lastT = now; return; }
+    lastT = now;
+    if (canvas.width === 0 || canvas.clientWidth !== W || canvas.clientHeight !== H) { init(); return; }
+    if (!sim) return;
+    var ts = performance.now();
+    var gen = sim.substep();
+    if (performance.now() - ts < SUBMS) gen |= sim.substep();
+    if (gen) {
+      var n = cw * ch, mx = 0, ms = 0;
+      for (var k = 0; k < 5; k++) if (sim.pop[k] > mx) { mx = sim.pop[k]; ms = k; }
+      if (mx > 0.97 * n) {
+        if (!monoSince) monoSince = now;
+        else if (now - monoSince > 20000) {
+          var other = (ms === SIPD.ALLD) ? SIPD.TFT : SIPD.ALLD;
+          sim.seedDisc(Math.floor(Math.random() * cw), Math.floor(Math.random() * ch), 6, other);
+          monoSince = 0;
+        }
+      } else monoSince = 0;
+    }
+    render();
+    var fi = (now - born) / FADEIN;
+    if (fi < 1) {
+      ctx.fillStyle = "rgba(0,0,0," + (1 - fi * fi) + ")";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  window.onclick = function() { done = !done; };
+  var rt;
+  window.onresize = function() { clearTimeout(rt); rt = setTimeout(init, 150); };
+  init();
+  lastT = performance.now();
+  window.requestAnimationFrame(loop);
+}
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>

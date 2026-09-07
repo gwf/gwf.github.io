@@ -1,0 +1,366 @@
+<!DOCTYPE html><html><head>
+<title>bifur1d</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  bifur1d - bifurcation diagrams of one-dimensional maps, from "The
+//  Computational Beauty of Nature" (src/bifur1d.c, src/maps1d.c).
+//
+//  For every pixel column an r value is chosen (r = rmin + i * rinc,
+//  clamped to 1), the map is started at x = 0.5 and iterated SKIP times
+//  without plotting, then iterated up to height * FACTOR more times,
+//  plotting (r, x) each time and stopping early when x repeats one of the
+//  previous four iterates within tol = 0.01 / height -- exactly the loop
+//  of bifur1d.c.  Maps are those of maps1d.c with aux = 1:
+//    logistic  x' = 4 r x (1 - x)
+//    sin       x' = sin(2 pi r x) / 2 + 1/2
+//    tent      x' = (x <= 1/2) ? 2 r x : 2 r (1 - x)
+//  Points land in a floating-point density buffer that is tone-mapped
+//  (log, amber on black) so periodic orbits burn white and chaotic bands
+//  glow.
+//
+//  Timeline of one cycle: the full diagram (r in [0,1], x in [0,1]) is
+//  drawn column by column with a left-to-right sweep (~6 s), then the
+//  view zooms smoothly (eased in log scale, ~20 s) into a curated window,
+//  holds while creeping in, zooms back out, zooms into a second window,
+//  and fades to black before the next cycle.  Windows (r centre, r width,
+//  x centre, x height):
+//    logistic  period-doubling cascade about its accumulation point
+//              r = 0.8925 (= 3.5699/4), central branch:
+//              (0.8923, 0.006, 0.52, 0.06)
+//    logistic  the period-3 window r = 0.9571..0.9625 (= 3.828..3.85),
+//              middle branch, which is a small copy of the whole diagram:
+//              (0.9598, 0.0075, 0.489, 0.10)
+//    sin       its own cascade, accumulating near r = 0.615:
+//              (0.613, 0.035, 0.44, 0.18), and the period-5 window at
+//              r = 0.85, middle branch: (0.851, 0.02, 0.50, 0.10)
+//    tent      the wedge that opens at r = 0.5 with its band-merging
+//              cascade: (0.535, 0.07, 0.53, 0.09) then (0.512, 0.025,
+//              0.505, 0.03)
+//  Two out of three cycles use the logistic map, the rest alternate sin
+//  and tent.  Curated: SKIP = 500 (bifur1d.c's default) at full view,
+//  rising with zoom depth because near bifurcation points transients decay
+//  slowly and would smear a magnified view; FACTOR = 2 as in the C default.
+//
+//  Modernized beyond bifur1d.c: the diagram is kept live -- each column's
+//  orbit (a "walker") persists while the view moves and keeps splatting
+//  its iterates at its current screen position, so magnification refines
+//  progressively instead of re-rendering from scratch.  bifur1d.c stops a
+//  column when it detects a period <= 4 purely as a speed-up; here the
+//  orbit keeps going after the initial burst so periodic points keep
+//  redrawing themselves while the buffer decays.  Iterations per column
+//  per frame adapt to the measured cost.  The buffer resolution is capped
+//  at ~1.2 Mpx and scaled up for 4K/5K displays.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+window.onload = function() {
+
+  var canvas = document.getElementById("viewport");
+  var ctx = canvas.getContext("2d");
+  var done = 0;
+
+  // ---- maps, straight from maps1d.c (aux = 1) ------------------------------
+  var aux = 1.0;
+  function flog(x, r) { return 4.0 * r * x * (1.0 - x); }
+  function fsin(x, r) { return Math.sin(x * Math.PI * aux * 2.0 * r) * 0.5 + 0.5; }
+  function ftent(x, r) { return (x <= 0.5) ? 2.0 * r * x : 2.0 * r * (1.0 - x); }
+
+  var MAPS = {
+    log:  { f: flog,  windows: [[0.8923, 0.006, 0.52, 0.06], [0.9598, 0.0075, 0.489, 0.10]] },
+    sin:  { f: fsin,  windows: [[0.613, 0.035, 0.44, 0.18], [0.851, 0.02, 0.50, 0.10]] },
+    tent: { f: ftent, windows: [[0.535, 0.07, 0.53, 0.09], [0.512, 0.025, 0.505, 0.03]] }
+  };
+  var FACTOR = 2.0, SKIP0 = 500;
+
+  // ---- buffers ---------------------------------------------------------------
+  var W, H, cw, ch, scale;
+  var density, img, pix;
+  var MAXW = 0, wr, wx, w1, w2, w3, w4, walive, nw = 0, freeList = [];
+  var occ;
+
+  function init() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    if (canvas.width === 0 || canvas.height === 0) return;
+    var s = Math.min(1, Math.sqrt(1200000 / (canvas.width * canvas.height)));
+    cw = Math.max(64, Math.floor(canvas.width * s));
+    ch = Math.max(64, Math.floor(canvas.height * s));
+    scale = canvas.width / cw;
+    density = new Float32Array(cw * ch);
+    img = ctx.createImageData(cw, ch);
+    pix = img.data;
+    for (var i = 3; i < pix.length; i += 4) pix[i] = 255;
+    MAXW = cw * 3;
+    wr = new Float64Array(MAXW); wx = new Float64Array(MAXW);
+    w1 = new Float64Array(MAXW); w2 = new Float64Array(MAXW);
+    w3 = new Float64Array(MAXW); w4 = new Float64Array(MAXW);
+    walive = new Uint8Array(MAXW);
+    freeList = []; for (var i = MAXW - 1; i >= 0; i--) freeList.push(i);
+    nw = 0;
+    occ = new Uint8Array(cw);
+    Mref = 0;
+    startCycle();
+  }
+
+  // ---- splatting -------------------------------------------------------------
+  // r0, rw, y0, yh: the current view (r range and x range), set per frame.
+  var r0 = 0, rw = 1, y0 = 0, yh = 1;
+
+  // plot_point: fx in column units, fy in row units (0 at top).
+  function splat(fx, fy) {
+    if (fx >= 0 && fy >= 0) {
+      var ix = fx | 0, iy = fy | 0;
+      if (ix < cw && iy < ch) density[iy * cw + ix] += 1;
+    }
+  }
+
+  // ---- walkers: one bifur1d.c column each ------------------------------------
+  function spawn(col, f, skip, burst) {
+    if (!freeList.length) return;
+    var i = freeList.pop();
+    var r = r0 + (col + 0.5) / cw * rw;
+    if (r > 1.0) r = 1.0;                        // as in bifur1d.c
+    if (r < 0.0) r = 0.0;
+    var x = 0.5;
+    for (var j = 0; j < skip; j++) x = f(x, r);
+    wr[i] = r; wx[i] = x;
+    w4[i] = 5.0; w3[i] = 4.0; w2[i] = 3.0; w1[i] = 2.0;   // nonsense history
+    walive[i] = 1; nw++;
+    if (burst) {
+      // The C program's plotting loop, verbatim: up to height * FACTOR
+      // iterates, bail out on period 1..4.
+      var tol = 0.01 / ch, n = ch * FACTOR;
+      var xt = 2.0, xtt = 3.0, xttt = 4.0, xtttt = 5.0;
+      var fx = (r - r0) / rw * cw;
+      for (var j = 0; j < n; j++) {
+        xtttt = xttt; xttt = xtt; xtt = xt; xt = x; x = f(x, r);
+        splat(fx, (y0 + yh - x) / yh * ch);
+        if (Math.abs(x - xt) < tol || Math.abs(x - xtt) < tol ||
+            Math.abs(x - xttt) < tol || Math.abs(x - xtttt) < tol) break;
+      }
+      wx[i] = x; w1[i] = xt; w2[i] = xtt; w3[i] = xttt; w4[i] = xtttt;
+    }
+  }
+
+  function kill(i) { walive[i] = 0; freeList.push(i); nw--; }
+
+  // Drop walkers that left the view or crowd a column; report empty columns.
+  function occupancy() {
+    for (var c = 0; c < cw; c++) occ[c] = 0;
+    for (var i = 0; i < MAXW; i++) {
+      if (!walive[i]) continue;
+      var col = Math.floor((wr[i] - r0) / rw * cw);
+      if (col < 0 || col >= cw || occ[col] >= 2) { kill(i); continue; }
+      occ[col]++;
+    }
+  }
+
+  function iterateAll(f, B) {
+    var sy = ch / yh, top = y0 + yh, d = density, chh = ch, cww = cw;
+    for (var i = 0; i < MAXW; i++) {
+      if (!walive[i]) continue;
+      var r = wr[i], x = wx[i];
+      var fx = (r - r0) / rw * cww;
+      if (fx < 0 || fx >= cww) continue;
+      var ix = fx | 0;
+      for (var j = 0; j < B; j++) {
+        x = f(x, r);
+        var fy = (top - x) * sy;
+        if (fy >= 0) { var iy = fy | 0; if (iy < chh) d[iy * cww + ix] += 1; }
+      }
+      if (!(x >= 0 && x <= 1)) { kill(i); continue; }   // never happens for these maps; belt and braces
+      wx[i] = x;
+    }
+  }
+
+  // ---- palette: amber on black, white-hot at the top -------------------------
+  var LUT = new Uint8ClampedArray(256 * 3);
+  (function() {
+    for (var i = 0; i < 256; i++) {
+      var u = i / 255;
+      var r = Math.pow(u, 0.55), g = 0.60 * Math.pow(u, 1.15), b = 0.10 * Math.pow(u, 2.2);
+      var wmix = Math.max(0, (u - 0.80) / 0.20);
+      r = r + (1.0 - r) * wmix; g = g + (0.95 - g) * wmix; b = b + (0.85 - b) * wmix;
+      LUT[i * 3] = r * 255; LUT[i * 3 + 1] = g * 255; LUT[i * 3 + 2] = b * 255;
+    }
+  })();
+
+  // Exposure: Mref is the density at which the tone map reaches white.  It
+  // follows (slowly) four times the expected steady-state density of a
+  // chaotic band pixel, so bands sit at ~3/4 brightness and periodic
+  // orbits, which pile hundreds of hits on one pixel, burn white.
+  var Mref = 0;
+
+  // Tone curve log(1 + 200 t) / log(201) for t = v / M in [0, 1), tabulated
+  // so the per-pixel pass needs no transcendental call.
+  var TONE = new Float32Array(4097);
+  for (var i = 0; i <= 4096; i++) TONE[i] = Math.log(1 + 200 * i / 4096) / Math.log(201);
+
+  function render(decay, gain, Mtarget) {
+    var n = cw * ch;
+    Mref = Mref ? Mref + (Mtarget - Mref) * 0.06 : Mtarget;
+    var M = Math.max(Mref, 1e-3);
+    var invM = 4096 / M, g255 = 255 * gain;
+    for (var i = 0, p = 0; i < n; i++, p += 4) {
+      var v = density[i];
+      if (v <= 0.0005) { pix[p] = 0; pix[p + 1] = 0; pix[p + 2] = 0; continue; }
+      if (decay !== 1) { v *= decay; density[i] = v; }
+      var t = v * invM;
+      var c = (t >= 4096 ? g255 : TONE[t | 0] * g255) | 0;
+      var q = c * 3;
+      pix[p] = LUT[q]; pix[p + 1] = LUT[q + 1]; pix[p + 2] = LUT[q + 2];
+    }
+    ctx.putImageData(img, 0, 0);
+    if (scale !== 1) {
+      ctx.imageSmoothingEnabled = true;
+      ctx.drawImage(canvas, 0, 0, cw, ch, 0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  // ---- timeline --------------------------------------------------------------
+  // Keyframes: [seconds, view] with view = [rc, rw, xc, xh]; the view is
+  // interpolated in log scale (size) and linearly (centre, weighted so the
+  // target point stays put on screen) with a smoothstep ease per segment.
+  var FULL = [0.85, 0.30, 0.5, 1.0];   // r in [0.70, 1.00]: the fixed point just before the first period doubling, then the whole cascade (author's note)
+  var cycle = null, cycleT = 0, sweepFront = 0, ncycle = 0;
+  var lastMap = "";
+
+  function pickMap() {
+    var name;
+    if (ncycle % 3 !== 2) name = "log";
+    else name = (lastMap === "sin") ? "tent" : "sin";
+    if (name !== "log") lastMap = name;
+    ncycle++;
+    return name;
+  }
+
+  function creep(v, k) { return [v[0], v[1] * k, v[2], v[3] * k]; }
+
+  function startCycle() {
+    var name = pickMap(), m = MAPS[name];
+    var A = m.windows[0], B = m.windows[1];
+    var keys = [];
+    var t = 0;
+    function seg(dur, view) { keys.push([t, view]); t += dur; }
+    seg(6.0, FULL);                 // sweep, full view
+    seg(4.0, FULL);                 // settle (tiny creep below keeps it alive)
+    seg(22.0, creep(FULL, 0.985));
+    seg(7.0, A);                    // arrive at A, creep in
+    seg(14.0, creep(A, 0.90));
+    seg(4.0, FULL);                 // back out
+    seg(22.0, creep(FULL, 0.985));
+    seg(8.0, B);
+    seg(3.0, creep(B, 0.88));       // fade happens during the last segment
+    keys.push([t, creep(B, 0.85)]);
+    cycle = { name: name, f: m.f, keys: keys, total: t, fadeAt: t - 3.0 };
+    cycleT = 0; sweepFront = 0;
+    // Fresh diagram: clear everything.
+    if (density) for (var i = 0; i < density.length; i++) density[i] = 0;
+    if (walive) for (var i = 0; i < MAXW; i++) if (walive[i]) kill(i);
+    Mref = 0; prevView = null;
+  }
+
+  function smooth01(u) { u = Math.min(Math.max(u, 0), 1); return u * u * (3 - 2 * u); }
+
+  function viewAt(T) {
+    var keys = cycle.keys;
+    var k = 0;
+    while (k + 1 < keys.length - 1 && keys[k + 1][0] <= T) k++;
+    var a = keys[k], b = keys[k + 1];
+    var u = (T - a[0]) / Math.max(b[0] - a[0], 1e-6);
+    var e = smooth01(u);
+    var A = a[1], B = b[1];
+    // Sizes in log scale.
+    var rwv = Math.exp(Math.log(A[1]) + (Math.log(B[1]) - Math.log(A[1])) * e);
+    var yhv = Math.exp(Math.log(A[3]) + (Math.log(B[3]) - Math.log(A[3])) * e);
+    // Centres: keep the destination point fixed on screen while zooming,
+    // blended with a straight pan early in the segment.
+    var s = 1 - smooth01(u / 0.4);
+    var fr = (rwv / A[1]) * s, fy = (yhv / A[3]) * s;
+    var rc, xc;
+    if (B[1] < A[1]) { rc = B[0] + (A[0] - B[0]) * fr; xc = B[2] + (A[2] - B[2]) * fy; }
+    else {
+      // Zooming out: stay centred on the start point for the first part,
+      // then pan to the destination centre while the view is already wide.
+      var g = smooth01((u - 0.3) / 0.7);
+      rc = A[0] + (B[0] - A[0]) * g; xc = A[2] + (B[2] - A[2]) * g;
+    }
+    // Keep the view inside the diagram's [0,1] x [0,1].
+    if (rc - rwv / 2 < 0) rc = rwv / 2;
+    if (rc + rwv / 2 > 1) rc = 1 - rwv / 2;
+    if (xc - yhv / 2 < 0) xc = yhv / 2;
+    if (xc + yhv / 2 > 1) xc = 1 - yhv / 2;
+    return [rc, rwv, xc, yhv];
+  }
+
+  // ---- main loop -------------------------------------------------------------
+  // B: map iterations per walker per frame, adapted to the measured cost so
+  // the iteration pass stays around 3-6 ms.
+  var lastNow = 0, B = 120, prevView = null;
+
+  function loop(now) {
+    window.requestAnimationFrame(loop);
+    var dt = lastNow ? now - lastNow : 16; lastNow = now;
+    if (done) return;
+    if (dt > 100) dt = 100;
+    if (!density || canvas.width === 0 || canvas.clientWidth !== W || canvas.clientHeight !== H) { init(); if (!density) return; }
+
+    cycleT += dt / 1000;
+    if (cycleT >= cycle.total) startCycle();
+    var vw = viewAt(cycleT);
+    var moved = 0;
+    if (prevView) {
+      var dx = Math.abs(vw[0] - prevView[0]) / vw[1] * cw + Math.abs(vw[1] - prevView[1]) / vw[1] * cw * 0.5;
+      var dy = Math.abs(vw[2] - prevView[2]) / vw[3] * ch + Math.abs(vw[3] - prevView[3]) / vw[3] * ch * 0.5;
+      moved = Math.max(dx, dy);
+    }
+    prevView = vw;
+    r0 = vw[0] - vw[1] / 2; rw = vw[1]; y0 = vw[2] - vw[3] / 2; yh = vw[3];
+
+    var f = cycle.f;
+    var decades = Math.max(0, -Math.log(rw) / Math.LN10);
+    var skip = Math.round(SKIP0 * (1 + 3 * decades));
+    var sweeping = cycleT < 6.0;
+    var t0 = performance.now();
+
+    occupancy();
+    var decay, Mtarget;
+    if (sweeping) {
+      // Each newly uncovered column is drawn in one go, as bifur1d.c does.
+      var front = Math.min(cw, Math.floor(smooth01(cycleT / 6.0) * cw + 1));
+      for (var c = sweepFront; c < front; c++) if (occ[c] === 0) spawn(c, f, skip, true);
+      sweepFront = Math.max(sweepFront, front);
+      decay = 1.0;
+      Mtarget = 4 * (ch * FACTOR) / (0.5 * ch);
+    } else {
+      for (var c = 0; c < cw; c++) if (occ[c] === 0) spawn(c, f, skip, false);
+      iterateAll(f, B);
+      decay = Math.max(0.70, 0.975 - moved * 0.08);
+      Mtarget = 4 * (B / (0.5 * ch)) / (1 - decay);
+    }
+    var cost = performance.now() - t0;
+    if (cost > 6 && B > 30) B = Math.max(30, Math.round(B * 0.85));
+    else if (cost < 3 && B < 220) B = Math.min(220, B + 4);
+
+    var gain = 1.0;
+    if (cycleT > cycle.fadeAt) gain = 1 - smooth01((cycleT - cycle.fadeAt) / 3.0);
+    else if (cycleT < 1.0 && ncycle > 1) gain = smooth01(cycleT / 1.0);
+    render(decay, gain, Mtarget);
+  }
+
+  window.onclick = function() { done = !done; };
+  var rt;
+  window.onresize = function() { clearTimeout(rt); rt = setTimeout(init, 150); };
+  init();
+  window.requestAnimationFrame(loop);
+}
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>

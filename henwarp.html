@@ -1,0 +1,277 @@
+<!DOCTYPE html><html><head>
+<title>henwarp</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  henwarp - stretching and folding, from "The Computational Beauty of
+//  Nature" (src/henwarp.c, src/henon.c).
+//
+//  A len x len grid of points filling a square centred on the origin is
+//  pushed through the Henon map  t = A - x*x + B*y; y = x; x = t  exactly
+//  as henwarp.c does, so the square is stretched, folded and squeezed
+//  onto the strange attractor.  Parameters straight from the C defaults:
+//  A = 1.29, B = 0.3, view ulx=-1.75 uly=1.75 lly=-1.75 (square, equal
+//  scales), swap=1 (plot (y, x)), and the initial square is the C default
+//  extent (301 plot pixels wide = 2.2 units).  The classic A = 1.4 is used
+//  on alternate runs; both are checked to keep the whole square inside the
+//  basin (no point escapes in 40 iterations), and any point that does
+//  escape (|x| > 5) simply fades away.
+//
+//  Modernization: henwarp.c prints the grid after -count iterations; here
+//  every single iteration is animated by tweening each point along a
+//  straight line from its pre-image to its image (eased, ~2 s), so the
+//  fold is seen happening.  Points are coloured by their ORIGINAL grid
+//  position so the folded layers stay readable: a two-dimensional hue
+//  gradient across the square (one hue to another left to right, with a
+//  35-degree drift and dark-to-bright lightness top to bottom; the two
+//  hues are drawn fresh for every run, 130-210 degrees apart) multiplied
+//  by a 12x12 checkerboard of lightness (dark squares at 22%), which is
+//  what keeps the stretching and folding legible once the layers overlap.
+//  Points are splatted into a floating-point RGB density buffer with a
+//  short decay (comet trails), tone-mapped to white where they pile up.
+//  The deposit per point (0.45) and the white lift were chosen by rendering
+//  the page headlessly: with them the checkerboard still reads at ~3:1
+//  after the tone curve at the densities the folded layers reach, and only
+//  real piles (the attractor's thin curve late in a run) go white.
+//  Timeline per run: ~10 iterations at 2.2 s, then the flow continues on
+//  the attractor at a slower pace for ~20 s (the attractor is fixed but
+//  the colours keep folding), a fade, and a fresh square.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+window.onload = function() {
+
+  var canvas = document.getElementById("viewport");
+  var ctx = canvas.getContext("2d");
+  var done = 0;
+
+  var LEN = 261;                              // grid side (odd, as henwarp.c forces)
+  var N = LEN * LEN;
+  var B = 0.3;
+  var ULX = -1.75, ULY = 1.75, LLY = -1.75;   // C default view
+  var XINC = (ULY - LLY) / (480 - 1);         // C default pixel pitch
+  var SQUARE = 301 * XINC;                    // C default square extent
+
+  var TWEEN = 2200, PAUSE = 450;              // ms per animated iteration
+  var NFAST = 10;                             // iterations at full pace
+  var TWEEN2 = 3600, PAUSE2 = 900, NSLOW = 5; // then slower, on the attractor
+  var FADEOUT = 3000;
+
+  var gx0 = new Float32Array(N), gy0 = new Float32Array(N);   // pre-image
+  var gx1 = new Float32Array(N), gy1 = new Float32Array(N);   // image
+  var alive = new Float32Array(N);                             // opacity 1 .. 0
+  var esc = new Uint8Array(N);                                 // escaped flag
+  var cr = new Float32Array(N), cg = new Float32Array(N), cb = new Float32Array(N);
+
+  var CHECK = 12;                             // checkerboard squares per side
+  var run = 0, A = 1.29, swap = 1, hue1 = 0, hue2 = 0;
+  var iter = 0, phase = 0, t0 = 0;    // phase 0 tween, 1 pause, 2 fade
+
+  function hsl2rgb(h, s, l) {
+    var c = (1 - Math.abs(2 * l - 1)) * s, hp = h / 60, x = c * (1 - Math.abs(hp % 2 - 1));
+    var r = 0, g = 0, b = 0;
+    if (hp < 1) { r = c; g = x; } else if (hp < 2) { r = x; g = c; }
+    else if (hp < 3) { g = c; b = x; } else if (hp < 4) { g = x; b = c; }
+    else if (hp < 5) { r = x; b = c; } else { r = c; b = x; }
+    var m = l - c / 2;
+    return [r + m, g + m, b + m];
+  }
+
+  // Colour of the point at grid position (u, v) in [0,1]^2: hue gradient
+  // across, lightness gradient down, times the checkerboard.
+  function pointColor(u, v, dark) {
+    var d = ((hue2 - hue1 + 540) % 360) - 180;          // shortest arc
+    var h = hue1 + d * u + hueDrift * (v - 0.5);
+    var c = hsl2rgb(((h % 360) + 360) % 360, 0.85, 0.42 + 0.20 * v);
+    var br = dark ? 0.22 : 1.0;
+    return [c[0] * br, c[1] * br, c[2] * br];
+  }
+
+  var hueDrift = 35;
+  function newRun() {
+    A = (run & 1) ? 1.4 : 1.29;
+    swap = (run >> 1) & 1;
+    run++;
+    hue1 = Math.random() * 360;
+    hue2 = (hue1 + 130 + Math.random() * 80) % 360;
+    hueDrift = Math.random() < 0.5 ? -35 : 35;
+    var sp = SQUARE / (LEN - 1), cell = LEN / CHECK;
+    for (var i = 0, k = 0; i < LEN; i++) {
+      for (var j = 0; j < LEN; j++, k++) {
+        gx1[k] = sp * (-0.5 * (LEN - 1) + j);
+        gy1[k] = sp * (-0.5 * (LEN - 1) + i);
+        gx0[k] = gx1[k]; gy0[k] = gy1[k];
+        alive[k] = 1; esc[k] = 0;
+        var dark = (((j / cell) | 0) + ((i / cell) | 0)) & 1;
+        var c = pointColor(j / (LEN - 1), i / (LEN - 1), dark);
+        cr[k] = c[0]; cg[k] = c[1]; cb[k] = c[2];
+      }
+    }
+    iter = 0; phase = 1; t0 = performance.now(); // brief pause on the square
+  }
+
+  // One Henon iteration on every point: the image becomes the new
+  // pre-image and the map is applied once more, exactly as henwarp.c.
+  function advance() {
+    for (var k = 0; k < N; k++) {
+      var x = gx1[k], y = gy1[k];
+      gx0[k] = x; gy0[k] = y;
+      var t = A - x * x + B * y; y = x; x = t;
+      if (esc[k]) continue;
+      if (!(x > -5 && x < 5 && y > -5 && y < 5)) { esc[k] = 1; continue; }   // stays put, fades
+      gx1[k] = x; gy1[k] = y;
+    }
+    iter++;
+  }
+
+  // ---- Density buffer / rendering. --------------------------------------
+
+  var W, H, dpr, cw, ch, scale;
+  var buf, img, pix;                 // interleaved RGB float density
+  // Tone-map lookup: 1 - exp(-K v) for v in [0, 8].
+  var TONE = new Float32Array(2049), LIFT = new Float32Array(2049);
+  for (var q = 0; q <= 2048; q++) {
+    var vv = q / 256;
+    TONE[q] = 1 - Math.exp(-vv * 2.2);
+    var wl = 1 - Math.exp(-vv * 0.2); LIFT[q] = wl * wl * 0.7;
+  }
+  var sx, sy, ox, oy;
+
+  function init() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    var s = Math.min(1, Math.sqrt(700000 / Math.max(1, canvas.width * canvas.height)));
+    cw = Math.max(64, Math.floor(canvas.width * s));
+    ch = Math.max(64, Math.floor(canvas.height * s));
+    scale = canvas.width / cw;
+    buf = new Float32Array(cw * ch * 3);
+    img = ctx.createImageData(cw, ch); pix = img.data;
+    for (var i = 3; i < pix.length; i += 4) pix[i] = 255;
+    // Fit the C view square (3.5 x 3.5) into the buffer, equal scales.
+    var vw = ULY - LLY, vh = ULY - LLY;
+    var aspect = cw / ch;
+    if (aspect > 1) vw = vh * aspect; else vh = vw / aspect;
+    sx = cw / vw; sy = ch / vh;
+    ox = cw / 2; oy = ch / 2;
+    ctx.imageSmoothingEnabled = true;
+    if (run === 0) newRun();
+  }
+
+  function ease(u) { return u < 0.5 ? 2 * u * u : -1 + (4 - 2 * u) * u; }
+
+  function splat(u, gain) {
+    // u in [0,1]: tween parameter.
+    var eu = ease(u);
+    for (var k = 0; k < N; k++) {
+      var a = alive[k];
+      if (a <= 0) continue;
+      var g = gain * 0.45 * a;
+      var x = gx0[k] + (gx1[k] - gx0[k]) * eu;
+      var y = gy0[k] + (gy1[k] - gy0[k]) * eu;
+      var px = swap ? y : x, py = swap ? x : y;
+      var fx = ox + px * sx, fy = oy - py * sy;
+      var ix = fx | 0, iy = fy | 0;
+      if (ix < 0 || iy < 0 || ix >= cw - 1 || iy >= ch - 1) continue;
+      var wx = fx - ix, wy = fy - iy;
+      var i0 = (iy * cw + ix) * 3, i1 = i0 + cw * 3;
+      var w00 = (1 - wx) * (1 - wy) * g, w10 = wx * (1 - wy) * g;
+      var w01 = (1 - wx) * wy * g, w11 = wx * wy * g;
+      var r = cr[k], gg = cg[k], b = cb[k];
+      buf[i0] += r * w00; buf[i0 + 1] += gg * w00; buf[i0 + 2] += b * w00;
+      buf[i0 + 3] += r * w10; buf[i0 + 4] += gg * w10; buf[i0 + 5] += b * w10;
+      buf[i1] += r * w01; buf[i1 + 1] += gg * w01; buf[i1 + 2] += b * w01;
+      buf[i1 + 3] += r * w11; buf[i1 + 4] += gg * w11; buf[i1 + 5] += b * w11;
+    }
+  }
+
+  // Escaped points fade out instead of flying off to infinity.
+  function fadeEscapees() {
+    for (var k = 0; k < N; k++)
+      if (esc[k] && alive[k] > 0) alive[k] = Math.max(0, alive[k] - 0.02);
+  }
+
+  function render(decay) {
+    var n = cw * ch * 3;
+    // Per-channel soft saturation (1 - exp(-K v)) plus a white lift where
+    // points pile up, both from lookup tables.
+    for (var i = 0, p = 0; i < n; i += 3, p += 4) {
+      var r = buf[i] * decay, g = buf[i + 1] * decay, b = buf[i + 2] * decay;
+      buf[i] = r; buf[i + 1] = g; buf[i + 2] = b;
+      var lum = r + g + b;
+      if (lum < 0.002) { pix[p] = 0; pix[p + 1] = 0; pix[p + 2] = 0; continue; }
+      var li = lum * 256; if (li > 2048) li = 2048;
+      var wl = LIFT[li | 0], kw = (1 - wl) * 255, add = wl * 255;
+      var ri = r * 256, gi = g * 256, bi = b * 256;
+      if (ri > 2048) ri = 2048; if (gi > 2048) gi = 2048; if (bi > 2048) bi = 2048;
+      pix[p]     = TONE[ri | 0] * kw + add;
+      pix[p + 1] = TONE[gi | 0] * kw + add;
+      pix[p + 2] = TONE[bi | 0] * kw + add;
+    }
+    ctx.putImageData(img, 0, 0);
+    if (scale !== 1) {
+      ctx.imageSmoothingEnabled = true;
+      ctx.drawImage(canvas, 0, 0, cw, ch, 0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  var lastT = 0;
+  function loop(now) {
+    window.requestAnimationFrame(loop);
+    if (done) { t0 += now - lastT; lastT = now; return; }
+    lastT = now;
+    if (canvas.width === 0 || canvas.clientWidth !== W || canvas.clientHeight !== H) {
+      init(); return;
+    }
+    var el = now - t0;
+    var slow = iter >= NFAST;
+    var tw = slow ? TWEEN2 : TWEEN, pa = slow ? PAUSE2 : PAUSE;
+    var u = 1, gain = 1, decay = 0.80;
+
+    if (phase === 1) {                       // pause at an image
+      u = 1;
+      if (el > pa) {
+        if (iter >= NFAST + NSLOW) { phase = 2; t0 = now; }
+        else { advance(); phase = 0; t0 = now; }
+      }
+    } else if (phase === 0) {                // tween pre-image -> image
+      u = Math.min(el / tw, 1);
+      if (u >= 1) { phase = 1; t0 = now; }
+    } else {                                 // fade out, then a new square
+      u = 1;
+      gain = Math.max(0, 1 - el / FADEOUT);
+      decay = 0.80 - 0.25 * (el / FADEOUT);
+      if (el > FADEOUT) {
+        for (var i = 0; i < buf.length; i++) buf[i] = 0;
+        newRun();
+        u = 1; gain = 0;
+      }
+    }
+    fadeEscapees();
+    // Points sitting still at an image get a gentler deposit so the pause
+    // does not bloom to white; moving points leave comet trails.
+    var moving = phase === 0;
+    splat(u, gain * (moving ? 1.0 : 0.55));
+    render(decay);
+  }
+
+  window.onclick = function() { done = !done; };
+  var rt;
+  window.onresize = function() { clearTimeout(rt); rt = setTimeout(init, 150); };
+  init();
+  lastT = performance.now();
+  window.requestAnimationFrame(loop);
+
+  window.__cbofn = { state: function() {
+    return { A: A, swap: swap, iter: iter, phase: phase, run: run, gx1: gx1, gy1: gy1, alive: alive, esc: esc,
+             buf: buf, cw: cw, ch: ch };
+  } };
+}
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>

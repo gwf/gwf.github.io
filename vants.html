@@ -1,0 +1,289 @@
+<!DOCTYPE html><html><head>
+<title>vants</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  vants - generalized virtual ants (Langton's ant family), from "The
+//  Computational Beauty of Nature" (src/vants.c).
+//
+//  A vant steps forward, increments the state of the cell it lands on
+//  (mod the number of states), and then turns right if the rule string has
+//  a '1' at the index of the cell's OLD state, left if it has a '0'.  The
+//  walk/turn/state update below is vants.c verbatim, including its quirks:
+//  the cell is incremented on arrival, direction 0 is +y, and the turn is
+//  vd += 5 or 3 (mod 4).  Several vants share one wrapping grid, and as
+//  the source notes, they can undo each other's work.
+//
+//  Curated program (all rule strings in vants.c's convention, '1' = right):
+//    "10"            Langton's ant: ~10k chaotic steps, then a highway.
+//    "1100"          RRLL: symmetric, slowly growing blob.
+//    "110011"        RRLLRR: chaotic growth with wide bright regions.
+//    "1101"          RRLR: turbulent, fills space.
+//    "10011"         RLLRR: textured growth.
+//    "0011"          LLRR: the famous cardioid-like symmetric growth.
+//    "011111001"     LRRRRRLLR: fills a growing square.
+//    "001110101001"  LLRRRLRLRLLR: builds a highway of a different kind.
+//    "110001000111"  RRLLLRLLLRRR: grows triangular regions.
+//  The torus is at most 360x240 cells.  Every page load opens with "10",
+//  and "10" always runs with a single vant (one time in four, two vants
+//  placed half a torus apart), because vants on a shared grid wreck each
+//  other's work and the classic story never reads with a crowd: ~10,000
+//  chaotic steps, then the 104-step highway.  For "10" the clock runs at
+//  ~500 steps/s for the first 20 s (so the chaos-then-highway turn happens
+//  on screen at ~20-25 s), then ramps to ~1200 steps/s (about 30 cells/s
+//  of highway) so the highway crosses the torus, wraps, and re-enters its
+//  own mess, which starts the story over.  Verified headlessly: a lone "10"
+//  vant's distance from its start is ~10-20 cells until step 10k and then
+//  grows by ~27 cells per 1000 steps (2.83 cells per 104-step period);
+//  on the 360x240 torus the first wrap comes at ~15k steps.  The multi-state
+//  rules use 2-4 vants at 3000 steps/s ramping to 24000 steps/s.  A run
+//  ends when >60% of cells are non-zero or after 75 s; the picture fades to
+//  black and the next rule starts.
+//
+//  Modernization: colors (one hue per run, states as luminance steps), the
+//  vants drawn as bright dots with short fading trails, and the automatic
+//  fade/restart cycle.  The simulation itself is unchanged.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+// ---- Simulation core: faithful port of vants.c ------------------------
+
+function Vants(W, H, rule, num, dense) {
+  this.W = W; this.H = H; this.rule = rule; this.num = num;
+  this.states = rule.length;
+  this.grid = new Uint8Array(W * H);
+  this.vx = new Int32Array(num);
+  this.vy = new Int32Array(num);
+  this.vd = new Int32Array(num);
+  this.turn = new Int32Array(this.states);   // 5 = right, 3 = left (vd += turn, mod 4)
+  for (var s = 0; s < this.states; s++) this.turn[s] = rule.charAt(s) === '1' ? 5 : 3;
+  for (var i = 0; i < num; i++) {
+    this.vx[i] = (Math.random() * W) | 0;      // random_range(0, width)
+    this.vy[i] = (Math.random() * H) | 0;
+    this.vd[i] = (Math.random() * 4) | 0;
+  }
+  this.nonzero = 0;
+  if (dense > 0)
+    for (var k = 0; k < W * H; k++)
+      if (Math.random() < dense) {
+        this.grid[k] = (Math.random() * this.states) | 0;
+        if (this.grid[k]) this.nonzero++;
+      }
+  this.steps = 0;
+}
+
+// Advance every vant n times, in vants.c's order (for each step, for each vant).
+Vants.prototype.step = function(n) {
+  var W = this.W, H = this.H, grid = this.grid, states = this.states;
+  var vx = this.vx, vy = this.vy, vd = this.vd, turn = this.turn, num = this.num;
+  var nonzero = this.nonzero;
+  for (var i = 0; i < n; i++) {
+    for (var j = 0; j < num; j++) {
+      var nx = vx[j], ny = vy[j], d = vd[j];
+      if (d === 0) ny++;
+      else if (d === 1) nx++;
+      else if (d === 2) ny--;
+      else nx--;
+      nx = (nx < 0) ? W - 1 : (nx > W - 1) ? 0 : nx;
+      ny = (ny < 0) ? H - 1 : (ny > H - 1) ? 0 : ny;
+      var k = ny * W + nx;
+      var old = grid[k];
+      var nv = (old + 1) % states;
+      grid[k] = nv;
+      if (old === 0) nonzero++;
+      if (nv === 0) nonzero--;
+      vx[j] = nx; vy[j] = ny;
+      vd[j] = (d + turn[old]) % 4;
+    }
+  }
+  this.nonzero = nonzero;
+  this.steps += n;
+};
+
+// ---- Presentation --------------------------------------------------------
+
+window.onload = function() {
+
+  var canvas = document.getElementById("viewport");
+  var ctx = canvas.getContext("2d");
+  var done = 0;
+
+  var RULES = ["10", "0011", "1100", "110011", "1101", "10011",
+               "011111001", "001110101001", "110001000111"];
+  var CLASSIC = 0;   // index of "10", always the first rule after a page load
+  // One hue per run: [deep color, pale color] pairs, all close to one hue.
+  var HUES = [
+    [[10, 70, 90], [190, 250, 245]],     // teal
+    [[95, 55, 8], [255, 225, 170]],      // amber
+    [[60, 30, 110], [225, 200, 255]],    // violet
+    [[20, 60, 120], [200, 225, 255]]     // blue
+  ];
+  var MAX_COLS = 360, MAX_ROWS = 240, MIN_CELL = 4;
+  var RUN_LIMIT = 75000, FILL_LIMIT = 0.6, FADE_OUT = 2500, FADE_IN = 1500;
+
+  var W = 0, H = 0, cols = 0, rows = 0;
+  var off, offctx, img, pix, trail, trailctx;
+  var sim = null, lut = null, ruleIdx = -1, order = [];
+  var phase = 'run', phaseT0 = 0, fade = 1, runStart = 0, acc = 0;
+  var MAX_STEPS_FRAME = 2000;
+  var hueIdx = 0;
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function nextRule() {
+    if (!order.length) {
+      var last = ruleIdx;
+      order = shuffle(RULES.map(function(_, i) { return i; }));
+      if (order[0] === last && order.length > 1) order.push(order.shift());
+      if (last < 0) { order.splice(order.indexOf(CLASSIC), 1); order.unshift(CLASSIC); }
+    }
+    ruleIdx = order.shift();
+    return RULES[ruleIdx];
+  }
+
+  // Steps per second as a function of run time.
+  function stepRate(el) {
+    if (ruleIdx === CLASSIC) return 500 + 700 * smooth((el - 20000) / 25000);
+    return 3000 + 21000 * smooth(el / 20000);
+  }
+
+  function makeLut(states) {
+    var h = HUES[hueIdx]; hueIdx = (hueIdx + 1) % HUES.length;
+    var A = h[0], B = h[1];
+    var L = new Uint8ClampedArray(states * 3);
+    L[0] = 5; L[1] = 5; L[2] = 9;
+    for (var s = 1; s < states; s++) {
+      var t = states === 2 ? 0.55 : (s - 1) / (states - 2);
+      t = Math.pow(t, 0.8);
+      L[s * 3] = A[0] + (B[0] - A[0]) * t;
+      L[s * 3 + 1] = A[1] + (B[1] - A[1]) * t;
+      L[s * 3 + 2] = A[2] + (B[2] - A[2]) * t;
+    }
+    return L;
+  }
+
+  function newRun(now) {
+    var rule = nextRule(), num;
+    if (ruleIdx === CLASSIC) num = Math.random() < 0.25 ? 2 : 1;
+    else num = 2 + Math.floor(Math.random() * 3);
+    sim = new Vants(cols, rows, rule, num, 0);
+    if (ruleIdx === CLASSIC) {
+      // Start in the middle third so the chaotic blob sits on screen, and
+      // put a second vant half a torus away from the first.
+      sim.vx[0] = Math.floor(cols * (0.33 + 0.34 * Math.random()));
+      sim.vy[0] = Math.floor(rows * (0.33 + 0.34 * Math.random()));
+      if (num === 2) { sim.vx[1] = (sim.vx[0] + (cols >> 1)) % cols; sim.vy[1] = (sim.vy[0] + (rows >> 1)) % rows; }
+    }
+    lut = makeLut(sim.states);
+    if (trailctx) trailctx.clearRect(0, 0, trail.width, trail.height);
+    runStart = now; acc = 0;
+  }
+
+  function init() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    if (W === 0 || H === 0) { canvas.width = 0; canvas.height = 0; return; }
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    var cell = Math.max(MIN_CELL, W / MAX_COLS, H / MAX_ROWS);
+    var ncols = Math.max(16, Math.floor(W / cell));
+    var nrows = Math.max(16, Math.floor(H / cell));
+    if (!off) { off = document.createElement("canvas"); offctx = off.getContext("2d"); }
+    if (!trail) { trail = document.createElement("canvas"); trailctx = trail.getContext("2d"); }
+    trail.width = canvas.width; trail.height = canvas.height;
+    if (ncols !== cols || nrows !== rows || !sim) {
+      cols = ncols; rows = nrows;
+      off.width = cols; off.height = rows;
+      img = offctx.createImageData(cols, rows);
+      pix = img.data;
+      for (var i = 3; i < pix.length; i += 4) pix[i] = 255;
+      newRun(performance.now());
+      phase = 'in'; phaseT0 = performance.now(); fade = 0;
+    }
+  }
+
+  function render() {
+    var grid = sim.grid, n = cols * rows;
+    for (var i = 0, p = 0; i < n; i++, p += 4) {
+      var q = grid[i] * 3;
+      pix[p] = lut[q]; pix[p + 1] = lut[q + 1]; pix[p + 2] = lut[q + 2];
+    }
+    offctx.putImageData(img, 0, 0);
+    var cw = canvas.width / cols, ch = canvas.height / rows;
+
+    // Trails: decay, then stamp each vant.
+    trailctx.globalCompositeOperation = "destination-out";
+    trailctx.fillStyle = "rgba(0,0,0,0.14)";
+    trailctx.fillRect(0, 0, trail.width, trail.height);
+    trailctx.globalCompositeOperation = "source-over";
+    var r = Math.max(cw, ch);
+    for (var j = 0; j < sim.num; j++) {
+      var x = (sim.vx[j] + 0.5) * cw, y = (sim.vy[j] + 0.5) * ch;
+      trailctx.fillStyle = "rgba(255,255,255,0.35)";
+      trailctx.beginPath(); trailctx.arc(x, y, r * 1.6, 0, 6.2832); trailctx.fill();
+      trailctx.fillStyle = "rgba(255,255,255,0.95)";
+      trailctx.beginPath(); trailctx.arc(x, y, r * 0.7, 0, 6.2832); trailctx.fill();
+    }
+
+    ctx.globalCompositeOperation = "source-over";
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(off, 0, 0, cols, rows, 0, 0, canvas.width, canvas.height);
+    ctx.globalCompositeOperation = "lighter";
+    ctx.drawImage(trail, 0, 0);
+    ctx.globalCompositeOperation = "source-over";
+    if (fade < 1) {
+      ctx.fillStyle = "rgba(0,0,0," + (1 - fade).toFixed(3) + ")";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  function smooth(u) { u = Math.max(0, Math.min(1, u)); return u * u * (3 - 2 * u); }
+
+  var lastT = 0;
+  function loop(now) {
+    window.requestAnimationFrame(loop);
+    if (done) { var d = now - lastT; lastT = now; runStart += d; phaseT0 += d; return; }
+    var dt = Math.min(100, now - lastT); lastT = now;
+    if (canvas.width === 0 || canvas.clientWidth !== W || canvas.clientHeight !== H) { init(); return; }
+
+    var el = now - runStart;
+    acc += dt * stepRate(el) / 1000;
+    var steps = Math.min(MAX_STEPS_FRAME, acc | 0);
+    acc -= steps;
+    if (phase === 'run') {
+      if (steps) sim.step(steps);
+      if (el > RUN_LIMIT || sim.nonzero > FILL_LIMIT * cols * rows) { phase = 'out'; phaseT0 = now; }
+    } else if (phase === 'out') {
+      if (steps) sim.step(steps >> 1);
+      var u = (now - phaseT0) / FADE_OUT;
+      fade = 1 - smooth(u);
+      if (u >= 1) { newRun(now); phase = 'in'; phaseT0 = now; fade = 0; }
+    } else {
+      if (steps) sim.step(steps);
+      var v = (now - phaseT0) / FADE_IN;
+      fade = smooth(v);
+      if (v >= 1) { phase = 'run'; fade = 1; }
+    }
+    render();
+  }
+
+  window.onclick = function() { done = !done; };
+  var rt;
+  window.onresize = function() { clearTimeout(rt); rt = setTimeout(init, 150); };
+  init();
+  lastT = performance.now();
+  window.requestAnimationFrame(loop);
+};
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>

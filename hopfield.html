@@ -1,0 +1,348 @@
+<!DOCTYPE html><html><head>
+<title>hopfield</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  hopfield - associative memory, from "The Computational Beauty of
+//  Nature" (src/assoc.c; src/hopfield.c is the continuous task-assignment
+//  network and is only the namesake here).
+//
+//  The network is exactly assoc.c's McCulloch-Pitts feedback net:
+//    training  w[i][k] += xi_i * xi_k for every stored bipolar pattern
+//              (self-connections included, as in the C), then w /= N,
+//              bias b[i] = -0.5 * sum_k w[i][k];
+//    recall    pick a random neuron, x = sum_k y_k w[i][k],
+//              y_i = (x - b_i > 0) ? 1 : -1   (asynchronous, random order).
+//  assoc.c's pruning options (-local, -cut, -pprob) are all at their
+//  defaults (off): every weight is used.
+//
+//  Modernization: the stored patterns are not PBM files but ten 64x64
+//  "emblems" built procedurally from a seeded random generator: a smooth
+//  random field (white noise box-blurred two or three times) on one
+//  32x32 quadrant, mirrored four-fold (left/right, top/bottom) or
+//  eight-fold (the diagonal too), then thresholded at its median so each
+//  pattern is exactly half on / half off (balanced patterns keep the
+//  Hebbian cross-talk low and make the bias vanish, which is what
+//  assoc.c assumes).  Candidates are generated in a fixed order and one
+//  is kept only if its overlap with every pattern already accepted is at
+//  most 0.15 in magnitude, so the ten memories are mutually nearly
+//  orthogonal.  They read as symmetric sigils / mandalas rather than as
+//  letters (an earlier version stored bold glyphs, which the author read
+//  as "Greek symbols").  With this set the network recalls every memory
+//  from 40% random flips plus a noise-filled occluding block in 50/50
+//  headless trials each (checked with the identical generator and seed).
+//
+//  Loop: the recovered pattern holds for a few seconds; then, over about
+//  two seconds, cells in random order dissolve into a heavily corrupted
+//  version of the NEXT memory (40% flips plus an occluding block, which
+//  looks like noise); the moment the dissolve completes, the asynchronous
+//  recall dynamics start from that noisy state with no pause, 40 neuron
+//  updates per frame ramping to 180, so the memory is seen crystallizing
+//  out of the noise over about three seconds (each flip sparkles).  The
+//  corrupted state is never shown as a separate step; the sequence is
+//  hold -> dissolve -> recall -> hold, with nothing in between.
+//
+//  Drawing: the grid is written one cell = RxR pixels into an ImageData
+//  (a soft rounded-square kernel, no gutters), R chosen so the offscreen
+//  image is about half the on-screen resolution, then upscaled with
+//  smoothing to a square whose side is 90% of the viewport's shorter
+//  side (computed in CSS pixels, then multiplied by devicePixelRatio for
+//  the backing store).  On = warm off-white, off = very dark blue-black.
+//  A cell that just flipped flashes a little brighter and decays over
+//  ~10 frames, so recall is seen as sparkle running through the pattern.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+window.onload = function() {
+
+  var canvas = document.getElementById("viewport");
+  var ctx = canvas.getContext("2d");
+  var done = 0;
+
+  var S = 64, N = S * S, H = S >> 1, NPAT = 10;
+  var W = new Float32Array(N * N);
+  var bias = new Float32Array(N);
+  var y = new Int8Array(N);           // activations, -1 / +1
+  var disp = new Float32Array(N);     // displayed value, eased toward y
+  var patterns = [];
+  var flash = new Float32Array(N);    // recent-flip glow per cell, decays
+
+  // ---- Emblem patterns (seeded, so the verified set is what is shown). --
+
+  var seed = 7;
+  function srand() {                  // mulberry32
+    seed = seed + 0x6D2B79F5 | 0;
+    var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  }
+
+  // Median split: the half of the cells with the largest v become +1.
+  function balanced(v) {
+    var idx = new Array(N);
+    for (var k = 0; k < N; k++) idx[k] = k;
+    idx.sort(function(a, b) { return v[a] - v[b]; });
+    var p = new Int8Array(N);
+    for (var k = 0; k < N; k++) p[idx[k]] = k < N / 2 ? -1 : 1;   // exactly balanced
+    return p;
+  }
+
+  // One emblem: blurred noise on a quadrant, mirrored 4- or 8-fold.
+  function emblem(sym) {
+    var f = new Float64Array(H * H), g = new Float64Array(H * H);
+    for (var k = 0; k < H * H; k++) f[k] = srand() - 0.5;
+    var passes = 2 + Math.floor(srand() * 2), rad = 1 + Math.floor(srand() * 2);
+    for (var p = 0; p < passes; p++) {
+      for (var i = 0; i < H; i++)
+        for (var j = 0; j < H; j++) {
+          var s = 0, c = 0;
+          for (var di = -rad; di <= rad; di++)
+            for (var dj = -rad; dj <= rad; dj++) {
+              var ii = i + di, jj = j + dj;
+              if (ii < 0 || jj < 0 || ii >= H || jj >= H) continue;
+              s += f[ii * H + jj]; c++;
+            }
+          g[i * H + j] = s / c;
+        }
+      var t = f; f = g; g = t;
+    }
+    var v = new Float64Array(N);
+    for (var i = 0; i < S; i++)
+      for (var j = 0; j < S; j++) {
+        var qi = i < H ? H - 1 - i : i - H, qj = j < H ? H - 1 - j : j - H;   // distance from centre
+        var val;
+        if (sym === 8) { var a = Math.max(qi, qj), b = Math.min(qi, qj); val = f[a * H + b]; }
+        else val = f[qi * H + qj];
+        v[i * S + j] = val + (((i * 7919 + j * 104729) % 97) - 48) * 1e-7;    // tie-break
+      }
+    return balanced(v);
+  }
+
+  function overlapOf(a, b) {
+    var s = 0;
+    for (var k = 0; k < N; k++) s += a[k] * b[k];
+    return s / N;
+  }
+
+  // Accept candidates in generator order; reject any that correlates
+  // more than 0.15 with an accepted one.
+  (function buildPatterns() {
+    var tries = 0;
+    while (patterns.length < NPAT && tries < 400) {
+      tries++;
+      var p = emblem(tries % 2 ? 4 : 8), ok = true;
+      for (var q = 0; q < patterns.length; q++)
+        if (Math.abs(overlapOf(p, patterns[q])) > 0.15) { ok = false; break; }
+      if (ok) patterns.push(p);
+    }
+  })();
+
+  // ---- Training (Hebb's rule as assoc.c), chunked over frames. ----------
+
+  var trainSet = null, trainRow = 0;
+
+  function trainStart(set) { trainSet = set; trainRow = 0; }
+
+  function trainChunk(rows) {
+    if (!trainSet) return true;
+    var P = trainSet.length, end = Math.min(N, trainRow + rows);
+    for (var i = trainRow; i < end; i++) {
+      var row = i * N, sum = 0;
+      for (var k = 0; k < N; k++) W[row + k] = 0;
+      for (var p = 0; p < P; p++) {
+        var pat = trainSet[p], si = pat[i];
+        for (var k = 0; k < N; k++) W[row + k] += si * pat[k];
+      }
+      for (var k = 0; k < N; k++) { W[row + k] /= N; sum += W[row + k]; }
+      bias[i] = -0.5 * sum;
+    }
+    trainRow = end;
+    if (trainRow >= N) { trainSet = null; return true; }
+    return false;
+  }
+
+  function trainAll(set) { trainStart(set); while (!trainChunk(N)) {} }
+
+  // ---- Recall (asynchronous, random neuron, as assoc.c). ----------------
+
+  function updateOne() {
+    var i = (Math.random() * N) | 0;
+    var row = i * N, x = 0;
+    for (var k = 0; k < N; k++) x += y[k] * W[row + k];
+    var ny = x - bias[i] > 0 ? 1 : -1;
+    var changed = ny !== y[i];
+    y[i] = ny;
+    if (changed) flash[i] = 1;
+    return changed;
+  }
+
+  function overlap(pat) { return overlapOf(y, pat); }
+
+  // Corrupted copy of pat into out: random flips plus an occluding block
+  // (~35% of the side, random place) filled with noise (a solid block
+  // would bias recall toward whichever memory is blank there).
+  function corruptInto(out, pat, flip) {
+    for (var k = 0; k < N; k++) out[k] = Math.random() < flip ? -pat[k] : pat[k];
+    var bs = Math.floor(S * (0.3 + Math.random() * 0.12));
+    var bi = Math.floor(Math.random() * (S - bs)), bj = Math.floor(Math.random() * (S - bs));
+    for (var i = bi; i < bi + bs; i++)
+      for (var j = bj; j < bj + bs; j++) out[i * S + j] = Math.random() < 0.5 ? 1 : -1;
+  }
+  function corrupt(pat, flip) { corruptInto(y, pat, flip); }
+
+  // ---- Timeline. ---------------------------------------------------------
+
+  // phases: 2 recall, 3 hold, 4 dissolve (into the corrupted next target)
+  var phase = 4, t0 = 0, cycle = 0, target = 0;
+  var order = [], oi = 0, stable = 0;
+  var PH = { recallMax: 7000, hold: 3600, dissolve: 2000 };
+  var next = new Int8Array(N);        // the corrupted next memory
+  var when = new Float32Array(N);     // per-cell dissolve time in [0, 1)
+  var dissolved = new Uint8Array(N);
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  function nextTarget() {
+    if (oi >= order.length) { order = shuffle(patterns.map(function(_, i) { return i; })); oi = 0; }
+    return order[oi++];
+  }
+
+  // Choose the next memory, prepare its corrupted version and the random
+  // order in which cells will take it over, and enter the dissolve.
+  function startDissolve(now) {
+    cycle++;
+    target = nextTarget();
+    corruptInto(next, patterns[target], 0.35 + Math.random() * 0.05);
+    for (var k = 0; k < N; k++) { when[k] = Math.random() * 0.9; dissolved[k] = 0; }
+    phase = 4; t0 = now;
+  }
+
+  // ---- Rendering. --------------------------------------------------------
+
+  var CW, CH, dpr, side, ox, oy;
+  var R = 0, GS = 0, gcv, gctx, gimg, gpix, KW;
+  var OFF = [9, 11, 20], ON = [255, 240, 214], FL = [70, 80, 120];
+
+  function init() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    CW = canvas.clientWidth; CH = canvas.clientHeight;
+    canvas.width = Math.floor(CW * dpr); canvas.height = Math.floor(CH * dpr);
+    // 90% of the shorter side, in CSS pixels, then to the backing store.
+    var sideCss = Math.min(CW, CH) * 0.9;
+    side = Math.round(sideCss * dpr);
+    ox = Math.round((canvas.width - side) / 2); oy = Math.round((canvas.height - side) / 2);
+    // Cell size in the offscreen image: about half the on-screen cell.
+    var r = Math.max(3, Math.min(16, Math.round(side / S / 2)));
+    if (r !== R) {
+      R = r; GS = S * R;
+      gcv = gcv || document.createElement("canvas");
+      gcv.width = GS; gcv.height = GS;
+      gctx = gcv.getContext("2d");
+      gimg = gctx.createImageData(GS, GS); gpix = gimg.data;
+      for (var q = 3; q < gpix.length; q += 4) gpix[q] = 255;
+      // Rounded-square kernel: edge pixels dimmer, corners dimmest.
+      var K1 = new Float32Array(R);
+      for (var i = 0; i < R; i++) K1[i] = 0.65 + 0.35 * Math.min(1, Math.min(i, R - 1 - i));
+      KW = new Float32Array(R * R);
+      for (var i = 0; i < R; i++) for (var j = 0; j < R; j++) KW[i * R + j] = K1[i] * K1[j];
+    }
+    ctx.fillStyle = "rgb(" + OFF[0] + "," + OFF[1] + "," + OFF[2] + ")";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  function draw() {
+    var o0 = OFF[0], o1 = OFF[1], o2 = OFF[2];
+    var d0 = ON[0] - o0, d1 = ON[1] - o1, d2 = ON[2] - o2;
+    var stride = GS * 4;
+    for (var i = 0, k = 0; i < S; i++) {
+      for (var j = 0; j < S; j++, k++) {
+        var v = (disp[k] + 1) * 0.5, vv = v * v * (0.4 + 0.6 * v), f = flash[k];
+        var c0 = d0 * vv + FL[0] * f, c1 = d1 * vv + FL[1] * f, c2 = d2 * vv + FL[2] * f;
+        var base = (i * R * GS + j * R) * 4;
+        for (var r = 0; r < R; r++) {
+          var p = base + r * stride;
+          for (var q = 0; q < R; q++, p += 4) {
+            var w = KW[r * R + q];
+            gpix[p] = o0 + c0 * w; gpix[p + 1] = o1 + c1 * w; gpix[p + 2] = o2 + c2 * w;
+          }
+        }
+      }
+    }
+    gctx.putImageData(gimg, 0, 0);
+    ctx.fillStyle = "rgb(" + o0 + "," + o1 + "," + o2 + ")";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(gcv, 0, 0, GS, GS, ox, oy, side, side);
+  }
+
+  var lastT = 0;
+  function loop(now) {
+    window.requestAnimationFrame(loop);
+    if (done) { t0 += now - lastT; lastT = now; return; }
+    lastT = now;
+    if (canvas.width === 0 || canvas.clientWidth !== CW || canvas.clientHeight !== CH) { init(); return; }
+    var el = now - t0;
+
+    if (phase === 2) {                          // recall, a few dozen updates per frame
+      var K = 40 + Math.min(140, el * 0.04);   // 40/frame ramping to 180/frame by 3.5 s
+      var ch = 0;
+      for (var q = 0; q < K; q++) if (updateOne()) ch++;
+      stable = ch ? 0 : stable + K;
+      if (stable > 2.5 * N || el > PH.recallMax) { phase = 3; t0 = now; }
+    } else if (phase === 3) {                   // hold on the recovered pattern
+      if (el > PH.hold) startDissolve(now);
+    } else if (phase === 4) {                   // dissolve into the corrupted next memory
+      trainChunk(48);                           // (first cycle only: initial Hebb training)
+      var u = el / PH.dissolve;
+      for (var k = 0; k < N; k++) {
+        if (dissolved[k] || when[k] > u) continue;
+        dissolved[k] = 1;
+        if (next[k] !== y[k]) { y[k] = next[k]; flash[k] = 0.5; }
+      }
+      if (u >= 1) {                             // recall starts at once, no pause
+        trainChunk(N);
+        phase = 2; t0 = now; stable = 0;
+      }
+    }
+
+    // Ease displayed values toward the activations; decay the flip glow.
+    var rate = phase === 4 ? 0.35 : 0.22;
+    for (var k = 0; k < N; k++) { disp[k] += (y[k] - disp[k]) * rate; flash[k] *= 0.85; }
+
+    draw();
+  }
+
+  window.onclick = function() { done = !done; };
+  var rt;
+  window.onresize = function() { clearTimeout(rt); rt = setTimeout(init, 150); };
+  init();
+  // Training is chunked over the first dissolve's frames (and finished
+  // synchronously if the dissolve ends first).
+  trainStart(patterns);
+  for (var k = 0; k < N; k++) { y[k] = Math.random() < 0.5 ? 1 : -1; disp[k] = y[k]; }
+  order = shuffle(patterns.map(function(_, i) { return i; }));
+  cycle = 0; startDissolve(performance.now());
+  lastT = performance.now();
+  window.requestAnimationFrame(loop);
+
+  window.__cbofn = {
+    S: S, N: N, patterns: patterns, y: y, W: W, bias: bias, next: next,
+    trainAll: trainAll, corrupt: corrupt, updateOne: updateOne, overlap: overlap, overlapOf: overlapOf,
+    flash: flash, disp: disp, loop: loop,
+    geometry: function() { return { dpr: dpr, CW: CW, CH: CH, w: canvas.width, h: canvas.height, side: side, ox: ox, oy: oy, R: R, GS: GS }; },
+    state: function() { return { phase: phase, target: target, cycle: cycle }; }
+  };
+}
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>

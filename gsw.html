@@ -1,0 +1,326 @@
+<!DOCTYPE html><html><head>
+<title>gsw</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  gsw - grass, sheep and wolves: a three species individual-based
+//  ecosystem, from "The Computational Beauty of Nature" (src/gsw.c).
+//
+//  update_plants(), update_herbs() and update_carns() are ported line for
+//  line: synchronous plant growth using the NEWPLANT marker so plants
+//  born this step are not counted as neighbors, the empty-cell energy
+//  field counting how long a cell has been bare (Pt), the per-step mark
+//  flag so a creature that moves right or down is not updated twice in
+//  one sweep, the neighbor order NW N NE W E SW S SE scanned from a
+//  random start, eating (energy + Ep for a sheep, + Eh for a wolf),
+//  reproduction by splitting energy in half when it exceeds Eh / Ec, a
+//  wolf stepping onto grass leaving the grass behind, and even the
+//  "break" in the death branch that ends the row sweep when a creature
+//  starves.  main()'s bookkeeping is kept too: marks are cleared before
+//  each step, populations are counted, and with noext on a lone sheep or
+//  wolf is dropped at a random cell whenever the species has vanished.
+//
+//  Curated parameters are the gsw.c defaults: Ep 15, Eh 50, Ec 200, Ch 5,
+//  Cc 5, pmin 3, pmax 8, Pt 0, noext on.  The grid is the viewport aspect
+//  at ~6 css px per cell, capped at 200x140 cells, and the initial
+//  populations are the gsw.c densities (50% grass, 5% sheep, 0.5%
+//  wolves) applied to that area.  One update per frame; the boom-bust
+//  waves (grass carpet -> sheep front eats it bare -> wolves follow the
+//  sheep -> everything starves -> grass returns) sweep across the screen
+//  on a scale of seconds.  Grass is dim green, sheep pale white, wolves
+//  red-orange; the frame is drawn over a translucent black wash so
+//  motion leaves a short afterglow.
+//
+//  Modernization beyond the C source: rendering only, plus a graceful
+//  restart: if grass ever vanishes (nothing can bring it back, since new
+//  grass needs pmin neighbors) the picture fades out and a fresh world is
+//  seeded.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+var GSW = (function() {
+
+  var EMPTY = 0, PLANT = 1, HERB = 2, CARN = 3, NEWPLANT = 4;
+  var neighs = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
+
+  function make(width, height, opts, rng) {
+    rng = rng || Math.random;
+    opts = opts || {};
+    var Ep = 15, Eh = 50, Ec = 200, pmin = 3, pmax = 8, Cc = 5, Ch = 5, Pt = 0, noext = 1;
+    var n = width * height;
+    var type = new Uint8Array(n), mark = new Uint8Array(n), energy = new Int32Array(n);
+    var plants = 0, herbs = 0, carns = 0, t = 0;
+
+    function rr(lo, hi) { return Math.floor(rng() * (hi - lo) + lo); }
+
+    function place(count, ty, e) {
+      for (var i = 0; i < count; i++) {
+        var j, k;
+        do { j = rr(0, height); k = rr(0, width); } while (type[j * width + k] !== EMPTY);
+        type[j * width + k] = ty; energy[j * width + k] = e;
+      }
+    }
+    var p0 = opts.plants !== undefined ? opts.plants : Math.round(n * 0.5);
+    var h0 = opts.herbs !== undefined ? opts.herbs : Math.round(n * 0.05);
+    var c0 = opts.carns !== undefined ? opts.carns : Math.round(n * 0.005);
+    place(p0, PLANT, Pt); place(h0, HERB, Eh); place(c0, CARN, Ec);
+
+    function update_plants() {
+      var i, j, ni, nj, cnt;
+      for (i = 0; i < height; i++)
+        for (j = 0; j < width; j++) {
+          var c = i * width + j;
+          if (type[c] !== EMPTY) continue;
+          cnt = 0;
+          for (ni = -1; ni <= 1; ni++)
+            for (nj = -1; nj <= 1; nj++)
+              if (type[((i + ni + height) % height) * width + ((j + nj + width) % width)] === PLANT) cnt++;
+          if (cnt >= pmin && cnt <= pmax && energy[c] >= Pt) type[c] = NEWPLANT;
+        }
+      for (var c = 0; c < n; c++) {
+        if (type[c] === NEWPLANT) type[c] = PLANT;
+        else if (type[c] === EMPTY) energy[c]++;
+      }
+    }
+
+    function copyCell(dst, src) {
+      type[dst] = type[src]; mark[dst] = mark[src]; energy[dst] = energy[src];
+    }
+
+    function update_herbs() {
+      var i, j, ni, nj, k, r, found, c, d;
+      for (i = 0; i < height; i++)
+        for (j = 0; j < width; j++) {
+          c = i * width + j;
+          if (type[c] !== HERB || mark[c] === 1) continue;
+          mark[c] = 1;
+          energy[c] -= Ch;
+          if (energy[c] <= 0) {
+            type[c] = EMPTY; energy[c] = 0;
+            break;             // as in gsw.c: ends this row's sweep
+          }
+          found = 0; r = rr(0, 8);
+          for (k = 0; k < 8; k++, r = (r + 1) % 8) {
+            ni = (i + neighs[r][0] + height) % height;
+            nj = (j + neighs[r][1] + width) % width;
+            if (type[ni * width + nj] === PLANT) { found = 1; break; }
+          }
+          if (found) {
+            d = ni * width + nj;
+            type[d] = HERB;
+            energy[d] = energy[c] + Ep;
+            mark[d] = 1;
+            if (energy[c] > Eh) {
+              energy[d] = (energy[d] / 2) | 0;
+              copyCell(c, d);
+            } else {
+              type[c] = EMPTY; energy[c] = 0;
+            }
+          } else {
+            r = rr(0, 8);
+            for (k = 0; k < 8; k++, r = (r + 1) % 8) {
+              ni = (i + neighs[r][0] + height) % height;
+              nj = (j + neighs[r][1] + width) % width;
+              d = ni * width + nj;
+              if (type[d] === EMPTY) {
+                copyCell(d, c);
+                type[c] = EMPTY; energy[c] = 0;
+                break;
+              }
+            }
+          }
+        }
+    }
+
+    function update_carns() {
+      var i, j, ni, nj, k, r, found, c, d;
+      for (i = 0; i < height; i++)
+        for (j = 0; j < width; j++) {
+          c = i * width + j;
+          if (type[c] !== CARN || mark[c] === 1) continue;
+          mark[c] = 1;
+          energy[c] -= Cc;
+          if (energy[c] <= 0) {
+            type[c] = EMPTY; energy[c] = 0;
+            break;             // as in gsw.c
+          }
+          found = 0; r = rr(0, 8);
+          for (k = 0; k < 8; k++, r = (r + 1) % 8) {
+            ni = (i + neighs[r][0] + height) % height;
+            nj = (j + neighs[r][1] + width) % width;
+            if (type[ni * width + nj] === HERB) { found = 1; break; }
+          }
+          if (found) {
+            d = ni * width + nj;
+            type[d] = CARN;
+            energy[d] = energy[c] + Eh;
+            mark[d] = 1;
+            if (energy[d] > Ec) {
+              energy[d] = (energy[d] / 2) | 0;
+              copyCell(c, d);
+            } else {
+              type[c] = EMPTY; energy[c] = 0;
+            }
+          } else {
+            r = rr(0, 8);
+            for (k = 0; k < 8; k++, r = (r + 1) % 8) {
+              ni = (i + neighs[r][0] + height) % height;
+              nj = (j + neighs[r][1] + width) % width;
+              d = ni * width + nj;
+              if (type[d] === EMPTY || type[d] === PLANT) {
+                found = type[d];
+                copyCell(d, c);
+                type[c] = found;
+                if (found === EMPTY) energy[c] = 0;
+                break;
+              }
+            }
+          }
+        }
+    }
+
+    // One time step of main(): clear marks, count, noext, then the three
+    // updates.
+    function step() {
+      plants = herbs = carns = 0;
+      for (var c = 0; c < n; c++) {
+        mark[c] = 0;
+        var ty = type[c];
+        if (ty === PLANT) plants++; else if (ty === HERB) herbs++; else if (ty === CARN) carns++;
+      }
+      if (noext) {
+        if (herbs === 0) {
+          var c1 = rr(0, height) * width + rr(0, width);
+          type[c1] = HERB; energy[c1] = Eh; herbs = 1;
+        }
+        if (carns === 0) {
+          var c2 = rr(0, height) * width + rr(0, width);
+          type[c2] = CARN; energy[c2] = Ec; carns = 1;
+        }
+      }
+      update_plants();
+      update_herbs();
+      update_carns();
+      t++;
+    }
+
+    return { width: width, height: height, type: type, energy: energy, step: step,
+             get plants() { return plants; }, get herbs() { return herbs; },
+             get carns() { return carns; }, get t() { return t; } };
+  }
+
+  return { make: make, EMPTY: EMPTY, PLANT: PLANT, HERB: HERB, CARN: CARN };
+})();
+
+if (typeof window !== "undefined") window.onload = function() {
+
+  var canvas = document.getElementById("viewport");
+  var ctx = canvas.getContext("2d");
+  var off = document.createElement("canvas");
+  var octx = off.getContext("2d");
+  var done = 0;
+  var W, H, cw, ch, sim, img, pix;
+  var phase = 0, t0 = 0, FADEMS = 2500, FADEIN = 2000, born = 0;
+
+  // Palette (r, g, b, a) per cell type.
+  var COL = [
+    [7, 10, 9, 255],          // bare ground: near black
+    [26, 62, 36, 255],        // grass: dim desaturated green
+    [7, 10, 9, 255],          // sheep: drawn as dots, ground here
+    [7, 10, 9, 255]           // wolves: drawn as dots, ground here
+  ];
+
+  function init() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    if (canvas.width === 0 || canvas.height === 0) return;
+    cw = Math.max(20, Math.min(240, Math.round(W / 5)));
+    ch = Math.max(20, Math.min(160, Math.round(H / 5)));
+    off.width = cw; off.height = ch;
+    img = octx.createImageData(cw, ch); pix = img.data;
+    ctx.fillStyle = "#000"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    newWorld();
+  }
+
+  function newWorld() {
+    sim = GSW.make(cw, ch);
+    phase = 0; born = performance.now();
+  }
+
+  var tex = null;
+  function render() {
+    var type = sim.type, n = cw * ch;
+    if (!tex || tex.length !== n) {
+      // Static per-cell texture so grass reads as a field, not a flat fill.
+      tex = new Float32Array(n);
+      for (var i = 0; i < n; i++) tex[i] = 0.7 + 0.3 * Math.random();
+    }
+    for (var c = 0, p = 0; c < n; c++, p += 4) {
+      var ty = type[c], k = COL[ty], f = ty === 1 ? tex[c] : 1;
+      pix[p] = k[0] * f; pix[p + 1] = k[1] * f; pix[p + 2] = k[2] * f; pix[p + 3] = k[3];
+    }
+    octx.putImageData(img, 0, 0);
+    ctx.globalCompositeOperation = "source-over";
+    // Reviewer's change: crisp opaque cells (the translucent afterglow wash
+    // smeared the herds into grey fog).
+    // Grass and bare ground as a softly upscaled image; animals drawn on
+    // top as round dots (author's note: something besides squares).
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(off, 0, 0, cw, ch, 0, 0, canvas.width, canvas.height);
+    var sx = canvas.width / cw, sy = canvas.height / ch, r = Math.min(sx, sy) * 0.42;
+    ctx.fillStyle = "rgb(222,226,214)";
+    ctx.beginPath();
+    for (var c = 0; c < n; c++) if (type[c] === 2) {
+      var x = ((c % cw) + 0.5) * sx, y = (((c / cw) | 0) + 0.5) * sy;
+      ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, 6.2832);
+    }
+    ctx.fill();
+    ctx.fillStyle = "rgb(236,88,40)";
+    ctx.beginPath();
+    for (var c = 0; c < n; c++) if (type[c] === 3) {
+      var x = ((c % cw) + 0.5) * sx, y = (((c / cw) | 0) + 0.5) * sy;
+      ctx.moveTo(x + r * 1.15, y); ctx.arc(x, y, r * 1.15, 0, 6.2832);
+    }
+    ctx.fill();
+  }
+
+  var lastT = 0;
+  function loop(now) {
+    window.requestAnimationFrame(loop);
+    if (done) { t0 += now - lastT; born += now - lastT; lastT = now; return; }
+    lastT = now;
+    if (canvas.width === 0 || canvas.clientWidth !== W || canvas.clientHeight !== H) { init(); return; }
+    if (!sim) return;
+    if (phase === 0) {
+      sim.step();
+      render();
+      var fi = (now - born) / FADEIN;
+      if (fi < 1) {
+        ctx.fillStyle = "rgba(0,0,0," + (1 - fi * fi) + ")";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+      if (sim.plants === 0 && sim.t > 10) { phase = 1; t0 = now; }
+    } else {
+      var u = Math.min(1, (now - t0) / FADEMS);
+      ctx.fillStyle = "rgba(0,0,0,0.12)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      if (u >= 1) newWorld();
+    }
+  }
+
+  window.onclick = function() { done = !done; };
+  var rt;
+  window.onresize = function() { clearTimeout(rt); rt = setTimeout(init, 150); };
+  init();
+  lastT = performance.now();
+  window.requestAnimationFrame(loop);
+}
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>

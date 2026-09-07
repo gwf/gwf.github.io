@@ -1,0 +1,323 @@
+<!DOCTYPE html><html><head>
+<title>boids</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  boids - a flock of android birds from Brooklyn, from "The Computational
+//  Beauty of Nature" (src/boids.c).
+//
+//  compute_new_heading() is ported verbatim: for every other boid pick the
+//  nearest toroidal image, skip it if it is beyond every rule radius or
+//  outside the viewing angle, then accumulate the four rules (centering,
+//  copying, avoidance with 1/d weighting, visual avoidance with the
+//  orthogonal dodge vector), drop centering when fewer than two boids are
+//  in range ("it makes you look aggressive"), normalize any rule vector
+//  longer than 1, mix with the weights, add wrand noise, blend with the
+//  old velocity by the momentum ddt and enforce the minimum speed minv.
+//  Positions then advance by dt and wrap exactly as in main() (including
+//  the "y >= height - 1" wrap).  All headings are computed before any boid
+//  moves, as in the C program.
+//
+//  Curated parameters.  The simulation runs in the C program's pixel
+//  units: the world is 480 high (boids.c default) and as wide as the
+//  viewport aspect requires (640 on a 4:3 screen), so every radius means
+//  what it means in boids.c.  num = 220 boids instead of 20 so the screen
+//  is populated; a spatial hash (cell = largest active radius) makes the
+//  neighbor search O(n) instead of O(n^2).  The demo starts with the
+//  boids.c defaults (angle 270, vangle 90, rcopy 80, rcent 30, rviso 40,
+//  rvoid 15, wcopy .2, wcent .4, wviso .8, wvoid 1, dt 3, ddt .95,
+//  minv .5) and every ~40 s eases (8 s, smoothstep) into one of the
+//  regimes hinted at in the boids.c RULES section: gnats (short radii,
+//  almost no copying, wrand = 1 so the swarm jitters in loose clouds
+//  instead of aligning), wolves fighting over the center (wvoid = 0,
+//  rcent 110 / wcent 1, 360 degree vision; packs form, collapse and
+//  reform) and fish (rcopy 40, wcopy .6, tight rcent/rvoid: one dense
+//  polarized school).  The regimes were tuned headlessly by measuring
+//  polarization and spatial spread so none of them freezes into a line
+//  or a point; a floor of wrand = 0.06 keeps the default flock from
+//  crystallizing into a static formation.
+//
+//  Modernization beyond the C source: the parameter morphing above; a
+//  guard that skips a neighbor at exactly zero distance (the C code would
+//  divide by zero there); rendering as speed-shaded streaks with a
+//  translucent-black trail instead of undraw/redraw lines.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+var Boids = (function() {
+
+  var REGIMES = [
+    { name: "birds",  angle: 270, vangle: 90, rcopy: 80, rcent: 30, rviso: 40, rvoid: 15,
+      wcopy: 0.2,  wcent: 0.4, wviso: 0.8, wvoid: 1.0, wrand: 0.06 },
+    { name: "gnats",  angle: 330, vangle: 90, rcopy: 25, rcent: 40, rviso: 15, rvoid: 6,
+      wcopy: 0.05, wcent: 1.0, wviso: 0.2, wvoid: 1.0, wrand: 1.0 },
+    { name: "wolves", angle: 360, vangle: 60, rcopy: 60, rcent: 110, rviso: 30, rvoid: 12,
+      wcopy: 0.2,  wcent: 1.0, wviso: 0.6, wvoid: 0.0, wrand: 0.12 },
+    { name: "fish",   angle: 270, vangle: 90, rcopy: 40, rcent: 30, rviso: 25, rvoid: 8,
+      wcopy: 0.6,  wcent: 0.6, wviso: 0.6, wvoid: 1.0, wrand: 0.12 }
+  ];
+  var KEYS = ["angle", "vangle", "rcopy", "rcent", "rviso", "rvoid",
+              "wcopy", "wcent", "wviso", "wvoid", "wrand"];
+
+  function make(width, height, num, rng) {
+    rng = rng || Math.random;
+    var xp = new Float64Array(num), yp = new Float64Array(num);
+    var xv = new Float64Array(num), yv = new Float64Array(num);
+    var xnv = new Float64Array(num), ynv = new Float64Array(num);
+    var P = {};
+    for (var k = 0; k < KEYS.length; k++) P[KEYS[k]] = REGIMES[0][KEYS[k]];
+    var dt = 3.0, ddt = 0.95, minv = 0.5;
+
+    // Spatial hash.
+    var head = null, next = new Int32Array(num), cols = 0, rows = 0, cs = 1;
+
+    for (var i = 0; i < num; i++) {
+      xp[i] = Math.floor(rng() * width);
+      yp[i] = Math.floor(rng() * height);
+      var a = rng() * 2 - 1, b = rng() * 2 - 1, l = Math.sqrt(a * a + b * b);
+      if (l === 0) { a = 1; l = 1; }
+      xv[i] = a / l; yv[i] = b / l;
+    }
+
+    function hash() {
+      var maxr = Math.max(P.rviso, P.rcopy, P.rcent, P.rvoid, 1);
+      cs = maxr;
+      cols = Math.floor(width / cs); if (cols < 3) cols = 1;
+      rows = Math.floor(height / cs); if (rows < 3) rows = 1;
+      if (!head || head.length !== cols * rows) head = new Int32Array(cols * rows);
+      head.fill(-1);
+      for (var i = 0; i < num; i++) {
+        var cx = Math.floor(xp[i] / width * cols), cy = Math.floor(yp[i] / height * rows);
+        if (cx < 0) cx = 0; else if (cx >= cols) cx = cols - 1;
+        if (cy < 0) cy = 0; else if (cy >= rows) cy = rows - 1;
+        var h = cy * cols + cx;
+        next[i] = head[h]; head[h] = i;
+      }
+    }
+
+    function compute_new_heading(which) {
+      var numcent = 0;
+      var xa = 0, ya = 0, xb = 0, yb = 0, xc = 0, yc = 0, xd = 0, yd = 0;
+      var maxr = Math.max(P.rviso, P.rcopy, P.rcent, P.rvoid);
+      var cosangle = Math.cos(P.angle * Math.PI / 180 / 2);
+      var cosvangle = Math.cos(P.vangle * Math.PI / 180 / 2);
+      var px = xp[which], py = yp[which], vx = xv[which], vy = yv[which];
+      var vlen = Math.sqrt(vx * vx + vy * vy);
+      var hw = width / 2, hh = height / 2;
+      var cx0 = Math.floor(px / width * cols), cy0 = Math.floor(py / height * rows);
+
+      for (var oy = -1; oy <= 1; oy++) {
+        var cy = cy0 + oy; if (cy < 0) cy += rows; else if (cy >= rows) cy -= rows;
+        for (var ox = -1; ox <= 1; ox++) {
+          if (rows < 3 && oy !== 0) continue;
+          if (cols < 3 && ox !== 0) continue;
+          var cx = cx0 + ox; if (cx < 0) cx += cols; else if (cx >= cols) cx -= cols;
+          for (var i = head[cy * cols + cx]; i !== -1; i = next[i]) {
+            if (i === which) continue;
+
+            // Nearest toroidal image of boid i (equivalent to the nine
+            // displacement search in boids.c since maxr < width/2).
+            var mx = xp[i], my = yp[i];
+            var xtemp = mx - px, ytemp = my - py;
+            if (xtemp > hw) { xtemp -= width; mx -= width; }
+            else if (xtemp < -hw) { xtemp += width; mx += width; }
+            if (ytemp > hh) { ytemp -= height; my -= height; }
+            else if (ytemp < -hh) { ytemp += height; my += height; }
+            var mindist = Math.sqrt(xtemp * xtemp + ytemp * ytemp);
+            if (mindist > maxr) continue;
+            if (mindist === 0) continue;   // guard (C would divide by zero)
+
+            var costemp = (vx * xtemp + vy * ytemp) / (vlen * mindist);
+            if (costemp < cosangle) continue;
+
+            if (mindist <= P.rcent && mindist > P.rvoid) {
+              xa += mx - px; ya += my - py; numcent++;
+            }
+            if (mindist <= P.rcopy && mindist > P.rvoid) {
+              xb += xv[i]; yb += yv[i];
+            }
+            if (mindist <= P.rvoid) {
+              xtemp = px - mx; ytemp = py - my;
+              var d = 1 / Math.sqrt(xtemp * xtemp + ytemp * ytemp);
+              xc += xtemp * d; yc += ytemp * d;
+            }
+            if (mindist <= P.rviso && cosvangle < costemp) {
+              xtemp = px - mx; ytemp = py - my;
+              var u = 0, v = 0;
+              if (xtemp !== 0 && ytemp !== 0) {
+                var q = (ytemp / xtemp) * (ytemp / xtemp);
+                u = Math.sqrt(q / (1 + q));
+                v = -xtemp * u / ytemp;
+              } else if (xtemp !== 0) u = 1;
+              else if (ytemp !== 0) v = 1;
+              if ((vx * u + vy * v) < 0) { u = -u; v = -v; }
+              u = px - mx + u; v = py - my + v;
+              var dd = Math.sqrt(xtemp * xtemp + ytemp * ytemp);
+              if (dd !== 0) { u /= dd; v /= dd; }
+              xd += u; yd += v;
+            }
+          }
+        }
+      }
+
+      if (numcent < 2) { xa = 0; ya = 0; }
+      var l;
+      l = Math.sqrt(xa * xa + ya * ya); if (l > 1) { xa /= l; ya /= l; }
+      l = Math.sqrt(xb * xb + yb * yb); if (l > 1) { xb /= l; yb /= l; }
+      l = Math.sqrt(xc * xc + yc * yc); if (l > 1) { xc /= l; yc /= l; }
+      l = Math.sqrt(xd * xd + yd * yd); if (l > 1) { xd /= l; yd /= l; }
+
+      var xt = xa * P.wcent + xb * P.wcopy + xc * P.wvoid + xd * P.wviso;
+      var yt = ya * P.wcent + yb * P.wcopy + yc * P.wvoid + yd * P.wviso;
+      if (P.wrand > 0) {
+        xt += (rng() * 2 - 1) * P.wrand;
+        yt += (rng() * 2 - 1) * P.wrand;
+      }
+      var nx = vx * ddt + xt * (1 - ddt), ny = vy * ddt + yt * (1 - ddt);
+      var dl = Math.sqrt(nx * nx + ny * ny);
+      if (dl < minv) {
+        if (dl === 0) { nx = minv; ny = 0; }
+        else { nx *= minv / dl; ny *= minv / dl; }
+      }
+      xnv[which] = nx; ynv[which] = ny;
+    }
+
+    function step() {
+      hash();
+      for (var j = 0; j < num; j++) compute_new_heading(j);
+      for (var j = 0; j < num; j++) {
+        xv[j] = xnv[j]; yv[j] = ynv[j];
+        xp[j] += xv[j] * dt; yp[j] += yv[j] * dt;
+        if (xp[j] < 0) xp[j] += width; else if (xp[j] >= width) xp[j] -= width;
+        if (yp[j] < 0) yp[j] += height; else if (yp[j] >= height - 1) yp[j] -= height;
+      }
+    }
+
+    function setParams(A, B, u) {
+      for (var k = 0; k < KEYS.length; k++) {
+        var key = KEYS[k];
+        P[key] = A[key] + (B[key] - A[key]) * u;
+      }
+    }
+
+    return { xp: xp, yp: yp, xv: xv, yv: yv, num: num, width: width, height: height,
+             P: P, step: step, setParams: setParams };
+  }
+
+  return { make: make, REGIMES: REGIMES };
+})();
+
+if (typeof window !== "undefined") window.onload = function() {
+
+  var canvas = document.getElementById("viewport");
+  var ctx = canvas.getContext("2d");
+  var done = 0;
+  var W, H, scale, sim;
+  var WORLD_H = 480, NUM = 220;
+
+  var HOLD = 40000, MORPH = 8000;
+  var phase = 0, t0 = 0, from = 0, to = 1, order = [], oi = 0;
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  function nextRegime() {
+    if (oi >= order.length) {
+      var last = order.length ? order[order.length - 1] : -1;
+      order = shuffle(Boids.REGIMES.map(function(_, i) { return i; }));
+      if (order[0] === last) order.push(order.shift());
+      oi = 0;
+    }
+    return order[oi++];
+  }
+  function ease(u) { return u * u * (3 - 2 * u); }
+
+  function init() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    if (canvas.width === 0 || canvas.height === 0) return;
+    var worldW = Math.max(200, Math.round(WORLD_H * canvas.width / canvas.height));
+    scale = canvas.height / WORLD_H;
+    var old = sim;
+    sim = Boids.make(worldW, WORLD_H, NUM);
+    if (old) {
+      // Keep the flock through a resize: carry positions over proportionally.
+      for (var i = 0; i < NUM; i++) {
+        sim.xp[i] = old.xp[i] / old.width * worldW;
+        sim.yp[i] = old.yp[i];
+        sim.xv[i] = old.xv[i]; sim.yv[i] = old.yv[i];
+      }
+      for (var k in old.P) sim.P[k] = old.P[k];
+    } else {
+      from = 0; to = nextRegime(); if (to === 0) to = nextRegime();
+      sim.setParams(Boids.REGIMES[0], Boids.REGIMES[0], 0);
+      t0 = performance.now(); phase = 0;
+    }
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  function render() {
+    ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = "rgba(0,0,0,0.16)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.globalCompositeOperation = "lighter";
+    var xp = sim.xp, yp = sim.yp, xv = sim.xv, yv = sim.yv;
+    var L = 9 * scale, Wd = 2.2 * scale;
+    for (var i = 0; i < sim.num; i++) {
+      var vx = xv[i], vy = yv[i], sp = Math.sqrt(vx * vx + vy * vy);
+      var ux = vx / sp, uy = vy / sp;
+      var x = xp[i] * scale, y = yp[i] * scale;
+      // Speed sits at minv = 0.5 most of the time; anything faster glows.
+      var b = Math.max(0, Math.min(1, (sp - 0.5) / 0.35));
+      var lum = 42 + b * 50;
+      ctx.fillStyle = "hsla(200,85%," + lum.toFixed(0) + "%,0.85)";
+      ctx.beginPath();
+      ctx.moveTo(x + ux * L, y + uy * L);
+      ctx.lineTo(x - ux * L * 0.6 - uy * Wd, y - uy * L * 0.6 + ux * Wd);
+      ctx.lineTo(x - ux * L * 1.2, y - uy * L * 1.2);
+      ctx.lineTo(x - ux * L * 0.6 + uy * Wd, y - uy * L * 0.6 - ux * Wd);
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.globalCompositeOperation = "source-over";
+  }
+
+  var lastT = 0;
+  function loop(now) {
+    window.requestAnimationFrame(loop);
+    if (done) { t0 += now - lastT; lastT = now; return; }
+    lastT = now;
+    if (canvas.width === 0 || canvas.clientWidth !== W || canvas.clientHeight !== H) { init(); return; }
+    if (!sim) return;
+    var el = now - t0;
+    if (phase === 0 && el > HOLD) { phase = 1; t0 = now; el = 0; }
+    if (phase === 1) {
+      var u = Math.min(el / MORPH, 1);
+      sim.setParams(Boids.REGIMES[from], Boids.REGIMES[to], ease(u));
+      if (u >= 1) { from = to; to = nextRegime(); phase = 0; t0 = now; }
+    }
+    sim.step();
+    render();
+  }
+
+  window.onclick = function() { done = !done; };
+  var rt;
+  window.onresize = function() { clearTimeout(rt); rt = setTimeout(init, 150); };
+  init();
+  lastT = performance.now();
+  window.requestAnimationFrame(loop);
+}
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>

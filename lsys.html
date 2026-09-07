@@ -1,0 +1,322 @@
+<!DOCTYPE html><html><head>
+<title>lsys</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  lsys - L-systems, from "The Computational Beauty of Nature" (src/lsys.c).
+//
+//  The interpreter is a direct port of compute_figure() in lsys.c: letters
+//  a-z are recursively expanded by their rules down to the given depth,
+//  'f' draws forward, 'g' moves forward, '|' draws a step whose length is
+//  scaled by ds^depth and is not expanded, '+'/'-' turn by da (with an
+//  optional integer multiplier, e.g. "4-"), '[' ']' push and pop the
+//  turtle, and -unoise jitters the heading of every step.
+//
+//  Curated presets are the examples from the lsys.c man page (the weed,
+//  the Koch curve, the Penrose snowflake, the Sierpinski arrowhead) plus a
+//  few classics expressed in the same rule language (bush, plant, tree,
+//  fern, sprig, dragon, Hilbert, Peano, Levy C, Koch island).  Curves that
+//  need two drawing symbols (Gosper, Sierpinski triangle) are out, since
+//  lsys.c draws only 'F' and '|'.
+//
+//  Modernization: each figure GROWS on screen in turtle order, segment by
+//  segment, with line width and color keyed to recursion depth (trunks
+//  thick and dark, tips thin and bright).  Plant-like figures sway: the
+//  whole figure is recomputed every frame with a slowly varying delta
+//  angle, using a seeded PRNG so the noise is coherent from frame to
+//  frame.  When a figure is complete it holds for a while, fades, and the
+//  next preset grows.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+window.onload = function() {
+
+  var canvas = document.getElementById("viewport");
+  var ctx = canvas.getContext("2d");
+  var done = 0;
+
+  // axiom, rules, da (deg), depth, ds, a0 (deg), unoise (rad), sway (deg),
+  // hue, plant-like?
+  var PRESETS = [
+    { name: "weed", axiom: "f", rules: { f: "|[-f]|[+f][-f]f" },
+      da: 20, depth: 5, ds: 1, a0: 0, unoise: 0.06, sway: 1.5, hue: 105,
+      plant: 1, grow: 9000 },
+    { name: "plant", axiom: "x", rules: { x: "f-[[x]+x]+f[+fx]-x", f: "ff" },
+      da: 22.5, depth: 6, ds: 1, a0: 0, unoise: 0.03, sway: 1.2, hue: 85,
+      plant: 1, grow: 9000 },
+    { name: "bush", axiom: "f", rules: { f: "ff-[-f+f+f]+[+f-f-f]" },
+      da: 22.5, depth: 4, ds: 1, a0: 0, unoise: 0.03, sway: 1.5, hue: 130,
+      plant: 1, grow: 9000 },
+    { name: "koch snowflake", axiom: "f++f++f", rules: { f: "f-f++f-f" },
+      da: 60, depth: 5, ds: 1, a0: 90, unoise: 0, sway: 0, hue: 200,
+      plant: 0, grow: 7000 },
+    { name: "penrose snowflake", axiom: "f4-f4-f4-f4-f",
+      rules: { f: "f4-f4-f10-f++f4-f" },
+      da: 18, depth: 4, ds: 1, a0: 90, unoise: 0, sway: 0, hue: 275,
+      plant: 0, grow: 9000 },
+    { name: "sierpinski arrowhead", axiom: "f",
+      rules: { f: "[-g+++f][-g+f][gg--f]", g: "gg" },
+      da: 60, depth: 7, ds: 1, a0: 90, unoise: 0, sway: 0, hue: 30,
+      plant: 0, grow: 8000 },
+    { name: "dragon", axiom: "fx", rules: { x: "x+yf+", y: "-fx-y" },
+      da: 90, depth: 12, ds: 1, a0: 90, unoise: 0, sway: 0, hue: 350,
+      plant: 0, grow: 9000 },
+    { name: "hilbert", axiom: "a",
+      rules: { a: "-bf+afa+fb-", b: "+af-bfb-fa+" },
+      da: 90, depth: 6, ds: 1, a0: 90, unoise: 0, sway: 0, hue: 180,
+      plant: 0, grow: 8000 },
+    { name: "tree", axiom: "f", rules: { f: "f[+f]f[-f][f]" },
+      da: 20, depth: 5, ds: 1, a0: 0, unoise: 0.04, sway: 1.5, hue: 95,
+      plant: 1, grow: 9000 },
+    { name: "fern", axiom: "x", rules: { x: "f[+x][-x]fx", f: "ff" },
+      da: 25.7, depth: 7, ds: 1, a0: 0, unoise: 0.03, sway: 1.0, hue: 115,
+      plant: 1, grow: 9000 },
+    { name: "sprig", axiom: "x", rules: { x: "f[+x]f[-x]+x", f: "ff" },
+      da: 20, depth: 7, ds: 1, a0: 0, unoise: 0.03, sway: 1.2, hue: 75,
+      plant: 1, grow: 9000 },
+    { name: "koch island", axiom: "f-f-f-f", rules: { f: "f-f+f+ff-f-f+f" },
+      da: 90, depth: 4, ds: 1, a0: 90, unoise: 0, sway: 0, hue: 215,
+      plant: 0, grow: 9000 },
+    { name: "levy", axiom: "f", rules: { f: "+f--f+" },
+      da: 45, depth: 13, ds: 1, a0: 90, unoise: 0, sway: 0, hue: 300,
+      plant: 0, grow: 9000 },
+    { name: "peano", axiom: "x", rules: { x: "xfyfx+f+yfxfy-f-xfyfx", y: "yfxfy-f-xfyfx+f+yfxfy" },
+      da: 90, depth: 4, ds: 1, a0: 90, unoise: 0, sway: 0, hue: 195,
+      plant: 0, grow: 8000 }
+  ];
+
+  var HOLD = 6000, FADE = 2500;
+
+  // Seeded PRNG so per-segment noise is stable across frames (mulberry32).
+  function rng(seed) {
+    return function() {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  // ---- Faithful port of compute_figure() from lsys.c -------------------
+  // Turtle state is in closure vars as in the C globals; output goes to
+  // the segs array as [x0, y0, x1, y1, depthIndex].
+  var x, y, a, s, num, rand, nest, maxnest;
+  var segs, nseg;
+  var P, da, unoise;
+  var MAXDEPTH;
+
+  function compute(rule, d) {
+    var i, len = rule.length, sx, sy, sa, ss, c;
+    for (i = 0; i < len; i++) {
+      c = rule.charAt(i);
+      if ((c >= 'a' && c <= 'z') || c === '|') {
+        if (d > 0 && c !== '|') {
+          ss = s; s *= P.ds;
+          compute(P.rules[c] || c, d - 1);
+          s = ss;
+        }
+        else if (c === 'f' || c === 'g' || c === '|') {
+          var n1 = unoise ? unoise * (rand() * 2 - 1) : 0;
+          var n2 = unoise ? unoise * (rand() * 2 - 1) : 0;
+          sx = x + Math.sin(a + n1) * s;
+          sy = y + Math.cos(a + n2) * s;
+          if (c === 'f' || c === '|') {
+            segs[nseg++] = x; segs[nseg++] = y;
+            segs[nseg++] = sx; segs[nseg++] = sy;
+            // Thickness key: branch nesting for plants, depth otherwise.
+            segs[nseg++] = P.plant ? nest : MAXDEPTH - d;
+            if (nest > maxnest) maxnest = nest;
+          }
+          x = sx; y = sy;
+        }
+      }
+      else if (c >= '0' && c <= '9') num = num * 10 + (c.charCodeAt(0) - 48);
+      else if (c === '+' || c === '-') {
+        num = (num === 0) ? 1 : num;
+        a += (c === '+') ? num * da : -num * da;
+        num = 0;
+      }
+      else if (c === '[') {
+        sx = x; sy = y; sa = a; ss = s;
+        nest++;
+        compute(rule.substring(i + 1), d);
+        nest--;
+        x = sx; y = sy; a = sa; s = ss; num = 1;
+        do {
+          i++;
+          c = rule.charAt(i);
+          num = num + ((c === '[') ? 1 : (c === ']') ? -1 : 0);
+        } while (num !== 0);
+        num = 0;
+      }
+      else if (c === ']') return;
+    }
+  }
+
+  function figure(preset, daDeg, seed) {
+    P = preset;
+    da = daDeg * Math.PI / 180;
+    unoise = preset.unoise;
+    MAXDEPTH = preset.depth;
+    rand = rng(seed);
+    x = 0; y = 0; a = preset.a0 * Math.PI / 180; s = 1; num = 0;
+    nseg = 0; nest = 0; maxnest = 0;
+    compute(preset.axiom, preset.depth);
+    return nseg / 5;
+  }
+
+  // ---- Presentation --------------------------------------------------------
+  var W, H, dpr;
+  var pi = -1, preset, seed, t0, count, total;
+  var bx0, bx1, by0, by1;
+  var order = [], oi = 0;
+  var lastT = 0;
+
+  function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  function nextPreset() {
+    // Debug hook: #name pins a single preset (not a UI, just for QA).
+    var h = decodeURIComponent(location.hash.slice(1));
+    for (var i = 0; h && i < PRESETS.length; i++)
+      if (PRESETS[i].name === h) return i;
+    if (oi >= order.length) {
+      var last = order.length ? order[order.length - 1] : -1;
+      order = shuffle(PRESETS.map(function(_, i) { return i; }));
+      if (order[0] === last) order.push(order.shift());
+      oi = 0;
+    }
+    return order[oi++];
+  }
+
+  function start(now) {
+    pi = nextPreset();
+    preset = PRESETS[pi];
+    seed = (Math.random() * 1e9) | 0;
+    segs = segs || new Float64Array(5 * 400000);
+    // Bounds from the un-swayed figure, padded for sway/noise.
+    total = figure(preset, preset.da, seed);
+    bx0 = by0 = 1e9; bx1 = by1 = -1e9;
+    for (var i = 0; i < total; i++) {
+      var q = i * 5;
+      var ax = segs[q], ay = segs[q + 1], bx = segs[q + 2], by = segs[q + 3];
+      if (ax < bx0) bx0 = ax; if (ax > bx1) bx1 = ax;
+      if (bx < bx0) bx0 = bx; if (bx > bx1) bx1 = bx;
+      if (ay < by0) by0 = ay; if (ay > by1) by1 = ay;
+      if (by < by0) by0 = by; if (by > by1) by1 = by;
+    }
+    var pad = (preset.plant ? 0.10 : 0.05) * Math.max(bx1 - bx0, by1 - by0);
+    bx0 -= pad; bx1 += pad; by0 -= pad; by1 += pad;
+    t0 = now;
+  }
+
+  function init() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  function ease(u) { return u < 0.5 ? 2 * u * u : -1 + (4 - 2 * u) * u; }
+
+  function draw(now) {
+    var el = now - t0;
+    var growT = preset.grow, holdEnd = growT + HOLD, fadeEnd = holdEnd + FADE;
+
+    // Sway: slow, low-frequency modulation of the delta angle (plants only).
+    var swayA = preset.sway ?
+      preset.sway * (0.6 * Math.sin(now * 0.00071) + 0.4 * Math.sin(now * 0.00113 + 1.7)) : 0;
+    var n = figure(preset, preset.da + swayA, seed);
+
+    // Number of segments visible: eased growth in turtle order.
+    var gu = Math.min(el / growT, 1);
+    var vis = Math.floor(ease(gu) * n);
+
+    // Global alpha for the fade-out at the end.
+    var alpha = 1;
+    if (el > holdEnd) alpha = Math.max(0, 1 - (el - holdEnd) / FADE);
+
+    // Fit: uniform scale into the viewport with a margin.
+    var bw = bx1 - bx0, bh = by1 - by0;
+    var sc = Math.min(W * 0.92 / bw, H * 0.92 / bh);
+    var ox = (W - bw * sc) / 2 - bx0 * sc;
+    var oy = (H + bh * sc) / 2 + by0 * sc;   // y flipped, as in lsys.c
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, W, H);
+    ctx.globalAlpha = alpha;
+    ctx.lineCap = "round";
+
+    var maxd = preset.plant ? maxnest : preset.depth;
+    var hue = preset.hue;
+    // Draw depth by depth so we can batch strokes by style.
+    for (var d = 0; d <= maxd; d++) {
+      var frac = maxd ? d / maxd : 1;
+      var lw, col;
+      if (preset.plant) {
+        lw = Math.max(1.0, (1 - frac) * (1 - frac) * 5.5 + 0.8);
+        var L = 22 + frac * 48, S = 35 + frac * 45;
+        col = "hsla(" + hue + "," + S + "%," + L + "%,0.92)";
+      } else {
+        lw = 1.1;
+        col = "hsla(" + hue + ",70%," + (58 + 20 * frac) + "%,0.85)";
+      }
+      ctx.lineWidth = lw;
+      ctx.strokeStyle = col;
+      ctx.beginPath();
+      var any = 0;
+      for (var i = 0; i < vis; i++) {
+        var q = i * 5;
+        if (segs[q + 4] !== d) continue;
+        ctx.moveTo(segs[q] * sc + ox, oy - segs[q + 1] * sc);
+        ctx.lineTo(segs[q + 2] * sc + ox, oy - segs[q + 3] * sc);
+        any = 1;
+      }
+      if (any) ctx.stroke();
+    }
+
+    // The growing tip: a small bright bloom on the newest segment.
+    if (vis > 0 && vis < n) {
+      var q = (vis - 1) * 5;
+      var tx = segs[q + 2] * sc + ox, ty = oy - segs[q + 3] * sc;
+      var g = ctx.createRadialGradient(tx, ty, 0, tx, ty, 14);
+      g.addColorStop(0, "hsla(" + hue + ",90%,85%,0.9)");
+      g.addColorStop(1, "hsla(" + hue + ",90%,60%,0)");
+      ctx.fillStyle = g;
+      ctx.fillRect(tx - 14, ty - 14, 28, 28);
+    }
+    ctx.globalAlpha = 1;
+
+    if (el > fadeEnd) start(now);
+  }
+
+  function loop(now) {
+    window.requestAnimationFrame(loop);
+    if (done) { t0 += now - lastT; lastT = now; return; }
+    lastT = now;
+    if (canvas.width === 0 || canvas.clientWidth !== W || canvas.clientHeight !== H) init();
+    if (pi < 0) start(now);
+    draw(now);
+  }
+
+  window.onclick = function() { done = !done; };
+  init();
+  lastT = performance.now();
+  window.requestAnimationFrame(loop);
+}
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>

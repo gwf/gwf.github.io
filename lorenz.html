@@ -1,0 +1,313 @@
+<!DOCTYPE html><html><head>
+<title>lorenz</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  lorenz - strange attractors, from "The Computational Beauty of Nature"
+//  (src/lorenz.c, src/rossler.c, src/predprey.c, src/mg.c).
+//
+//  Each system is integrated with the same second-order Euler step used by
+//  the C programs (euler(): evaluate the derivative, take a trial step,
+//  evaluate again, average).  The vector fields are copied verbatim:
+//    Lorenz     x' = -a x + a y,  y' = b x - y - z x,  z' = -c z + x y
+//    Rossler    x' = -y - z,  y' = x + a y,  z' = b + z (x - c)
+//    Pred-prey  the three-species system of predprey.c with alpha
+//    Mackey-Glass  x' = a x(t-tau) / (1 + x(t-tau)^10) - b x(t), embedded
+//                  as (x(t), x(t-delta), x(t-2 delta)) as mg.c plots it.
+//
+//  Curated parameters: lorenz.c's own defaults a=5 b=15 c=1 (a less
+//  familiar but genuinely chaotic parameterization) and the classic
+//  10/28/8/3; rossler.c's .2/.2/5.7; predprey.c's alpha=1.5; mg.c's
+//  a=.2 b=.1 tau=17 with delta=6 samples.
+//
+//  Modernization: instead of one trajectory, a few thousand particles are
+//  integrated in lockstep.  Two thirds are spread over the attractor and
+//  draw it as a dim, ever-moving skeleton; the rest are released together
+//  in a tiny bright ball.  Because
+//  the dynamics are chaotic the ball is stretched along the attractor and
+//  folded until it covers the whole thing, which is the show.  Every so
+//  often the swarm is regathered into a new ball.  The 3-D state is drawn
+//  as additive streaks under a slowly orbiting camera, with depth cueing,
+//  and the view auto-frames the attractor.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+window.onload = function() {
+
+  var canvas = document.getElementById("viewport");
+  var ctx = canvas.getContext("2d");
+  var done = 0;
+
+  var SYSTEMS = [
+    { name: "lorenz-book", hue: 265, dt: 0.02, sub: 1, up: 2, seed: [1, 1, 1], ball: 0.02,
+      f: function(x, y, z, o) { var a = 5, b = 15, c = 1;
+        o[0] = -a * x + a * y; o[1] = b * x - y - z * x; o[2] = -c * z + x * y; } },
+    { name: "lorenz", hue: 205, dt: 0.008, sub: 2, up: 2, seed: [1, 1, 1], ball: 0.05,
+      f: function(x, y, z, o) { var a = 10, b = 28, c = 8 / 3;
+        o[0] = -a * x + a * y; o[1] = b * x - y - z * x; o[2] = -c * z + x * y; } },
+    { name: "rossler", hue: 25, dt: 0.02, sub: 4, up: 2, seed: [1, 1, 1], ball: 0.05,
+      f: function(x, y, z, o) { var a = 0.2, b = 0.2, c = 5.7;
+        o[0] = -y - z; o[1] = x + a * y; o[2] = b + z * (x - c); } },
+    { name: "predprey", hue: 140, dt: 0.1, sub: 2, up: 2, seed: [0.5, 0.5, 0.5], ball: 0.01,
+      f: function(x, y, z, o) { var alpha = 1.5;
+        o[0] = x * (1.1 - x / 2 - y / 2 - z / 10);
+        o[1] = y * (-0.5 + x / 2 + y / 10 - z / 10);
+        o[2] = z * (alpha + 0.2 - alpha * x - y / 10 - z / 10); } },
+    { name: "mackey-glass", hue: 330, dt: 0.1, sub: 5, up: 2, seed: [1.2, 1.2, 1.2], ball: 0.02,
+      mg: { a: 0.2, b: 0.1, tau: 170, delta: 60 } }
+  ];
+
+  var N = 3000, NB = 2000;   // particles NB..N-1 form the "ball"; 0..NB-1 stay spread
+  var pos = new Float32Array(N * 3), prev = new Float32Array(N * 3);
+  var d1 = [0, 0, 0], d2 = [0, 0, 0];
+  var mgbuf = null, mghead = 0;      // Mackey-Glass delay lines, N x tau
+  var W, H, dpr;
+  var si = -1, S, t0, lastT = 0, lastGather = 0;
+  var SEG = 40000, FADE = 2500, GATHER = 14000;
+  var order = [], oi = 0;
+  var center = [0, 0, 0], radius = 1;    // smoothed framing
+  var fadeAlpha = 0;
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  function nextSystem() {
+    var h = decodeURIComponent(location.hash.slice(1));   // QA hook only
+    for (var i = 0; h && i < SYSTEMS.length; i++) if (SYSTEMS[i].name === h) return i;
+    if (oi >= order.length) {
+      var last = order.length ? order[order.length - 1] : -1;
+      order = shuffle(SYSTEMS.map(function(_, i) { return i; }));
+      if (order[0] === last) order.push(order.shift());
+      oi = 0;
+    }
+    return order[oi++];
+  }
+
+  // Second-order Euler step for ordinary 3-D systems (lorenz.c euler()).
+  function stepODE(dt) {
+    var f = S.f;
+    for (var i = 0; i < N * 3; i += 3) {
+      var x = pos[i], y = pos[i + 1], z = pos[i + 2];
+      f(x, y, z, d1);
+      f(x + dt * d1[0], y + dt * d1[1], z + dt * d1[2], d2);
+      x += 0.5 * dt * (d1[0] + d2[0]);
+      y += 0.5 * dt * (d1[1] + d2[1]);
+      z += 0.5 * dt * (d1[2] + d2[2]);
+      if (!(x * x + y * y + z * z < 1e8)) { x = S.seed[0]; y = S.seed[1]; z = S.seed[2]; }
+      pos[i] = x; pos[i + 1] = y; pos[i + 2] = z;
+    }
+  }
+
+  // Mackey-Glass: one delay line per particle; mg.c's euler() verbatim.
+  function stepMG(dt) {
+    var a = S.mg.a, b = S.mg.b, tau = S.mg.tau, delta = S.mg.delta;
+    var nh = (mghead + 1) % tau;
+    for (var p = 0; p < N; p++) {
+      var base = p * tau;
+      var xt = mgbuf[base + mghead];
+      var xtau = mgbuf[base + nh];              // oldest sample = x(t - tau)
+      var x1 = (a * xtau) / (1 + Math.pow(xtau, 10)) - b * xt;
+      var x2 = (a * xtau) / (1 + Math.pow(xtau, 10)) - b * (dt * x1 + xt);
+      var xn = xt + 0.5 * dt * (x1 + x2);
+      mgbuf[base + nh] = xn;
+      var i = p * 3;
+      pos[i] = xn;
+      pos[i + 1] = mgbuf[base + ((nh - delta + tau) % tau)];
+      pos[i + 2] = mgbuf[base + ((nh - 2 * delta + 2 * tau) % tau)];
+    }
+    mghead = nh;
+  }
+
+  function gather() {
+    // Release a tight ball around one existing particle (so it is on the
+    // attractor), or around the seed point on the first run.
+    var k = (Math.random() * N) | 0;
+    var cx = pos[k * 3], cy = pos[k * 3 + 1], cz = pos[k * 3 + 2];
+    if (!(cx * cx + cy * cy + cz * cz < 1e8) || si < 0) { cx = S.seed[0]; cy = S.seed[1]; cz = S.seed[2]; }
+    var r = S.ball * radius;
+    for (var i = NB * 3; i < N * 3; i += 3) {
+      pos[i] = cx + (Math.random() - 0.5) * r;
+      pos[i + 1] = cy + (Math.random() - 0.5) * r;
+      pos[i + 2] = cz + (Math.random() - 0.5) * r;
+    }
+    if (S.mg) {
+      // Fill each delay line with a slightly jittered constant history.
+      var tau = S.mg.tau;
+      for (var p = NB; p < N; p++) {
+        var v = pos[p * 3];
+        for (var j = 0; j < tau; j++) mgbuf[p * tau + j] = v + (Math.random() - 0.5) * r * 0.2;
+      }
+    }
+    prev.set(pos);
+  }
+
+  function start(now) {
+    si = nextSystem(); S = SYSTEMS[si];
+    if (S.mg) { mgbuf = new Float32Array(N * S.mg.tau); }
+    // Seed ONE trajectory from the C default initial condition, burn in
+    // past the transient (skip = 2000 in the C programs), then hand out
+    // successive states along that trajectory to the particles, so the
+    // swarm starts spread over the attractor.
+    var GAP = 7;
+    if (S.mg) {
+      var tau = S.mg.tau, line = new Float32Array(tau), head = 0;
+      for (var j = 0; j < tau; j++) line[j] = S.seed[0] + (Math.random() - 0.5) * 0.05;
+      var a = S.mg.a, b = S.mg.b;
+      function mg1() {
+        var nh = (head + 1) % tau, xt = line[head], xtau = line[nh];
+        var x1 = (a * xtau) / (1 + Math.pow(xtau, 10)) - b * xt;
+        var x2 = (a * xtau) / (1 + Math.pow(xtau, 10)) - b * (S.dt * x1 + xt);
+        line[nh] = xt + 0.5 * S.dt * (x1 + x2); head = nh;
+      }
+      for (var s = 0; s < 3000; s++) mg1();
+      for (var p = 0; p < N; p++) {
+        for (var s = 0; s < GAP; s++) mg1();
+        // Copy the delay line, rotated so index 0 is the oldest sample.
+        for (var j = 0; j < tau; j++) mgbuf[p * tau + j] = line[(head + 1 + j) % tau];
+      }
+      mghead = tau - 1;
+      stepMG(S.dt);
+    } else {
+      var x = S.seed[0], y = S.seed[1], z = S.seed[2], dt = S.dt;
+      function one() {
+        S.f(x, y, z, d1);
+        S.f(x + dt * d1[0], y + dt * d1[1], z + dt * d1[2], d2);
+        x += 0.5 * dt * (d1[0] + d2[0]); y += 0.5 * dt * (d1[1] + d2[1]); z += 0.5 * dt * (d1[2] + d2[2]);
+      }
+      for (var s = 0; s < 2000; s++) one();
+      for (var p = 0; p < N; p++) {
+        for (var s = 0; s < GAP; s++) one();
+        pos[p * 3] = x; pos[p * 3 + 1] = y; pos[p * 3 + 2] = z;
+      }
+    }
+    measure(1);
+    gather();
+    t0 = now; lastGather = now; fadeAlpha = 0;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = "#000"; ctx.fillRect(0, 0, W, H);
+  }
+
+  // Smoothed framing: center = mean of the spread particles, radius = a
+  // high percentile of their distance from it (robust to spikes).
+  var dtmp = new Float32Array(NB);
+  function measure(hard) {
+    var sx = 0, sy = 0, sz = 0;
+    for (var i = 0; i < NB * 3; i += 3) { sx += pos[i]; sy += pos[i + 1]; sz += pos[i + 2]; }
+    sx /= NB; sy /= NB; sz /= NB;
+    for (var p = 0; p < NB; p++) {
+      var dx = pos[p * 3] - sx, dy = pos[p * 3 + 1] - sy, dz = pos[p * 3 + 2] - sz;
+      dtmp[p] = dx * dx + dy * dy + dz * dz;
+    }
+    var sorted = dtmp.slice().sort();
+    var r = Math.sqrt(sorted[(NB * 0.98) | 0]) * 1.08;
+    var k = hard ? 1 : 0.02;
+    center[0] += (sx - center[0]) * k; center[1] += (sy - center[1]) * k; center[2] += (sz - center[2]) * k;
+    radius += (r - radius) * k;
+  }
+
+  function init() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = "#000"; ctx.fillRect(0, 0, W, H);
+  }
+
+  function draw(now) {
+    var el = now - t0;
+    // Fade in at the start of a segment, fade out at the end.
+    var a = 1;
+    if (el < FADE) a = el / FADE;
+    if (el > SEG - FADE) a = Math.max(0, (SEG - el) / FADE);
+    fadeAlpha = a;
+
+    // Camera: orbit about the system's "up" axis with a slow nod.
+    var th = now * 0.00012, ph = 0.35 + 0.25 * Math.sin(now * 0.00007);
+    var ct = Math.cos(th), st = Math.sin(th), cp = Math.cos(ph), sp = Math.sin(ph);
+    var up = S.up;
+    var scale = Math.min(W, H) * 0.44 / Math.max(radius, 1e-6);
+    var cx = W / 2, cy = H / 2;
+    var jump2 = Math.pow(0.5 * Math.min(W, H), 2);
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = "rgba(0,0,0,0.12)";
+    ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = "lighter";
+    ctx.lineWidth = 1.2;
+    ctx.lineCap = "round";
+
+    // Project both previous and current positions; bucket by depth into a
+    // few brightness bins so strokes can be batched.
+    var BINS = 6, paths = [];
+    for (var b = 0; b < BINS * 2; b++) paths.push([]);
+    for (var i = 0; i < N * 3; i += 3) {
+      // Recenter, then rotate so that `up` is the screen's vertical.
+      var x = pos[i] - center[0], y = pos[i + 1] - center[1], z = pos[i + 2] - center[2];
+      var px = prev[i] - center[0], py = prev[i + 1] - center[1], pz = prev[i + 2] - center[2];
+      var u, v, w, pu, pv, pw;
+      if (up === 2) { u = x; v = y; w = z; pu = px; pv = py; pw = pz; }
+      else { u = x; v = z; w = y; pu = px; pv = pz; pw = py; }
+      // yaw about w (vertical), then pitch.
+      var rx = u * ct - v * st, ry = u * st + v * ct;
+      var sy = w * cp - ry * sp, depth = w * sp + ry * cp;
+      var prx = pu * ct - pv * st, pry = pu * st + pv * ct;
+      var psy = pw * cp - pry * sp;
+      var X = cx + rx * scale, Y = cy - sy * scale;
+      var PX = cx + prx * scale, PY = cy - psy * scale;
+      var bin = ((depth / radius + 1) * 0.5 * BINS) | 0;
+      if (bin < 0) bin = 0; if (bin >= BINS) bin = BINS - 1;
+      var p = paths[i < NB * 3 ? bin : BINS + bin];
+      p.push(PX, PY, X, Y);
+    }
+    for (var b = 0; b < BINS * 2; b++) {
+      var p = paths[b]; if (!p.length) continue;
+      var ball = b >= BINS;
+      var t = ((b % BINS) + 0.5) / BINS;       // 0 = far, 1 = near
+      var L = ball ? 72 + 24 * t : 52 + 22 * t;
+      var Sat = ball ? 60 : 90;
+      var al = (ball ? 0.4 + 0.6 * t : 0.22 + 0.4 * t) * a;
+      ctx.lineWidth = ball ? 1.8 : 1.3;
+      ctx.strokeStyle = "hsla(" + S.hue + "," + Sat + "%," + L + "%," + al + ")";
+      ctx.beginPath();
+      for (var k = 0; k < p.length; k += 4) {
+        var dx = p[k + 2] - p[k], dy = p[k + 3] - p[k + 1];
+        if (dx * dx + dy * dy > jump2) continue;  // skip only respawn jumps
+        ctx.moveTo(p[k], p[k + 1]); ctx.lineTo(p[k + 2], p[k + 3]);
+      }
+      ctx.stroke();
+    }
+    ctx.globalCompositeOperation = "source-over";
+  }
+
+  function loop(now) {
+    window.requestAnimationFrame(loop);
+    if (done) { t0 += now - lastT; lastGather += now - lastT; lastT = now; return; }
+    lastT = now;
+    if (canvas.width === 0 || canvas.clientWidth !== W || canvas.clientHeight !== H) init();
+    if (si < 0) start(now);
+    prev.set(pos);
+    for (var s = 0; s < S.sub; s++) { if (S.mg) stepMG(S.dt); else stepODE(S.dt); }
+    measure(0);
+    draw(now);
+    var el = now - t0;
+    if (now - lastGather > GATHER && el < SEG - FADE - GATHER * 0.5) { gather(); lastGather = now; }
+    if (el > SEG) start(now);
+  }
+
+  window.onclick = function() { done = !done; };
+  init();
+  lastT = performance.now();
+  window.requestAnimationFrame(loop);
+}
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>

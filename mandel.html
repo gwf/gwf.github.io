@@ -1,0 +1,394 @@
+<!DOCTYPE html><html><head>
+<title>mandel</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  mandel - the Mandelbrot set, from "The Computational Beauty of Nature"
+//  (src/mandel.c).
+//
+//  Every pixel is a point c = x + yi; z starts at c (mandel.c starts with
+//  a = x, b = y, which is z(1) of the usual z(0) = 0 orbit) and is iterated
+//  exactly as in mandel.c: u = a*a, v = b*b, w = 2ab, a = u - v + x,
+//  b = w + y, bail out when u + v > BAIL.  This runs in a WebGL fragment
+//  shader.  Each cycle starts from mandel.c's default framing
+//  (ulx = -2.4, uly = 1.4, lly = -1.4: a 2.8-unit-tall window whose left
+//  edge is at x = -2.4; on portrait screens the width -2.4..1.33 of the
+//  original 640x480 plot is kept instead).
+//
+//  Timeline: hold the classic view ~3 s, then an eased zoom (~6 s per
+//  decade) into a curated target, a short hold, a fade to black and the
+//  next target.  The targets:
+//    seahorse valley   -0.743643887037151 + 0.131825904205330i   (to 3e-9)
+//    elephant valley    0.28693186889504513 + 0.014286693904085048i (1e-9)
+//    the spike          the period-3 island at -1.754877666...  (to 0.05,
+//                       the whole mini-brot fills the screen)
+//    period-4 island    -0.156520166833755 + 1.032247108922832i (to 8e-3)
+//    period-24 island   -1.251221105040921 + 0.071915135801662i (to 8e-5,
+//                       the island itself is ~6e-5 across)
+//    Misiurewicz M4,1  -0.10109636384562 + 0.95628651080914i (to 1e-9,
+//                       an endless spiral, self-similar at every depth)
+//  The island centres are the exact nuclei (Newton on f^p(0) = 0) so the
+//  deep views end centred on the mini-brots.  Iterations rise with depth:
+//  maxit = 160 + 220 * log10(w0 / w) (mandel.c's 160 at the start view).
+//
+//  Precision: single floats run out at a window width of ~1e-4.  Below
+//  2e-3 the shader switches to double-single ("df") arithmetic -- every
+//  number is a hi/lo pair of floats, added with two-sum and multiplied
+//  with a Veltkamp split -- which is good to ~1e-14 relative, so the zooms
+//  reach ~1e-9 wide.  On start-up a tiny probe shader checks that the
+//  driver did not optimise the tricks away; if it did, zooms stop at
+//  1.5e-4 instead.  The df path is ~8x more expensive, so the render
+//  resolution eases down with depth and also adapts to frame time.
+//
+//  Modernized beyond mandel.c: continuous (fractional) escape-time
+//  colouring instead of k % LEVELS, BAIL = 256 instead of 16 (so the
+//  fractional count has no ridges), a single slowly cycling navy -> gold
+//  -> white gradient instead of grey levels, interior black.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+window.onload = function() {
+
+  var canvas = document.getElementById("viewport");
+  var done = 0;
+  var gl = null, quad = null;
+  var progF = null, progD = null, uniF = {}, uniD = {};
+  var dfOK = false, dfTested = false;
+  var W = 0, H = 0, RW = 0, RH = 0;
+  var quality = 1.0, needDraw = true;
+  var MAXPIX = 2100000;
+  var BAIL = 256.0;
+  var DF_BELOW = 2e-3;        // switch to df arithmetic below this width
+  var FP32_FLOOR = 1.5e-4;    // deepest width without df
+
+  var TARGETS = [
+    { x: -0.743643887037151,   y: 0.131825904205330,    w: 3e-9 },
+    { x: -1.7615,              y: 0.0,                  w: 0.05 },
+    { x: 0.28693186889504513,  y: 0.014286693904085048, w: 1e-9 },
+    { x: -0.156520166833755,   y: 1.032247108922832,    w: 8e-3 },
+    { x: -0.10109636384562,    y: 0.95628651080914,     w: 1e-9 },
+    { x: -1.251221105040921,   y: 0.071915135801662,    w: 8e-5 }
+  ];
+
+  var VS =
+    "attribute vec2 p; varying vec2 v;" +
+    "void main() { v = p; gl_Position = vec4(p, 0.0, 1.0); }";
+
+  var HEAD =
+    "precision highp float;\n" +
+    "varying vec2 v;\n" +
+    "uniform vec2 u_cx;\n" +         // centre x as (hi, lo)
+    "uniform vec2 u_cy;\n" +
+    "uniform vec2 u_half;\n" +       // half-extents of the view
+    "uniform int u_maxit;\n" +
+    "uniform float u_phase;\n" +
+    "uniform float u_fade;\n" +
+    "const int MAXLOOP = 4096;\n" +
+    "const float BAIL = " + BAIL.toFixed(1) + ";\n" +
+    "vec3 palette(float x) {\n" +
+    "  float t = 1.0 - abs(2.0 * fract(x) - 1.0);\n" +
+    "  vec3 c0 = vec3(0.01, 0.02, 0.12);\n" +
+    "  vec3 c1 = vec3(0.08, 0.20, 0.55);\n" +
+    "  vec3 c2 = vec3(0.98, 0.72, 0.25);\n" +
+    "  vec3 c3 = vec3(1.00, 0.97, 0.88);\n" +
+    "  vec3 c = mix(c0, c1, smoothstep(0.0, 0.38, t));\n" +
+    "  c = mix(c, c2, smoothstep(0.38, 0.72, t));\n" +
+    "  c = mix(c, c3, smoothstep(0.72, 1.0, t));\n" +
+    "  return c;\n" +
+    "}\n" +
+    "vec4 shade(bool esc, float k, float m) {\n" +
+    "  if (!esc) return vec4(0.0, 0.0, 0.0, 1.0);\n" +
+    "  float mu = k - log2(max(log(m) * 0.5, 1e-6));\n" +
+    "  mu = max(mu, 0.0);\n" +
+    "  float idx = log2(1.0 + mu) * 0.42 + u_phase;\n" +
+    "  vec3 col = palette(idx) * pow(clamp((mu - 1.0) / 8.0, 0.0, 1.0), 0.7);\n" +
+    "  return vec4(col * u_fade, 1.0);\n" +
+    "}\n";
+
+  // Plain single-precision shader.
+  var FS_F = HEAD +
+    "void main() {\n" +
+    "  float x = (v.x * u_half.x + u_cx.y) + u_cx.x;\n" +
+    "  float y = (v.y * u_half.y + u_cy.y) + u_cy.x;\n" +
+    "  float a = x, b = y, k = 0.0, m = 0.0;\n" +
+    "  bool esc = false;\n" +
+    "  for (int i = 1; i <= MAXLOOP; i++) {\n" +
+    "    if (i > u_maxit) break;\n" +
+    "    float u = a * a;\n" +
+    "    float w2 = b * b;\n" +
+    "    float w = 2.0 * a * b;\n" +
+    "    a = u - w2 + x;\n" +
+    "    b = w + y;\n" +
+    "    if (u + w2 > BAIL) { k = float(i); m = u + w2; esc = true; break; }\n" +
+    "  }\n" +
+    "  gl_FragColor = shade(esc, k, m);\n" +
+    "}\n";
+
+  // Double-single arithmetic: each value is vec2(hi, lo).
+  var DS =
+    "vec2 ds_add(vec2 a, vec2 b) {\n" +
+    "  float s = a.x + b.x;\n" +
+    "  float bb = s - a.x;\n" +
+    "  float e = (a.x - (s - bb)) + (b.x - bb);\n" +
+    "  e += a.y + b.y;\n" +
+    "  float hi = s + e;\n" +
+    "  float lo = e - (hi - s);\n" +
+    "  return vec2(hi, lo);\n" +
+    "}\n" +
+    "vec2 ds_mul(vec2 a, vec2 b) {\n" +
+    "  float c = 4097.0 * a.x;\n" +
+    "  float ah = c - (c - a.x);\n" +
+    "  float al = a.x - ah;\n" +
+    "  c = 4097.0 * b.x;\n" +
+    "  float bh = c - (c - b.x);\n" +
+    "  float bl = b.x - bh;\n" +
+    "  float p = a.x * b.x;\n" +
+    "  float e = ((ah * bh - p) + ah * bl + al * bh) + al * bl;\n" +
+    "  e += a.x * b.y + a.y * b.x;\n" +
+    "  float hi = p + e;\n" +
+    "  float lo = e - (hi - p);\n" +
+    "  return vec2(hi, lo);\n" +
+    "}\n";
+
+  var FS_D = HEAD + DS +
+    "void main() {\n" +
+    "  vec2 x = ds_add(u_cx, vec2(v.x * u_half.x, 0.0));\n" +
+    "  vec2 y = ds_add(u_cy, vec2(v.y * u_half.y, 0.0));\n" +
+    "  vec2 a = x, b = y;\n" +
+    "  float k = 0.0, m = 0.0;\n" +
+    "  bool esc = false;\n" +
+    "  for (int i = 1; i <= MAXLOOP; i++) {\n" +
+    "    if (i > u_maxit) break;\n" +
+    "    vec2 u = ds_mul(a, a);\n" +
+    "    vec2 w2 = ds_mul(b, b);\n" +
+    "    vec2 w = ds_mul(a, b) * 2.0;\n" +
+    "    a = ds_add(ds_add(u, -w2), x);\n" +
+    "    b = ds_add(w, y);\n" +
+    "    float mm = u.x + w2.x;\n" +
+    "    if (mm > BAIL) { k = float(i); m = mm; esc = true; break; }\n" +
+    "  }\n" +
+    "  gl_FragColor = shade(esc, k, m);\n" +
+    "}\n";
+
+  // Probe: does the driver keep the lo parts?  (1 + 1e-9) has lo = 1e-9,
+  // its square has lo = 2e-9.  Values come in through uniforms so nothing
+  // is constant-folded.
+  var FS_T =
+    "precision highp float;\n" +
+    "uniform vec2 u_a;\n" +
+    "uniform vec2 u_b;\n" + DS +
+    "void main() {\n" +
+    "  vec2 s = ds_add(u_a, u_b);\n" +
+    "  vec2 p = ds_mul(s, s);\n" +
+    "  gl_FragColor = vec4(s.y * 5.0e8, p.y * 2.5e8, 0.5, 1.0);\n" +
+    "}\n";
+
+  function compile(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { gl.deleteShader(s); return null; }
+    return s;
+  }
+
+  function link(fsSrc, names, uni) {
+    var vs = compile(gl.VERTEX_SHADER, VS), fs = compile(gl.FRAGMENT_SHADER, fsSrc);
+    if (!vs || !fs) return null;
+    var p = gl.createProgram();
+    gl.attachShader(p, vs); gl.attachShader(p, fs);
+    gl.bindAttribLocation(p, 0, "p");
+    gl.linkProgram(p);
+    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) return null;
+    for (var i = 0; i < names.length; i++) uni[names[i]] = gl.getUniformLocation(p, names[i]);
+    return p;
+  }
+
+  var UNAMES = ["u_cx", "u_cy", "u_half", "u_maxit", "u_phase", "u_fade"];
+
+  function buildPrograms() {
+    quad = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, quad);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(0);
+    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+    progF = link(FS_F, UNAMES, uniF);
+    progD = link(FS_D, UNAMES, uniD);
+    dfTested = false; dfOK = false;
+    return !!progF;
+  }
+
+  function probeDF() {
+    dfTested = true;
+    if (!progD) return;
+    var ut = {};
+    var pt = link(FS_T, ["u_a", "u_b"], ut);
+    if (!pt) return;
+    gl.useProgram(pt);
+    gl.uniform2f(ut.u_a, 1.0, 0.0);
+    gl.uniform2f(ut.u_b, 1e-9, 0.0);
+    gl.viewport(0, 0, 4, 4);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    var px = new Uint8Array(4);
+    gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+    gl.viewport(0, 0, RW, RH);
+    gl.deleteProgram(pt);
+    dfOK = Math.abs(px[0] - 128) < 20 && Math.abs(px[1] - 128) < 20;
+  }
+
+  function setupGL() {
+    var opts = { alpha: false, antialias: false, depth: false, stencil: false,
+                 preserveDrawingBuffer: false, powerPreference: "high-performance" };
+    gl = canvas.getContext("webgl", opts) || canvas.getContext("experimental-webgl", opts);
+    if (!gl) return false;
+    canvas.addEventListener("webglcontextlost", function(e) { e.preventDefault(); progF = progD = null; }, false);
+    canvas.addEventListener("webglcontextrestored", function() { buildPrograms(); RW = 0; }, false);
+    return buildPrograms();
+  }
+
+  // Render-resolution factor that eases down with zoom depth (the df path
+  // is far more expensive) -- a slow, invisible softening.
+  function depthQuality(w) {
+    var d = Math.log(w) / Math.LN10;          // log10 of width
+    var u = smooth01((-2.5 - d) / 2.5);        // 0 at 3e-3 ... 1 at 1e-5
+    return 1.0 - 0.45 * u;
+  }
+
+  function fitCanvas(w) {
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    if (W === 0 || H === 0) return false;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var pw = W * dpr, ph = H * dpr;
+    var q = Math.min(quality, depthQuality(w));
+    q = Math.round(q * 40) / 40;
+    var s = Math.min(1, Math.sqrt(MAXPIX / (pw * ph))) * q;
+    var rw = Math.max(64, Math.round(pw * s)), rh = Math.max(64, Math.round(ph * s));
+    if (rw !== RW || rh !== RH) {
+      RW = rw; RH = rh;
+      canvas.width = RW; canvas.height = RH;
+      gl.viewport(0, 0, RW, RH);
+      needDraw = true;
+    }
+    return true;
+  }
+
+  function smooth01(u) { u = Math.min(Math.max(u, 0), 1); return u * u * (3 - 2 * u); }
+
+  // mandel.c's framing for the current aspect ratio: centre and width.
+  function classicView() {
+    var cx, w;
+    if (W / H >= 4 / 3) { w = 2.8 * W / H; cx = -2.4 + w / 2; }
+    else { w = 2.4 + 4.0 / 3.0; cx = -2.4 + w / 2; }
+    return { x: cx, y: 0.0, w: w };
+  }
+
+  // ---- timeline ------------------------------------------------------------
+  var HOLD0 = 3.0, HOLD1 = 5.0, FADE = 2.5, PER_DECADE = 6.0;
+  var order = [], oi = 0, tgt = null, phase = 0, pt = 0;
+  var tau = 0, lastNow = 0, ema = 16, cooldown = 0;
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  function nextTarget() {
+    if (oi >= order.length) {
+      var last = order.length ? order[order.length - 1] : -1;
+      order = shuffle(TARGETS.map(function(_, i) { return i; }));
+      if (order[0] === last) order.push(order.shift());
+      oi = 0;
+    }
+    return TARGETS[order[oi++]];
+  }
+
+  // Returns {x, y, w, fade} for the current timeline position.
+  function viewNow(dt) {
+    var c0 = classicView();
+    var w1 = tgt.w;
+    if (!dfOK) w1 = Math.max(w1, FP32_FLOOR);
+    var decades = Math.log(c0.w / w1) / Math.LN10;
+    var zoomDur = decades * PER_DECADE;
+    pt += dt;
+    var fade = 1, x = c0.x, y = c0.y, w = c0.w;
+    if (phase === 0) {                                   // hold the classic view
+      fade = smooth01(pt / 2.0);
+      if (pt >= HOLD0) { phase = 1; pt = 0; }
+    } else if (phase === 1) {                            // zoom
+      var p = Math.min(pt / zoomDur, 1);
+      var e = smooth01(p);
+      w = Math.exp(Math.log(c0.w) + (Math.log(w1) - Math.log(c0.w)) * e);
+      var s = 1 - smooth01(p / 0.35);
+      var f = (w / c0.w) * s;
+      x = tgt.x + (c0.x - tgt.x) * f;
+      y = tgt.y + (c0.y - tgt.y) * f;
+      if (p >= 1) { phase = 2; pt = 0; }
+    } else if (phase === 2) {                            // hold, still creeping in
+      var q = Math.min(pt / HOLD1, 1);
+      w = w1 * (1 - 0.08 * smooth01(q));
+      x = tgt.x; y = tgt.y;
+      if (pt >= HOLD1) { phase = 3; pt = 0; }
+    } else {                                             // fade out
+      w = w1 * 0.92; x = tgt.x; y = tgt.y;
+      fade = 1 - smooth01(pt / FADE);
+      if (pt >= FADE) { tgt = nextTarget(); phase = 0; pt = 0; fade = 0; }
+    }
+    return { x: x, y: y, w: w, fade: fade, w0: c0.w };
+  }
+
+  function draw(vw) {
+    var useDF = dfOK && progD && vw.w < DF_BELOW;
+    var prog = useDF ? progD : progF, uni = useDF ? uniD : uniF;
+    gl.useProgram(prog);
+    var hx = vw.w / 2, hy = hx * RH / RW;
+    var cxh = Math.fround(vw.x), cyh = Math.fround(vw.y);
+    gl.uniform2f(uni.u_cx, cxh, Math.fround(vw.x - cxh));
+    gl.uniform2f(uni.u_cy, cyh, Math.fround(vw.y - cyh));
+    gl.uniform2f(uni.u_half, hx, hy);
+    var maxit = Math.round(160 + 220 * Math.log(vw.w0 / vw.w) / Math.LN10);
+    gl.uniform1i(uni.u_maxit, Math.min(Math.max(maxit, 160), 4000));
+    gl.uniform1f(uni.u_phase, (tau * 0.015) % 1);
+    gl.uniform1f(uni.u_fade, vw.fade);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    needDraw = false;
+  }
+
+  var lastView = null;
+
+  function frame(now) {
+    window.requestAnimationFrame(frame);
+    var dt = lastNow ? now - lastNow : 16; lastNow = now;
+    if (!progF) return;
+    if (dt > 100) dt = 100;
+    if (done) {
+      // Paused: only redraw if the canvas had to be re-created.
+      if (lastView && fitCanvas(lastView.w) && needDraw) draw(lastView);
+      return;
+    }
+    ema += (dt - ema) * 0.1;
+    if (cooldown > 0) cooldown--;
+    else if (ema > 21 && quality > 0.3) { quality *= 0.9; cooldown = 30; }
+    else if (ema < 12.5 && quality < 1) { quality = Math.min(1, quality + 0.03); cooldown = 20; }
+    if (!dfTested) { if (!fitCanvas(1.0)) return; probeDF(); }
+    if (!tgt) tgt = nextTarget();
+    var vw = viewNow(dt / 1000);
+    tau += dt / 1000;
+    if (!fitCanvas(vw.w)) return;
+    lastView = vw;
+    draw(vw);
+  }
+
+  if (!setupGL()) return;
+  window.onclick = function() { done = !done; };
+  window.onresize = function() { RW = 0; };
+  window.requestAnimationFrame(frame);
+}
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html><html><head>
+<title>diffuse</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  diffuse - diffusion limited aggregation, from "The Computational Beauty
+//  of Nature" (src/diffuse.c).
+//
+//  Walkers take one random step per turn in one of the four compass
+//  directions; a walker that leaves the box that bounds the aggregate
+//  (plus a 5 cell margin) reappears on the opposite side of the box, then
+//  the grid wraps toroidally; a walker with any of its 8 neighbors frozen
+//  (nearanother) freezes in place, the bounding box grows, and the walker
+//  is reborn on the circle of radius (largest extent of the box + 5)
+//  around the grid center, clamped to the grid and re-drawn until it
+//  lands on an empty cell.  The plot color advances by one level every
+//  cincfreq sticks.  All of that is ported as is, with the walker order
+//  and the step order of diffuse.c.
+//
+//  Curated parameters.  The grid is the viewport aspect capped at 600x400
+//  cells and drawn scaled up; num = 1200 walkers (20 in diffuse.c) so the
+//  coral fills the screen in roughly a minute at a fixed per-frame budget
+//  of walker steps, with an additional cap on the number of sticks a
+//  single frame may show so the very first branches are revealed slowly
+//  instead of popping.  Color follows stick order along one gradient,
+//  deep violet at the seed through magenta to pale gold at the tips;
+//  cincfreq is set from the expected particle count of each run so the
+//  gradient spans the whole fractal (the level clamps at gold instead of
+//  wrapping mod 255).  Each frozen particle is a small glowing dot drawn
+//  additively.  When the aggregate reaches the edge (diffuse.c's "done"
+//  test, made symmetric for all four edges) the picture holds 4 s, fades
+//  to black over 3 s and a new run starts.  Runs alternate between the
+//  point seed of diffuse.c and a line seed along the bottom edge, which
+//  grows a forest.
+//
+//  Modernization beyond the C source: the line seed variant (walkers are
+//  born on the row 5 cells above the highest frozen particle and are
+//  turned back if they wander far above it, done when the forest is 5
+//  cells from the top); the gradient palette; the pacing and restart
+//  logic.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+var Diffuse = (function() {
+
+  function make(width, height, num, lineSeed, rng, multi) {
+    rng = rng || Math.random;
+    var grid = new Uint8Array(width * height);
+    var xb = new Int32Array(num), yb = new Int32Array(num);
+    var minx, maxx, miny, maxy, done = 0;
+    var cinc = 0, color = 1, cincfreq = 10, sticks = 0, totalSteps = 0;
+    var cx = Math.floor(width / 2), cy = Math.floor(height / 2);
+    var order = [];            // [x, y, color] of newly frozen particles
+
+    function rr(lo, hi) { return rng() * (hi - lo) + lo; }
+
+    if (lineSeed) {
+      for (var x = 0; x < width; x++) grid[(height - 1) * width + x] = 1;
+      minx = 0; maxx = width - 1; miny = maxy = height - 1;
+      for (var i = 0; i < num; i++) {
+        xb[i] = Math.floor(rr(0, width));
+        yb[i] = Math.max(0, Math.floor(rr(height - 40, height - 2)));
+      }
+    } else {
+      minx = maxx = Math.floor(width / 2 + 0.5);
+      miny = maxy = Math.floor(height / 2 + 0.5);
+      grid[miny * width + minx] = 1;
+      if (multi) {
+        // Author's note: more variety.  Several seeds scattered over the
+        // middle of the grid; they grow into separate corals that meet.
+        for (var k = 0; k < multi; k++) {
+          var mx = Math.floor(rr(width * 0.2, width * 0.8)), my = Math.floor(rr(height * 0.2, height * 0.8));
+          grid[my * width + mx] = 1;
+          if (mx < minx) minx = mx; if (mx > maxx) maxx = mx;
+          if (my < miny) miny = my; if (my > maxy) maxy = my;
+        }
+        cx = Math.floor((minx + maxx) / 2); cy = Math.floor((miny + maxy) / 2);
+      }
+      for (var i = 0; i < num; i++) {
+        xb[i] = Math.trunc(rr(-width / 10, width / 10)) + cx;
+        yb[i] = Math.trunc(rr(-height / 10, height / 10)) + cy;
+      }
+    }
+
+    function nearanother(x, y) {
+      for (var i = -1; i <= 1; i++)
+        for (var j = -1; j <= 1; j++) {
+          if (i === 0 && j === 0) continue;
+          var nx = x + i, ny = y + j;
+          nx = (nx < 0) ? width - 1 : (nx > width - 1) ? 0 : nx;
+          ny = (ny < 0) ? height - 1 : (ny > height - 1) ? 0 : ny;
+          if (grid[ny * width + nx]) return 1;
+        }
+      return 0;
+    }
+
+    function respawn(j) {
+      var nx, ny;
+      if (lineSeed) {
+        do {
+          nx = Math.floor(rr(0, width));
+          ny = Math.max(0, miny - 5);
+        } while (grid[ny * width + nx]);
+      } else {
+        do {
+          var ang = rr(0, Math.PI * 2);
+          nx = Math.max(cx - minx, maxx - cx) + 5;
+          ny = Math.max(cy - miny, maxy - cy) + 5;
+          nx = Math.trunc(Math.cos(ang) * nx + cx);
+          ny = Math.trunc(Math.sin(ang) * ny + cy);
+          nx = (nx < 0) ? 0 : (nx > width - 1) ? width - 1 : nx;
+          ny = (ny < 0) ? 0 : (ny > height - 1) ? height - 1 : ny;
+        } while (grid[ny * width + nx]);
+      }
+      xb[j] = nx; yb[j] = ny;
+    }
+
+    // One pass over all walkers (one "step" of diffuse.c's outer loop),
+    // in diffuse.c's walker order.  Returns the number of particles that
+    // froze.  If `limit` is given the pass stops early once that many
+    // froze and the next call resumes with the following walker, so the
+    // display can meter sticks per frame without changing the order.
+    var cursor = 0, active = num;
+    function step(limit) {
+      var stuck = 0;
+      if (limit === undefined) limit = 1e9;
+      for (var n = 0; n < active; n++) {
+        var j = cursor;
+        cursor = (cursor + 1) % active;
+        var nx = xb[j], ny = yb[j];
+        if (rng() < 0.5) nx += rng() < 0.5 ? 1 : -1;
+        else ny += rng() < 0.5 ? 1 : -1;
+
+        if (lineSeed) {
+          if (ny < miny - 8) ny = miny - 8;
+        } else {
+          nx = (nx < minx - 5) ? maxx + 5 : (nx > maxx + 5) ? minx - 5 : nx;
+          ny = (ny < miny - 5) ? maxy + 5 : (ny > maxy + 5) ? miny - 5 : ny;
+        }
+        nx = (nx < 0) ? width - 1 : (nx > width - 1) ? 0 : nx;
+        ny = (ny < 0) ? height - 1 : (ny > height - 1) ? 0 : ny;
+        xb[j] = nx; yb[j] = ny;
+
+        if (nearanother(nx, ny)) {
+          grid[ny * width + nx] = 1;
+          minx = (nx < minx) ? nx : minx;
+          maxx = (nx > maxx) ? nx : maxx;
+          miny = (ny < miny) ? ny : miny;
+          maxy = (ny > maxy) ? ny : maxy;
+          if (lineSeed) {
+            if (miny < 5) done = 1;
+          } else if (minx < 5 || miny < 5 || maxx > width - 6 || maxy > height - 6) done = 1;
+          order.push(nx, ny, color);
+          sticks++; stuck++;
+          respawn(j);
+          cinc++;
+          if (cinc > cincfreq) {
+            if (color < 255) color++;
+            cinc = 0;
+          }
+          if (stuck >= limit) break;
+        }
+      }
+      if (cursor === 0) totalSteps++;
+      return stuck;
+    }
+
+    var self = {
+      width: width, height: height, num: num, lineSeed: lineSeed,
+      grid: grid, xb: xb, yb: yb, order: order, step: step,
+      get done() { return done; }, get sticks() { return sticks; },
+      get color() { return color; }, get steps() { return totalSteps; },
+      get box() { return [minx, miny, maxx, maxy]; },
+      set cincfreq(v) { cincfreq = v; }, get cincfreq() { return cincfreq; },
+      // Reviewer's addition: the number of walkers in play grows with the
+      // aggregate (diffuse.c uses 20).  With all 1200 walkers active from
+      // the start the tiny confinement box is saturated and the seed
+      // grows as a solid blob instead of branches.
+      set active(v) { v = Math.max(1, Math.min(num, v | 0)); if (v !== active) { active = v; cursor = 0; } },
+      get active() { return active; }
+    };
+    return self;
+  }
+
+  return { make: make };
+})();
+
+if (typeof window !== "undefined") window.onload = function() {
+
+  var canvas = document.getElementById("viewport");
+  var ctx = canvas.getContext("2d");
+  var agg = document.createElement("canvas");
+  var actx = agg.getContext("2d");
+  var done = 0;
+  var W, H, cw, ch, scale, sim, lineSeed = false;
+  var NUM = 1200;
+  var phase = 0, t0 = 0;               // 0 grow, 1 hold, 2 fade
+  var HOLDMS = 4000, FADEMS = 3000;
+  var drawn = 0, frame = 0;
+
+  // Gradient: deep violet -> magenta -> pale gold, indexed by color level.
+  var LUT = new Float32Array(256 * 3);
+  (function() {
+    var stops = [[18, 26, 88], [36, 92, 176], [110, 190, 222], [244, 236, 205]];
+    for (var i = 0; i < 256; i++) {
+      var u = i / 255 * (stops.length - 1), k = Math.min(stops.length - 2, Math.floor(u)), f = u - k;
+      for (var c = 0; c < 3; c++) LUT[i * 3 + c] = stops[k][c] + (stops[k + 1][c] - stops[k][c]) * f;
+    }
+  })();
+
+  var runMode = 0;   // 0 point, 1 multi-point, 2 line
+  function newRun() {
+    runMode = (runMode + 1) % 3;
+    var h = location.hash.slice(1);                       // QA hook only
+    if (h === "point") runMode = 0; else if (h === "multi") runMode = 1; else if (h === "line") runMode = 2;
+    lineSeed = runMode === 2;
+    sim = Diffuse.make(cw, ch, NUM, lineSeed, null, runMode === 1 ? 3 + Math.floor(Math.random() * 4) : 0);
+    // Expected particle count: DLA has dimension ~1.7 from a point; the
+    // forest fills roughly a third of its area.
+    var expect = lineSeed ? cw * ch * 0.1 : Math.pow(Math.min(cw, ch) / 2, 1.71) * 1.6;
+    sim.cincfreq = Math.max(1, Math.round(expect / 250));
+    drawn = 0; frame = 0;
+    phase = 0; t0 = performance.now();
+    actx.globalCompositeOperation = "source-over";
+    actx.fillStyle = "#000";
+    actx.fillRect(0, 0, agg.width, agg.height);
+    if (lineSeed) {
+      // Draw the seed row faintly.
+      actx.fillStyle = "rgba(18,26,88,0.5)";
+      actx.fillRect(0, (ch - 1) * scale, agg.width, scale);
+    }
+  }
+
+  function init() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    if (canvas.width === 0 || canvas.height === 0) return;
+    var s = Math.min(1, 600 / canvas.width, 400 / canvas.height);
+    cw = Math.max(40, Math.floor(canvas.width * s));
+    ch = Math.max(40, Math.floor(canvas.height * s));
+    scale = canvas.width / cw;
+    agg.width = canvas.width; agg.height = canvas.height;
+    runMode = (runMode + 2) % 3;   // newRun advances it, so a resize keeps the mode
+    newRun();
+  }
+
+  function drawStuck(n) {
+    var o = sim.order;
+    actx.globalCompositeOperation = "lighter";
+    var r = Math.max(1.0, scale * 0.9);
+    for (var k = drawn; k < n; k++) {
+      var x = (o[k * 3] + 0.5) * scale, y = (o[k * 3 + 1] + 0.5) * scale, c = o[k * 3 + 2] * 3;
+      var R = LUT[c] | 0, G = LUT[c + 1] | 0, B = LUT[c + 2] | 0;
+      var g = actx.createRadialGradient(x, y, 0, x, y, r * 2.6);
+      g.addColorStop(0, "rgba(" + R + "," + G + "," + B + ",0.9)");
+      g.addColorStop(0.4, "rgba(" + R + "," + G + "," + B + ",0.12)");
+      g.addColorStop(1, "rgba(" + R + "," + G + "," + B + ",0)");
+      actx.fillStyle = g;
+      actx.beginPath(); actx.arc(x, y, r * 2.6, 0, 6.2832); actx.fill();
+    }
+    drawn = n;
+  }
+
+  function loop(now) {
+    window.requestAnimationFrame(loop);
+    if (done) { t0 += now - lastT; lastT = now; return; }
+    lastT = now;
+    if (canvas.width === 0 || canvas.clientWidth !== W || canvas.clientHeight !== H) { init(); return; }
+    if (!sim) return;
+    frame++;
+    if (phase === 0) {
+      // Per-frame budget: walker passes, and a stick cap that ramps up so
+      // the seed's first branches appear slowly.
+      var cap = Math.min(40, 1 + Math.floor(frame / 30));
+      var bb = sim.box, ext = Math.max(bb[2] - bb[0], bb[3] - bb[1]);
+      sim.active = sim.lineSeed ? Math.min(NUM, 200 + ext * 12) : Math.min(NUM, 20 + ext * 12);
+      var passes = 0, stuck = 0, tstart = performance.now();
+      while (!sim.done && stuck < cap && passes < 60 && performance.now() - tstart < 9) {
+        stuck += sim.step(cap - stuck); passes++;
+      }
+      drawStuck(sim.order.length / 3);
+      if (sim.done) { phase = 1; t0 = now; }
+    } else if (phase === 1) {
+      if (now - t0 > HOLDMS) { phase = 2; t0 = now; }
+    }
+    ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = 1;
+    ctx.drawImage(agg, 0, 0);
+    if (phase === 2) {
+      var u = Math.min(1, (now - t0) / FADEMS);
+      ctx.fillStyle = "rgba(0,0,0," + u + ")";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      if (u >= 1) newRun();
+    }
+  }
+
+  var lastT = 0;
+  window.onclick = function() { done = !done; };
+  var rt;
+  window.onresize = function() { clearTimeout(rt); rt = setTimeout(init, 150); };
+  init();
+  lastT = performance.now();
+  window.requestAnimationFrame(loop);
+}
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>

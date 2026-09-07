@@ -1,123 +1,50 @@
 <!DOCTYPE html><html><head>
+<meta charset="utf-8">
 <title>flake.org</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Gary William Flake. Live programs from The Computational Beauty of Nature.">
 <style>
   * { margin: 0; padding: 0; }
-  html, body, #viewport { width: 100%; height: 100%; }
+  html, body { width: 100%; height: 100%; background: #000; overflow: hidden; }
+  iframe { width: 100%; height: 100%; border: 0; display: block; }
 </style>
 <script type="text/javascript">
-
 //////////////////////////////////////////////////////////////////////////////
-
+//
+//  flake.org - each visit shows one program from "The Computational Beauty
+//  of Nature" full screen, chosen at random.  No UI; click to pause.
+//
+//  - #name in the URL pins a demo (flake.org/#lorenz).
+//  - The last few demos shown in this browser are remembered so a return
+//    visit gets something different.
+//  - The WebGL demos are skipped if the browser has no WebGL.
+//  - gallery.html lists everything.
+//
+//////////////////////////////////////////////////////////////////////////////
 window.onload = function() {
-
-  var sz = 4, gap = 1, delay = 2, decay = 0.99, pcnt = 0.35;
-  var canvas = document.getElementById("viewport");
-  var width = canvas.clientWidth;
-  var height = canvas.clientHeight;
-  var context = canvas.getContext("2d");
-  var cw = Math.floor((width - gap) / (sz + gap));
-  var ch = Math.floor((height - gap) / (sz + gap));
-  var done = 0;
-  var state, newstate, gray;
-
-//////////////////////////////////////////////////////////////////////////////
-
-  function init() {
-    canvas.width = width = cw * (sz + gap) + gap;
-    canvas.height = height = ch * (sz + gap) + gap;
-    state = new Array(ch);
-    newstate = new Array(ch);
-    gray = new Array(ch);
-    for (var i = 0; i < ch; i++) {
-      state[i] = new Array(cw)
-      newstate[i] = new Array(cw)
-      gray[i] = new Array(cw)
-    }
-
-    window.onclick = function() { done = !done; };
-    context.fillStyle = "rgb(40,40,40)";
-    context.fillRect(0, 0, width, height);
-    for (var i = 0; i < ch; i++)
-      for (var j = 0; j < cw; j++) {
-        state[i][j] = Math.random() > pcnt ? 1 : 0;
-        gray[i][j] = state[i][j] ? 0 : 255;
-      }
+  var DEMOS = [
+    "life", "ifs", "lsys", "mandel", "julia", "bifur1d", "lorenz", "henwarp",
+    "ca", "hp", "vants", "termites", "boids", "diffuse", "gsw", "sipd",
+    "hopfield", "mlp"
+  ];
+  var WEBGL = { mandel: 1, julia: 1 };
+  var pick = decodeURIComponent(location.hash.slice(1));
+  if (DEMOS.indexOf(pick) < 0) {
+    var pool = DEMOS.slice(), recent = [];
+    try { recent = JSON.parse(localStorage.getItem("flake.recent") || "[]"); } catch (e) {}
+    var gl = 0;
+    try { var c = document.createElement("canvas"); gl = !!(c.getContext("webgl") || c.getContext("experimental-webgl")); } catch (e) {}
+    pool = pool.filter(function(d) { return (gl || !WEBGL[d]) && recent.indexOf(d) < 0; });
+    if (!pool.length) pool = DEMOS.slice();
+    pick = pool[Math.floor(Math.random() * pool.length)];
+    recent.push(pick); while (recent.length > 6) recent.shift();
+    try { localStorage.setItem("flake.recent", JSON.stringify(recent)); } catch (e) {}
   }
-
-//////////////////////////////////////////////////////////////////////////////
-
-  function drawCell(i, j, color) {
-    context.fillStyle = color;
-    context.fillRect(gap + i * (sz + gap), gap + j * (sz + gap), sz, sz);
-  }
-
-//////////////////////////////////////////////////////////////////////////////
-
-  function drawCells() {
-    for (i = 0; i < ch; i++)
-      for (j = 0; j < cw; j++) {
-        var val = state[i][j] ? 0 : 255;
-        if (val == 0)
-          gray[i][j] = val;
-        else {
-          val =  gray[i][j] = Math.ceil(
-            decay * gray[i][j] + (1 - decay) * val);
-          val = Math.floor(256 + (val - 256) / 2);
-        }
-        val = 255 - val;
-        var color = "rgb(" + val + "," + val + "," + val + ")";
-        drawCell(j, i, color);
-      }
-  }
-
-//////////////////////////////////////////////////////////////////////////////
-
-  function updateState() {
-    for (var i = 0; i < ch; i++) {
-      for (var j = 0; j < cw; j++) {
-        var sum = 0;
-        for (var k = -1; k <= 1; k++) {
-          for (var l = -1; l <= 1; l++) {
-            if (k == 0 && l == 0) continue;
-            var ni = (i + k + ch) % ch;
-            var nj = (j + l + cw) % cw;
-            sum += state[ni][nj];
-          }
-        }
-        rule = "2333"
-        newstate[i][j] = state[i][j];
-        if (sum < parseInt(rule[0]) || sum > parseInt(rule[1]))
-          newstate[i][j] = 0;
-        if (sum >= parseInt(rule[2]) && sum <= parseInt(rule[3]))
-          newstate[i][j] = 1;
-      }
-    }
-    var temp = state;
-    state = newstate;
-    newstate = temp;
-  }
-
-//////////////////////////////////////////////////////////////////////////////
-
-  function loop() {
-    if (!done) {
-      window.requestAnimationFrame(function () {
-        setTimeout(loop, delay);
-      });
-      updateState();
-      drawCells();
-    }
-    else
-      setTimeout(loop, 250);
-  }
-
-//////////////////////////////////////////////////////////////////////////////
-
-  init();
-  loop();
-}
-
-//////////////////////////////////////////////////////////////////////////////
-
+  var f = document.createElement("iframe");
+  f.src = pick + ".html";
+  f.setAttribute("allow", "fullscreen");
+  document.body.appendChild(f);
+  window.onhashchange = function() { location.reload(); };
+};
 </script></head>
-<body><canvas id="viewport"></canvas></body></html>
+<body></body></html>

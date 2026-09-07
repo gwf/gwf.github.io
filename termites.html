@@ -1,0 +1,276 @@
+<!DOCTYPE html><html><head>
+<title>termites</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  termites - termites gathering wood chips into piles, from "The
+//  Computational Beauty of Nature" (src/termites.c).
+//
+//  Each termite does a biased random walk on a torus: every step it turns
+//  -45, 0 or +45 degrees (equal odds) and moves one cell in one of eight
+//  directions.  "Carrying" a chip means a chip sits on the termite's own
+//  cell.  Rules, verbatim from termites.c:
+//    - carrying, next cell empty:  the chip moves with her;
+//    - carrying, next cell has a chip: she reverses direction and steps
+//      away, leaving her chip behind (dropped next to the other one);
+//    - not carrying: she just moves (onto a chip = she picks it up).
+//  No leader, no global plan; the chips nonetheless end up in a few piles.
+//
+//  Curated parameters: ~100 termites (scaled with grid area, 40..120) on a
+//  grid of at most 320x200 cells.  Each run draws its own chip density
+//  from 0.18-0.35 (termites.c's default is 0.3).  The clock ramps from
+//  3000 time steps per second at the start of a run to 20000 by 50 s, so
+//  the first seconds are readable and the piles then consolidate quickly.
+//  Measured headlessly on 320x200 with 100 termites at density 0.28: ~3300
+//  chip clusters at the start, ~560 after 25k steps, ~250 after 100k, ~130
+//  by 500k and a slowly drifting plateau after that; with the ramp, 500k
+//  steps arrive about 45 s into a run, so the plateau (clear piles) is
+//  reached within the first minute.
+//
+//  Timeline: the 8-connected chip-cluster count is measured every 3 s.
+//  When it has not made a new low (by >3%) for 25 s (after at least 45 s of
+//  running), or after 100 s, the scene fades to black and a fresh random
+//  field starts with a new density and a new warm chip hue.
+//
+//  Modernization: chips drawn as warm dots (a different tan/amber/rose hue
+//  each run), termites as bright small dots with short fading trails (a
+//  translucent overlay layer), and the automatic fade/restart cycle.  The
+//  simulation is unchanged.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+// ---- Simulation core: faithful port of termites.c --------------------------
+
+var TERMITE_DIR = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]];
+
+function Termites(W, H, num, dense) {
+  this.W = W; this.H = H; this.num = num;
+  this.chips = new Uint8Array(W * H);
+  this.tx = new Int32Array(num);
+  this.ty = new Int32Array(num);
+  this.td = new Int32Array(num);
+  for (var i = 0; i < num; i++) {
+    this.tx[i] = (Math.random() * W) | 0;   // random_range(0, width)
+    this.ty[i] = (Math.random() * H) | 0;
+    this.td[i] = (Math.random() * 8) | 0;
+  }
+  this.total = 0;
+  for (var k = 0; k < W * H; k++)
+    if (Math.random() < dense) { this.chips[k] = 1; this.total++; }
+  this.steps = 0;
+}
+
+// n time steps; in each, every termite takes one step (termites.c order).
+Termites.prototype.step = function(n) {
+  var W = this.W, H = this.H, num = this.num, chips = this.chips;
+  var tx = this.tx, ty = this.ty, td = this.td, DIR = TERMITE_DIR;
+  for (var i = 0; i < n; i++) {
+    for (var j = 0; j < num; j++) {
+      // newstep(): turn -45/0/+45 and move.
+      var d = (td[j] + (((Math.random() * 3) | 0) - 1) + 8) % 8;
+      td[j] = d;
+      var nx = (tx[j] + DIR[d][0] + W) % W;
+      var ny = (ty[j] + DIR[d][1] + H) % H;
+      var here = ty[j] * W + tx[j], there = ny * W + nx;
+      if (chips[here] && !chips[there]) {
+        chips[here] = 0;
+        tx[j] = nx; ty[j] = ny;
+        chips[there] = 1;
+      } else if (chips[here] && chips[there]) {
+        td[j] = (d + 4) % 8;
+        tx[j] = (tx[j] + DIR[td[j]][0] + W) % W;
+        ty[j] = (ty[j] + DIR[td[j]][1] + H) % H;
+      } else {
+        tx[j] = nx; ty[j] = ny;
+      }
+    }
+  }
+  this.steps += n;
+};
+
+// Number of 8-connected clusters of chips (used only to detect that the
+// piles have stopped merging).
+Termites.prototype.clusters = function() {
+  var W = this.W, H = this.H, chips = this.chips;
+  var seen = new Uint8Array(W * H), n = 0, stack = [];
+  for (var s = 0; s < W * H; s++) {
+    if (!chips[s] || seen[s]) continue;
+    n++; seen[s] = 1; stack.push(s);
+    while (stack.length) {
+      var c = stack.pop(), cx = c % W, cy = (c / W) | 0;
+      for (var dy = -1; dy <= 1; dy++)
+        for (var dx = -1; dx <= 1; dx++) {
+          var q = ((cy + dy + H) % H) * W + (cx + dx + W) % W;
+          if (chips[q] && !seen[q]) { seen[q] = 1; stack.push(q); }
+        }
+    }
+  }
+  return n;
+};
+
+// ---- Presentation --------------------------------------------------------
+
+window.onload = function() {
+
+  var canvas = document.getElementById("viewport");
+  var ctx = canvas.getContext("2d");
+  var done = 0;
+
+  var MAX_COLS = 320, MAX_ROWS = 200, MIN_CELL = 4;
+  var DENSE_MIN = 0.18, DENSE_MAX = 0.35;
+  var RATE0 = 3000, RATE1 = 20000, RAMP = 50000, MAX_STEPS_FRAME = 800;
+  var RUN_LIMIT = 100000, MIN_RUN = 45000, STALL = 25000, CHECK = 3000;
+  var FADE_OUT = 3000, FADE_IN = 2000;
+  var SUB = 3;   // offscreen sub-pixels per cell: a chip is a 2x2 dot in a 3x3 cell
+
+  var W = 0, H = 0, cols = 0, rows = 0;
+  var off, offctx, img, pix, trail, trailctx;
+  var sim = null;
+  var phase = 'in', phaseT0 = 0, fade = 0, runStart = 0, acc = 0;
+  var lastCheck = 0, best = 1e9, bestT = 0;
+
+  var CHIP = [222, 176, 118], BG = [7, 5, 4];
+  // Warm chip hues, one per run: [hue, saturation, lightness].
+  var CHIP_HUES = [[34, 0.62, 0.66], [22, 0.70, 0.62], [44, 0.58, 0.64], [8, 0.55, 0.64], [352, 0.45, 0.66], [28, 0.50, 0.70]];
+  var hueIdx = Math.floor(Math.random() * CHIP_HUES.length);
+
+  function hsl2rgb(h, s, l) {
+    var c = (1 - Math.abs(2 * l - 1)) * s, hp = h / 60, x = c * (1 - Math.abs(hp % 2 - 1));
+    var r = 0, g = 0, b = 0;
+    if (hp < 1) { r = c; g = x; } else if (hp < 2) { r = x; g = c; }
+    else if (hp < 3) { g = c; b = x; } else if (hp < 4) { g = x; b = c; }
+    else if (hp < 5) { r = x; b = c; } else { r = c; b = x; }
+    var m = l - c / 2;
+    return [Math.round((r + m) * 255), Math.round((g + m) * 255), Math.round((b + m) * 255)];
+  }
+
+  function stepRate(el) { return RATE0 + (RATE1 - RATE0) * smooth(el / RAMP); }
+
+  function newRun(now) {
+    var num = Math.max(40, Math.min(120, Math.round(cols * rows / 640)));
+    var dense = DENSE_MIN + Math.random() * (DENSE_MAX - DENSE_MIN);
+    var h = CHIP_HUES[hueIdx]; hueIdx = (hueIdx + 1) % CHIP_HUES.length;
+    CHIP = hsl2rgb(h[0], h[1], h[2]);
+    sim = new Termites(cols, rows, num, dense);
+    if (trailctx) trailctx.clearRect(0, 0, trail.width, trail.height);
+    runStart = now; lastCheck = now; best = 1e9; bestT = now; acc = 0;
+    // Background of the chip image.
+    for (var p = 0; p < pix.length; p += 4) { pix[p] = BG[0]; pix[p + 1] = BG[1]; pix[p + 2] = BG[2]; }
+  }
+
+  function init() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    if (W === 0 || H === 0) { canvas.width = 0; canvas.height = 0; return; }
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    var cell = Math.max(MIN_CELL, W / MAX_COLS, H / MAX_ROWS);
+    var ncols = Math.max(16, Math.floor(W / cell));
+    var nrows = Math.max(16, Math.floor(H / cell));
+    if (!off) { off = document.createElement("canvas"); offctx = off.getContext("2d"); }
+    if (!trail) { trail = document.createElement("canvas"); trailctx = trail.getContext("2d"); }
+    trail.width = canvas.width; trail.height = canvas.height;
+    if (ncols !== cols || nrows !== rows || !sim) {
+      cols = ncols; rows = nrows;
+      off.width = cols * SUB; off.height = rows * SUB;
+      img = offctx.createImageData(cols * SUB, rows * SUB);
+      pix = img.data;
+      for (var i = 3; i < pix.length; i += 4) pix[i] = 255;
+      newRun(performance.now());
+      phase = 'in'; phaseT0 = performance.now(); fade = 0;
+    }
+  }
+
+  function render() {
+    var chips = sim.chips, ow = cols * SUB;
+    for (var y = 0; y < rows; y++) {
+      var r0 = (y * SUB) * ow, r1 = (y * SUB + 1) * ow;
+      for (var x = 0; x < cols; x++) {
+        var c = chips[y * cols + x], col = c ? CHIP : BG;
+        var x0 = x * SUB;
+        var p0 = (r0 + x0) * 4, p1 = (r1 + x0) * 4;
+        pix[p0] = col[0]; pix[p0 + 1] = col[1]; pix[p0 + 2] = col[2];
+        pix[p0 + 4] = col[0]; pix[p0 + 5] = col[1]; pix[p0 + 6] = col[2];
+        pix[p1] = col[0]; pix[p1 + 1] = col[1]; pix[p1 + 2] = col[2];
+        pix[p1 + 4] = col[0]; pix[p1 + 5] = col[1]; pix[p1 + 6] = col[2];
+      }
+    }
+    offctx.putImageData(img, 0, 0);
+
+    var cw = canvas.width / cols, ch = canvas.height / rows, r = Math.max(cw, ch);
+    trailctx.globalCompositeOperation = "destination-out";
+    trailctx.fillStyle = "rgba(0,0,0,0.10)";
+    trailctx.fillRect(0, 0, trail.width, trail.height);
+    trailctx.globalCompositeOperation = "source-over";
+    for (var j = 0; j < sim.num; j++) {
+      var x = (sim.tx[j] + 0.33) * cw, yy = (sim.ty[j] + 0.33) * ch;
+      var carrying = sim.chips[sim.ty[j] * cols + sim.tx[j]];
+      trailctx.fillStyle = carrying ? "rgba(255,200,120,0.30)" : "rgba(255,245,225,0.22)";
+      trailctx.beginPath(); trailctx.arc(x, yy, r * 1.3, 0, 6.2832); trailctx.fill();
+      trailctx.fillStyle = "rgba(255,252,240,0.95)";
+      trailctx.beginPath(); trailctx.arc(x, yy, r * 0.5, 0, 6.2832); trailctx.fill();
+    }
+
+    ctx.globalCompositeOperation = "source-over";
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    ctx.drawImage(off, 0, 0, off.width, off.height, 0, 0, canvas.width, canvas.height);
+    ctx.globalCompositeOperation = "lighter";
+    ctx.drawImage(trail, 0, 0);
+    ctx.globalCompositeOperation = "source-over";
+    if (fade < 1) {
+      ctx.fillStyle = "rgba(0,0,0," + (1 - fade).toFixed(3) + ")";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  function smooth(u) { u = Math.max(0, Math.min(1, u)); return u * u * (3 - 2 * u); }
+
+  var lastT = 0;
+  function loop(now) {
+    window.requestAnimationFrame(loop);
+    if (done) { var d = now - lastT; lastT = now; runStart += d; phaseT0 += d; lastCheck += d; bestT += d; return; }
+    var dt = Math.min(100, now - lastT); lastT = now;
+    if (canvas.width === 0 || canvas.clientWidth !== W || canvas.clientHeight !== H) { init(); return; }
+
+    acc += dt * stepRate(now - runStart) / 1000;
+    var steps = Math.min(MAX_STEPS_FRAME, acc | 0);
+    acc -= steps;
+
+    if (phase === 'run') {
+      if (steps) sim.step(steps);
+      var el = now - runStart;
+      if (now - lastCheck > CHECK) {
+        lastCheck = now;
+        var n = sim.clusters();
+        if (n < best * 0.97) { best = n; bestT = now; }
+      }
+      if (el > RUN_LIMIT || (el > MIN_RUN && now - bestT > STALL)) { phase = 'out'; phaseT0 = now; }
+    } else if (phase === 'out') {
+      if (steps) sim.step(steps >> 1);
+      var u = (now - phaseT0) / FADE_OUT;
+      fade = 1 - smooth(u);
+      if (u >= 1) { newRun(now); phase = 'in'; phaseT0 = now; fade = 0; }
+    } else {
+      if (steps) sim.step(steps);
+      var v = (now - phaseT0) / FADE_IN;
+      fade = smooth(v);
+      if (v >= 1) { phase = 'run'; fade = 1; }
+    }
+    render();
+  }
+
+  window.onclick = function() { done = !done; };
+  var rt;
+  window.onresize = function() { clearTimeout(rt); rt = setTimeout(init, 150); };
+  init();
+  lastT = performance.now();
+  window.requestAnimationFrame(loop);
+};
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>

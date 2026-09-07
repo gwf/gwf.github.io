@@ -1,0 +1,256 @@
+<!DOCTYPE html><html><head>
+<title>julia</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  julia - Julia sets, from "The Computational Beauty of Nature"
+//  (src/julia.c).
+//
+//  Every pixel is a starting point z = x + yi that is iterated through
+//  z <- z^2 + c exactly as in julia.c (u = a*a, v = b*b, w = 2ab,
+//  a = u - v + cr, b = w + ci, bail out when u + v > BAIL) in a WebGL
+//  fragment shader.  The initial view is julia.c's default framing
+//  (ulx = -2, uly = 1.5, lly = -1.5, i.e. a 3-unit-tall window centred on
+//  the origin; on portrait screens the 4-unit-wide window is kept instead).
+//
+//  Curated parameters:
+//    c wanders along the boundary of the Mandelbrot set's main cardioid
+//    (c = e^{it}/2 - e^{2it}/4) and of its period-2 bulb (c = -1 + e^{it}/4),
+//    walked at constant arc-length speed (one full lap in ~6 minutes), and
+//    pushed slightly outside/inside the boundary along the outward normal by
+//    a slow three-sine "noise" of amplitude 0.035.  On the boundary the
+//    Julia set is a dendrite; a hair inside it is connected with a fat
+//    interior; a hair outside it crumbles into Cantor dust -- so the set
+//    morphs continuously between all three.  julia.c's default
+//    c = 0.3 + 0.6i (a dust just outside the cardioid) is visited exactly
+//    once per lap via a smooth bump in the offset.
+//    maxit = 400 (julia.c uses 160; more is needed for the dust phases to
+//    show their fine bands), BAIL = 256 instead of 16 so the continuous
+//    escape-time colouring has no ridges at the bailout circle.
+//
+//  Modernized beyond julia.c: continuous (fractional) escape-time colouring
+//    instead of k % LEVELS, a single slowly cycling teal->violet->white
+//    gradient instead of grey levels, a gentle "breathing" zoom, and a
+//    render-resolution cap that adapts to frame time so 4K/5K screens stay
+//    at 60 fps.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+window.onload = function() {
+
+  var canvas = document.getElementById("viewport");
+  var done = 0;
+  var gl = null, prog = null, uni = {}, quad = null;
+  var W = 0, H = 0, RW = 0, RH = 0;   // css size, render size
+  var quality = 1.0;                   // adaptive render-resolution factor
+  var MAXPIX = 1600000;                // hard cap on rendered pixels
+  var MAXIT = 400, BAIL = 256.0;
+
+  var VS =
+    "attribute vec2 p; varying vec2 v;" +
+    "void main() { v = p; gl_Position = vec4(p, 0.0, 1.0); }";
+
+  var FS =
+    "precision highp float;\n" +
+    "varying vec2 v;\n" +
+    "uniform vec2 u_c;\n" +          // cr, ci
+    "uniform vec2 u_half;\n" +       // half-extents of the view in complex units
+    "uniform int u_maxit;\n" +
+    "uniform float u_phase;\n" +
+    "uniform float u_fade;\n" +
+    "const int MAXLOOP = 2048;\n" +
+    "const float BAIL = " + BAIL.toFixed(1) + ";\n" +
+    "vec3 palette(float x) {\n" +
+    "  float t = 1.0 - abs(2.0 * fract(x) - 1.0);\n" +
+    "  vec3 c0 = vec3(0.01, 0.02, 0.06);\n" +
+    "  vec3 c1 = vec3(0.03, 0.26, 0.32);\n" +
+    "  vec3 c2 = vec3(0.30, 0.22, 0.62);\n" +
+    "  vec3 c3 = vec3(0.88, 0.86, 0.96);\n" +
+    "  vec3 c = mix(c0, c1, smoothstep(0.0, 0.40, t));\n" +
+    "  c = mix(c, c2, smoothstep(0.40, 0.75, t));\n" +
+    "  c = mix(c, c3, smoothstep(0.75, 1.0, t));\n" +
+    "  return c;\n" +
+    "}\n" +
+    "void main() {\n" +
+    "  float x = v.x * u_half.x;\n" +
+    "  float y = v.y * u_half.y;\n" +
+    "  float a = x, b = y;\n" +
+    "  float k = 0.0, m = 0.0;\n" +
+    "  bool esc = false;\n" +
+    "  for (int i = 1; i <= MAXLOOP; i++) {\n" +
+    "    if (i > u_maxit) break;\n" +
+    "    float u = a * a;\n" +
+    "    float w2 = b * b;\n" +
+    "    float w = 2.0 * a * b;\n" +
+    "    a = u - w2 + u_c.x;\n" +
+    "    b = w + u_c.y;\n" +
+    "    if (u + w2 > BAIL) { k = float(i); m = u + w2; esc = true; break; }\n" +
+    "  }\n" +
+    "  if (!esc) { gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0); return; }\n" +
+    "  float mu = k - log2(max(log(m) * 0.5, 1e-6));\n" +
+    "  mu = max(mu, 0.0);\n" +
+    "  float idx = log2(1.0 + mu) * 0.5 + u_phase;\n" +
+    "  vec3 col = palette(idx) * pow(clamp((mu - 1.0) / 14.0, 0.0, 1.0), 1.2);\n" +
+    "  gl_FragColor = vec4(col * u_fade, 1.0);\n" +
+    "}\n";
+
+  function compile(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { gl.deleteShader(s); return null; }
+    return s;
+  }
+
+  function buildProgram() {
+    var vs = compile(gl.VERTEX_SHADER, VS), fs = compile(gl.FRAGMENT_SHADER, FS);
+    if (!vs || !fs) return false;
+    prog = gl.createProgram();
+    gl.attachShader(prog, vs); gl.attachShader(prog, fs);
+    gl.bindAttribLocation(prog, 0, "p");
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return false;
+    ["u_c", "u_half", "u_maxit", "u_phase", "u_fade"].forEach(function(n) {
+      uni[n] = gl.getUniformLocation(prog, n);
+    });
+    quad = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, quad);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(0);
+    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+    gl.useProgram(prog);
+    return true;
+  }
+
+  function setupGL() {
+    var opts = { alpha: false, antialias: false, depth: false, stencil: false,
+                 preserveDrawingBuffer: false, powerPreference: "high-performance" };
+    gl = canvas.getContext("webgl", opts) || canvas.getContext("experimental-webgl", opts);
+    if (!gl) return false;
+    canvas.addEventListener("webglcontextlost", function(e) { e.preventDefault(); prog = null; }, false);
+    canvas.addEventListener("webglcontextrestored", function() { buildProgram(); RW = 0; }, false);
+    return buildProgram();
+  }
+
+  // Choose the render size from the css size, dpr, pixel cap and quality.
+  function fitCanvas() {
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    if (W === 0 || H === 0) return false;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var pw = W * dpr, ph = H * dpr;
+    var s = Math.min(1, Math.sqrt(MAXPIX / (pw * ph))) * quality;
+    var rw = Math.max(64, Math.round(pw * s)), rh = Math.max(64, Math.round(ph * s));
+    if (rw !== RW || rh !== RH) {
+      RW = rw; RH = rh;
+      canvas.width = RW; canvas.height = RH;   // css keeps it full-screen
+      gl.viewport(0, 0, RW, RH);
+    }
+    return true;
+  }
+
+  // ---- the wander path for c -------------------------------------------
+  // Arc-length parametrized: cardioid top half (length 2), bulb (pi/2),
+  // cardioid bottom half (length 2).
+  var LC = 2.0, LB = Math.PI / 2, LTOT = 2 * LC + LB;
+  var LAP = 360.0;                          // seconds per full lap
+  var TSTAR = 1.6112;                       // cardioid t nearest 0.3+0.6i
+  var LSTAR = 2 * (1 - Math.cos(TSTAR / 2));
+  var CSTAR = [0.3, 0.6];
+
+  function cardioid(t) {
+    return [Math.cos(t) / 2 - Math.cos(2 * t) / 4, Math.sin(t) / 2 - Math.sin(2 * t) / 4];
+  }
+  // Outward unit normal of the cardioid at t (curve runs counter-clockwise).
+  function cardioidNormal(t) {
+    var tx = -Math.sin(t) / 2 + Math.sin(2 * t) / 2, ty = Math.cos(t) / 2 - Math.cos(2 * t) / 2;
+    var l = Math.hypot(tx, ty); if (l < 1e-9) return [1, 0];
+    return [ty / l, -tx / l];
+  }
+  function smooth01(u) { u = Math.min(Math.max(u, 0), 1); return u * u * (3 - 2 * u); }
+
+  // Base point and outward normal at arc-length L, plus an envelope that
+  // tapers the normal offset to zero at the cusp and the two bulb joints
+  // (where the normal flips direction).
+  function pathAt(L) {
+    L = L - Math.floor(L / LTOT) * LTOT;
+    var base, n, env;
+    var TAPER = 0.18;
+    if (L < LC) {
+      var t = 2 * Math.acos(1 - L / 2);
+      base = cardioid(t); n = cardioidNormal(t);
+      env = smooth01(L / TAPER) * smooth01((LC - L) / TAPER);
+    } else if (L < LC + LB) {
+      var th = (L - LC) / 0.25;
+      base = [-1 + Math.cos(th) / 4, Math.sin(th) / 4]; n = [Math.cos(th), Math.sin(th)];
+      env = smooth01((L - LC) / TAPER) * smooth01((LC + LB - L) / TAPER);
+    } else {
+      var L2 = L - LC - LB;                     // 0..LC along the bottom half
+      var t2 = 2 * Math.PI - 2 * Math.acos(1 - (LC - L2) / 2);
+      base = cardioid(t2); n = cardioidNormal(t2);
+      env = smooth01(L2 / TAPER) * smooth01((LC - L2) / TAPER);
+    }
+    return { base: base, n: n, env: env, L: L };
+  }
+
+  function cAt(tau) {
+    var L = tau / LAP * LTOT;
+    var p = pathAt(L);
+    // Slow noise, pushes outward (+) into dust and inward (-) into fat sets.
+    var rho = 0.035 * (0.55 * Math.sin(tau * 2 * Math.PI / 23.0 + 0.7) +
+                       0.30 * Math.sin(tau * 2 * Math.PI / 37.0 + 2.1) +
+                       0.15 * Math.sin(tau * 2 * Math.PI / 61.0 + 4.0));
+    rho *= p.env;
+    // Bump that lands exactly on julia.c's default c = 0.3 + 0.6i.
+    var d = (p.L - LSTAR) / 0.12, g = Math.exp(-d * d);
+    var cr = p.base[0] + p.n[0] * rho * (1 - g) + (CSTAR[0] - p.base[0]) * g;
+    var ci = p.base[1] + p.n[1] * rho * (1 - g) + (CSTAR[1] - p.base[1]) * g;
+    return [cr, ci];
+  }
+
+  // ---- timing ------------------------------------------------------------
+  // Start on julia.c's default c = 0.3+0.6i (a dendrite) instead of at the
+  // cardioid cusp, where the set is a fat black island (author's note).
+  var TAU0 = LSTAR / LTOT * LAP;
+  var tau = TAU0, lastNow = 0, ema = 16, cooldown = 0;
+
+  function frame(now) {
+    window.requestAnimationFrame(frame);
+    var dt = lastNow ? now - lastNow : 16; lastNow = now;
+    if (done || !prog) return;
+    if (dt > 100) dt = 100;
+    ema += (dt - ema) * 0.1;
+    if (cooldown > 0) cooldown--;
+    else if (ema > 21 && quality > 0.35) { quality *= 0.9; cooldown = 30; }
+    else if (ema < 12.5 && quality < 1) { quality = Math.min(1, quality + 0.03); cooldown = 20; }
+    if (!fitCanvas()) return;
+
+    tau += dt / 1000;
+    var c = cAt(tau);
+    // Breathing zoom: +-12% about the julia.c framing.
+    var breath = 1 + 0.12 * Math.sin((tau - TAU0) * 2 * Math.PI / 47.0);
+    var hx, hy;
+    if (W / H >= 4 / 3) { hy = 1.5 * breath; hx = hy * W / H; }
+    else { hx = 2.0 * breath; hy = hx * H / W; }
+    var fade = smooth01((tau - TAU0) / 2.5);
+
+    gl.uniform2f(uni.u_c, c[0], c[1]);
+    gl.uniform2f(uni.u_half, hx, hy);
+    gl.uniform1i(uni.u_maxit, MAXIT);
+    gl.uniform1f(uni.u_phase, (tau * 0.012) % 1);
+    gl.uniform1f(uni.u_fade, fade);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+
+  if (!setupGL()) return;
+  window.onclick = function() { done = !done; };
+  window.onresize = function() { RW = 0; };
+  window.requestAnimationFrame(frame);
+}
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>

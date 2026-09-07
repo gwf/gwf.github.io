@@ -1,0 +1,154 @@
+<!DOCTYPE html><html><head>
+<title>flake.org</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  life - Conway's Game of Life (src/life.c), a variation on the flake.org
+//  page.  Same rule (2333), same 4 px cells with a 1 px gap, same slow gray
+//  decay of dead cells.  Two changes:
+//
+//  1. Rain instead of restart.  The page hashes each generation; when the
+//     world has been in a period-1 or period-2 state (still lifes and
+//     blinkers only) for ~90 generations, a soft-edged patch of random soup
+//     "rains" onto a random spot, grown in over a second so it reads as
+//     weather rather than a reset.  The world never dies and never hard
+//     cuts, and old debris stays in place and gets re-invaded.
+//
+//  2. Age tint.  A cell that was just born is drawn a little brighter and
+//     warmer than a cell that has survived many generations, so gliders
+//     and the fronts of expanding soup glow while stable debris settles
+//     into the same quiet gray as before.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+window.onload = function() {
+
+  var sz = 4, gap = 1, decay = 0.99, pcnt = 0.35;
+  var canvas = document.getElementById("viewport");
+  var ctx = canvas.getContext("2d");
+  var W, H, cw, ch, dpr;
+  var state, newstate, gray, age;
+  var done = 0, gen = 0;
+  var hashes = [], quiet = 0;
+  var rain = null;            // {x, y, r, t0}
+
+  function init() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    cw = Math.floor((W - gap) / (sz + gap));
+    ch = Math.floor((H - gap) / (sz + gap));
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var n = cw * ch;
+    state = new Uint8Array(n); newstate = new Uint8Array(n);
+    gray = new Float32Array(n); age = new Uint16Array(n);
+    for (var i = 0; i < n; i++) {
+      state[i] = Math.random() > pcnt ? 1 : 0;
+      gray[i] = state[i] ? 0 : 255;
+    }
+    ctx.fillStyle = "rgb(40,40,40)";
+    ctx.fillRect(0, 0, W, H);
+    hashes = []; quiet = 0; rain = null;
+  }
+
+  function updateState() {
+    var h = 2166136261 | 0, pop = 0;
+    for (var i = 0; i < ch; i++) {
+      var up = ((i - 1 + ch) % ch) * cw, row = i * cw, dn = ((i + 1) % ch) * cw;
+      for (var j = 0; j < cw; j++) {
+        var l = (j - 1 + cw) % cw, r = (j + 1) % cw;
+        var sum = state[up + l] + state[up + j] + state[up + r] +
+                  state[row + l] + state[row + r] +
+                  state[dn + l] + state[dn + j] + state[dn + r];
+        var k = row + j, s = state[k];
+        var ns = s;
+        if (sum < 2 || sum > 3) ns = 0;
+        if (sum === 3) ns = 1;
+        newstate[k] = ns;
+        if (ns) { pop++; h = Math.imul(h ^ (k + 1), 16777619); age[k] = s ? Math.min(age[k] + 1, 60000) : 0; }
+      }
+    }
+    var t = state; state = newstate; newstate = t;
+    // Period detection: compare with the hash two generations back.
+    hashes.push(h);
+    if (hashes.length > 3) hashes.shift();
+    if (hashes.length === 3 && (hashes[2] === hashes[1] || hashes[2] === hashes[0])) quiet++;
+    else quiet = 0;
+  }
+
+  function startRain(now) {
+    var r = Math.floor(Math.min(cw, ch) * (0.18 + Math.random() * 0.14));
+    rain = { x: r + Math.floor(Math.random() * (cw - 2 * r)),
+             y: r + Math.floor(Math.random() * (ch - 2 * r)), r: r, t0: now };
+    quiet = 0;
+  }
+
+  // Rain: over ~1.2 s, cells inside the disc are randomized with a soft
+  // edge, a few percent per generation so it grows in rather than pops.
+  function applyRain(now) {
+    var u = (now - rain.t0) / 1200;
+    if (u > 1) { rain = null; return; }
+    var r = rain.r, r2 = r * r;
+    for (var i = -r; i <= r; i++) for (var j = -r; j <= r; j++) {
+      var d2 = i * i + j * j; if (d2 > r2) continue;
+      var edge = 1 - d2 / r2;                       // soft edge
+      if (Math.random() < 0.06 * edge) {
+        var k = ((rain.y + i + ch) % ch) * cw + ((rain.x + j + cw) % cw);
+        state[k] = Math.random() > pcnt ? 1 : 0; age[k] = 0;
+      }
+    }
+  }
+
+  function drawCells() {
+    for (var i = 0; i < ch; i++)
+      for (var j = 0; j < cw; j++) {
+        var k = i * cw + j, val, col;
+        if (state[k]) {
+          gray[k] = 0;
+          // Age tint: newborn bright and warm, old cells plain light gray.
+          var a = age[k], f = a < 12 ? 1 - a / 12 : 0;
+          var L = 200 + 55 * f;
+          col = "rgb(" + (L | 0) + "," + ((L - 12 * f) | 0) + "," + ((L - 40 * f) | 0) + ")";
+        } else {
+          val = gray[k] = Math.ceil(decay * gray[k] + (1 - decay) * 255);
+          val = Math.floor(256 + (val - 256) / 2);
+          val = 255 - val;
+          col = "rgb(" + val + "," + val + "," + val + ")";
+        }
+        ctx.fillStyle = col;
+        ctx.fillRect(gap + j * (sz + gap), gap + i * (sz + gap), sz, sz);
+      }
+  }
+
+  var lastT = 0, acc = 0;
+  function loop(now) {
+    window.requestAnimationFrame(loop);
+    if (done) { lastT = now; return; }
+    if (canvas.width === 0 || canvas.clientWidth !== W || canvas.clientHeight !== H) init();
+    var dt = Math.min(now - lastT, 100); lastT = now;
+    acc += dt;
+    // ~40 generations per second, as the original's 2 ms delay effectively
+    // gives on most displays.
+    var steps = 0;
+    while (acc >= 25 && steps < 3) {
+      acc -= 25; steps++;
+      if (rain) applyRain(now);
+      updateState();
+      if (!rain && quiet > 90) startRain(now);
+    }
+    if (steps) drawCells();
+  }
+
+  window.onclick = function() { done = !done; };
+  init();
+  lastT = performance.now();
+  window.requestAnimationFrame(loop);
+}
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>

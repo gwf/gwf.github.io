@@ -1,0 +1,420 @@
+<!DOCTYPE html><html><head>
+<title>mlp</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  mlp - a multilayer perceptron learning a moving boundary, from "The
+//  Computational Beauty of Nature" (src/mlp.c).
+//
+//  The network is mlp.c verbatim: one hidden layer, sigmoid units
+//  everywhere (linout = 0), feedforward / feedback / update with
+//  momentum, one random training pattern per step:
+//      Delta(t+1) = mrate * Delta(t) - lrate * grad,  w += Delta.
+//  Parameters: numin = 2, numhid = 40, numout = 1, lrate = 0.25 and
+//  mrate = 0.5 (the C defaults), winit = 0.1.  numhid was raised from 20
+//  to 40 after the author found the two spirals too slow to solve; with
+//  40 the spirals separate in tens of seconds and the per-frame cost
+//  (50 training steps plus a 160x100 field evaluation every second
+//  frame) is still well under a millisecond per frame headlessly.
+//
+//  Modernization: instead of a static data file the training set is one
+//  of six 2-D problems, 2 x 180 points each, whose shape drifts slowly
+//  and continuously (a slow global rotation, plus a parameter wobble per
+//  set) so the boundary must keep chasing the data:
+//      two moons, two interleaved spirals, a disc inside a ring,
+//      XOR (four blobs), a 2x3 checkerboard, a sine-wave split.
+//  (A 3x3 checkerboard was tried and dropped: with 40 hidden units and
+//  the C learning rate it was still at RMS error 0.3 after two minutes,
+//  while the 2x3 board is solved in 15-20 s.)
+//  The RMS training error over the whole set is measured every third of
+//  a second.  Once a data set has been on screen for at least 25 s and
+//  the error has been flat for 8 s (no 4% improvement on its best value
+//  in that time; a solved set with error below 0.05 counts as flat too),
+//  or after 100 s regardless, the points crossfade to the next set:
+//  every point's position is interpolated over 3 s from its place in the
+//  old set to its place in the new one, so the swarm visibly reorganizes.
+//  The weights are KEPT across the crossfade, so the decision field is
+//  seen bending from the old fit to the new one rather than starting
+//  over; this is also what happens after a local minimum: the data moves
+//  on and the same weights are pushed toward a new solution.  The
+//  weights are re-drawn from scratch under a short fade only every five
+//  minutes, so the learning is seen again from zero now and then.
+//
+//  Rendering: 50 training steps per frame (3000/s): the C defaults put a
+//  rough linear boundary in place within a second and then take tens of
+//  seconds to bend it around the data, which is the learning the demo is
+//  meant to show.  The network's output p is evaluated every second
+//  frame on a coarse grid (about 160 x 100, capped) into an offscreen
+//  image and upscaled with smoothing.  The field is drawn as heat haze
+//  on near-black: a deep desaturated blue wash where p -> 0, a deep
+//  amber wash where p -> 1 (both around 10-17% luminance), and a soft
+//  warm ridge that glows only where |p - 0.5| is small, so the boundary
+//  is the bright thing and the classes are dim.  As the weights grow the
+//  ridge narrows on its own.  The training points sit on top as small
+//  bright dots with faint halos.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+window.onload = function() {
+
+  var canvas = document.getElementById("viewport");
+  var ctx = canvas.getContext("2d");
+  var done = 0;
+
+  // ---- The network, as mlp.c. ------------------------------------------
+
+  var numin = 2, numhid = 40, numout = 1;
+  var lrate = 0.25, mrate = 0.5, winit = 0.1;
+  var z = new Float64Array(numhid), yout = new Float64Array(numout);
+  var gz = new Float64Array(numhid), gy = new Float64Array(numout);
+  var u = new Float64Array(numhid * numin), gu = new Float64Array(numhid * numin), du = new Float64Array(numhid * numin);
+  var v = new Float64Array(numout * numhid), gv = new Float64Array(numout * numhid), dv = new Float64Array(numout * numhid);
+  var a = new Float64Array(numhid), ga = new Float64Array(numhid), da = new Float64Array(numhid);
+  var b = new Float64Array(numout), gb = new Float64Array(numout), db = new Float64Array(numout);
+
+  function rnd() { return Math.random() * 2 - 1; }
+  function sigmoid(x) { return 1 / (1 + Math.exp(-x)); }
+
+  function initialize() {
+    for (var i = 0; i < numhid; i++) { a[i] = rnd() * winit; da[i] = 0; }
+    for (var i = 0; i < numout; i++) { b[i] = rnd() * winit; db[i] = 0; }
+    for (var i = 0; i < numhid * numin; i++) { u[i] = rnd() * winit; du[i] = 0; }
+    for (var i = 0; i < numout * numhid; i++) { v[i] = rnd() * winit; dv[i] = 0; }
+  }
+
+  // feedforward on inputs (x0, x1); returns squared error against t.
+  function feedforward(x0, x1, t) {
+    var error = 0;
+    for (var i = 0; i < numhid; i++)
+      z[i] = sigmoid(a[i] + x0 * u[i * numin] + x1 * u[i * numin + 1]);
+    for (var i = 0; i < numout; i++) {
+      var s = b[i];
+      for (var j = 0; j < numhid; j++) s += z[j] * v[i * numhid + j];
+      yout[i] = sigmoid(s);
+      error += (yout[i] - t) * (yout[i] - t);
+    }
+    return error / numout;
+  }
+
+  function feedback(x0, x1, t) {
+    var error = 0;
+    for (var i = 0; i < numout; i++) {
+      gy[i] = yout[i] - t;
+      error += gy[i] * gy[i];
+      gy[i] *= yout[i] * (1 - yout[i]);
+      gb[i] = gy[i];
+    }
+    for (var i = 0; i < numhid; i++) {
+      gz[i] = 0;
+      for (var j = 0; j < numout; j++) {
+        gv[j * numhid + i] = gy[j] * z[i];
+        gz[i] += gy[j] * v[j * numhid + i];
+      }
+      gz[i] *= z[i] * (1 - z[i]);
+      ga[i] = gz[i];
+      gu[i * numin] = gz[i] * x0;
+      gu[i * numin + 1] = gz[i] * x1;
+    }
+    return error / numout;
+  }
+
+  function update() {
+    for (var i = 0; i < numhid; i++) {
+      da[i] = mrate * da[i] - lrate * ga[i]; a[i] += da[i];
+      for (var j = 0; j < numin; j++) {
+        var k = i * numin + j;
+        du[k] = mrate * du[k] - lrate * gu[k]; u[k] += du[k];
+      }
+    }
+    for (var i = 0; i < numout; i++) {
+      db[i] = mrate * db[i] - lrate * gb[i]; b[i] += db[i];
+      for (var j = 0; j < numhid; j++) {
+        var k = i * numhid + j;
+        dv[k] = mrate * dv[k] - lrate * gv[k]; v[k] += dv[k];
+      }
+    }
+  }
+
+  // Fast single-output evaluation for the display field only (training
+  // uses the exact sigmoid above): a 1/256-step lookup table with linear
+  // interpolation over [-16, 16].
+  var SIG = new Float32Array(32 * 256 + 2);
+  for (var q = 0; q < SIG.length; q++) SIG[q] = 1 / (1 + Math.exp(-(q / 256 - 16)));
+  function sigL(x) {
+    if (x <= -16) return 0; if (x >= 16) return 1;
+    var f = (x + 16) * 256, i = f | 0;
+    return SIG[i] + (SIG[i + 1] - SIG[i]) * (f - i);
+  }
+  function evalNet(x0, x1) {
+    var s = b[0];
+    for (var i = 0; i < numhid; i++)
+      s += v[i] * sigL(a[i] + x0 * u[i * numin] + x1 * u[i * numin + 1]);
+    return sigL(s);
+  }
+
+  // ---- The moving data sets. ---------------------------------------------
+
+  var NPC = 180, NPAT = NPC * 2, NDS = 6;
+  // Per-point persistent randoms: pt, pu, pv uniform in [0, 1), pn0/pn1
+  // gaussian (sd ~0.064).  Class = ty (0 for the first NPC points).
+  var pt = new Float64Array(NPAT), pu = new Float64Array(NPAT), pv = new Float64Array(NPAT);
+  var pn0 = new Float64Array(NPAT), pn1 = new Float64Array(NPAT);
+  var tx0 = new Float64Array(NPAT), tx1 = new Float64Array(NPAT), ty = new Float64Array(NPAT);
+  var wx = new Float64Array(NPAT), wy = new Float64Array(NPAT);   // world coords
+  function gauss() { var s = 0; for (var i = 0; i < 4; i++) s += Math.random(); return (s - 2) * 1.0; }
+  for (var i = 0; i < NPAT; i++) {
+    pt[i] = Math.random(); pu[i] = Math.random(); pv[i] = Math.random();
+    pn0[i] = gauss() * 0.11; pn1[i] = gauss() * 0.11;
+    ty[i] = i < NPC ? 0 : 1;
+  }
+
+  // Base (unrotated) position of point i in data set ds at time tsec.
+  // Inputs are fed to the net in [-1.5, 1.5]-ish units; world = same units.
+  var P2 = [0, 0];
+  function place(ds, i, tsec) {
+    var c = ty[i], u = pt[i], x, y;
+    switch (ds) {
+      case 0: {                                           // two moons
+        var gap = 0.30 + 0.22 * Math.sin(tsec * 0.061);
+        var reach = Math.PI * (0.95 + 0.2 * Math.sin(tsec * 0.037));
+        var dx = 0.9 + 0.25 * Math.sin(tsec * 0.029);
+        var th = u * reach;
+        if (!c) { x = Math.cos(th) - dx / 2; y = Math.sin(th) - gap / 2; }
+        else { x = dx / 2 - Math.cos(th); y = gap / 2 - Math.sin(th); }
+        x += pn0[i]; y += pn1[i];
+        break;
+      }
+      case 1: {                                           // two interleaved spirals
+        var turns = 1.15 + 0.15 * Math.sin(tsec * 0.041);
+        var th = u * turns * 6.2832 + (c ? Math.PI : 0);
+        var r = 0.22 + 1.15 * u;
+        x = r * Math.cos(th) + pn0[i] * 0.5; y = r * Math.sin(th) + pn1[i] * 0.5;
+        break;
+      }
+      case 2: {                                           // disc inside a ring
+        var th = u * 6.2832, r;
+        var squash = 1 + 0.18 * Math.sin(tsec * 0.053);
+        if (!c) r = Math.sqrt(pu[i]) * (0.62 + 0.08 * Math.sin(tsec * 0.047));
+        else r = 1.22 + (pu[i] - 0.5) * 0.28;
+        x = r * Math.cos(th) * squash + pn0[i] * 0.4; y = r * Math.sin(th) / squash + pn1[i] * 0.4;
+        break;
+      }
+      case 3: {                                           // XOR: four blobs
+        var sep = 0.72 + 0.14 * Math.sin(tsec * 0.043);
+        var q = pu[i] < 0.5 ? 0 : 1;                      // which of the class's two blobs
+        var sx = q ? 1 : -1, sy = (q ^ c) ? 1 : -1;
+        x = sx * sep + pn0[i] * 3.4; y = sy * sep + pn1[i] * 3.4;
+        break;
+      }
+      case 4: {                                           // 2x3 checkerboard
+        var cell = 1.0 + 0.08 * Math.sin(tsec * 0.049);
+        // cells (a, b), a = 0..1 columns, b = 0..2 rows; class = (a + b) odd
+        var k = Math.floor(pu[i] * 3), a = (k + c) & 1, b = k;
+        x = (a - 0.5 + (u - 0.5) * 0.7) * cell; y = (b - 1 + (pv[i] - 0.5) * 0.7) * cell;
+        break;
+      }
+      default: {                                          // sine-wave split
+        var amp = 0.5 + 0.15 * Math.sin(tsec * 0.039), freq = 2.0 + 0.5 * Math.sin(tsec * 0.031);
+        x = (u - 0.5) * 3.2;
+        var band = 0.16 + pv[i] * 0.75;
+        y = amp * Math.sin(freq * x) + (c ? -band : band) + pn1[i] * 0.5;
+        x += pn0[i] * 0.5;
+        break;
+      }
+    }
+    P2[0] = x; P2[1] = y;
+    return P2;
+  }
+
+  var ds = 0, fadeFrom = -1, fadeT0 = 0, FADE = 3000;
+  function ease(u) { return u < 0.5 ? 2 * u * u : -1 + (4 - 2 * u) * u; }
+
+  // Lay the current set out (blending from the previous one during a
+  // crossfade) and rotate everything slowly: full turn in ~140 s.
+  function layoutData(tsec, now) {
+    var rot = tsec * 0.045, cr = Math.cos(rot), sr = Math.sin(rot);
+    var f = fadeFrom >= 0 ? Math.min(1, (now - fadeT0) / FADE) : 1;
+    var m = ease(f);
+    for (var i = 0; i < NPAT; i++) {
+      var q = place(ds, i, tsec), x = q[0], y = q[1];
+      if (f < 1) { q = place(fadeFrom, i, tsec); x = q[0] + (x - q[0]) * m; y = q[1] + (y - q[1]) * m; }
+      var rx = x * cr - y * sr, ry = x * sr + y * cr;
+      wx[i] = rx; wy[i] = ry;
+      tx0[i] = rx; tx1[i] = ry;
+    }
+    if (f >= 1) fadeFrom = -1;
+  }
+  function startCrossfade(now) { fadeFrom = ds; ds = (ds + 1) % NDS; fadeT0 = now; }
+
+  var STEPS = 50;
+  function trainSteps(n) {
+    for (var s = 0; s < n; s++) {
+      var j = (Math.random() * NPAT) | 0;
+      feedforward(tx0[j], tx1[j], ty[j]);
+      feedback(tx0[j], tx1[j], ty[j]);
+      update();
+    }
+  }
+  function totalError() {
+    var e = 0;
+    for (var i = 0; i < NPAT; i++) e += feedforward(tx0[i], tx1[i], ty[i]);
+    return Math.sqrt(e / NPAT);
+  }
+
+  // ---- Rendering. --------------------------------------------------------
+
+  var W, H, dpr, gw, gh, img, pix, field, fctx, ref;
+  var viewR;      // world units per half of the shorter axis
+
+  function init() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    var aspect = canvas.width / Math.max(1, canvas.height);
+    gh = 100; gw = Math.max(16, Math.min(320, Math.round(100 * aspect)));
+    if (aspect < 1) { gw = 100; gh = Math.max(16, Math.min(320, Math.round(100 / aspect))); }
+    field = document.createElement("canvas");
+    field.width = gw; field.height = gh;
+    fctx = field.getContext("2d");
+    img = fctx.createImageData(gw, gh); pix = img.data;
+    for (var i = 3; i < pix.length; i += 4) pix[i] = 255;
+    ref = Math.min(canvas.width, canvas.height) / 2;
+    viewR = 2.3;    // the moons' diameter is ~3 units: ~65% of the shorter axis
+    ctx.fillStyle = "#000"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    fieldFrame = 0;
+  }
+
+  // world -> pixel
+  function sxW(x) { return canvas.width / 2 + x / viewR * ref; }
+  function syW(y) { return canvas.height / 2 - y / viewR * ref; }
+
+  // Field colours: deep desaturated blue (p -> 0), deep amber (p -> 1),
+  // warm pale ridge along p = 0.5.  Point colours are the bright versions.
+  var BLUE = [14, 24, 56], AMBER = [56, 34, 12], RIDGE = [190, 178, 160];
+  var P0 = [120, 175, 255], P1 = [255, 190, 90];
+  var RIDGE_W = 0.22;                 // ridge half-width in units of 2p-1
+
+  function evalField(bright) {
+    var sx = 2 * viewR * canvas.width / (2 * ref) / gw;   // world units per cell
+    var sy = 2 * viewR * canvas.height / (2 * ref) / gh;
+    var x0 = -sx * gw / 2, y0 = sy * gh / 2;
+    var k = -1 / (2 * RIDGE_W * RIDGE_W);
+    for (var iy = 0, p = 0; iy < gh; iy++) {
+      var yw = y0 - (iy + 0.5) * sy;
+      for (var ix = 0; ix < gw; ix++, p += 4) {
+        var xw = x0 + (ix + 0.5) * sx;
+        var d = 2 * evalNet(xw, yw) - 1;          // -1..1
+        var m = d < 0 ? -d : d;
+        var g = Math.exp(k * d * d);              // ridge weight
+        var wash = (0.5 + 0.5 * m) * (1 - 0.6 * g) * bright;
+        var rg = g * 0.42 * bright;
+        var c = d < 0 ? BLUE : AMBER;
+        pix[p] = c[0] * wash + RIDGE[0] * rg;
+        pix[p + 1] = c[1] * wash + RIDGE[1] * rg;
+        pix[p + 2] = c[2] * wash + RIDGE[2] * rg;
+      }
+    }
+    fctx.putImageData(img, 0, 0);
+  }
+
+  function drawField() {
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(field, 0, 0, gw, gh, 0, 0, canvas.width, canvas.height);
+  }
+
+  function dots(lo, hi, r) {
+    ctx.beginPath();
+    for (var i = lo; i < hi; i++) {
+      var px = sxW(wx[i]), py = syW(wy[i]);
+      ctx.moveTo(px + r, py);
+      ctx.arc(px, py, r, 0, 6.2832);
+    }
+    ctx.fill();
+  }
+
+  function renderPoints(bright) {
+    var rc = Math.max(1.2, 1.2 * dpr), rh = rc * 3.6;   // 2-3 px core, faint halo
+    ctx.globalCompositeOperation = "lighter";
+    for (var cls = 0; cls < 2; cls++) {
+      var c = cls ? P1 : P0, lo = cls * NPC, hi = lo + NPC;
+      var rgb = c[0] + "," + c[1] + "," + c[2] + ",";
+      ctx.fillStyle = "rgba(" + rgb + (0.10 * bright).toFixed(3) + ")";
+      dots(lo, hi, rh);
+      ctx.fillStyle = "rgba(" + rgb + (0.95 * bright).toFixed(3) + ")";
+      dots(lo, hi, rc);
+    }
+    ctx.globalCompositeOperation = "source-over";
+  }
+
+  // ---- Timeline. ---------------------------------------------------------
+
+  var REINIT = 300000, REFADE = 1800;
+  var epochT0 = 0, simT = 0, lastT = 0, fading = 0, refadeT0 = 0, fieldFrame = 0;
+  // Error watch: RMS error over the set every ERR_EVERY frames.  A set is
+  // left once it has been shown for at least DS_MIN ms and the error has
+  // not improved on its best by 4% for FLAT ms (an error below SOLVED
+  // counts as flat), or after DS_MAX ms in any case.
+  var ERR_EVERY = 20, FLAT = 8000, SOLVED = 0.05, DS_MIN = 25000, DS_MAX = 100000;
+  var errFrame = 0, err = 1, bestErr = 1, flatT0 = 0, dsT0 = 0;
+
+  function watchError(now) {
+    if ((errFrame++ % ERR_EVERY) !== 0) return;
+    err = totalError();
+    if (err < bestErr * 0.96 && err >= SOLVED) { bestErr = err; flatT0 = now; }
+    else if (err < bestErr) bestErr = err;
+    var flat = now - flatT0 > FLAT;
+    if (fadeFrom < 0 && !fading && now - dsT0 > DS_MIN && (flat || now - dsT0 > DS_MAX)) {
+      startCrossfade(now);
+      dsT0 = now; bestErr = 1; flatT0 = now + FADE;   // give the new set time before judging
+    }
+  }
+
+  function loop(now) {
+    window.requestAnimationFrame(loop);
+    if (done) { var d = now - lastT; epochT0 += d; refadeT0 += d; fadeT0 += d; flatT0 += d; dsT0 += d; lastT = now; return; }
+    var dt = Math.min(50, now - lastT); lastT = now;
+    if (canvas.width === 0 || canvas.clientWidth !== W || canvas.clientHeight !== H) { init(); return; }
+    simT += dt * 0.001;
+
+    var bright = 1;
+    if (!fading && fadeFrom < 0 && now - epochT0 > REINIT) { fading = 1; refadeT0 = now; }
+    if (fading) {
+      var f = (now - refadeT0) / REFADE;
+      if (f < 0.5) bright = 1 - ease(f * 2);
+      else if (f < 1) {
+        if (fading === 1) { initialize(); fading = 2; epochT0 = now; bestErr = 1; flatT0 = now; dsT0 = now; }
+        bright = ease((f - 0.5) * 2);
+      } else { fading = 0; bright = 1; }
+    }
+
+    layoutData(simT, now);
+    trainSteps(STEPS);
+    watchError(now);
+    // The field is re-evaluated every second frame; during the fade every
+    // frame so the brightness ramp stays smooth.
+    if (fading || (fieldFrame++ & 1) === 0) evalField(bright);
+    drawField();
+    renderPoints(bright);
+  }
+
+  window.onclick = function() { done = !done; };
+  var rt;
+  window.onresize = function() { clearTimeout(rt); rt = setTimeout(init, 150); };
+  initialize();
+  init();
+  lastT = performance.now(); epochT0 = lastT; dsT0 = lastT; flatT0 = lastT;
+  window.requestAnimationFrame(loop);
+
+  window.__cbofn = { totalError: totalError, layoutData: layoutData, trainSteps: trainSteps,
+                     initialize: initialize, evalNet: evalNet, evalField: evalField, wx: wx, wy: wy, ty: ty,
+                     place: place, setDataset: function(k) { ds = k; fadeFrom = -1; }, weights: { u: u, v: v, a: a, b: b }, numhid: numhid,
+                     state: function() { return { ds: ds, fadeFrom: fadeFrom, err: err, bestErr: bestErr, simT: simT }; } };
+}
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>

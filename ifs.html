@@ -1,0 +1,319 @@
+<!DOCTYPE html><html><head>
+<title>ifs</title>
+<style>
+  * { margin: 0; padding: 0; }
+  html, body, #viewport { width: 100%; height: 100%; }
+  body { background: #000; overflow: hidden; }
+</style>
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////
+//
+//  ifs - Iterated Function Systems, from "The Computational Beauty of
+//  Nature" (src/ifs.c, src/mrcm.c, data/ifscma.txt).
+//
+//  The chaos game exactly as in ifs.c: pick an affine map with a roulette
+//  choice, apply x' = a x + b y + e, y' = c x + d y + f, plot.  Here the
+//  points land in a floating-point density buffer that is tone-mapped
+//  (log) into pixels, so the attractor comes out shaded by visit density
+//  instead of binary dots.
+//
+//  Modernization: the demo continuously MORPHS between the named systems
+//  from data/ifscma.txt (fern, tree, snowflake, dragon, ...) by linearly
+//  interpolating the six affine coefficients of each map.  Systems with
+//  fewer maps are padded by duplicating maps (which does not change the
+//  attractor).  Map probabilities are proportional to |det| as usual.
+//  While a morph is in flight the density buffer decays quickly so the
+//  fractal appears to flow from one shape into the next.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+window.onload = function() {
+
+  var canvas = document.getElementById("viewport");
+  var ctx = canvas.getContext("2d");
+  var done = 0;
+
+  // Named systems, straight from data/ifscma.txt: [a b c d e f] per map.
+  var SYSTEMS = [
+    ["fern", [
+      [ 0.849,  0.037, -0.037,  0.849, 0.075,  0.175],
+      [ 0.197, -0.226,  0.226,  0.197, 0.400,  0.049],
+      [-0.150,  0.283,  0.260,  0.237, 0.575, -0.084],
+      [ 0.000,  0.000,  0.000,  0.165, 0.500,  0.000]]],
+    ["tree", [
+      [ 0.195, -0.488,  0.344,  0.443, 0.4431, 0.2453],
+      [ 0.462,  0.414, -0.252,  0.361, 0.2511, 0.5692],
+      [-0.058, -0.070,  0.453, -0.111, 0.5976, 0.0969],
+      [-0.035,  0.070, -0.469, -0.022, 0.4884, 0.5069],
+      [-0.637,  0.000,  0.000,  0.501, 0.8562, 0.2513]]],
+    ["snowflake", [
+      [0.382, 0, 0, 0.382, 0.3072, 0.6190],
+      [0.382, 0, 0, 0.382, 0.6033, 0.4044],
+      [0.382, 0, 0, 0.382, 0.0139, 0.4044],
+      [0.382, 0, 0, 0.382, 0.1253, 0.0595],
+      [0.382, 0, 0, 0.382, 0.4920, 0.0595]]],
+    ["dragon", [
+      [0, 0.577, -0.577, 0, 0.0951, 0.5893],
+      [0, 0.577, -0.577, 0, 0.4413, 0.7893],
+      [0, 0.577, -0.577, 0, 0.0952, 0.9893]]],
+    ["pine", [
+      [0.25,  0.0,  0.0,  0.9,  0.375, 0.0],
+      [0.65,  0.0,  0.0,  0.75, 0.175, 0.25],
+      [0.0,  -0.5,  0.25, 0.0,  0.5,   0.2],
+      [0.0,   0.5, -0.25, 0.0,  0.5,   0.45]]],
+    ["twig", [
+      [ 0.387,  0.430,  0.430, -0.387, 0.2560, 0.5220],
+      [ 0.441, -0.091, -0.009, -0.322, 0.4219, 0.5059],
+      [-0.468,  0.020, -0.113,  0.015, 0.4000, 0.4000]]],
+    ["crystal", [
+      [0.0, -0.5,  0.5, 0.0, 0.5,  0.0],
+      [0.0,  0.5, -0.5, 0.0, 0.5,  0.5],
+      [0.5,  0.0,  0.0, 0.5, 0.25, 0.5]]],
+    ["weed", [
+      [0.5,   0.0,  0.0,  0.75, 0.25, 0.0],
+      [0.25, -0.2,  0.1,  0.3,  0.25, 0.5],
+      [0.25,  0.2, -0.1,  0.3,  0.5,  0.4],
+      [0.2,   0.0,  0.0,  0.3,  0.4,  0.55]]],
+    ["ice", [
+      [0.75,  0.0,  0.0, 0.75, 0.125, 0.125],
+      [0.5,  -0.5,  0.5, 0.5,  0.5,   0.0],
+      [0.25,  0.0,  0.0, 0.25, 0.0,   0.75],
+      [0.25,  0.0,  0.0, 0.25, 0.75,  0.75],
+      [0.25,  0.0,  0.0, 0.25, 0.0,   0.0],
+      [0.25,  0.0,  0.0, 0.25, 0.75,  0.0]]],
+    ["carpet", [
+      [0.5,  0.0, 0.0, 0.5, 0.0, 0.0],
+      [0.5,  0.0, 0.0, 0.5, 0.5, 0.0],
+      [0.0, -0.5, 0.5, 0.0, 1.0, 0.5]]],
+    ["devil", [
+      [ 0.333334, 0, 0,  0.5, 0.000000, 0.0],
+      [ 0.333334, 0, 0,  0.5, 0.333334, 0.0],
+      [ 0.333334, 0, 0,  0.5, 0.666667, 0.0],
+      [ 0.333334, 0, 0,  0.5, 0.666667, 0.5],
+      [-0.333334, 0, 0, -0.5, 0.666667, 0.5],
+      [-0.333334, 0, 0, -0.5, 1.000000, 0.5]]],
+    ["island", [
+      [0, 0.577, -0.577, 0, 0.0951, 0.5893],
+      [0, 0.577, -0.577, 0, 0.4413, 0.7893],
+      [0, 0.577, -0.577, 0, 0.0952, 0.9893]]],
+    ["pascal", [
+      [0.5, 0, 0, 0.5, 0.0,  0.0],
+      [0.5, 0, 0, 0.5, 0.5,  0.0],
+      [0.5, 0, 0, 0.5, 0.25, 0.5]]]
+  ];
+
+  // Pad every system to the same number of maps by duplicating maps.
+  var NMAPS = 0;
+  for (var i = 0; i < SYSTEMS.length; i++)
+    NMAPS = Math.max(NMAPS, SYSTEMS[i][1].length);
+  for (var i = 0; i < SYSTEMS.length; i++) {
+    var m = SYSTEMS[i][1], k = 0;
+    while (m.length < NMAPS) { m.push(m[k % (m.length)].slice()); k++; }
+  }
+
+  // Density buffer resolution (capped so 4K displays stay cheap).
+  var W, H, cw, ch, scale;
+  var density, img, pix;
+  var cur = new Array(NMAPS), prob = new Array(NMAPS);
+  var px = 0.5, py = 0.5;
+  var order = [], oi = 0;
+  var HOLD = 3000, MORPH = 3000;
+  var phase = 0, t0 = 0, from, to;
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function nextSystem() {
+    // Debug hook: #name pins a single system (QA only, not a UI).
+    var h = decodeURIComponent(location.hash.slice(1));
+    for (var i = 0; h && i < SYSTEMS.length; i++)
+      if (SYSTEMS[i][0] === h) return SYSTEMS[i][1];
+    if (oi >= order.length) {
+      var last = order.length ? order[order.length - 1] : -1;
+      order = shuffle(SYSTEMS.map(function(_, i) { return i; }));
+      if (order[0] === last) { order.push(order.shift()); }
+      oi = 0;
+    }
+    return SYSTEMS[order[oi++]][1];
+  }
+
+  function init() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    // Simulation resolution: at most ~1.2 Mpx.
+    var s = Math.min(1, Math.sqrt(1200000 / (canvas.width * canvas.height)));
+    cw = Math.max(64, Math.floor(canvas.width * s));
+    ch = Math.max(64, Math.floor(canvas.height * s));
+    scale = canvas.width / cw;
+    density = new Float32Array(cw * ch);
+    img = ctx.createImageData(cw, ch);
+    pix = img.data;
+    for (var i = 3; i < pix.length; i += 4) pix[i] = 255;
+    ctx.imageSmoothingEnabled = true;
+    if (!from) {
+      // Author's note: open on a random point cloud (a random contractive
+      // IFS) and morph straight into the first named system, so the
+      // morphing is evident from the first seconds.
+      from = randomSystem(); to = nextSystem();
+      setSystem(from);
+      t0 = performance.now(); phase = 1;
+    }
+  }
+
+  function randomSystem() {
+    var sys = [];
+    for (var i = 0; i < NMAPS; i++) {
+      var sc = 0.25 + Math.random() * 0.35, th = Math.random() * 6.2832;
+      var sh = (Math.random() - 0.5) * 0.4;
+      sys.push([sc * Math.cos(th), -sc * Math.sin(th) + sh,
+                sc * Math.sin(th), sc * Math.cos(th),
+                Math.random(), Math.random()]);
+    }
+    return sys;
+  }
+
+  function setSystem(sys) {
+    var tot = 0;
+    for (var i = 0; i < NMAPS; i++) {
+      cur[i] = sys[i];
+      var d = Math.abs(sys[i][0] * sys[i][3] - sys[i][1] * sys[i][2]);
+      prob[i] = Math.max(d, 0.02);
+      tot += prob[i];
+    }
+    for (var i = 0; i < NMAPS; i++) prob[i] /= tot;
+  }
+
+  var lerped = [];
+  for (var i = 0; i < NMAPS; i++) lerped.push([0, 0, 0, 0, 0, 0]);
+
+  function lerpSystem(A, B, u) {
+    for (var i = 0; i < NMAPS; i++)
+      for (var j = 0; j < 6; j++)
+        lerped[i][j] = A[i][j] + (B[i][j] - A[i][j]) * u;
+    setSystem(lerped);
+  }
+
+  function ease(u) { return u < 0.5 ? 2 * u * u : -1 + (4 - 2 * u) * u; }
+
+  // Bounding box of the current attractor, tracked with a slow filter so
+  // the view frames the shape without jitter.
+  var bx0 = 0, bx1 = 1, by0 = 0, by1 = 1;
+  var vx0 = 0, vx1 = 1, vy0 = 0, vy1 = 1;
+
+  function iterate(n, morphing) {
+    // Measure the attractor's extent from a short burn-in run.
+    var mx0 = 1e9, mx1 = -1e9, my0 = 1e9, my1 = -1e9;
+    var x = px, y = py;
+    for (var i = 0; i < 3000; i++) {
+      var r = Math.random(), j = 0, s = prob[0];
+      while (s < r && j < NMAPS - 1) { j++; s += prob[j]; }
+      var m = cur[j];
+      var t = m[0] * x + m[1] * y + m[4];
+      y = m[2] * x + m[3] * y + m[5]; x = t;
+      if (!(x * x + y * y < 1e6)) { x = Math.random(); y = Math.random(); }
+      if (i > 100) {
+        if (x < mx0) mx0 = x; if (x > mx1) mx1 = x;
+        if (y < my0) my0 = y; if (y > my1) my1 = y;
+      }
+    }
+    var k = morphing ? 0.25 : 0.06;
+    bx0 += (mx0 - bx0) * k; bx1 += (mx1 - bx1) * k;
+    by0 += (my0 - by0) * k; by1 += (my1 - by1) * k;
+
+    // View: fit the box with a margin, keep aspect, a bit of headroom.
+    var bw = Math.max(bx1 - bx0, 1e-3), bh = Math.max(by1 - by0, 1e-3);
+    var aspect = cw / ch;
+    var vw = bw * 1.12, vh = bh * 1.12;
+    if (vw / vh < aspect) vw = vh * aspect; else vh = vw / aspect;
+    var cx = (bx0 + bx1) / 2, cy = (by0 + by1) / 2;
+    var sx = cw / vw, sy = ch / vh;
+    var ox = cw / 2 - cx * sx, oy = ch / 2 + cy * sy;
+
+    for (var i = 0; i < n; i++) {
+      var r = Math.random(), j = 0, s = prob[0];
+      while (s < r && j < NMAPS - 1) { j++; s += prob[j]; }
+      var m = cur[j];
+      var t = m[0] * x + m[1] * y + m[4];
+      y = m[2] * x + m[3] * y + m[5]; x = t;
+      if (!(x * x + y * y < 1e6)) { x = Math.random(); y = Math.random(); }
+      var ix = (x * sx + ox) | 0, iy = (oy - y * sy) | 0;
+      if (ix >= 0 && ix < cw && iy >= 0 && iy < ch)
+        density[iy * cw + ix] += 1;
+    }
+    px = x; py = y;
+  }
+
+  // Palette: deep blue-black through teal to warm white.
+  var LUT = new Uint8ClampedArray(256 * 3);
+  (function() {
+    for (var i = 0; i < 256; i++) {
+      var u = i / 255;
+      var r = Math.pow(u, 1.6) * 255;
+      var g = Math.pow(u, 1.0) * 235;
+      var b = 40 + Math.pow(u, 0.6) * 215;
+      LUT[i * 3] = r; LUT[i * 3 + 1] = g; LUT[i * 3 + 2] = b;
+    }
+  })();
+
+  function render(decay) {
+    var n = cw * ch, maxv = 0;
+    for (var i = 0; i < n; i++) {
+      var v = density[i] * decay;
+      density[i] = v;
+      if (v > maxv) maxv = v;
+    }
+    var inv = 1 / Math.log(1 + maxv * 6 + 1e-6);
+    for (var i = 0, p = 0; i < n; i++, p += 4) {
+      var v = density[i];
+      if (v <= 0) { pix[p] = 0; pix[p + 1] = 0; pix[p + 2] = 0; continue; }
+      var c = (Math.log(1 + v * 6) * inv * 255) | 0;
+      var q = c * 3;
+      pix[p] = LUT[q]; pix[p + 1] = LUT[q + 1]; pix[p + 2] = LUT[q + 2];
+    }
+    ctx.putImageData(img, 0, 0);
+    if (scale !== 1) {
+      ctx.imageSmoothingEnabled = true;
+      ctx.drawImage(canvas, 0, 0, cw, ch, 0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  var lastT = 0;
+  function loop(now) {
+    window.requestAnimationFrame(loop);
+    if (done) { t0 += now - lastT; lastT = now; return; }
+    lastT = now;
+    if (canvas.width === 0 || canvas.clientWidth !== W) { init(); return; }
+    var el = now - t0;
+    var morphing = 0;
+    if (phase === 0) {
+      if (el > HOLD) { phase = 1; t0 = now; el = 0; }
+    }
+    if (phase === 1) {
+      morphing = 1;
+      var u = Math.min(el / MORPH, 1);
+      lerpSystem(from, to, ease(u));
+      if (u >= 1) {
+        from = to; to = nextSystem(); setSystem(from);
+        phase = 0; t0 = now; morphing = 0;
+      }
+    }
+    iterate(morphing ? 90000 : 160000, morphing);
+    render(morphing ? 0.72 : 0.965);
+  }
+
+  window.onclick = function() { done = !done; };
+  var rt;
+  window.onresize = function() { clearTimeout(rt); rt = setTimeout(init, 150); };
+  init();
+  lastT = performance.now();
+  window.requestAnimationFrame(loop);
+}
+//////////////////////////////////////////////////////////////////////////////
+</script></head>
+<body><canvas id="viewport"></canvas></body></html>
