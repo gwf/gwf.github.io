@@ -1,0 +1,145 @@
+#include "defaults.inc"
+#define GLOSSARY_OPTS HIGHLIGHT_COLOR
+#define GLOSSARY_PRE HBEG<b>
+#define GLOSSARY_POST </b>HEND
+#define TITLE Glossary - B
+#include "top.inc"
+
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="B-section">B</a></h1>
+
+
+<p><b><a name="backpropagation">Backpropagation</a></b> &nbsp; &nbsp;
+An <a href="glossary-A.html#algorithm">algorithm</a> for efficiently calculating the error
+<a href="glossary-G.html#gradient">gradient</a> of a <a href="glossary-N.html#neural_network_(nn)">neural network</a>, which can then be used
+as the basis of <a href="glossary-L.html#learning">learning</a>.  Backpropagation is equivalent to the
+<a href="glossary-D.html#delta_rule">delta rule</a> for <a href="glossary-P.html#perceptron">perceptrons</a>, but can also calculate
+appropriate <a href="glossary-W.html#weight">weight</a> changes for the <a href="glossary-H.html#hidden_layer">hidden layer</a> weights of
+a <a href="glossary-M.html#multilayer_perceptron_(mlp)">multilayer perceptron</a> by generalizing the notion of an error
+correction term.  In the simplest case, backpropagation is a type of
+<a href="glossary-S.html#steepest_descent_(ascent)">steepest descent</a> in the <a href="glossary-S.html#search_space">search space</a> of the network
+weights, and it will usually <a href="glossary-C.html#convergence">converge</a> to a <a href="glossary-L.html#local_minimum_(maximum)">local minimum</a>. 
+
+<p><b><a name="basin_of_attraction">Basin of Attraction</a></b> &nbsp; &nbsp;
+A region of <a href="glossary-S.html#state_space">state space</a> in which all included states of a
+<a href="glossary-D.html#dynamical_system">dynamical system</a> ultimately lead into the <a href="glossary-A.html#attractor">attractor</a>. 
+
+<p><b><a name="bias">Bias</a></b> &nbsp; &nbsp;
+See <a href="glossary-T.html#threshold">threshold</a>.  
+
+<p><b><a name="bifurcation">Bifurcation</a></b> &nbsp; &nbsp;
+The splitting of a single mode of a <a href="glossary-S.html#system">system</a>'s behavior into two
+new modes.  This usually occurs as a <a href="glossary-F.html#function">function</a> of a
+<a href="glossary-C.html#continuous">continuously</a> varying <a href="glossary-C.html#control">control</a> parameter.  A cascade of
+bifurcations will usually precede the onset of <a href="glossary-C.html#chaos/chaotic">chaos</a>.  
+
+<p><b><a name="binary">Binary</a></b> &nbsp; &nbsp;
+Written in a form that uses only 0s and 1s.  A <a href="glossary-S.html#string">string</a> of
+<a href="glossary-B.html#bit">bits</a>.
+
+<p><b><a name="bit">Bit</a></b> &nbsp; &nbsp;
+The smallest unit of information; the answer to a yes/no question; the
+outcome of a coin toss; a 0 or a 1.  
+
+<p><b><a name="boid">Boid</a></b> &nbsp; &nbsp;
+An <a href="glossary-A.html#autonomous_agent">autonomous agent</a> that behaves like a simplified bird but will
+display flocking patterns in the presence of other boids.  
+
+<p><b><a name="boolean">Boolean</a></b> &nbsp; &nbsp;
+Taking only 0/1, true/false, yes/no values.  
+
+<p><b><a name="bottom-up">Bottom-Up</a></b> &nbsp; &nbsp;
+A description that uses the lower-level details to explain
+higher-level patterns; related to <a href="glossary-R.html#reductionism">reductionism</a>.  
+
+<p><b><a name="brown_noise/brownian_motion">Brown Noise/Brownian Motion</a></b> &nbsp; &nbsp;
+A form of <a href="glossary-R.html#random/randomness">randomness</a> that is the result of cumulatively adding
+<a href="glossary-W.html#white_noise">white noise</a>, to yield a <a href="glossary-R.html#random_walk">random walk</a> pattern.
+
+<p><b><a name="bucket_brigade_algorithm">Bucket Brigade Algorithm</a></b> &nbsp; &nbsp;
+A <a href="glossary-L.html#learning">learning</a> <a href="glossary-A.html#algorithm">algorithm</a> that is a method for adjusting the
+<a href="glossary-S.html#strength">strengths</a> of the <a href="glossary-C.html#classifier">classifiers</a> of a  <a href="glossary-C.html#classifier_system">classifier system</a>.
+``Winning'' classifiers pay a portion of their earnings to other
+classifiers that assisted them in being activated, similar to an
+economic <a href="glossary-S.html#system">system</a>.  
+
+<p><b><a name="byte">Byte</a></b> &nbsp; &nbsp;
+Eight <a href="glossary-B.html#bit">bits</a>.  In programming, often used to store a single text
+character.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+
+
+#include "bottom.inc"

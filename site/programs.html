@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<title>Programs - The Computational Beauty of Nature</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* { box-sizing: border-box; }
+html { color-scheme: dark; }
+body { margin: 0; background: #0b0c0f; color: #cfd2d8; font: 16px/1.6 -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+a { color: #9cc4ff; text-decoration: none; } a:hover { text-decoration: underline; }
+header.top { border-bottom: 1px solid #1d1f25; padding: 14px 28px; display: flex; gap: 22px; align-items: baseline; flex-wrap: wrap; }
+header.top .brand { font: 400 18px Georgia, "Times New Roman", serif; color: #f2f2f2; }
+header.top nav a { color: #9aa0ab; margin-right: 16px; font-size: 14px; }
+header.top nav a.cur { color: #fff; }
+main { max-width: 980px; margin: 0 auto; padding: 36px 28px 80px; }
+h1 { font: 400 34px/1.15 Georgia, "Times New Roman", serif; color: #f4f4f4; margin: 0 0 8px; }
+h2 { font: 400 24px/1.2 Georgia, "Times New Roman", serif; color: #eee; margin: 38px 0 12px; }
+h3 { font: 500 17px/1.3 -apple-system, Helvetica, Arial, sans-serif; color: #e6e6e6; margin: 26px 0 8px; }
+.kicker { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a8f99; }
+.lede { color: #aab; font-size: 17px; margin-bottom: 26px; }
+p { margin: 0 0 14px; }
+blockquote { border-left: 2px solid #333; margin: 14px 0; padding: 2px 16px; color: #b9bcc4; font-style: italic; }
+pre, code { font: 13.5px Menlo, Consolas, monospace; } pre { background: #14161b; padding: 12px 14px; border-radius: 4px; overflow-x: auto; }
+code { color: #dde; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+.card { background: #101218; border: 1px solid #1d1f25; border-radius: 6px; overflow: hidden; }
+.card img { display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #000; }
+.card .b { padding: 10px 12px 12px; } .card b { color: #eee; font-weight: 500; display: block; } .card small { color: #8a8f99; }
+.card:hover { border-color: #444; }
+.parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+.part { border-top: 1px solid #23262d; padding-top: 12px; }
+.part h2 { margin: 4px 0 8px; font-size: 21px; }
+.part ol { margin: 0; padding-left: 22px; color: #aab; } .part li { margin: 3px 0; } .part li a { color: #cfd2d8; }
+.part .demo { color: #9cc4ff; font-size: 13px; margin-left: 6px; }
+ul.plain { list-style: none; columns: 2; column-gap: 30px; padding-left: 22px; color: #aab; margin: 0 0 8px; } ul.plain li { margin: 2px 0; } @media (max-width: 700px) { ul.plain { columns: 1; } }
+.figs { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+.figs a { display: block; background: #fff; border-radius: 4px; padding: 6px; }
+.figs img { width: 100%; height: 120px; object-fit: contain; display: block; }
+.figs span { display: block; font-size: 12px; color: #444; margin-top: 4px; }
+dl.gloss dt { color: #eee; font-weight: 500; margin-top: 14px; } dl.gloss dd { margin: 2px 0 0; color: #b5b9c2; }
+input.search { width: 100%; font: 16px inherit; padding: 10px 12px; background: #14161b; border: 1px solid #2a2d35; color: #eee; border-radius: 6px; margin: 14px 0 22px; }
+.chapnav { display: flex; justify-content: space-between; margin: 40px 0 0; color: #9aa0ab; font-size: 14px; }
+.opts td { vertical-align: top; padding: 4px 10px 4px 0; font-size: 14px; } .opts code { white-space: nowrap; }
+.muted { color: #8a8f99; font-size: 14px; }
+.hero { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+.hero .cover { width: 220px; border-radius: 4px; box-shadow: 0 6px 30px rgba(0,0,0,0.6); }
+.two { columns: 2; column-gap: 34px; } @media (max-width: 700px) { .two { columns: 1; } }
+footer { color: #6d727b; font-size: 13px; border-top: 1px solid #1d1f25; margin-top: 60px; padding: 18px 28px; }
+.demo-embed { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: 6px; background: #000; display: block; }
+</style></head><body>
+<header class="top"><span class="brand">The Computational Beauty of Nature</span><nav><a href="index.html" class="">Programs</a><a href="figures.html" class="">Figures</a><a href="glossary.html" class="">Glossary</a><a href="quotes.html" class="">Quotations</a><a href="about.html" class="">About the book</a><a href="../index.html" class="">flake.org</a></nav></header>
+<main><h1>Programs</h1>
+<p class="lede">Every example in the book is a small C program with a command-line interface and a plotting driver. The code is on <a href="https://github.com/gwf/CBofN">GitHub</a>; the programs that draw something also run in the browser here.</p>
+<p><a href="programs/assoc.html"><code>assoc</code></a> &mdash; retrieve associative memories &middot; <a href="../index.html#hopfield">run it live</a></p><p><a href="programs/bifur1d.html"><code>bifur1d</code></a> &mdash; plot bifurcations from a one-dimensional map &middot; <a href="../index.html#bifur1d">run it live</a></p><p><a href="programs/boids.html"><code>boids</code></a> &mdash; simulate a flock of android birds from Brooklyn &middot; <a href="../index.html#boids">run it live</a></p><p><a href="programs/ca.html"><code>ca</code></a> &mdash; simulate arbitrary one-dimensional cellular automata &middot; <a href="../index.html#ca">run it live</a></p><p><a href="programs/diffuse.html"><code>diffuse</code></a> &mdash; simulate diffusion limited aggregation &middot; <a href="../index.html#diffuse">run it live</a></p><p><a href="programs/eipd.html"><code>eipd</code></a> &mdash; simulate the ecological iterated Prisoner&#x27;s Dilemma</p><p><a href="programs/gabump.html"><code>gabump</code></a> &mdash; find a bump&#x27;s peak with a genetic algorithm</p><p><a href="programs/gaipd.html"><code>gaipd</code></a> &mdash; breed IPD strategies with a genetic algorithm</p><p><a href="programs/gastring.html"><code>gastring</code></a> &mdash; breed strings with a genetic algorithm</p><p><a href="programs/gasurf.html"><code>gasurf</code></a> &mdash; find a surfaces peak with a genetic algorithm</p><p><a href="programs/gatask.html"><code>gatask</code></a> &mdash; solve a task assignment problem via a genetic algorithm</p><p><a href="programs/gen1d.html"><code>gen1d</code></a> &mdash; generate time series from a one-dimensional map</p><p><a href="programs/gsw.html"><code>gsw</code></a> &mdash; simulate a three species individual-based ecosystem &middot; <a href="../index.html#gsw">run it live</a></p><p><a href="programs/henbif.html"><code>henbif</code></a> &mdash; plot a bifurcation diagram for the Henon system</p><p><a href="programs/hencon.html"><code>hencon</code></a> &mdash; control the Henon system with the OGY control law</p><p><a href="programs/henon.html"><code>henon</code></a> &mdash; plot the phase space of the Henon system</p><p><a href="programs/henwarp.html"><code>henwarp</code></a> &mdash; warps a square into the phase space of the Henon system &middot; <a href="../index.html#henwarp">run it live</a></p><p><a href="programs/hopfield.html"><code>hopfield</code></a> &mdash; solve a task assignment problem via a Hopfield network</p><p><a href="programs/hp.html"><code>hp</code></a> &mdash; simulate the hodgepodge machine &middot; <a href="../index.html#hp">run it live</a></p><p><a href="programs/ifs.html"><code>ifs</code></a> &mdash; generate fractals with an IFS &middot; <a href="../index.html#ifs">run it live</a></p><p><a href="programs/julia.html"><code>julia</code></a> &mdash; make a plot a Julia set &middot; <a href="../index.html#julia">run it live</a></p><p><a href="programs/life.html"><code>life</code></a> &mdash; play Conway&#x27;s Game of Life &middot; <a href="../index.html#life">run it live</a></p><p><a href="programs/lorenz.html"><code>lorenz</code></a> &mdash; plot the phase space of the Lorenz system &middot; <a href="../index.html#lorenz">run it live</a></p><p><a href="programs/lotka.html"><code>lotka</code></a> &mdash; integrate the Lotka-Volterra system</p><p><a href="programs/lsys.html"><code>lsys</code></a> &mdash; builds an L-system fractal from multiple rules &middot; <a href="../index.html#lsys">run it live</a></p><p><a href="programs/mandel.html"><code>mandel</code></a> &mdash; make a plot the Mandelbrot set &middot; <a href="../index.html#mandel">run it live</a></p><p><a href="programs/mg.html"><code>mg</code></a> &mdash; plot the phase space of the Mackey-Glass system</p><p><a href="programs/mlp.html"><code>mlp</code></a> &mdash; train a multilayer perceptron with backprop &middot; <a href="../index.html#mlp">run it live</a></p><p><a href="programs/mrcm.html"><code>mrcm</code></a> &mdash; generate fractals with the MRCM algorithm</p><p><a href="programs/phase1d.html"><code>phase1d</code></a> &mdash; plot phase-space of a one-dimensional map</p><p><a href="programs/predprey.html"><code>predprey</code></a> &mdash; plot the phase space of a predator-prey system</p><p><a href="programs/rossler.html"><code>rossler</code></a> &mdash; plot the phase space of the Rossler system</p><p><a href="programs/sipd.html"><code>sipd</code></a> &mdash; simulate the spatial iterated Prisoner&#x27;s Dilemma &middot; <a href="../index.html#sipd">run it live</a></p><p><a href="programs/stutter.html"><code>stutter</code></a> &mdash; a simple lisp interpreter</p><p><a href="programs/termites.html"><code>termites</code></a> &mdash; simulate a population of termites &middot; <a href="../index.html#termites">run it live</a></p><p><a href="programs/vants.html"><code>vants</code></a> &mdash; simulate a population of generalized virtual ants &middot; <a href="../index.html#vants">run it live</a></p><p><a href="programs/zcs.html"><code>zcs</code></a> &mdash; run a zeroth level classifier system on a terrain</p><p><a href="programs/zcscup.html"><code>zcscup</code></a> &mdash; run a zeroth level classifier system on the cups problem</p>
+<h2>Overview</h2><p>The programs below are listed in the order in which they appear in the text.</p>
+<h2>Computation</h2>
+<h3><a href="programs/stutter.html">stutter</a></h3>
+<p>interprets simple lisp and only understands car, cdr, cons, if, set, equal, quote, and lambda, but is still Turing-complete. Uses stop-and-copy garbage collection and has an adjustable heap size. Examples that implement integer and floating-point arithmetic are provided. There is even an example <strong>stutter</strong> function to compute the square root of a floating-point argument with nothing but the primitives listed above.</p>
+<h2>Fractals</h2>
+<h3><a href="programs/diffuse.html">diffuse</a></h3>
+<p>Generates diffusion limited aggregate growth that looks like coral.</p>
+<h3><a href="programs/lsys.html">lsys</a></h3>
+<p>Builds L-system fractals. Accepts multiple rules so that complicated fractals (such as a Penrose tiling) can be expressed. Great for generating plantlike fractals.</p>
+<h3><a href="programs/mrcm.html">mrcm</a></h3>
+<p>Uses the Multiple Reduction Copy Machine algorithm to generate affine fractals. Accepts an arbitrary number of transformations. Good for making snowflakes and mosaic patterns.</p>
+<h3><a href="programs/ifs.html">ifs</a></h3>
+<p>Similar to <strong>mrcm</strong> but uses Iterated Functional Systems for finer granularity.</p>
+<h3><a href="programs/mandel.html">mandel</a></h3>
+<p>Plots the famous Mandelbrot set. There are options for the displayed coordinates, zoom level, coloring schemes, etc.</p>
+<h3><a href="programs/julia.html">julia</a></h3>
+<p>Generates Julia sets, which are related to the Mandelbrot set. Has options similar to <strong>mandel</strong>.</p>
+<h2>Chaos</h2>
+<h3><a href="programs/gen1d.html">gen1d</a></h3>
+<p>Generates a time series from a one-dimensional map. Nothing fancy; it just shows how chaos can be seen in simple systems.</p>
+<h3><a href="programs/bifur1d.html">bifur1d</a></h3>
+<p>Plots a bifurcation diagram for a one-dimensional map to illustrate how a change in a single parameter can move a system from fixed-point behavior, to periodic, and finally to chaos. Different regions can be zoomed in on.</p>
+<h3><a href="programs/phase1d.html">phase1d</a></h3>
+<p>Plots the phase space and trajectories of a one-dimensional map. Showing trajectories in the phase space more clearly illustrates why fixed-points and limit cycles occur. This can also be used to show the exponential divergence of nearby trajectories.</p>
+<h3><a href="programs/henon.html">henon</a></h3>
+<p>Plots the phase space of the Hénon map, a two-dimensional system with a fractal shape. Different regions can be zoomed in on.</p>
+<h3><a href="programs/henbif.html">henbif</a></h3>
+<p>Plots a bifurcation diagram for the Hénon system. This is similar to <strong>bifur1d</strong> but shows that bifurcations apply to multidimensional systems as well.</p>
+<h3><a href="programs/henwarp.html">henwarp</a></h3>
+<p>Takes a square of a specified area and “warps” it a fixed number of times by the Hénon system. This illustrates the stretching and folding motion of chaotic systems as well as shows how points within an attractor's basin of attraction are eventually forced into a strange attractor.</p>
+<h3><a href="programs/lorenz.html">lorenz</a></h3>
+<p>Plots the phase space of the Lorenz system, a three-dimensional system described by differential equations with a fractal shape. Both plain phase-space plots and delayed state-space plots are possible.</p>
+<h3><a href="programs/rossler.html">rossler</a></h3>
+<p>Similar to <strong>lorenz</strong>, but uses the Rossler system.</p>
+<h3><a href="programs/mg.html">mg</a></h3>
+<p>Plots a two-dimensional embedding of the phase space of the Mackey-Glass system, a delay-differential system, with arbitrary parameters.</p>
+<h3><a href="programs/gsw.html">gsw</a></h3>
+<p>Simulates an individual-based three-species predator-prey ecosystem according to the specified parameters. The three species consist of plants, herbivores, and carnivores (grass, sheep, and wolves; hence the name, <strong>gsw</strong>). Updates are done synchronously, and each species has several parameters which can control their life cycles, from the ability to give birth, to the likelihood of starvation. Population statistics of the three species can be calculated over a subset of the entire grid.</p>
+<h3><a href="programs/predprey.html">predprey</a></h3>
+<p>Plots the phase space of a three-species predator-prey system (described by differential equations) which may be fractal in shape. Both plain phase-space plots and delayed state-space plots are possible.</p>
+<h3><a href="programs/lotka.html">lotka</a></h3>
+<p>Simulates the two-species Lotka-Volterra predator-prey system with a second-order Euler's method. This program serves as a simple introduction to differential equations.</p>
+<h3><a href="programs/hencon.html">hencon</a></h3>
+<p>Controls the Hénon system with the OGY control law for arbitrary choices of the system parameters. The control law is analytically calculated based on the system parameters. The user can select times in which control is turned on and off so that time-to-control and transients can be observed. Gaussian noise can be injected into the system.</p>
+<h2>Complex Systems</h2>
+<h3><a href="programs/ca.html">ca</a></h3>
+<p>Simulates arbitrary one-dimensional cellular automata with an arbitrary choice of simulation parameters. Random rules can be generated and used with a desired lambda value.</p>
+<h3><a href="programs/life.html">life</a></h3>
+<p>Simulates Conway's Game of Life with an arbitrary set of initial conditions. Input files need to be in the PBM file format.</p>
+<h3><a href="programs/hp.html">hp</a></h3>
+<p>Simulates and plots the time evolution of the hodgepodge machine according to specified parameters. With a proper choice of parameters, this system resembles the Belousov-Zhabotinsky reaction which forms self-perpetuating spirals in a lattice.</p>
+<h3><a href="programs/termites.html">termites</a></h3>
+<p>Simulates a population of termites which do a random walk while possibly carrying a wood chip. Under normal circumstances, the termites will self-organize and move the wood chips into piles without a global leader. The termites' behavior is dictated by the following set of rules: If a termite is not carrying anything and it bumps into a chip, then it picks it up, reverses direction, and continues with the random walk. If it is carrying a chip and bumps into another, it drops the chip, turns around, and starts walking again. Otherwise, it just does a random walk whether it is carrying a chip or not.</p>
+<h3><a href="programs/vants.html">vants</a></h3>
+<p>Simulates and plots a population of generalized virtual ants (vants). The behavior of the vants is determined by a bit string with length equal to the number of states that each cell in the vants' grid world can take. If a vant walks on a cell in state <em>s</em>, then the vant turns right if the <em>s</em>'th bit of the rule string is 1 and left if it is 0. As it leaves the cell the vant changes the state of the old cell to <em>(s + 1)</em> modulo the number of states.</p>
+<h3><a href="programs/boids.html">boids</a></h3>
+<p>Simulates a flock of boids according to rules that determine their individual behaviors as well as the “physics” of their universe. A boid greedily attempts to apply four rules with respect to its neighbors: It wants to fly in the same direction, be in the center of the local cluster of boids, avoid collisions with boids too close, and maintain a clear view ahead by skirting around others that block its view. Changing these rules can make the boids behave like birds, gnats, bees, fish, or magnetic particles.</p>
+<h3><a href="programs/sipd.html">sipd</a></h3>
+<p>Simulates and plots the spatial iterated Prisoner's Dilemma over time according to the specified parameters. Each cell in a grid plays a specific strategy against its eight neighbors for several rounds. At the end of the last round, each cell copies the strategy of its most successful neighbor, which is then used for the next time step. Possible strategies include “Always-Cooperate,” “Always-Defect”, “Random,” “Pavlov,” and “Tit-for-Tat.”</p>
+<h3><a href="programs/eipd.html">eipd</a></h3>
+<p>Simulates the ecological iterated Prisoner's Dilemma over time according to the specified parameters. At every time step the population of each strategy is calculated as a function of the expected scores earned against all strategies weighted by the populations of the opponents. Possible strategies include “Always-Cooperate,” “Always-Defect,” “Random,” “Pavlov,” and “Tit-for-Tat.”</p>
+<h2>Adaptation</h2>
+<h3><a href="programs/assoc.html">assoc</a></h3>
+<p>Attempts to reconstruct a corrupted image with a McCulloch-Pitts feedback neural network that acts as an associative memory. The weights of the network are determined via Hebb's rule after reading in multiple patterns. Weights can be pruned either by size, by locality, or randomly.</p>
+<h3><a href="programs/hopfield.html">hopfield</a></h3>
+<p>Solves a task assignment problem via a Hopfield neural network while plotting the activations of the neurons over time. The program uses the <em>k</em>-out-of-<em>n</em> rule for setting the external inputs and synapse strength of the neurons.</p>
+<h3><a href="programs/gastring.html">gastring</a></h3>
+<p>Uses a genetic algorithm to breed strings that match a user-specified target string. This program illustrates how GAs can perform a type of stochastic search in a space of discrete objects. Reproduction of strings entails crossover and mutation with strings being selected based on fitness.</p>
+<h3><a href="programs/gabump.html">gabump</a></h3>
+<p>Uses a genetic algorithm to find the maximum of a single-humped function that is centered at a user-specified location. This program serves as an example of how GAs can be used to optimize functions which take a floating-point argument.</p>
+<h3><a href="programs/gasurf.html">gasurf</a></h3>
+<p>Uses a genetic algorithm to find the maximum of a multi-humped function. This program serves as an example of how GAs can be used to optimize functions which take multiple floating-point arguments.</p>
+<h3><a href="programs/gatask.html">gatask</a></h3>
+<p>Uses a genetic algorithm to solve a task assignment problem with user-specified costs. This program illustrates how GAs can perform combinatorial optimization. Reproduction of strings entails special crossover and mutation operations which preserve constraints on the form of feasible solutions.</p>
+<h3><a href="programs/gaipd.html">gaipd</a></h3>
+<p>Uses a genetic algorithm to evolve iterated Prisoner's Dilemma (IPD) strategies according to user-specified constraints. This program illustrates how GAs can demonstrate coevolution since IPD strategies can only be successful within the context of their likely opponents.</p>
+<h3><a href="programs/zcs.html">zcs</a></h3>
+<p>Adapts a zeroth level classifier system (ZCS) with the implicit bucket brigade algorithm and a genetic algorithm so that the ZCS can traverse a two-dimensional terrain, avoid obstacles, and find food. At the beginning of each step the ZCS is placed at a random location of its world. It interacts with its environment until it finds food, which yields a reward. The simulation then restarts with the ZCS placed at a new random location. The progress of the ZCS is continuously plotted, while the statistics on the time to find food are calculated and displayed. At the end of the simulation the classifiers that make up the final ZCS are saved to a log file.</p>
+<h3><a href="programs/zcscup.html">zcscup</a></h3>
+<p>Trains a zeroth level classifier system (ZCS) to solve the cups problem with the implicit bucket brigade algorithm and a genetic algorithm. Solving this problem requires the ZCS to learn to remember important features from previous states, which makes this problem very challenging. The ZCS always starts in the same initial position. It interacts with its environment until it finds both cups, which (only at that point) yields a reward. The simulation then restarts with the ZCS placed at the original location. The progress of the ZCS is continuously plotted, while the statistics on the time to find both cups are calculated and displayed. At the end of the simulation the classifiers that make up the final ZCS are saved to a log file.</p>
+<h3><a href="programs/mlp.html">mlp</a></h3>
+<p>Trains a multilayer perceptron with a single hidden layer of neurons on a set of data contained in a file using the backpropagation learning algorithm with momentum. Output units can be linear or sigmoidal, allowing you to model both discrete and continuous output target values.</p>
+<h2>Downloads (historical)</h2><p><strong>Newsflash</strong> (17 Apr 00): If you have had any trouble running the Mac or Windows ports of the code, read the <a href="faq.html">FAQ list</a>.</p>
+<p><strong>Newsflash</strong> (18 Dec 98): the Mac port is here! Special thanks to Mike Miller, hacker extraordinare and the author of the <em>CBofN</em> <a href="programs.html">Java applets</a>, for making this possible.</p>
+<p><strong>Newsflash</strong> (26 Oct 98): the Windows port is here! Also, the X Windows and Windows graphic drivers now have a nice color map. See the “<a href="errata.html">miscellany / errata</a>” section for how the new graphic capabilities have changed the command-line options.</p>
+<p>The source code is currently available many flavors:</p>
+<ul>
+<li><a href="https://github.com/gwf/CBofN">cbn-noarch-src.tgz</a> - only the source code. You will need either (1) GNU <code>make</code> and <code>gcc</code>, or (2) Microsoft Visual C++, in order to build the source. Moreover, <code>perl</code> and <code>sed</code> are required to build the manual and HTML pages. Get this only if you are hacker that wants to get down and dirty with everything (216 KB).</li>
+</ul>
+<ul>
+<li><a href="https://github.com/gwf/CBofN">cbn-noarch-src+docs.tgz</a> - same as above but has the manual and HTML pages prebuilt. Get this only if you are hacker but you don't want to build the docs (259 KB).</li>
+</ul>
+<ul>
+<li><a href="https://github.com/gwf/CBofN">cbn-noarch-src+docs.zip</a> - same as above but as a zip archive. Get this only if you are Windows hacker (462 KB).</li>
+</ul>
+<ul>
+<li><a href="https://github.com/gwf/CBofN">cbn-linux-bin.tgz</a> - contains everything prebuilt for an i386 linux box with glibc and glibm (498 KB).</li>
+</ul>
+<ul>
+<li><a href="https://github.com/gwf/CBofN">cbn-sunos-bin.tgz</a> - this contains everything prebuilt for Sun machines running SunOS. (1,177 KB).</li>
+</ul>
+<ul>
+<li><a href="https://github.com/gwf/CBofN">cbn-win-bin.zip</a> - this contains everything prebuilt for Windows 95/98/NT (1,807 KB).</li>
+</ul>
+<ul>
+<li><a href="https://github.com/gwf/CBofN">cbn-mac-bin.sit.hqx</a> - this contains only the Mac executables. You may also want to get <a href="https://github.com/gwf/CBofN">cbn-noarch-src+docs.zip</a> for documentation and source, as well as <a href="https://github.com/gwf/CBofN">cbn-mac-proj.sit.hqx</a> for an example project file under CodeWarrior. (1,557 KB).</li>
+</ul>
+<p>NB: the links above use HTTP protocol (not FTP), just in case this web server doesn't support FTP. This means that you will need to SHIFT-click the links to save them to a file.</p>
+<p>While the code is known to work under Solaris, I currently don't have access to a Solaris machine, so a binary distribution for it will have to wait.</p>
+<h2>Java ports (historical)</h2><p class="muted">Mike Miller's Java applets from 1998 no longer run in any browser; the JavaScript versions above replace them.</p><p>Mike Miller graciously coded up a set of Java classes to simplify porting the source code from the book. Using this framework, Mike has ported about half of the programs from the original C source into Java. His framework is in keeping with the philosophy behind the design of the original C source in that all of the details for the GUI are more or less extracted away from the main source. This means that the heart of the code, i.e., the interesting stuff, is pretty easy to understand from looking at the class definitions.</p>
+<p>Of course, the java source code is freely available, <a href="https://github.com/gwf/CBofN">with</a> and <a href="https://github.com/gwf/CBofN">without</a> the class files precompiled. If you don't have a Java compiler or you are not sure, get the package with the class files included.</p>
+<p>Since the Java applets closely resemble the <a href="programs.html">C programs</a>, you may wish to consult the <a href="programs.html">online documentation</a> of the original programs.</p>
+<p>While using the applets, note that you can often interact with the main viewer. For example, some applets will allow you to zoom in and/or rotate an image, depending on what is appropriate; so try your mouse on the viewer and see what happens.</p>
+<p>Depending on the size of your screen and the amount of processing power that you have, you should choose one links below to run the applets.</p>
+<ul>
+<li><a href="programs.html">small screen:</a> 420x520 panel, 100x100 graphics</li>
+<li><a href="programs.html">medium screen:</a> 520x520 panel, 200x200 graphics</li>
+<li><a href="programs.html">large screen:</a> 620x520 panel, 300x300 graphics</li>
+</ul>
+<p>NB: Netscape under Linux and Solaris has a strange update policy for the screen that I can't quite figure out. If the graphics take a long time to update, try moving your mouse around or clicking the menu. Anyone know what's the deal here?</p>
+<p><em>The original page embedded the <code>CBNapplet</code> Java applet (../legacy/classes/); the javasmall/javamed/javalarge pages were applet-only and are not converted.</em></p></main>
+<script src="../excerpt.js"></script>
+<footer>Gary William Flake, <em>The Computational Beauty of Nature: Computer Explorations of Fractals, Chaos, Complex Systems, and Adaptation</em>, MIT Press, 1998. Figures may be used freely for noncommercial purposes. Source code is GPL. Site text from the original companion site (1998-2002), rebuilt 2026.</footer>
+</body></html>

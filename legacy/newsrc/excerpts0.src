@@ -1,0 +1,110 @@
+#include "defaults.inc"
+#define EXCERPTS_OPTS HIGHLIGHT_COLOR
+#define EXCERPTS_PRE HBEG<b>
+#define EXCERPTS_POST </b>HEND
+#define TITLE Selected Excerpts - Preface
+#include "top.inc"
+#include "excerpts-top.inc"
+
+<h1>Preface (portion of):</h1>
+
+<blockquote><i>The scientist  does not study nature because it
+is useful; he studies it because he delights in it, and he delights in
+it because it is beautiful. If nature were not beautiful, it would not
+be worth knowing, and if nature were not worth knowing, life would not
+be worth living.   Of course I do  not here speak  of that beauty that
+strikes the senses, the beauty of qualities  and appearances; not that
+I undervalue such beauty,  far from it, but it  has nothing to do with
+science; I mean that profounder beauty which comes from the harmonious
+order of the parts, and which a pure intelligence can grasp.</i>
+<p align=right>--Henri Poincaré</p>
+</blockquote>
+<br>
+<br>
+
+<p>
+<font size="+2">A</font> variation on an old joke goes as follows:
+<blockquote>
+Engineers study interesting real-world problems but fudge their
+results.  Mathematicians get exact results but study only toy problems.
+But computer scientists, being neither engineers nor mathematicians,
+study toy problems and fudge their results.
+</blockquote><p>
+Now, since I am a computer scientist, I have taken the liberty of
+altering the joke to make myself and my colleagues the butt of it.
+This joke examines a real problem found in all scientific disciplines.
+By substituting experimentalist, theorist, and simulationist for
+engineer, mathematician, and computer scientist, respectively, the
+joke becomes generalized for almost all of the sciences and gets to
+the heart of a very real division.
+
+<p>
+A theorist will often make many simplifying assumptions in order to
+get to the essence of some physical process.  Particles do not
+necessarily look like billiard balls, but it often helps to think in
+this way if you are trying to understand how classical mechanics says
+things should behave.  Likewise, experimentalists often have to deal
+with messy processes that are prone to measurement error.  So if a
+physicist finds that the surface temperature of an object is between
+100,000 and 200,000 degrees, it doesn't matter if the units are
+Celsius degrees or Kelvin degrees, because the margin of error is
+orders of magnitude larger than the difference in the two measuring
+units.
+
+<p>
+A simulationist is a relatively new breed of scientist who attempts to
+understand how the world works by studying computer simulations of
+phenomena found in nature.  A simulationist will always have to make
+some assumptions when building a computer model but will also find
+that the simulated results are not always a perfect match for what
+exists in the real world.  Hence, the simulationist, having to
+incorporate principles from theory and experimental methodologies,
+straddles the fence and must deal with limiting factors found in both
+extreme approaches.  But this is not always a bad thing.
+
+<p>
+Consider an economist who builds a simplified model of the world
+economy, runs the model on a computer, and reaches the conclusion that
+interest rates, unemployment, inflation, and growth will all reach a
+constant level at the end of the year and stay that way forever.  For
+this one case, the simplified model tells us very little about how the
+real world works because the simplified model has failed to capture an
+important aspect of the real world.  On the other hand, suppose that a
+simplified model is such that it never reaches equilibrium, turns out
+to be extremely sensitive to the starting conditions, and displays
+surprisingly complex behavior.  Even if this model fails to make
+actual predictions about the real economy, it still has some
+predictive power since it may reveal a deeper truth about the inherent
+difficulty of predicting the economy or similar systems.  In other
+words, the model is predictable in its unpredictability.  Hence, if a
+simplified model can behave in a sophisticated manner, then it is not
+too great a leap to conclude that the real-world economy can display
+an even greater form of sophistication.
+
+<p>
+For the first case, if after simplifying a natural process we find
+behavior that is profoundly simpler than the original phenomenon, then
+it is likely that the model failed to capture some essential piece of
+the real-world counterpart.  On the other hand, if an analogous form
+of complexity is still found even in a simplified model, then it is
+highly possible that a key feature of the natural system has been
+isolated. This illustrates that simulations---especially if they are
+simplifications---can yield insight into how things work in the real
+world.
+
+<p>
+All of this boils down to a simple but deep idea: simple recurrent
+rules can produce extremely rich and complicated behaviors.  Pure
+theory often fails to make accurate predictions of complicated natural
+processes because the world does not always obey equations with
+analytical solutions.  Similarly, experiments with complicated
+observations are often useless because they fail to bridge things from
+a reverse direction and correlate complex effects from simple causes.
+It is only through the marriage of theory and experimentation that
+many claims of the complexity of nature can withstand reasonable
+tests.  Simulation, then, becomes a form of experimentation in a
+universe of theories.  The primary purpose of this book is to
+celebrate this fact.
+
+#include "excerpts-bottom.inc"
+#include "bottom.inc"

@@ -1,0 +1,171 @@
+#include "defaults.inc"
+#define GLOSSARY_OPTS HIGHLIGHT_COLOR
+#define GLOSSARY_PRE HBEG<b>
+#define GLOSSARY_POST </b>HEND
+#define TITLE Glossary - P
+#include "top.inc"
+
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="P-section">P</a></h1>
+
+
+<p><b><a name="parallel/parallelism">Parallel/Parallelism</a></b> &nbsp; &nbsp;
+Many things happening at once.  
+
+<p><b><a name="pattern_classification">Pattern Classification</a></b> &nbsp; &nbsp;
+A task that <a href="glossary-N.html#neural_network_(nn)">neural networks</a> are often trained to do.  Given some
+input pattern, the task is to make an accurate class assignment to the
+input.  For example, classifying many images of letters to one of the
+twenty-six letters of the alphabet is a pattern classification task. 
+
+<p><b><a name="payoff">Payoff</a></b> &nbsp; &nbsp;
+In <a href="glossary-G.html#game_theory">game theory</a>, the amount that a player wins, given the player's
+and his opponent's actions.  
+
+<p><b><a name="peano_curve">Peano Curve</a></b> &nbsp; &nbsp;
+A <a href="glossary-F.html#fractal">fractal</a> <a href="glossary-S.html#space-filling">space-filling</a> curve that can fill a plane even
+though it is a line of infinite length.  Oddly enough, it has an
+integer <a href="glossary-F.html#fractal_dimension">fractal dimension</a> of 2.  
+
+<p><b><a name="perceptron">Perceptron</a></b> &nbsp; &nbsp;
+The simplest type of <a href="glossary-F.html#feedforward_neural_network">feedforward neural network</a>.  It has only
+inputs and outputs, i.e., no <a href="glossary-H.html#hidden_layer">hidden layers</a>.  
+
+<p><b><a name="periodic">Periodic</a></b> &nbsp; &nbsp;
+Refers to motion that goes through a finite number of regions, returns
+to a previous state, and repeats the same fixed pattern forever.  
+
+<p><b><a name="perturbation">Perturbation</a></b> &nbsp; &nbsp;
+A slight nudge.  
+
+<p><b><a name="phase_space">Phase Space</a></b> &nbsp; &nbsp;
+In this book, another name for <a href="glossary-S.html#state_space">state space</a>.  In the scientific
+literature, ``phase space'' is used to denote the space of motion in a
+<a href="glossary-D.html#dynamical_system">dynamical system</a> that moves in <a href="glossary-C.html#continuous">continuous</a> time, while
+<a href="glossary-S.html#state_space">state space</a> is often used for <a href="glossary-D.html#discrete">discrete</a> time <a href="glossary-S.html#system">systems</a>. 
+
+<p><b><a name="phase_transition">Phase Transition</a></b> &nbsp; &nbsp;
+In physics, a change from one state of matter to another.  In
+<a href="glossary-D.html#dynamical_system">dynamical systems</a> theory, a change from one mode of behavior to
+another. 
+
+<p><b><a name="planning">Planning</a></b> &nbsp; &nbsp;
+In computer science, and particularly in <a href="glossary-A.html#artificial_intelligence">artificial intelligence</a>,
+the task of determining a stepwise plan to accomplish a very specific
+task.  
+
+<p><b><a name="polynomial">Polynomial</a></b> &nbsp; &nbsp;
+A <a href="glossary-F.html#function">function</a> in which the output is the sum of terms that are the
+products of constant values and the input raised to some integer
+power.  The polynomial of a polynomial is another polynomial.  From a
+<a href="glossary-T.html#time_complexity">time complexity</a> point of view, polynomials are well-behaved. 
+
+<p><b><a name="post_production_system">Post Production System</a></b> &nbsp; &nbsp;
+A <a href="glossary-M.html#model_of_computation">model of computation</a> that resembles a collection of ``if
+... then'' rules and is capable of <a href="glossary-U.html#universal_computation">universal computation</a>.  
+
+<p><b><a name="predator-prey_system">Predator-Prey System</a></b> &nbsp; &nbsp;
+An <a href="glossary-E.html#ecosystem">ecosystem</a> in which one portion of the population consumes
+another.  With three or more species, simple predator-prey
+interactions can lead to <a href="glossary-C.html#chaos/chaotic">chaos</a> and biological <a href="glossary-A.html#arms_race">arms races</a>.
+See also <a href="glossary-L.html#lotka-volterra_system">Lotka-Volterra system</a>.  
+
+<p><b><a name="prime_number">Prime Number</a></b> &nbsp; &nbsp;
+A <a href="glossary-N.html#natural_number">natural number</a> that can be evenly divided only by itself and 1. 
+
+<p><b><a name="prisoners_dilemma">Prisoner's Dilemma</a></b> &nbsp; &nbsp;
+A non-<a href="glossary-Z.html#zero-sum_game">zero-sum game</a> in which both players have incentive not to
+cooperate under any circumstances.  Thus, the optimal <a href="glossary-G.html#game_theory">game theory</a>
+<a href="glossary-S.html#strategy">strategy</a> of <a href="glossary-A.html#always_defect">always defect</a> has the paradoxical property that
+both players would have a higher <a href="glossary-P.html#payoff">payoff</a> if they ignored the
+advice of game theory. 
+
+<p><b><a name="probability">Probability</a></b> &nbsp; &nbsp;
+The likelihood that a <a href="glossary-R.html#random/randomness">random</a> event will occur.  
+
+<p><b><a name="program">Program</a></b> &nbsp; &nbsp;
+An <a href="glossary-A.html#algorithm">algorithm</a> that is written in a programming language for
+execution on a physical computer.  
+
+<p><b><a name="proof">Proof</a></b> &nbsp; &nbsp;
+A sequence of <a href="glossary-S.html#statement">statements</a> in which each subsequent statement is
+derivable from one of the previous statements or from an <a href="glossary-A.html#axiom">axiom</a> of
+a <a href="glossary-F.html#formal_system">formal system</a>.   The final statement of a proof is usually the
+<a href="glossary-T.html#theorem">theorem</a> that one has set out to prove.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+
+
+#include "bottom.inc"

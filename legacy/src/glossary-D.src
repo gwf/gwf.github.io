@@ -1,0 +1,176 @@
+#include "defaults.inc"
+#define GLOSSARY_OPTS HIGHLIGHT_COLOR
+#define GLOSSARY_PRE HBEG<b>
+#define GLOSSARY_POST </b>HEND
+#define TITLE Glossary - D
+#include "top.inc"
+
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="D-section">D</a></h1>
+
+
+<p><b><a name="darwinism">Darwinism</a></b> &nbsp; &nbsp;
+The theory of <a href="glossary-E.html#evolution">evolution</a> as proposed by Charles Darwin, which
+combined <a href="glossary-V.html#variation">variation</a> of <a href="glossary-I.html#inheritable">inheritable</a> traits with <a href="glossary-N.html#natural_selection">natural
+selection</a>.  After the discovery of the physical mechanism of
+genetics, this was further refined into <a href="glossary-N.html#neo-darwinism">neo-Darwinism</a>.  
+
+<p><b><a name="delta_rule">Delta Rule</a></b> &nbsp; &nbsp;
+The <a href="glossary-P.html#perceptron">perceptron</a> <a href="glossary-L.html#learning">learning</a> rule that specifies that <a href="glossary-W.html#weight">weight</a>
+changes should be proportional to the product of a weight's input and
+the error (or delta) term for the perceptron.  
+
+<p><b><a name="derivative">Derivative</a></b> &nbsp; &nbsp;
+An expression that characterizes how the output of a <a href="glossary-F.html#function">function</a>
+changes as the input is varied.  Unlike <a href="glossary-I.html#integral">integrals</a>, derivatives
+can be calculated in an <a href="glossary-A.html#analytical">analytical</a> manner very easily. 
+
+<p><b><a name="decision_problem">Decision Problem</a></b> &nbsp; &nbsp;
+A problem in which all questions take the form ``Is something a member
+of a particular <a href="glossary-S.html#set">set</a>?'' and all answers are either ``yes'' or
+``no.''  
+
+<p><b><a name="detector">Detector</a></b> &nbsp; &nbsp;
+A sensor that translates the state of a <a href="glossary-C.html#classifier">classifier</a>'s
+<a href="glossary-E.html#environment">environment</a> into a <a href="glossary-M.html#message">message</a> that is suitable for posting to
+the <a href="glossary-M.html#message_list">message list</a> of the <a href="glossary-C.html#classifier_system">classifier system</a>. 
+
+<p><b><a name="determinant">Determinant</a></b> &nbsp; &nbsp;
+A quantity of a <a href="glossary-M.html#matrix">matrix</a> that characterizes the amount of expansion
+or contraction that the matrix inflicts on a <a href="glossary-V.html#vector">vector</a> when that
+vector is multiplied by the matrix.  
+
+<p><b><a name="deterministic">Deterministic</a></b> &nbsp; &nbsp;
+Occurring in a non-<a href="glossary-R.html#random/randomness">random</a> manner such that the next state of a
+<a href="glossary-S.html#system">system</a> depends only on prior states of the system or the
+<a href="glossary-E.html#environment">environment</a>.  Perfect knowledge of previous states implies
+perfect knowledge of the next state. 
+
+<p><b><a name="diagonal_matrix">Diagonal Matrix</a></b> &nbsp; &nbsp;
+A <a href="glossary-M.html#matrix">matrix</a> that has 0 entries along all nondiagonal entries,
+i.e., only the main diagonal may have non-zero values.  
+
+<p><b><a name="difference_equation">Difference Equation</a></b> &nbsp; &nbsp;
+An equation that describes how something changes in <a href="glossary-D.html#discrete">discrete</a> time
+steps.  <a href="glossary-N.html#numerical_solution">Numerical solutions</a> to <a href="glossary-I.html#integral">integrals</a> are usually
+realized as difference equations.  
+
+<p><b><a name="differential_equation">Differential Equation</a></b> &nbsp; &nbsp;
+A description of how something <a href="glossary-C.html#continuous">continuously</a> changes over time.
+Some differential equations can have an <a href="glossary-A.html#analytical_solution">analytical solution</a>
+such that all future states can be known without <a href="glossary-S.html#simulate/simulation">simulation</a> of
+the time evolution of the <a href="glossary-S.html#system">system</a>.  However, most can have a
+<a href="glossary-N.html#numerical_solution">numerical solution</a> with only limited accuracy.  
+
+<p><b><a name="differentiation">Differentiation</a></b> &nbsp; &nbsp;
+The act of calculating a <a href="glossary-D.html#derivative">derivative</a>; the inverse operation of
+calculating an <a href="glossary-I.html#integral">integral</a>.  
+
+<p><b><a name="diffusion_limited_aggregation">Diffusion Limited Aggregation</a></b> &nbsp; &nbsp;
+A type of <a href="glossary-S.html#stochastic">stochastic</a> <a href="glossary-F.html#fractal">fractal</a> formed by particles floating
+about in a <a href="glossary-R.html#random/randomness">random</a> manner until they stick to something solid.  
+
+<p><b><a name="discrete">Discrete</a></b> &nbsp; &nbsp;
+Taking only non-<a href="glossary-C.html#continuous">continuous</a> values, e.g., <a href="glossary-B.html#boolean">Boolean</a> or
+<a href="glossary-N.html#natural_number">natural numbers</a>. 
+
+<p><b><a name="dissipative_system">Dissipative System</a></b> &nbsp; &nbsp;
+A <a href="glossary-D.html#dynamical_system">dynamical system</a> that contains internal friction that deforms
+the structure of its <a href="glossary-A.html#attractor">attractor</a>, thus making motion such as
+<a href="glossary-F.html#fixed_point">fixed points</a>, <a href="glossary-L.html#limit_cycle">limit cycles</a>, <a href="glossary-Q.html#quasiperiodic">quasiperiodicity</a>, and
+<a href="glossary-C.html#chaos/chaotic">chaos</a> possible.  Dissipative systems often have internal
+structure despite being far from <a href="glossary-E.html#equilibrium">equilibrium</a>, like a whirlpool
+that preserves its basic form despite being in the midst of constant
+change.  
+
+<p><b><a name="diverge">Diverge</a></b> &nbsp; &nbsp;
+For <a href="glossary-A.html#algorithm">algorithms</a> or computers, to run forever and never halt; for
+<a href="glossary-I.html#iterate/iterative">iterative</a> <a href="glossary-S.html#system">systems</a> (like the equations for the <a href="glossary-M.html#mandelbrot_set">Mandelbrot
+set</a>), reaching a state such that all future states explode in size. 
+
+<p><b><a name="dot_product">Dot Product</a></b> &nbsp; &nbsp;
+The <a href="glossary-I.html#inner_product">inner product</a> of two <a href="glossary-V.html#vector">vectors</a>.  
+
+<p><b><a name="dynamical_system">Dynamical System</a></b> &nbsp; &nbsp;
+A <a href="glossary-S.html#system">system</a> that changes over time according to a set of fixed rules
+that determine how one state of the system moves to another state.  
+
+<p><b><a name="dynamics/dynamical">Dynamics/Dynamical</a></b> &nbsp; &nbsp;
+Pertaining to the change in behavior of a <a href="glossary-S.html#system">system</a> over time.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+
+
+#include "bottom.inc"

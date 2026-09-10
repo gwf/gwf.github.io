@@ -1,0 +1,46 @@
+#include "defaults.inc"
+#define COVER_OPTS HIGHLIGHT_COLOR
+#define COVER_PRE HBEG<b>
+#define COVER_POST </b>HEND
+#define TITLE Cover Artwork
+#include "top.inc"
+
+
+<table bgcolor="#ffffff" align=top border=0
+       cellspacing=0 cellpadding=0 width="100%"><tr><td>
+
+<a href="graphics/cover.gif">
+<img alt="Cover Artwork" align=right hspace=5  border=1
+ src="graphics/cover-small.gif" width="240" height="269">
+</a>
+
+<font face="Tahoma,Verdana,Arial,Helvetica" size=2>
+The cover for <em>The Computational Beauty of Nature</em> was
+produced in three stages by three people.  The original illustrations
+of the flying fish were made by
+<a href="http://info.med.yale.edu/caim/principals/lynch.html">
+Patrick Lynch</a>,
+Director of 
+<a href="http://info.med.yale.edu/">Yale University School of Medicine</a>'s 
+<a href="http://info.med.yale.edu/caim/">Center for Advanced Instructional Media</a>.
+<a href="author.html">Gary Flake</a> cannibalized Lynch's fish with
+<a href="http://www.gimp.org/">The Gimp</a> editor, made the colors
+look as unnatural as possible, and morphed them to some home grown
+circuitry. Finally, Jeannet Leendertse did the titles and layout.
+
+<p> The very first printing of the book contains a blooper <b>*</b> on
+the jacket, which reads: ``Cover illustration: `Original Flying Fish,'
+created by Patrick Lynch.''  While Lynch is responsible for all of the
+``art'' in the cover artwork, I and the MIT Press didn't think it fair
+to place the blame for the final result on his shoulders.  Subsequent
+printings will have a different credit.  In any event, if your copy of
+the book contains the credit above, then you can be sure you have a
+book from the first printing.
+
+</font>
+</td>
+</tr>
+</table>
+
+#include "bottom.inc"
+

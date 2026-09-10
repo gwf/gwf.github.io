@@ -1,0 +1,16 @@
+#include "defaults.inc"
+#define JAVA_OPTS HIGHLIGHT_COLOR
+#define JAVA_PRE HBEG<b>
+#define JAVA_POST </b>HEND
+#define TITLE Java Applets - Small
+#include "top.inc"
+
+<p>
+<APPLET CODE="CBNapplet" CODEBASE="classes" WIDTH=520 HEIGHT=520>
+<param name="viewer width" value="100">
+<param name="viewer height" value="100">
+<param name="background color" value="ffffff">
+</APPLET>
+
+#include "bottom.inc"
+

@@ -1,0 +1,182 @@
+#include "defaults.inc"
+#define GLOSSARY_OPTS HIGHLIGHT_COLOR
+#define GLOSSARY_PRE HBEG<b>
+#define GLOSSARY_POST </b>HEND
+#define TITLE Glossary - N
+#include "top.inc"
+
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="N-section">N</a></h1>
+
+
+<p><b><a name="nash_equilibrium">Nash Equilibrium</a></b> &nbsp; &nbsp;
+In <a href="glossary-G.html#game_theory">game theory</a>, a pair of <a href="glossary-S.html#strategy">strategies</a> for a game such that
+neither player can improve his outcome by changing his strategy.  A
+Nash equilibrium sometimes takes the form of a <a href="glossary-S.html#saddle">saddle</a> structure.
+Under some cases, when a strategy is at a Nash equilibrium with
+itself, the strategy resembles an <a href="glossary-E.html#evolutionary_stable_strategy_(ess)">evolutionary stable strategy</a>. 
+
+<p><b><a name="natural_number">Natural Number</a></b> &nbsp; &nbsp;
+Any of the standard counting numbers; a positive integer.  
+
+<p><b><a name="natural_selection">Natural Selection</a></b> &nbsp; &nbsp;
+The natural filtering process by which individuals with higher
+<a href="glossary-F.html#fitness">fitness</a> are more likely to reproduce than individuals with lower
+fitness. 
+
+<p><b><a name="neo-darwinism">Neo-Darwinism</a></b> &nbsp; &nbsp;
+A synthesis of <a href="glossary-D.html#darwinism">Darwinism</a> with the mechanisms of genetics; the
+idea that <a href="glossary-A.html#adaptation">adaptation</a> equals a combination of <a href="glossary-V.html#variation">variation</a>,
+heredity, and selection.  See also <a href="glossary-E.html#evolution">evolution</a>, <a href="glossary-I.html#inheritable">inheritable</a>,
+and <a href="glossary-N.html#natural_selection">natural selection</a>.  
+
+<p><b><a name="net_input">Net Input</a></b> &nbsp; &nbsp;
+The weighted sum of incoming signals into a <a href="glossary-N.html#neuron">neuron</a> plus a
+neuron's
+<a href="glossary-T.html#threshold">threshold</a> value. 
+
+<p><b><a name="neural_network_(nn)">Neural Network (NN)</a></b> &nbsp; &nbsp;
+A network of <a href="glossary-N.html#neuron">neurons</a> that are connected through <a href="glossary-S.html#synapse">synapses</a> or
+<a href="glossary-W.html#weight">weights</a>.  In this book, the term is  used almost exclusively to
+denote an artificial neural network and not the real thing.  Each
+neuron performs a simple calculation that is a <a href="glossary-F.html#function">function</a> of the
+<a href="glossary-A.html#activation">activations</a> of the neurons that are connected to it.  Through
+<a href="glossary-F.html#feedback">feedback</a> mechanisms and/or the <a href="glossary-N.html#nonlinear">nonlinear</a> output
+response of neurons, the network as a whole is capable of performing
+extremely complicated tasks, including <a href="glossary-U.html#universal_computation">universal computation</a> and
+<a href="glossary-U.html#universal_approximation">universal approximation</a>.  Three different classes of neural
+networks are <a href="glossary-F.html#feedforward_neural_network">feedforward</a>, <a href="glossary-F.html#feedback">feedback</a>, and <a href="glossary-R.html#recurrent_neural_network">recurrent neural
+networks</a>, which differ in the degree and type of <a href="glossary-C.html#connectivity">connectivity</a>
+that they possess. 
+
+<p><b><a name="neuron">Neuron</a></b> &nbsp; &nbsp;
+A simple computational unit that performs a weighted sum on incoming
+signals, adds a <a href="glossary-T.html#threshold">threshold</a> or bias term to this value to yield a
+<a href="glossary-N.html#net_input">net input</a>, and maps this last value through an <a href="glossary-A.html#activation_function">activation
+function</a> to compute its own <a href="glossary-A.html#activation">activation</a>.  Some neurons, such as
+those found in <a href="glossary-F.html#feedback">feedback</a> or <a href="glossary-H.html#Hopfield Network">Hopfield networks</a>, will
+retain a portion of their previous activation. 
+
+<p><b><a name="newtons_method">Newton's Method</a></b> &nbsp; &nbsp;
+An <a href="glossary-I.html#iterate/iterative">iterative</a> method for finding 0 values of a <a href="glossary-F.html#function">function</a>. 
+
+<p><b><a name="niche">Niche</a></b> &nbsp; &nbsp;
+A way for an animal to make a living in an <a href="glossary-E.html#ecosystem">ecosystem</a>.  
+
+<p><b><a name="no_free_lunch_(nfl)">No Free Lunch (NFL)</a></b> &nbsp; &nbsp;
+A <a href="glossary-T.html#theorem">theorem</a> that states that in the worst case, and averaged over
+an infinite number of <a href="glossary-S.html#search_space">search spaces</a>, all <a href="glossary-S.html#search/search_method">search methods</a>
+perform equally well.  More than being a condemnation of any search
+method, the NFL theorem actually hints that most naturally occurring
+search spaces are, in fact, not <a href="glossary-R.html#random/randomness">random</a>.  
+
+<p><b><a name="nonlinear">Nonlinear</a></b> &nbsp; &nbsp;
+A <a href="glossary-F.html#function">function</a> that is not <a href="glossary-L.html#linear">linear</a>.  Most things in nature are
+nonlinear.  This means that in a very real way, the whole is at least
+different from the sum of the parts.  See also <a href="glossary-H.html#holism">holism</a>.  
+
+<p><b><a name="not_recursively_enumerable_(not-re)">Not Recursively Enumerable (not-RE)</a></b> &nbsp; &nbsp;
+An infinite <a href="glossary-S.html#set">set</a> that cannot be <a href="glossary-R.html#recursively_enumerable_(re)">recursively enumerated</a>.
+<a href="glossary-S.html#set">Sets</a> of this type that are also not <a href="glossary-C.html#co-recursively_enumerable_(co-re)">co-recursively enumerable</a>
+are effectively <a href="glossary-R.html#random/randomness">random</a>. 
+
+<p><b><a name="np">NP</a></b> &nbsp; &nbsp;
+Nondeterministic polynomial time problems; a class of computational
+problems that may or may not be solvable in <a href="glossary-P.html#polynomial">polynomial</a> time but
+are expressed in such a way that candidate solutions can be tested for
+correctness in polynomial time.  See also <a href="glossary-T.html#time_complexity">time complexity</a> and
+<a href="glossary-N.html#np-complete">NP-Complete</a>. 
+
+<p><b><a name="np-complete">NP-Complete</a></b> &nbsp; &nbsp;
+A problem type in which any instance of any other <a href="glossary-N.html#np">NP</a> class
+problem can be translated to in <a href="glossary-P.html#polynomial">polynomial</a> time.  This means that
+if a fast
+<a href="glossary-A.html#algorithm">algorithm</a> exists for an NP-complete problem, then any problem
+that is in NP can be solved with the same algorithm. 
+
+<p><b><a name="numerical_solution">Numerical Solution</a></b> &nbsp; &nbsp;
+A solution to a problem that is calculated through a <a href="glossary-S.html#simulate/simulation">simulation</a>.
+For example, solving the <a href="glossary-T.html#three_body_problem">Three Body Problem</a> is not possible in
+the worst case; however, with the <a href="glossary-D.html#differential_equation">differential equations</a> that
+describe the motions of three bodies in space, one could simulate
+their movements by simulating each time step.  Nevertheless, numerical
+solutions are usually error-prone due to <a href="glossary-S.html#sensitivity">sensitivity</a> and,
+therefore, can be used to estimate the future for only relatively
+short time spans, in the worst case.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+
+
+#include "bottom.inc"

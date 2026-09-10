@@ -1,0 +1,36 @@
+#include "top.inc"
+
+<h1>The Author</h1>
+
+<a href="graphics/gwf2_sm.jpg">
+<img class="flushleft" src="graphics/gwf2_sm.jpg" width=120>
+</a>
+
+<p> Gary William Flake is the Principal Scientist of <a
+href="http://www.yahoo.com/">Yahoo!</a> and the founder and Head of <a
+href="http://research.yahoo.com/">Yahoo! Research Labs</a>.  He
+resides in northern California with his wife, son, and two adopted pit
+bulls.
+
+<p> His research interests include low complexity models, models of
+adaptation inspired by nature, neural network algorithms and
+architectures, nonlinear dynamics, complex systems, time series
+forecasting, system identification, pattern classification,
+model-based control, numerical optimization algorithms, database
+mining, graph clustering, web metrics, web searching, and network flow
+algorithms.
+
+<p> He has been affiliated with <a
+href="http://www.cs.clemson.edu/">Clemson University</a>, <a
+href="http://cnls.lanl.gov/">The Center for Nonlinear Studies</a> at
+<a href="http://www.lanl.gov/">Los Alamos National Laboratory</a>, <a
+href="http://www.cs.umd.edu">The University of Maryland</a>, <a
+href="http://web.mit.edu/">MIT</a>'s <a
+href="http://www.ai.mit.edu/projects/cbcl/web-homepage/web-homepage.html">Center
+for Biological and Computational Learning</a>, <a
+href="http://www.scr.siemens.com/">Siemens Corporate Research</a>, and
+<a href="http://www.neci.nj.nec.com/">NEC Research Institute</a>.
+
+
+#include "bottom.inc"
+

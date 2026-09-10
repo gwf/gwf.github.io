@@ -1,0 +1,102 @@
+#include "defaults.inc"
+#define FIGURES_OPTS HIGHLIGHT_COLOR
+#define FIGURES_PRE HBEG<b>
+#define FIGURES_POST </b>HEND
+#define TITLE Book Figures - Page 9
+#include "top.inc"
+
+<br><br><center>
+[ <a href=fig8.html>prev</a>&nbsp; | 
+<a href=fig1.html>1</a> | 
+<a href=fig2.html>2</a> | 
+<a href=fig3.html>3</a> | 
+<a href=fig4.html>4</a> | 
+<a href=fig5.html>5</a> | 
+<a href=fig6.html>6</a> | 
+<a href=fig7.html>7</a> | 
+<a href=fig8.html>8</a> | 
+9 | 
+<a href=fig10.html>10</a> | 
+<a href=fig11.html>11</a> | 
+<a href=fig12.html>12</a> | 
+<a href=fig13.html>13</a> | 
+<a href=fig14.html>14</a> | 
+<a href=fig15.html>15</a> | 
+<a href=fig16.html>16</a> | 
+<a href=fig17.html>17</a> | 
+<a href=fig18.html>18</a> | 
+<a href=fig19.html>19</a> | 
+&nbsp;<a href=fig10.html>next</a> ]
+</center><br><br>
+<table border=1 align=center cellspacing=1 cellpadding=5>
+  <tr valign=center>
+    <td align=center><table><tr align=center><td><a href=figs/73-100dpi.gif><img border=0 src=figs/73-24dpi.gif></a></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/73.eps>EPS</a> | <a href=figs/73.pdf>PDF</a> | <a href=figs/73-24dpi.gif>24dpi GIF</a> ]    </font></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/73-100dpi.gif>100dpi GIF</a> | <a href=figs/73-300dpi.gif>300dpi GIF</a> ]
+    </font></td></tr></table></td>
+    <td align=center><table><tr align=center><td><a href=figs/74-100dpi.gif><img border=0 src=figs/74-24dpi.gif></a></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/74.eps>EPS</a> | <a href=figs/74.pdf>PDF</a> | <a href=figs/74-24dpi.gif>24dpi GIF</a> ]    </font></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/74-100dpi.gif>100dpi GIF</a> | <a href=figs/74-300dpi.gif>300dpi GIF</a> ]
+    </font></td></tr></table></td>
+    <td align=center><table><tr align=center><td><a href=figs/75-100dpi.gif><img border=0 src=figs/75-24dpi.gif></a></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/75.eps>EPS</a> | <a href=figs/75.pdf>PDF</a> | <a href=figs/75-24dpi.gif>24dpi GIF</a> ]    </font></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/75-100dpi.gif>100dpi GIF</a> | <a href=figs/75-300dpi.gif>300dpi GIF</a> ]
+    </font></td></tr></table></td>
+  </tr>
+  <tr valign=center>
+    <td align=center><table><tr align=center><td><a href=figs/76-100dpi.gif><img border=0 src=figs/76-24dpi.gif></a></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/76.eps>EPS</a> | <a href=figs/76.pdf>PDF</a> | <a href=figs/76-24dpi.gif>24dpi GIF</a> ]    </font></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/76-100dpi.gif>100dpi GIF</a> | <a href=figs/76-300dpi.gif>300dpi GIF</a> ]
+    </font></td></tr></table></td>
+    <td align=center><table><tr align=center><td><a href=figs/77-100dpi.gif><img border=0 src=figs/77-24dpi.gif></a></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/77.eps>EPS</a> | <a href=figs/77.pdf>PDF</a> | <a href=figs/77-24dpi.gif>24dpi GIF</a> ]    </font></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/77-100dpi.gif>100dpi GIF</a> | <a href=figs/77-300dpi.gif>300dpi GIF</a> ]
+    </font></td></tr></table></td>
+    <td align=center><table><tr align=center><td><a href=figs/78-100dpi.gif><img border=0 src=figs/78-24dpi.gif></a></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/78.eps>EPS</a> | <a href=figs/78.pdf>PDF</a> | <a href=figs/78-24dpi.gif>24dpi GIF</a> ]    </font></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/78-100dpi.gif>100dpi GIF</a> | <a href=figs/78-300dpi.gif>300dpi GIF</a> ]
+    </font></td></tr></table></td>
+  </tr>
+  <tr valign=center>
+    <td align=center><table><tr align=center><td><a href=figs/79-100dpi.gif><img border=0 src=figs/79-24dpi.gif></a></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/79.eps>EPS</a> | <a href=figs/79.pdf>PDF</a> | <a href=figs/79-24dpi.gif>24dpi GIF</a> ]    </font></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/79-100dpi.gif>100dpi GIF</a> | <a href=figs/79-300dpi.gif>300dpi GIF</a> ]
+    </font></td></tr></table></td>
+    <td align=center><table><tr align=center><td><a href=figs/80-100dpi.gif><img border=0 src=figs/80-24dpi.gif></a></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/80.eps>EPS</a> | <a href=figs/80.pdf>PDF</a> | <a href=figs/80-24dpi.gif>24dpi GIF</a> ]    </font></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/80-100dpi.gif>100dpi GIF</a> | <a href=figs/80-300dpi.gif>300dpi GIF</a> ]
+    </font></td></tr></table></td>
+    <td align=center><table><tr align=center><td><a href=figs/81-100dpi.gif><img border=0 src=figs/81-24dpi.gif></a></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/81.eps>EPS</a> | <a href=figs/81.pdf>PDF</a> | <a href=figs/81-24dpi.gif>24dpi GIF</a> ]    </font></td></tr>
+                            <tr align=center><td><font size=-3> [ <a href=figs/81-100dpi.gif>100dpi GIF</a> | <a href=figs/81-300dpi.gif>300dpi GIF</a> ]
+    </font></td></tr></table></td>
+  </tr>
+</table>
+<br><br><center>
+[ <a href=fig8.html>prev</a>&nbsp; | 
+<a href=fig1.html>1</a> | 
+<a href=fig2.html>2</a> | 
+<a href=fig3.html>3</a> | 
+<a href=fig4.html>4</a> | 
+<a href=fig5.html>5</a> | 
+<a href=fig6.html>6</a> | 
+<a href=fig7.html>7</a> | 
+<a href=fig8.html>8</a> | 
+9 | 
+<a href=fig10.html>10</a> | 
+<a href=fig11.html>11</a> | 
+<a href=fig12.html>12</a> | 
+<a href=fig13.html>13</a> | 
+<a href=fig14.html>14</a> | 
+<a href=fig15.html>15</a> | 
+<a href=fig16.html>16</a> | 
+<a href=fig17.html>17</a> | 
+<a href=fig18.html>18</a> | 
+<a href=fig19.html>19</a> | 
+&nbsp;<a href=fig10.html>next</a> ]
+</center><br><br>
+
+
+#include "bottom.inc"
+
+

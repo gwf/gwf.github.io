@@ -1,0 +1,59 @@
+#include "defaults.inc"
+#define JAVA_OPTS HIGHLIGHT_COLOR
+#define JAVA_PRE HBEG<b>
+#define JAVA_POST </b>HEND
+#define TITLE Java Applets
+#include "top.inc"
+
+<p>
+Mike Miller graciously coded up a set of Java classes to simplify
+porting the source code from the book.  Using this framework, Mike has
+ported about half of the programs from the original C source into
+Java.  His framework is in keeping with the philosophy behind the
+design of the original C source in that all of the details for the GUI
+are more or less extracted away from the main source.  This means that
+the heart of the code, i.e., the interesting stuff, is pretty easy to
+understand from looking at the class definitions.
+
+<p>
+Of course, the java source code is freely available, <a
+href="cbn-java+class.zip">with</a> and <a href="cbn-java.jar">without</a> the
+class files precompiled.  If you don't have a Java compiler or you are
+not sure, get the package with the class files included.
+
+<p>
+Since the Java applets closely resemble the
+<a href="download.html">C programs</a>,
+you may wish
+to consult the
+<a href="source.html">online documentation</a>
+of the original programs.
+
+<p>
+While using the applets, note that you can often interact with the
+main viewer.  For example, some applets will allow you to zoom in
+and/or rotate an image, depending on what is appropriate; so try
+your mouse on the viewer and see what happens.
+
+<p>
+Depending on the size of your screen and the amount of processing
+power that you have, you should choose one links below to run the
+applets.
+
+<p>
+<ul>
+<li> <a href="javasmall.html">small screen:</a> 420x520 panel, 100x100 graphics
+<li> <a href="javamed.html">medium screen:</a> 520x520 panel, 200x200 graphics
+<li> <a href="javalarge.html">large screen:</a> 620x520 panel, 300x300 graphics
+</ul>
+
+
+<p>
+NB: Netscape under Linux and Solaris has a strange update policy for
+the screen that I can't quite figure out.  If the graphics take a long
+time to update, try moving your mouse around or clicking the menu.
+Anyone know what's the deal here?
+
+
+#include "bottom.inc"
+

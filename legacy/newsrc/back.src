@@ -1,0 +1,54 @@
+
+#include "top.inc"
+
+<h1>Jacket Text</h1>
+
+<p>
+<span style="font-size:18px;">
+<b>The Computational Beauty of Nature</b></span><br>
+<span style="font-size:12px;">
+<i>Computer Explorations of Fractals, Chaos,<br>
+Complex Systems, and Adaptation</i></span><br>
+by Gary William Flake
+
+<p class="quote">
+``This book is a delight.''
+<p class="cite">&#151;<a href="http://www.cs.unm.edu/~bap/">Barak Pearlmutter</a>,
+<a href="http://www.unm.edu/">The University of New Mexico</a> 
+
+<p class="quote">
+``This delightful book illustrates beautifully the paradigm shift
+in physics from writing equations and solving them to computer
+modeling and experimentation.''
+<p class="cite">&#151;<a href="http://www.cs.auckland.ac.nz/CDMTCS/chaitin/">Greg Chaitin</a></b>, author 
+of <i><a href="http://www.springer-ny.com/press/chaitin/">The Limits
+of Mathematics</a></i> 
+
+<br><br>
+<p>
+``Simulation,'' writes Gary Flake in his preface,
+``becomes a form of experimentation in a universe of theories. The
+primary purpose of this book is to celebrate this fact.''
+<p>
+In this book, Gary William Flake develops in depth the simple idea
+that recurrent rules can produce rich and complicated
+behaviors. Distinguishing ``agents'' (e.g., molecules, cells,
+animals, and species) from their interactions (e.g., chemical
+reactions, immune system responses, sexual reproduction, and
+evolution), Flake argues that it is the computational properties of
+interactions that account for much of what we think of as
+``beautiful'' and ``interesting.'' From this basic
+thesis, Flake explores what he considers to be today's four most
+interesting computational topics: fractals, chaos, complex systems,
+and adaptation.
+<p>
+Each of the book's parts can be read independently, enabling even the
+casual reader to understand and work with the basic equations and
+programs. Yet the parts are bound together by the theme of the
+computer as a laboratory and a metaphor for understanding the
+universe. The inspired reader will experiment further with the ideas
+presented to create fractal landscapes, chaotic systems, artificial
+life forms, genetic algorithms, and artificial neural networks.
+
+
+#include "bottom.inc"

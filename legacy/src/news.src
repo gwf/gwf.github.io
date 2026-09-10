@@ -1,0 +1,109 @@
+#include "defaults.inc"
+#define NEWS_OPTS HIGHLIGHT_COLOR
+#define NEWS_PRE HBEG<b>
+#define NEWS_POST </b>HEND
+#define TITLE News and To Do Items
+#include "top.inc"
+
+BOXBEG
+<b>News</b>
+BOXMID
+<ul>
+
+<li> <i>30 Nov 2002</i> - Made minor changes in the news items, added
+a FAQ entry, updated author affiliation, and added Amazon
+links.<br><br>
+
+<li> <i>21 Nov 2000</i> - Two major changes: (1) Added all of the figures
+from the book; includes thumbnail gallery, and archives of the figures
+in several formats.  (2)  Restructured the glossary so that there are
+many sections for each initial letter.  This keeps the pages down to
+around 30KB; the full glossary had been over 150KB.  I also made many
+little minor corrections and modifications including: fixing broken
+Fatbrain link, adding two FAQ items, added info for Stephanie
+Forrest's course, etc.<br><br>
+
+<li> <i>4 Jul 2000</i> - I went crazy and redid the entire style of
+the website: new fancy boxes, consistent color theme, and (wow!)
+JavaScript.  Added a bunch of new reviews and courses.  Added the new
+section on the FAQ list.  Added paperback links to the ordering
+section.<br><br>
+
+<li> <i>12 Dec 1999</i> - Added London Times review to home page and
+to reviews section.  Added my NEC website to the author section.<br><br>
+
+<li> <i>24 Oct 1999</i> - Many new corrections have been added to the
+errata section.  Changed the color scheme (the purple/pink motif was
+getting on my nerves).  Changed the home page to include many news
+items related to the book and to yours truly.  Extensively updated the
+"For Educators" section.<br><br>
+
+<li> <i>18 Apr 1999</i> - Very minor updates.  Most changes
+in the news &amp; awards section.  Some small changes in the ordering
+section.  Note that the author's <a
+href="mailto:gary.flake@bigfoot.com">email address</a> has
+changed. (``Free email for life'' said the folks at <tt>USA.NET</tt>.
+Yeah, sure.)<br><br>
+
+<li> <i>18 Dec 1998</i> - Minor update to author info.  Added Mac
+stuff.  Added current errata.  Added section for reviews, etc. <br><br>
+
+<li> <i>26 Oct 1998</i> - So many changes, let me count the ways...
+<br><br>
+<ol>
+  <li> IE ``ugly mode'' disabled - my apologies to anyone using IE
+       that saw this website prior to this version.  Actually, my
+       apologies to anyone using IE. <br><br>
+  <li> Windows 95/98/NT port for the code is now here! - I managed to
+       find a nice plotting package that simplified the whole thing;
+       however, you still need to use the command-line interface.  I
+       may do something about this at a later date. <br><br>
+  <li> Updated author information - I am no longer at SCR.  Changed
+       email address as well. <br><br>
+  <li> Changed Java source with class files to be a ZIP file (instead of a
+       JAR file).  (If you don't have Java, how could you handle JARs?
+       Duh.) <br><br>
+  <li> Kickbacks from book sellers - If your order from Amazon.com,
+       Barnes and Noble, or ComputerLiteracy  by
+       following the link in the ordering section, I get free
+       beer.<br><br>
+  <li> Errata entries now reflect source code changes. <br><br> 
+  <li> Added ``for educators'' section.<br><br>
+</ol>
+
+<li> <i>29 Sep 1998</i> - Updated author information and added valid
+email address.  Added best online price information.  Added prebuilt C
+distribution for Linux and Solaris.  Java jar file now contains
+*.class files for people without Java compilers. <br><br>
+
+<li> <i>9 Sep 1998</i> - Fixed minor typos. <br><br>
+
+<li> <i>27 Aug 1998</i> - Corrected affiliation and web links for
+Barak Pearlmutter and Greg Chaitin.  Added web tracking link on main
+page. <br><br>
+
+<li> <i>9 Aug 1998</i> - Fixed a typo or two.  Significantly modified java
+applets:  HP and Termites now use fat pixels; L-system, Lorenz, and
+Rossler are new;  Lorenz, Rossler, and MG use a new 3D viewer; changed
+Gen1D to plot lines; fixed a bug in HP;  Cleaned up Panel interface to
+allow multiple indirect modifications to other controls. <br><br>
+
+<li> <i>1 Aug 1998</i> - First public version. <br><br>
+</ul>
+BOXEND
+
+
+<p>
+BOXBEG
+<b>To Do</b>
+BOXMID
+<ul>
+<li> When questions start coming, I'll compile a list of Frequently
+Asked Questions. <br><br>
+<li> The C source code will be updated by 2001 with a new Windows interface.<br>
+
+</ul>
+BOXEND
+
+#include "bottom.inc"
+

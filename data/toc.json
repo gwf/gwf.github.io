@@ -1,0 +1,765 @@
+{
+  "source": "html/toc.html",
+  "pdf": "book/cbn.pdf",
+  "page_offset_note": "printed page = pdf page - 20",
+  "parts": [
+    {
+      "number": null,
+      "title": "Front Matter",
+      "chapters": [
+        {
+          "title": "Preface",
+          "sections": [
+            {
+              "title": "How to Read This Book"
+            },
+            {
+              "title": "Dealing with Difficult Subjects"
+            },
+            {
+              "title": "Personal Motivation"
+            },
+            {
+              "title": "Acknowledgments"
+            }
+          ],
+          "excerpt": "pages/excerpts0.md",
+          "number": null,
+          "kind": "preface",
+          "pdf_page": null,
+          "printed_page": null
+        },
+        {
+          "title": "Introduction",
+          "sections": [
+            {
+              "title": "Simplicity and Complexity"
+            },
+            {
+              "title": "The Convergence of the Sciences"
+            },
+            {
+              "title": "The Silicon Laboratory"
+            }
+          ],
+          "number": 1,
+          "kind": "chapter",
+          "pdf_page": 21,
+          "printed_page": 1
+        }
+      ]
+    },
+    {
+      "number": "I",
+      "title": "Computation",
+      "chapters": [
+        {
+          "title": "Number Systems and Infinity",
+          "sections": [
+            {
+              "title": "Introduction to Number Properties"
+            },
+            {
+              "title": "Counting Numbers"
+            },
+            {
+              "title": "Rational Numbers"
+            },
+            {
+              "title": "Irrational Numbers"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 2,
+          "kind": "chapter",
+          "pdf_page": 31,
+          "printed_page": 11
+        },
+        {
+          "title": "Computability and Incomputability",
+          "sections": [
+            {
+              "title": "Gödelization"
+            },
+            {
+              "title": "Models of Computation"
+            },
+            {
+              "title": "Lisp and Stutter"
+            },
+            {
+              "title": "Equivalence and Time Complexity"
+            },
+            {
+              "title": "Universal Computation and Decision Problems"
+            },
+            {
+              "title": "Incomputability"
+            },
+            {
+              "title": "Number Sets Revisited"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 3,
+          "kind": "chapter",
+          "pdf_page": 43,
+          "printed_page": 23
+        },
+        {
+          "title": "Postscript: Computation",
+          "sections": [
+            {
+              "title": "Gödel's Incompleteness Result"
+            },
+            {
+              "title": "Incompleteness versus Incomputability",
+              "excerpt": "pages/excerpts1.md"
+            },
+            {
+              "title": "Discrete versus Continuous"
+            },
+            {
+              "title": "Incomputability versus Computability"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 4,
+          "kind": "postscript",
+          "pdf_page": 71,
+          "printed_page": 51
+        }
+      ],
+      "synopsis": "pages/parts.md#computation"
+    },
+    {
+      "number": "II",
+      "title": "Fractals",
+      "chapters": [
+        {
+          "title": "Self-Similarity and Fractal Geometry",
+          "sections": [
+            {
+              "title": "The Cantor Set"
+            },
+            {
+              "title": "The Koch Curve"
+            },
+            {
+              "title": "The Peano Curve"
+            },
+            {
+              "title": "Fractional Dimensions"
+            },
+            {
+              "title": "Random Fractals in Nature and Brownian Motion"
+            },
+            {
+              "title": "Further Exploration"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 5,
+          "kind": "chapter",
+          "pdf_page": 81,
+          "printed_page": 61
+        },
+        {
+          "title": "L-Systems and Fractal Growth",
+          "sections": [
+            {
+              "title": "Production Systems"
+            },
+            {
+              "title": "Turtle Graphics"
+            },
+            {
+              "title": "Further Exploration"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 6,
+          "kind": "chapter",
+          "pdf_page": 97,
+          "printed_page": 77
+        },
+        {
+          "title": "Affine Transformation Fractals",
+          "sections": [
+            {
+              "title": "A Review of Linear Algebra"
+            },
+            {
+              "title": "Composing Affine Linear Operations"
+            },
+            {
+              "title": "The Multiple Reduction Copy Machine Algorithm"
+            },
+            {
+              "title": "Iterated Functional Systems"
+            },
+            {
+              "title": "Further Exploration"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 7,
+          "kind": "chapter",
+          "pdf_page": 115,
+          "printed_page": 95
+        },
+        {
+          "title": "The Mandelbrot Set and Julia Sets",
+          "sections": [
+            {
+              "title": "Iterative Dynamical Systems"
+            },
+            {
+              "title": "Complex Numbers"
+            },
+            {
+              "title": "The Mandelbrot Set"
+            },
+            {
+              "title": "The M-Set and Computability"
+            },
+            {
+              "title": "The M-Set as the Master Julia Set"
+            },
+            {
+              "title": "Other Mysteries of the M-Set"
+            },
+            {
+              "title": "Further Exploration"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 8,
+          "kind": "chapter",
+          "pdf_page": 131,
+          "printed_page": 111
+        },
+        {
+          "title": "Postscript: Fractals",
+          "sections": [
+            {
+              "title": "Algorithmic Regularity as Simplicity"
+            },
+            {
+              "title": "Stochastic Irregularity as Simplicity"
+            },
+            {
+              "title": "Effective Complexity"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 9,
+          "kind": "postscript",
+          "pdf_page": 149,
+          "printed_page": 129
+        }
+      ],
+      "synopsis": "pages/parts.md#fractals"
+    },
+    {
+      "number": "III",
+      "title": "Chaos",
+      "chapters": [
+        {
+          "title": "Nonlinear Dynamics in Simple Maps",
+          "sections": [
+            {
+              "title": "The Logistic Map"
+            },
+            {
+              "title": "Stability and Instability"
+            },
+            {
+              "title": "Bifurcations and Universality"
+            },
+            {
+              "title": "Prediction, Layered Pastry, and Information Loss"
+            },
+            {
+              "title": "The Shadowing Lemma"
+            },
+            {
+              "title": "Characteristics of Chaos"
+            },
+            {
+              "title": "Further Exploration"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "excerpt": "pages/excerpts2.md",
+          "number": 10,
+          "kind": "chapter",
+          "pdf_page": 159,
+          "printed_page": 139
+        },
+        {
+          "title": "Strange Attractors",
+          "sections": [
+            {
+              "title": "The Hénon Attractor"
+            },
+            {
+              "title": "A Brief Introduction to Calculus"
+            },
+            {
+              "title": "The Lorenz Attractor"
+            },
+            {
+              "title": "The Mackey-Glass System"
+            },
+            {
+              "title": "Further Exploration"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 11,
+          "kind": "chapter",
+          "pdf_page": 179,
+          "printed_page": 159
+        },
+        {
+          "title": "Producer-Consumer Dynamics",
+          "sections": [
+            {
+              "title": "Producer-Consumer Interactions"
+            },
+            {
+              "title": "Predator-Prey Systems"
+            },
+            {
+              "title": "Generalized Lotka-Volterra Systems"
+            },
+            {
+              "title": "Individual-Based Ecology"
+            },
+            {
+              "title": "Unifying Themes"
+            },
+            {
+              "title": "Further Exploration"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 12,
+          "kind": "chapter",
+          "pdf_page": 201,
+          "printed_page": 181
+        },
+        {
+          "title": "Controlling Chaos",
+          "sections": [
+            {
+              "title": "Taylor Expansions"
+            },
+            {
+              "title": "Vector Calculus"
+            },
+            {
+              "title": "Inner and Outer Vector Product"
+            },
+            {
+              "title": "Eigenvectors, Eigenvalues, and Basis"
+            },
+            {
+              "title": "OGY Control"
+            },
+            {
+              "title": "Controlling the Hénon Map"
+            },
+            {
+              "title": "Further Exploration"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 13,
+          "kind": "chapter",
+          "pdf_page": 223,
+          "printed_page": 203
+        },
+        {
+          "title": "Postscript: Chaos",
+          "sections": [
+            {
+              "title": "Chaos and Randomness"
+            },
+            {
+              "title": "Randomness and Incomputability"
+            },
+            {
+              "title": "Incomputability and Chaos"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 14,
+          "kind": "postscript",
+          "pdf_page": 241,
+          "printed_page": 221
+        }
+      ],
+      "synopsis": "pages/parts.md#chaos"
+    },
+    {
+      "number": "IV",
+      "title": "Complex Systems",
+      "chapters": [
+        {
+          "title": "Cellular Automata",
+          "sections": [
+            {
+              "title": "One-Dimensional CA"
+            },
+            {
+              "title": "Wolfram's CA Classification"
+            },
+            {
+              "title": "Langton's Lambda Parameter"
+            },
+            {
+              "title": "Conway's Game of Life"
+            },
+            {
+              "title": "Natural CA-like Phenomena"
+            },
+            {
+              "title": "Further Exploration"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 15,
+          "kind": "chapter",
+          "pdf_page": 251,
+          "printed_page": 231
+        },
+        {
+          "title": "Autonomous Agents and Self-Organization",
+          "sections": [
+            {
+              "title": "Termites"
+            },
+            {
+              "title": "Virtual Ants"
+            },
+            {
+              "title": "Flocks, Herds, and Schools"
+            },
+            {
+              "title": "Unifying Themes"
+            },
+            {
+              "title": "Further Exploration"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 16,
+          "kind": "chapter",
+          "pdf_page": 281,
+          "printed_page": 261
+        },
+        {
+          "title": "Competition and Cooperation",
+          "sections": [
+            {
+              "title": "Game Theory and Zero-Sum Games"
+            },
+            {
+              "title": "Nonzero-Sum Games and Dilemmas"
+            },
+            {
+              "title": "Iterated Prisoner's Dilemma"
+            },
+            {
+              "title": "Stable Strategies and Other Considerations"
+            },
+            {
+              "title": "Ecological and Spatial Worlds"
+            },
+            {
+              "title": "Final Thoughts"
+            },
+            {
+              "title": "Further Exploration"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 17,
+          "kind": "chapter",
+          "pdf_page": 301,
+          "printed_page": 281
+        },
+        {
+          "title": "Natural and Analog Computation",
+          "sections": [
+            {
+              "title": "Artificial Neural Networks"
+            },
+            {
+              "title": "Associative Memory and Hebbian Learning"
+            },
+            {
+              "title": "Recalling Letters"
+            },
+            {
+              "title": "Hopfield Networks and Cost Optimization"
+            },
+            {
+              "title": "Unifying Themes"
+            },
+            {
+              "title": "Further Exploration"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "excerpt": "pages/excerpts3.md",
+          "number": 18,
+          "kind": "chapter",
+          "pdf_page": 327,
+          "printed_page": 307
+        },
+        {
+          "title": "Postscript: Complex Systems",
+          "sections": [
+            {
+              "title": "Phase Transitions in Networks"
+            },
+            {
+              "title": "Phase Transitions in Computation"
+            },
+            {
+              "title": "Phase Transitions and Criticality"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 19,
+          "kind": "postscript",
+          "pdf_page": 347,
+          "printed_page": 327
+        }
+      ],
+      "synopsis": "pages/parts.md#compsys"
+    },
+    {
+      "number": "V",
+      "title": "Adaptation",
+      "chapters": [
+        {
+          "title": "Genetics and Evolution",
+          "sections": [
+            {
+              "title": "Biological Adaptation",
+              "excerpt": "pages/excerpts4.md"
+            },
+            {
+              "title": "Heredity as Motivation for Simulated Evolution"
+            },
+            {
+              "title": "Details of a Genetic Algorithm"
+            },
+            {
+              "title": "A Sampling of GA Encodings"
+            },
+            {
+              "title": "Schemata and Implicit Parallelism"
+            },
+            {
+              "title": "Other Evolutionary Inspirations"
+            },
+            {
+              "title": "Unifying Themes"
+            },
+            {
+              "title": "Further Exploration"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 20,
+          "kind": "chapter",
+          "pdf_page": 359,
+          "printed_page": 339
+        },
+        {
+          "title": "Classifier Systems",
+          "sections": [
+            {
+              "title": "Feedback and Control"
+            },
+            {
+              "title": "Production, Expert, and Classifier Systems"
+            },
+            {
+              "title": "The Zeroth Level Classifier System"
+            },
+            {
+              "title": "Experiments with ZCS"
+            },
+            {
+              "title": "Further Exploration"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 21,
+          "kind": "chapter",
+          "pdf_page": 381,
+          "printed_page": 361
+        },
+        {
+          "title": "Neural Networks and Learning",
+          "sections": [
+            {
+              "title": "Pattern Classification and the Perceptron"
+            },
+            {
+              "title": "Linear Inseparability"
+            },
+            {
+              "title": "Multilayer Perceptrons"
+            },
+            {
+              "title": "Backpropagation"
+            },
+            {
+              "title": "Function Approximation"
+            },
+            {
+              "title": "Internal Representations"
+            },
+            {
+              "title": "Other Applications"
+            },
+            {
+              "title": "Unifying Themes"
+            },
+            {
+              "title": "Further Exploration"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 22,
+          "kind": "chapter",
+          "pdf_page": 403,
+          "printed_page": 383
+        },
+        {
+          "title": "Postscript: Adaptation",
+          "sections": [
+            {
+              "title": "Models and Search Methods"
+            },
+            {
+              "title": "Search Methods and Environments"
+            },
+            {
+              "title": "Environments and Models"
+            },
+            {
+              "title": "Adaptation and Computation"
+            },
+            {
+              "title": "Further Reading"
+            }
+          ],
+          "number": 23,
+          "kind": "postscript",
+          "pdf_page": 435,
+          "printed_page": 415
+        }
+      ],
+      "synopsis": "pages/parts.md#adaptation"
+    },
+    {
+      "number": null,
+      "title": "Epilogue",
+      "chapters": [
+        {
+          "title": "Duality and Dichotomy",
+          "sections": [
+            {
+              "title": "Web of Connections"
+            },
+            {
+              "title": "Interfaces to Hierarchies"
+            },
+            {
+              "title": "Limitations on Knowledge"
+            }
+          ],
+          "number": 24,
+          "kind": "epilogue",
+          "pdf_page": 445,
+          "printed_page": 425
+        },
+        {
+          "title": "Source Code Notes",
+          "sections": [],
+          "number": null,
+          "kind": "back_matter",
+          "pdf_page": 455,
+          "printed_page": 435
+        },
+        {
+          "title": "Glossary",
+          "sections": [],
+          "number": null,
+          "kind": "back_matter",
+          "pdf_page": 463,
+          "printed_page": 443
+        },
+        {
+          "title": "Production Notes",
+          "sections": [],
+          "number": null,
+          "kind": "back_matter",
+          "pdf_page": 515,
+          "printed_page": 495
+        }
+      ],
+      "synopsis": "pages/parts.md#epilogue"
+    }
+  ]
+}

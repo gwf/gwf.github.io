@@ -1,0 +1,89 @@
+#include "defaults.inc"
+
+<html>
+<head>
+<meta name="description" content="The Computational Beauty of Nature -
+Computer Explorations of Fractals, Chaos, Complex Systems, and
+Adaptation">
+<meta name="keywords" content="computation, fractals, chaos,
+complex systems, adaptation, source code, java, Mandelbrot, Julia set,
+mathematics, logistic map, Henon map, strange attractor, dynamical
+system, system theory, nature, cellular automata, boids, game theory,
+prisoners dilemma, flocking, neural, neural network, genetic
+algorithm, classifier system, evolution, learning"> <meta
+name="robots" content="all, index, follow">
+<title>The Computational Beauty of Nature</title>
+</head>
+
+<body bgcolor="#ffffff"
+ link="#993333" alink = "#000000" vlink = "#000000"
+ text = "#000000">     
+
+<p>
+<img alt="" src="graphics/blank.gif" height="5">
+
+<table border=0 cellspacing=0 cellpadding=0 width="100%">
+<tr align=center>
+      <td>
+        <img alt="The Computational Beauty of Nature"
+	 border=0 src="graphics/title3.gif" width="419" height="32">
+	<br>
+	<font color="#5555aa" face="Helvetica" size="+1"><b>
+	Computer Explorations of Fractals, Chaos,<br>Complex Systems, and
+	Adaptation
+	</b></font>
+      </td>
+    </tr>
+<tr align=center><td>
+<br>
+<a href="home.html"><img alt="Fish &amp; Chips" border=0 src="graphics/fish2lbw.jpg" width=575 height=397></a>
+</td></tr>
+<tr align=center>
+<td>
+<br>
+<a href="home.html">Click here to continue</a>, or just click on the fish &amp; chips.
+<br>
+<br>
+<script language="JavaScript">
+function popUp(URL,NAME) {
+amznwin=window.open(URL,NAME,'location=yes,scrollbars=yes,status=yes,toolbar=yes,resizable=yes,width=380,height=450,screenX=10,screenY=10,top=10,left=10');
+amznwin.focus();}
+document.open();
+document.write("<a href=javascript:popUp('http://buybox.amazon.com/exec/obidos/redirect?tag=thecomputatbeaut&link_code=xsc&creative=23424&camp=2025&path=/dt/assoc/tg/aa/xml/assoc/-/0262561271/thecomputatbeaut/ref=ac_bb6_,_amazon')><img src=http://rcm-images.amazon.com/images/G/01/associates/remote-buy-box/buy6.gif border=0 alt='Buy from Amazon.com' ></a>");
+document.close();
+</script>
+<noscript>
+<form method="POST" action="http://buybox.amazon.com/o/dt/assoc/handle-buy-box=0262561271">
+<input type="hidden" name="asin.0262561271" value="1">
+<input type="hidden" name="tag-value" value="thecomputatbeaut">
+<input type="hidden" name="tag_value" value="thecomputatbeaut">
+<input type="image" name="submit.add-to-cart" value="Buy from Amazon.com" border="0" alt="Buy from Amazon.com" src="http://rcm-images.amazon.com/images/G/01/associates/add-to-cart.gif">
+</form>
+</noscript>
+<br>
+<br>
+Last update: MODDATE.
+</td></tr>
+</table>
+
+<br><br><br><br>
+
+<ilayer visibility=hidden>
+<table border=0 width="100%"><tr><td align=left style="visibility:hidden">
+<!-- webbot bot="HTMLMarkup" startspan -->
+<A target="_top" HREF="http://counter.hitslink.com">
+<SCRIPT language="javascript1.2" src="http://counter.hitslink.com/counter.asp?acct=gary.flake">
+</SCRIPT>
+<SCRIPT language="javascript">
+  if ((navigator.appVersion.substring(0,1) <= '3') && (navigator.appName.substring(0,9) == 'Microsoft'))
+  {    document.write ('<IMG border=0 src="http://counter.hitslink.com/counterupdate.asp?acct=gary.flake">');  }
+</SCRIPT></A>
+<!-- webbot bot="HTMLMarkup" endspan -->
+</td></tr></table>
+</layer>
+
+
+</body>
+</html>
+
+

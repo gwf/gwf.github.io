@@ -1,0 +1,457 @@
+[
+  {
+    "quotation": "The scientist does not study nature because it is useful; he studies it because he delights in it, and he delights in it because it is beautiful. If nature were not beautiful, it would not be worth knowing, and if nature were not worth knowing, life would not be worth living. Of course I do not here speak of that beauty that strikes the senses, the beauty of qualities and appearances; not that I undervalue such beauty, far from it, but it has nothing to do with science; I mean that profounder beauty which comes from the harmonious order of the parts, and which a pure intelligence can grasp.",
+    "attribution": "Henri Poincaré",
+    "attribution_md": "**Henri Poincaré**",
+    "chapter": 0,
+    "part": "Preface"
+  },
+  {
+    "quotation": "The point of philosophy is to start with something so simple as not to seem worth stating, and to end with something so paradoxical that no one will believe it.",
+    "attribution": "Bertrand Russell",
+    "attribution_md": "**Bertrand Russell**",
+    "chapter": 1,
+    "part": "Introduction"
+  },
+  {
+    "quotation": "Things should be as simple as possible, but not simpler.",
+    "attribution": "Albert Einstein",
+    "attribution_md": "**Albert Einstein**",
+    "chapter": 1,
+    "part": "Introduction"
+  },
+  {
+    "quotation": "It is strange that we know so little about the properties of numbers. They are our handiwork, yet they baffle us; we can fathom only a few of their intricacies. Having defined their attributes and prescribed their behavior, we are hard pressed to perceive the implications of our formulas.",
+    "attribution": "James R. Newman",
+    "attribution_md": "**James R. Newman**",
+    "chapter": 2,
+    "part": "I - Computation"
+  },
+  {
+    "quotation": "Our minds are finite, and yet even in these circumstances of finitude we are surrounded by possibilities that are infinite, and the purpose of human life is to grasp as much as we can out of the infinitude.",
+    "attribution": "Alfred North Whitehead",
+    "attribution_md": "**Alfred North Whitehead**",
+    "chapter": 2,
+    "part": "I - Computation"
+  },
+  {
+    "quotation": "Computer Science is no more about computers than astronomy is about telescopes.",
+    "attribution": "E. W. Dijkstra",
+    "attribution_md": "**E. W. Dijkstra**",
+    "chapter": 3,
+    "part": "I - Computation"
+  },
+  {
+    "quotation": "To use: Apply shampoo to wet hair. Massage to lather, then rinse. Repeat.",
+    "attribution": "A typical hair-washing algorithm that fails to halt",
+    "attribution_md": "A typical hair-washing algorithm that fails to halt",
+    "chapter": 3,
+    "part": "I - Computation"
+  },
+  {
+    "quotation": "But let your communication be Yea, yea; Nay, nay: for whatsoever is more than these cometh of evil.",
+    "attribution": "An early proposal for binary code, Matthew 5:37",
+    "attribution_md": "An early proposal for binary code, **Matthew 5:37**",
+    "chapter": 3,
+    "part": "I - Computation"
+  },
+  {
+    "quotation": "All Cretans are liars.",
+    "attribution": "Epimenides, who was himself a Cretan",
+    "attribution_md": "**Epimenides**, who was himself a Cretan",
+    "chapter": 4,
+    "part": "I - Computation"
+  },
+  {
+    "quotation": "Trying to define yourself is like trying to bite your own teeth.",
+    "attribution": "Alan Watts",
+    "attribution_md": "**Alan Watts**",
+    "chapter": 4,
+    "part": "I - Computation"
+  },
+  {
+    "quotation": "There is no “royal road” to geometry.",
+    "attribution": "Euclid to King Ptolemy I",
+    "attribution_md": "**Euclid to King Ptolemy I**",
+    "chapter": 5,
+    "part": "II - Fractals"
+  },
+  {
+    "quotation": "So, Na'ralist observe, A Flea Hath smaller fleas that on him prey, And these have smaller fleas to bite 'em And so proceed ad infinitum.",
+    "attribution": "Jonathan Swift",
+    "attribution_md": "**Jonathan Swift**",
+    "chapter": 5,
+    "part": "II - Fractals"
+  },
+  {
+    "quotation": "God used beautiful mathematics in creating the world.",
+    "attribution": "Paul Dirac",
+    "attribution_md": "**Paul Dirac**",
+    "chapter": 5,
+    "part": "II - Fractals"
+  },
+  {
+    "quotation": "Nature uses as little as possible of anything.",
+    "attribution": "Johannes Kepler",
+    "attribution_md": "**Johannes Kepler**",
+    "chapter": 6,
+    "part": "II - Fractals"
+  },
+  {
+    "quotation": "The development of an organism ... may be considered as the execution of a “developmental program” present in the fertilized egg. ... A central task of developmental biology is to discover the underlying algorithm from the course of development.",
+    "attribution": "Aristid Lindenmayer and Grzegorz Rozenberg",
+    "attribution_md": "**Aristid Lindenmayer** and **Grzegorz Rozenberg**",
+    "chapter": 6,
+    "part": "II - Fractals"
+  },
+  {
+    "quotation": "Fractal geometry will make you see everything differently. There is danger in reading further. You risk the loss of your childhood vision of clouds, forests, flowers, galaxies, leaves, feathers, rocks, mountains, torrents of water, carpets, bricks, and much else besides. Never again will your interpretation of these things be quite the same.",
+    "attribution": "Michael F. Barnsley",
+    "attribution_md": "**Michael F. Barnsley**",
+    "chapter": 7,
+    "part": "II - Fractals"
+  },
+  {
+    "quotation": "Clouds are not spheres, mountains are not cones, coastlines are not circles, and bark is not smooth, nor does lightning travel in a straight line.",
+    "attribution": "Benoit Mandelbrot",
+    "attribution_md": "**Benoit Mandelbrot**",
+    "chapter": 7,
+    "part": "II - Fractals"
+  },
+  {
+    "quotation": "The universe is full of magical things patiently waiting for our wits to grow sharper.",
+    "attribution": "Eden Phillpots",
+    "attribution_md": "**Eden Phillpots**",
+    "chapter": 8,
+    "part": "II - Fractals"
+  },
+  {
+    "quotation": "Beauty is the first test; there is no permanent place in the world for ugly mathematics.",
+    "attribution": "G. H. Hardy",
+    "attribution_md": "**G. H. Hardy**",
+    "chapter": 8,
+    "part": "II - Fractals"
+  },
+  {
+    "quotation": "Mathematics is the science of patterns.",
+    "attribution": "Lynn Arthur Steen",
+    "attribution_md": "**Lynn Arthur Steen**",
+    "chapter": 9,
+    "part": "II - Fractals"
+  },
+  {
+    "quotation": "It is indeed a surprising and fortunate fact that nature can be expressed by relatively low-order mathematical functions.",
+    "attribution": "Rudolf Carnap",
+    "attribution_md": "**Rudolf Carnap**",
+    "chapter": 9,
+    "part": "II - Fractals"
+  },
+  {
+    "quotation": "Everything you've learned in school as “obvious” becomes less and less obvious as you begin to study the universe. For example, there are no solids in the universe. There's not even a suggestion of a solid. There are no absolute continuums. There are no surfaces. There are no straight lines.",
+    "attribution": "R. Buckminster Fuller",
+    "attribution_md": "**R. Buckminster Fuller**",
+    "chapter": 9,
+    "part": "II - Fractals"
+  },
+  {
+    "quotation": "Chaos is the score upon which reality is written.",
+    "attribution": "Henry Miller",
+    "attribution_md": "**Henry Miller**",
+    "chapter": 10,
+    "part": "III - Chaos"
+  },
+  {
+    "quotation": "... it may happen that small differences in the initial conditions produce very great ones in the final phenomena.",
+    "attribution": "Henri Poincaré",
+    "attribution_md": "**Henri Poincaré**",
+    "chapter": 10,
+    "part": "III - Chaos"
+  },
+  {
+    "quotation": "Prediction is difficult, especially of the future.",
+    "attribution": "Mark Twain (also attributed to Niels Bohr)",
+    "attribution_md": "**Mark Twain** (also attributed to **Niels Bohr**)",
+    "chapter": 10,
+    "part": "III - Chaos"
+  },
+  {
+    "quotation": "I am strangely attracted to you.",
+    "attribution": "Cole Porter",
+    "attribution_md": "**Cole Porter**",
+    "chapter": 11,
+    "part": "III - Chaos"
+  },
+  {
+    "quotation": "There is no excellent beauty that hath not some strangeness in the proportions.",
+    "attribution": "Francis Bacon",
+    "attribution_md": "**Francis Bacon**",
+    "chapter": 11,
+    "part": "III - Chaos"
+  },
+  {
+    "quotation": "Big whorls have little whorls, Which feed on their velocity; And little whorls have lesser whorls, And so on to viscosity.",
+    "attribution": "L. F. Richardson",
+    "attribution_md": "**L. F. Richardson**",
+    "chapter": 12,
+    "part": "III - Chaos"
+  },
+  {
+    "quotation": "Chaos often breeds life when order breeds habit.",
+    "attribution": "Henry Brooks Adams",
+    "attribution_md": "**Henry Brooks Adams**",
+    "chapter": 12,
+    "part": "III - Chaos"
+  },
+  {
+    "quotation": "Nature itself, even in chaos, cannot proceed except in an orderly and regular manner.",
+    "attribution": "Immanuel Kant",
+    "attribution_md": "**Immanuel Kant**",
+    "chapter": 12,
+    "part": "III - Chaos"
+  },
+  {
+    "quotation": "It turns out that an eerie type of chaos can lurk just behind a facade of order---and yet, deep inside the chaos lurks an even eerier type of order.",
+    "attribution": "Douglas Hofstadter",
+    "attribution_md": "**Douglas Hofstadter**",
+    "chapter": 13,
+    "part": "III - Chaos"
+  },
+  {
+    "quotation": "Amid the turmoil and tumult of battle, there may be seeming disorder and yet no real disorder at all.",
+    "attribution": "Sun Tzu",
+    "attribution_md": "**Sun Tzu**",
+    "chapter": 13,
+    "part": "III - Chaos"
+  },
+  {
+    "quotation": "All stable processes we shall predict. All unstable processes we shall control.",
+    "attribution": "John von Neumann",
+    "attribution_md": "**John von Neumann**",
+    "chapter": 13,
+    "part": "III - Chaos"
+  },
+  {
+    "quotation": "Order is not sufficient. What is required, is something much more complex. It is order entering upon novelty; so that the massiveness of order does not degenerate into mere repetition; and so that the novelty is always reflected upon a background of system.",
+    "attribution": "Alfred North Whitehead",
+    "attribution_md": "**Alfred North Whitehead**",
+    "chapter": 14,
+    "part": "III - Chaos"
+  },
+  {
+    "quotation": "Nothing in Nature is random. ... A thing appears random only through the incompleteness of our knowledge.",
+    "attribution": "Benedict Spinoza",
+    "attribution_md": "**Benedict Spinoza**",
+    "chapter": 14,
+    "part": "III - Chaos"
+  },
+  {
+    "quotation": "God has put a secret art into the forces of Nature so as to enable it to fashion itself out of chaos into a perfect world system.",
+    "attribution": "Immanuel Kant",
+    "attribution_md": "**Immanuel Kant**",
+    "chapter": 14,
+    "part": "III - Chaos"
+  },
+  {
+    "quotation": "If patterns of ones and zeros were “like” patterns of human lives and death, if everything about an individual could be represented in a computer record by a long string of ones and zeros, then what kind of creature would be represented by a long string of lives and deaths?",
+    "attribution": "Thomas Pynchon",
+    "attribution_md": "**Thomas Pynchon**",
+    "chapter": 15,
+    "part": "IV - Complex Systems"
+  },
+  {
+    "quotation": "The chess-board is the world; the pieces are the phenomena of the universe; the rules of the game are what we call the laws of Nature.",
+    "attribution": "T. H. Hardy",
+    "attribution_md": "**T. H. Hardy**",
+    "chapter": 15,
+    "part": "IV - Complex Systems"
+  },
+  {
+    "quotation": "Some primal termite knocked on wood. And tasted it, and found it good. And that is why your Cousin May Fell through the parlor floor today.",
+    "attribution": "Ogden Nash",
+    "attribution_md": "**Ogden Nash**",
+    "chapter": 16,
+    "part": "IV - Complex Systems"
+  },
+  {
+    "quotation": "Go to the ant, thou sluggard; consider her ways, and be wise.",
+    "attribution": "Proverbs 6:6",
+    "attribution_md": "**Proverbs 6:6**",
+    "chapter": 16,
+    "part": "IV - Complex Systems"
+  },
+  {
+    "quotation": "... and the thousands of fishes moved as a huge beast, piercing the water. They appear united, inexorably bound by common fate. How comes this unity?",
+    "attribution": "Anonymous",
+    "attribution_md": "**Anonymous**",
+    "chapter": 16,
+    "part": "IV - Complex Systems"
+  },
+  {
+    "quotation": "Do onto others as you would have them do onto you.",
+    "attribution": "Luke 6:31",
+    "attribution_md": "**Luke 6:31**",
+    "chapter": 17,
+    "part": "IV - Complex Systems"
+  },
+  {
+    "quotation": "Eye for eye, tooth for tooth, hand for hand, foot for foot.",
+    "attribution": "Deuteronomy 19:21",
+    "attribution_md": "**Deuteronomy 19:21**",
+    "chapter": 17,
+    "part": "IV - Complex Systems"
+  },
+  {
+    "quotation": "Morality is the herd-instinct in the individual.",
+    "attribution": "Friedrich Nietzsche",
+    "attribution_md": "**Friedrich Nietzsche**",
+    "chapter": 17,
+    "part": "IV - Complex Systems"
+  },
+  {
+    "quotation": "A technique succeeds in mathematical physics, not by a clever trick, or a happy accident, but because it expresses some aspect of a physical truth.",
+    "attribution": "O. G. Sutton",
+    "attribution_md": "**O. G. Sutton**",
+    "chapter": 18,
+    "part": "IV - Complex Systems"
+  },
+  {
+    "quotation": "What is important is that complex systems, richly cross-connected internally, have complex behaviours, and that these behaviours can be goal-seeking in complex patterns.",
+    "attribution": "W. Ross Ashby",
+    "attribution_md": "**W. Ross Ashby**",
+    "chapter": 18,
+    "part": "IV - Complex Systems"
+  },
+  {
+    "quotation": "I see the world in very fluid, contradictory, emerging, interconnected terms, and with that kind of circuitry I just don't feel the need to say what is going to happen or will not happen.",
+    "attribution": "Jerry Brown",
+    "attribution_md": "**Jerry Brown**",
+    "chapter": 18,
+    "part": "IV - Complex Systems"
+  },
+  {
+    "quotation": "If this seems complex, the reason is because Tao is both simple and complex. It is complex when we try to understand it, and simple when we allow ourselves to experience it.",
+    "attribution": "Stanley Rosenthal",
+    "attribution_md": "**Stanley Rosenthal**",
+    "chapter": 19,
+    "part": "IV - Complex Systems"
+  },
+  {
+    "quotation": "I want to stay as close to the edge as I can without going over. Out on the edge you see all kinds of things you can't see from the center.",
+    "attribution": "Kurt Vonnegut, Jr.",
+    "attribution_md": "**Kurt Vonnegut, Jr.**",
+    "chapter": 19,
+    "part": "IV - Complex Systems"
+  },
+  {
+    "quotation": "Life is pleasant. Death is peaceful. It's the transition that's troublesome.",
+    "attribution": "Isaac Asimov",
+    "attribution_md": "**Isaac Asimov**",
+    "chapter": 19,
+    "part": "IV - Complex Systems"
+  },
+  {
+    "quotation": "A hen is only an egg's way of making another egg.",
+    "attribution": "Samuel Butler",
+    "attribution_md": "**Samuel Butler**",
+    "chapter": 20,
+    "part": "V - Adaptation"
+  },
+  {
+    "quotation": "Natural selection is a mechanism for generating an exceedingly high degree of improbability.",
+    "attribution": "Sir Ronald Fisher",
+    "attribution_md": "**Sir Ronald Fisher**",
+    "chapter": 20,
+    "part": "V - Adaptation"
+  },
+  {
+    "quotation": "The goal of science is to build better mousetraps. The goal of nature is to build better mice.",
+    "attribution": "Anonymous",
+    "attribution_md": "**Anonymous**",
+    "chapter": 20,
+    "part": "V - Adaptation"
+  },
+  {
+    "quotation": "Mathematicians are inexorably drawn to nature, not just describing what is to be found there, but in creating echoes of natural laws.",
+    "attribution": "Roger Lewin",
+    "attribution_md": "**Roger Lewin**",
+    "chapter": 21,
+    "part": "V - Adaptation"
+  },
+  {
+    "quotation": "Plasticity is a double-edged sword: the more flexible an organism is the greater the variety of maladaptive, as well as adaptive, behaviors it can develop; the more teachable it is the more fully it can profit from the experiences of its ancestors and associates and the more it risks being exploited by its ancestors and associates.",
+    "attribution": "Donald Symons",
+    "attribution_md": "**Donald Symons**",
+    "chapter": 21,
+    "part": "V - Adaptation"
+  },
+  {
+    "quotation": "Repetition is the only form of permanence that Nature can achieve.",
+    "attribution": "George Santayana",
+    "attribution_md": "**George Santayana**",
+    "chapter": 21,
+    "part": "V - Adaptation"
+  },
+  {
+    "quotation": "I bet the human brain is a kludge.",
+    "attribution": "Marvin Minsky",
+    "attribution_md": "**Marvin Minsky**",
+    "chapter": 22,
+    "part": "V - Adaptation"
+  },
+  {
+    "quotation": "As a net is made up of a series of ties, so everything in this world is connected by a series of ties. If anyone thinks that the mesh of a net is an independent, isolated thing, he is mistaken. It is called a net because it is made up of a series of interconnected meshes, and each mesh has its place and responsibility in relation to other meshes.",
+    "attribution": "Buddha",
+    "attribution_md": "**Buddha**",
+    "chapter": 22,
+    "part": "V - Adaptation"
+  },
+  {
+    "quotation": "If the brain were so simple we could understand it, we would be so simple we couldn't.",
+    "attribution": "Lyall Watson",
+    "attribution_md": "**Lyall Watson**",
+    "chapter": 22,
+    "part": "V - Adaptation"
+  },
+  {
+    "quotation": "The sciences do not try to explain, they hardly even try to interpret, they mainly make models. By a model is meant a mathematical construct which, with the addition of certain verbal interpretations, describes observed phenomena. The justification of such a mathematical construct is solely and precisely that it is expected to work.",
+    "attribution": "John von Neumann",
+    "attribution_md": "**John von Neumann**",
+    "chapter": 23,
+    "part": "V - Adaptation"
+  },
+  {
+    "quotation": "Breadth-first search is the bulldozer of science.",
+    "attribution": "Randy Goebel",
+    "attribution_md": "**Randy Goebel**",
+    "chapter": 23,
+    "part": "V - Adaptation"
+  },
+  {
+    "quotation": "The most extensive computation known has been conducted over the last billion years on a planet-wide scale: it is the evolution of life. The power of this computation is illustrated by the complexity and beauty of its crowning achievement, the human brain.",
+    "attribution": "David Rogers",
+    "attribution_md": "**David Rogers**",
+    "chapter": 23,
+    "part": "V - Adaptation"
+  },
+  {
+    "quotation": "When two texts, or two assertions, perhaps two ideas, are in contradiction, be ready to reconcile them rather than cancel one by the other; regard them as two different facets, or two successive stages, of the same reality, a reality convincingly human just because it is complex.",
+    "attribution": "Marguerite Yourcenar",
+    "attribution_md": "**Marguerite Yourcenar**",
+    "chapter": 24,
+    "part": "Epilogue"
+  },
+  {
+    "quotation": "To see a World in a grain of Sand, And a Heaven in a Wild Flower, Hold Infinity in the palm of your hand, And Eternity in an hour.",
+    "attribution": "William Blake",
+    "attribution_md": "**William Blake**",
+    "chapter": 24,
+    "part": "Epilogue"
+  },
+  {
+    "quotation": "The process of preparing programs for a digital computer is especially attractive, not only because it can be economically and scientifically rewarding, but also because it can be an aesthetic experience much like composing poetry or music.",
+    "attribution": "Donald E. Knuth",
+    "attribution_md": "**Donald E. Knuth**",
+    "chapter": "Source Code Notes",
+    "part": "Back Matter"
+  }
+]

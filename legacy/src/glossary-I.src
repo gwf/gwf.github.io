@@ -1,0 +1,167 @@
+#include "defaults.inc"
+#define GLOSSARY_OPTS HIGHLIGHT_COLOR
+#define GLOSSARY_PRE HBEG<b>
+#define GLOSSARY_POST </b>HEND
+#define TITLE Glossary - I
+#include "top.inc"
+
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="I-section">I</a></h1>
+
+
+<p><b><a name="ifs">IFS</a></b> &nbsp; &nbsp;
+An iterated functional system; it constructs a <a href="glossary-F.html#fractal">fractal</a> by
+<a href="glossary-I.html#iterate/iterative">iterating</a> a <a href="glossary-V.html#vector">vector</a> quantity through an <a href="glossary-A.html#affine">affine</a> equation that
+is <a href="glossary-R.html#random/randomness">randomly</a> selected on each iteration.  
+
+<p><b><a name="imaginary_number">Imaginary Number</a></b> &nbsp; &nbsp;
+The square root of a negative number.  The square root of -1 is often
+denoted as <i>i</i> for the purpose of writing out <a href="glossary-C.html#complex_number">complex numbers</a>.  
+
+<p><b><a name="implicit_parallelism">Implicit Parallelism</a></b> &nbsp; &nbsp;
+The idea that <a href="glossary-G.html#genetic_algorithm_(ga)">genetic algorithms</a> have an extra built-in form of
+<a href="glossary-P.html#parallel/parallelism">parallelism</a> that is expressed when a GA <a href="glossary-S.html#search/search_method">searches</a> through a
+<a href="glossary-S.html#search_space">search space</a>.  Implicit parallelism depends on the similarities
+and differences between individuals in the population.  The theory
+posits that GAs process more <a href="glossary-S.html#schema/schemata">schemata</a> than there are <a href="glossary-S.html#string">strings</a>
+in a population, thus getting something of a free lunch.  See also 
+<a href="glossary-N.html#no_free_lunch_(nfl)">no free lunch</a>. 
+
+<p><b><a name="incomputable">Incomputable</a></b> &nbsp; &nbsp;
+Something that cannot be characterized by a <a href="glossary-P.html#program">program</a> that always
+halts.  <a href="glossary-S.html#set">Sets</a> that are incomputable may be <a href="glossary-R.html#recursively_enumerable_(re)">recursively
+enumerable</a> (like the <a href="glossary-H.html#halting_set">halting set</a>),
+<a href="glossary-C.html#co-recursively_enumerable_(co-re)">co-recursively enumerable</a>
+(e.g., the halting set's <a href="glossary-C.html#complement">complement</a>),
+or <a href="glossary-N.html#not_recursively_enumerable_(not-re)">not recursively enumerable</a>
+(which, if also not CO-RE, is a <a href="glossary-R.html#random/randomness">random</a>
+set).  
+
+<p><b><a name="incomputable_number">Incomputable Number</a></b> &nbsp; &nbsp;
+A <a href="glossary-R.html#real_number">real number</a> with an infinite decimal (or <a href="glossary-B.html#binary">binary</a>) expansion
+that cannot be enumerated by any <a href="glossary-U.html#universal_computer">universal computer</a>.  
+
+<p><b><a name="inheritable">Inheritable</a></b> &nbsp; &nbsp;
+Refers to a trait that can be genetically passed from parent to
+offspring.  
+
+<p><b><a name="inhibitory">Inhibitory</a></b> &nbsp; &nbsp;
+Refers to a neural <a href="glossary-S.html#synapse">synapse</a> or <a href="glossary-W.html#weight">weight</a> that is negative such
+that activity in the source <a href="glossary-N.html#neuron">neuron</a> encourages inactivity in the
+connected neuron.  The opposite of <a href="glossary-E.html#excitatory">excitatory</a>.  
+
+<p><b><a name="inner_product">Inner Product</a></b> &nbsp; &nbsp;
+For two <a href="glossary-V.html#vector">vectors</a> of the same dimensionality, the sum of the
+pairwise products of the two vector components.  
+
+<p><b><a name="integral">Integral</a></b> &nbsp; &nbsp;
+The cumulative <a href="glossary-C.html#continuous">continuous</a> sum of a <a href="glossary-F.html#function">function</a>.  The integral
+of a <a href="glossary-D.html#differential_equation">differential equation</a> represents the future state of a
+<a href="glossary-D.html#dynamical_system">dynamical system</a>; however, most integrals do not have an
+<a href="glossary-A.html#analytical_solution">analytical solution</a>, which means that they may only have
+<a href="glossary-N.html#numerical_solution">numerical solutions</a>, an admittedly inexact process. 
+
+<p><b><a name="integration">Integration</a></b> &nbsp; &nbsp;
+The act of calculating an <a href="glossary-I.html#integral">integral</a>, by either a <a href="glossary-N.html#numerical_solution">numerical</a> or
+an <a href="glossary-A.html#analytical_solution">analytical solution</a>; the inverse operation of
+<a href="glossary-D.html#differentiation">differentiation</a>.  
+
+<p><b><a name="invertible">Invertible</a></b> &nbsp; &nbsp;
+A <a href="glossary-F.html#function">function</a> is invertible (with a unique inverse) if the output
+uniquely determines the input (i.e., it is <a href="glossary-O.html#one-to-one">one-to-one</a>) and the
+set of legal outputs is equal to the set of legal inputs.  The
+function <i>x^2</i> is not strictly invertible, while <i>x^3</i> has an inverse.
+For operations the definition is slightly looser.  While
+<a href="glossary-I.html#integration">integration</a> and <a href="glossary-D.html#differentiation">differentiation</a> are considered to be
+inverse operations, there are an infinite number of
+<a href="glossary-I.html#integral">integrals</a> that are valid results for integrating any function;
+thus, the process is not one-to-one. 
+
+<p><b><a name="irrational_number">Irrational Number</a></b> &nbsp; &nbsp;
+A <a href="glossary-R.html#real_number">real number</a> that cannot be represented as a fraction.  
+
+<p><b><a name="iterated_prisoners_dilemma">Iterated Prisoner's Dilemma</a></b> &nbsp; &nbsp;
+The <a href="glossary-P.html#prisoners_dilemma">Prisoner's Dilemma</a> game played in an <a href="glossary-I.html#iterate/iterative">iterative</a> manner
+for a number of rounds that is unknown to both players.  
+
+<p><b><a name="iterate/iterative">Iterate/Iterative</a></b> &nbsp; &nbsp;
+Doing something repeatedly.  Doing something repeatedly.  Doing
+something repeatedly.  Doing something repeatedly.  Doing something
+repeatedly.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+
+
+#include "bottom.inc"

@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+	  "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<meta name="description" content="The Computational Beauty of Nature -
+Computer Explorations of Fractals, Chaos, Complex Systems, and
+Adaptation">
+<meta name="keywords" content="computation, fractals, chaos,
+complex systems, adaptation, source code, java, Mandelbrot, Julia set,
+mathematics, logistic map, Henon map, strange attractor, dynamical
+system, system theory, nature, cellular automata, boids, game theory,
+prisoners dilemma, flocking, neural, neural network, genetic
+algorithm, classifier system, evolution, learning"> <meta
+name="robots" content="all, index, follow">
+<title>CBofN - Selected Excerpts - Section 20.1</title>
+<link rel="stylesheet" href="format.css" type="text/css"
+ media="screen, print">
+</head>
+<body>
+
+<h1>The Computational Beauty of Nature <p>Computer Explorations of
+Fractals, Chaos, Complex Systems, and Adaptation</p></h1>
+
+<div id="right">
+<div id="vmenu">
+<h1>About the Book</h1>
+<a href="home.html">home</a>
+<a href="cover.html">cover artwork</a>
+<a href="back.html">jacket text</a>
+<a href="toc.html">table of contents</a>
+<a href="author.html">the author</a>
+<a href="ordering.html">ordering information</a>
+
+<br>
+<h1>Book Contents</h1>
+<a href="themes.html">three themes</a>
+<a href="parts.html">part synopses</a>
+<a href="excerpts0.html">selected excerpts</a>
+<a href="fig.html">all figures from book</a>
+<a href="quotes.html">quotes from book</a>
+<a href="glossary-intro.html">glossary from book</a>
+<a href="bibliography.html">bibliography</a>
+<a href="slides.html">slide show</a>
+
+<br>
+<h1>Source Code</h1>
+<a href="source.html">overview &amp;<br>documentation</a>
+<a href="faq.html">FAQ list</a>
+<a href="download.html">download source code</a>
+<a href="java.html">java applets</a>
+
+<br>
+<h1>Miscellany</h1>
+<a href="news.html">news</a>
+<a href="reviews.html">reviews &amp; awards</a>
+<a href="errata.html">errata</a>
+<a href="edu.html">for educators</a>
+<a href="cbofn.bib">bibliography (BibTeX format)</a>
+<a href="other.html">other links</a>
+
+</div>
+</div>
+
+<div id="content">
+
+<p>[
+  <a href="excerpts0.html">preface</a>
+| <a href="excerpts1.html">section 4.2</a>
+| <a href="excerpts2.html">section 10.0</a>
+| <a href="excerpts3.html">section 18.0</a>
+| <a href="excerpts4.html">section 22.0</a>
+]
+<br>
+<br>
+
+
+<h2>Section 20.1</h2><h1>Biological Adaptation</h1>
+
+
+<p> <font size="+3">T</font>he property of adaptation, from an
+evolutionary point of view, is often 
+described by the equation
+<b>adaptation = variation + heredity + selection</b>.
+This distillation of ideas, known as <i>neo-Darwinism</i>, differs
+from strict Darwinism by explicitly making reference to a method of
+heredity.  Breaking the equation down into basic terms reveals some
+interesting connections between adaptation and the fundamental
+computational issues highlighted earlier.  For example, variation,
+which refers to how individuals in a population can differ from each
+other, is crucial to the neo-Darwinist view since evolution operates
+on no single individual but on entire species.  Variations, by
+definition, can be expressed only in terms of multiple individuals;
+thus, parallelism and spatial multiplicity are essential ingredients
+in the algorithm of evolution.  Similarly, heredity can be seen as a
+form of temporal persistence.  When children inherit traits from their
+parents in discrete chunks of information, the traits can be seen to
+be iteratively passed down a time line.  Thus, we have both parallelism
+and iteration as fundamental pieces of the biological equation for
+adaptation.
+
+<p>
+Now if we lived in a world of infinite resources where every organism
+was guaranteed an opportunity to reproduce, then that would be the end
+of the story; you and I would not be here since evolution would never
+have occurred in our world.  So it is perhaps ironic that we are
+indebted to the finiteness of the universe.  With limitations on
+available resources, reproduction is far from a sure thing since more
+organisms will exist than can reproduce.  This brings us to the often
+misunderstood term ``survival of the fittest.''  This phrase has been
+criticized as being a tautology since it is really equivalent to
+``survival of the survivors,'' a nearly meaningless phrase.  The
+problem here seems to be with the word ``fittest,'' which is usually
+associated with physical characteristics independent of the ability to
+reproduce.  But by ``survival of the fittest'' we really mean
+``survival of the reproducers'' and nothing more.  As Richard Dawkins
+is fond of saying, you and I can proudly make the claim that every one
+of our ancestors---without exception---survived long enough to
+reproduce.  This may be an obvious statement, but if we consider the
+number of organisms that did not survive long enough to reproduce, and
+consider the exponential number of descendants that could have been,
+then we can be seen as members of a truly exclusive club.
+
+<p>
+Our ancestors may have been strong, fast, clever, or even sexy, and
+``survival of the fittest'' seems to refer to some of these traits,
+but in truth these admirable traits are secondary.  What really counts
+in natural selection is an organism's ability to reproduce, and
+nothing else.  If strength, speed, intelligence, and desirability
+happen to increase an organism's chances of reproducing, then these
+traits do indeed correspond to being ``fit,'' but only in the context
+of reproduction.  In fact, ``fitness'' can often be associated with a
+trait that is maladaptive in the sense that the trait may actually
+decrease the functionality of an organism.  An example of this can be
+found in the peacock's gaudy tail feathers, which can hardly do
+anything but decrease a peacock's ability in the daily business of
+survival, but are selective for survival solely because peahens find
+them ``sexy,'' in that they are indicators of a peacock's overall
+health and fitness.
+
+<p>
+Adaptation, natural selection, and evolution are indeed very strange
+things.  This is especially apparent when one factors in how organisms
+can have a recurrent relationship with their environments.  The
+concept <i>coevolution</i> refers to how two species can mutually
+adapt to one another in such a way as to have a circular relationship,
+with one species' influence on another ultimately returning to the
+first species in a feedback loop.  We see this in the coevolution of
+predator and prey species, such as lions and gazelles.  As lions
+became better hunters over the past several millions of years, they
+exerted selective pressure on the gazelles that they preyed upon,
+which had the effect of increasing the speed and elusiveness of future
+gazelles.  This in turn made it harder for the lions to get a meal,
+turning them into victims of their own success.  This phenomenon is
+often characterized as a biological arms race.
+
+<p>
+An even more elaborate and illustrative example is found in the
+coevolution of bats and moths.  Bats use a form of sonar, known as
+echolocation, to locate moths to eat.  To accomplish this, bats emit
+very high-frequency sounds that bounce off moths and other insects,
+giving them an estimate of the prey's relative location.  The process
+is actually far more complicated than one would think, since the
+bat-emitted sounds are often thousands of times more powerful than the
+returning echoes; hence, bats have evolved a technique to filter out
+the most powerful sounds so that they can concentrate on the faint
+return signals.  By itself, this form of navigation and target
+identification is an extremely impressive and creative feat of
+evolution.  But moths have coevolved a defense in the form of a soft
+covering on their bodies and wings that absorbs the bat chirps.  Bats,
+in turn, have evolved new chirp frequencies that can be used to identify
+moths' fuzzy coating.  In response, the moths have enhanced their stealth
+technology and, furthermore, have come up with a jamming technique that
+involves emitting their own sounds to jam the bats' return signals.
+This is often coordinated with elaborate evasive maneuvers.
+As if that were not enough, bats have evolved an elaborate flight
+pattern that can overwhelm a moth's senses, and also
+periodically turn off their echolocation, making the jamming technique
+less affective.  And so the arms race continues (Wesson 1991).
+
+<p>
+The point is that every species partially molds its own environment,
+which makes the boundary between the selector and the selected
+somewhat indistinct.  Hence, in many ways, Earth as whole may be
+best understood and appreciated as one enormous complex adaptive
+system.
+
+<p>
+<hr align=left size=1 noshade width="100">
+<p>Wesson, R. (1991). <i>Beyond natural selection</i>. Cambridge, Mass.:
+Bradford Books/MIT Press.
+
+
+<p>
+<br>
+<br>
+[
+  <a href="excerpts0.html">preface</a>
+| <a href="excerpts1.html">section 4.2</a>
+| <a href="excerpts2.html">section 10.0</a>
+| <a href="excerpts3.html">section 18.0</a>
+| <a href="excerpts4.html">section 22.0</a>
+]
+
+
+<br>
+<br>
+<br>
+<p><small>
+Copyright &#169; <a href="mailto:gary.flake AT usa.net">Gary
+William Flake</a>, 1998-2005. All Rights Reserved.</small>
+</div>
+</body>
+</html>

@@ -1,0 +1,149 @@
+{
+  "title": "The Computational Beauty of Nature",
+  "subtitle": "Computer Explorations of Fractals, Chaos, Complex Systems, and Adaptation",
+  "author": "Gary William Flake",
+  "source": "Author's local copy of the companion website for The Computational Beauty of Nature (MIT Press, 1998); site last modified 30 Nov 2002.",
+  "source_path": "/Users/gary/Deprecated/cbn",
+  "source_last_modified": "2002-11-30",
+  "generated_by": "tools/convert.py",
+  "legacy": {
+    "path": "legacy/",
+    "files": 529,
+    "bytes": 3846568,
+    "excluded": [
+      "figs/ (see figures/)",
+      "*.tgz *.zip *.jar *.hqx archives"
+    ]
+  },
+  "pages": {
+    "path": "data/pages/",
+    "count": 69,
+    "names": [
+      "assoc",
+      "author",
+      "back",
+      "bibliography",
+      "bifur1d",
+      "boids",
+      "ca",
+      "cover",
+      "diffuse",
+      "download",
+      "edu",
+      "eipd",
+      "errata",
+      "excerpts0",
+      "excerpts1",
+      "excerpts2",
+      "excerpts3",
+      "excerpts4",
+      "faq",
+      "fig",
+      "gabump",
+      "gaipd",
+      "gastring",
+      "gasurf",
+      "gatask",
+      "gen1d",
+      "glossary-intro",
+      "gsw",
+      "henbif",
+      "hencon",
+      "henon",
+      "henwarp",
+      "home",
+      "hopfield",
+      "hp",
+      "ifs",
+      "java",
+      "julia",
+      "life",
+      "lorenz",
+      "lotka",
+      "lsys",
+      "mandel",
+      "mg",
+      "mlp",
+      "mrcm",
+      "news",
+      "oldnews",
+      "ordering",
+      "other",
+      "parts",
+      "phase1d",
+      "predprey",
+      "quotes",
+      "reviews",
+      "rossler",
+      "sipd",
+      "slides",
+      "source",
+      "stutter",
+      "termites",
+      "theme1",
+      "theme2",
+      "theme3",
+      "themes",
+      "toc",
+      "vants",
+      "zcs",
+      "zcscup"
+    ],
+    "skipped": [
+      "index (splash page)",
+      "fig1..fig19 (thumbnail grids; see figures.json)",
+      "glossary, glossary-A..Z (see glossary.json)",
+      "javasmall/javamed/javalarge (applet-only)"
+    ]
+  },
+  "programs": {
+    "path": "data/programs.json",
+    "count": 38
+  },
+  "glossary": {
+    "path": "data/glossary.json",
+    "markdown": "data/glossary.md",
+    "count": 284
+  },
+  "toc": {
+    "path": "data/toc.json",
+    "chapters": 24,
+    "postscript_pdf_pages": {
+      "4": 71,
+      "9": 149,
+      "14": 241,
+      "19": 347,
+      "23": 435
+    }
+  },
+  "figures": {
+    "path": "data/figures.json",
+    "count": 164,
+    "captions_verified_in_pdf": 161,
+    "numbering_note": "html/figs order = allfigs.lof order = book order; chapter numbering derived from per-chapter counts in master.lof (which is stale for figs 74-77) and verified against book/cbn.pdf text",
+    "dirs": {
+      "pdf": "figures/pdf/",
+      "gif100": "figures/gif100/",
+      "svg": "figures/svg/",
+      "thumb": "figures/thumb/"
+    },
+    "conversion_failures": []
+  },
+  "quotes": {
+    "path": "data/quotes.json",
+    "count": 65,
+    "book_xquotes": 65,
+    "unmatched": 0
+  },
+  "reviews": {
+    "path": "data/reviews.json",
+    "reviews": 14,
+    "awards": 3,
+    "distinctions": 4
+  },
+  "warnings": [
+    "figure 56 (9.2): caption not matched in book pdf text (number-only): 'Gaussian distributions'",
+    "figure 68 (11.1): caption not matched in book pdf text (number-only): 'The Hénon map for $a = 1.29$ and $b = 0.3$'",
+    "figure 69 (11.2): caption not matched in book pdf text (number-only): 'The Hénon attractor viewed from many scales'"
+  ]
+}

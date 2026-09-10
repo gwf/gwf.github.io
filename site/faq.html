@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<title>FAQ (historical) - The Computational Beauty of Nature</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* { box-sizing: border-box; }
+html { color-scheme: dark; }
+body { margin: 0; background: #0b0c0f; color: #cfd2d8; font: 16px/1.6 -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+a { color: #9cc4ff; text-decoration: none; } a:hover { text-decoration: underline; }
+header.top { border-bottom: 1px solid #1d1f25; padding: 14px 28px; display: flex; gap: 22px; align-items: baseline; flex-wrap: wrap; }
+header.top .brand { font: 400 18px Georgia, "Times New Roman", serif; color: #f2f2f2; }
+header.top nav a { color: #9aa0ab; margin-right: 16px; font-size: 14px; }
+header.top nav a.cur { color: #fff; }
+main { max-width: 980px; margin: 0 auto; padding: 36px 28px 80px; }
+h1 { font: 400 34px/1.15 Georgia, "Times New Roman", serif; color: #f4f4f4; margin: 0 0 8px; }
+h2 { font: 400 24px/1.2 Georgia, "Times New Roman", serif; color: #eee; margin: 38px 0 12px; }
+h3 { font: 500 17px/1.3 -apple-system, Helvetica, Arial, sans-serif; color: #e6e6e6; margin: 26px 0 8px; }
+.kicker { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a8f99; }
+.lede { color: #aab; font-size: 17px; margin-bottom: 26px; }
+p { margin: 0 0 14px; }
+blockquote { border-left: 2px solid #333; margin: 14px 0; padding: 2px 16px; color: #b9bcc4; font-style: italic; }
+pre, code { font: 13.5px Menlo, Consolas, monospace; } pre { background: #14161b; padding: 12px 14px; border-radius: 4px; overflow-x: auto; }
+code { color: #dde; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+.card { background: #101218; border: 1px solid #1d1f25; border-radius: 6px; overflow: hidden; }
+.card img { display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #000; }
+.card .b { padding: 10px 12px 12px; } .card b { color: #eee; font-weight: 500; display: block; } .card small { color: #8a8f99; }
+.card:hover { border-color: #444; }
+.parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+.part { border-top: 1px solid #23262d; padding-top: 12px; }
+.part h2 { margin: 4px 0 8px; font-size: 21px; }
+.part ol { margin: 0; padding-left: 22px; color: #aab; } .part li { margin: 3px 0; } .part li a { color: #cfd2d8; }
+.part .demo { color: #9cc4ff; font-size: 13px; margin-left: 6px; }
+ul.plain { list-style: none; columns: 2; column-gap: 30px; padding-left: 22px; color: #aab; margin: 0 0 8px; } ul.plain li { margin: 2px 0; } @media (max-width: 700px) { ul.plain { columns: 1; } }
+.figs { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+.figs a { display: block; background: #fff; border-radius: 4px; padding: 6px; }
+.figs img { width: 100%; height: 120px; object-fit: contain; display: block; }
+.figs span { display: block; font-size: 12px; color: #444; margin-top: 4px; }
+dl.gloss dt { color: #eee; font-weight: 500; margin-top: 14px; } dl.gloss dd { margin: 2px 0 0; color: #b5b9c2; }
+input.search { width: 100%; font: 16px inherit; padding: 10px 12px; background: #14161b; border: 1px solid #2a2d35; color: #eee; border-radius: 6px; margin: 14px 0 22px; }
+.chapnav { display: flex; justify-content: space-between; margin: 40px 0 0; color: #9aa0ab; font-size: 14px; }
+.opts td { vertical-align: top; padding: 4px 10px 4px 0; font-size: 14px; } .opts code { white-space: nowrap; }
+.muted { color: #8a8f99; font-size: 14px; }
+.hero { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+.hero .cover { width: 220px; border-radius: 4px; box-shadow: 0 6px 30px rgba(0,0,0,0.6); }
+.two { columns: 2; column-gap: 34px; } @media (max-width: 700px) { .two { columns: 1; } }
+footer { color: #6d727b; font-size: 13px; border-top: 1px solid #1d1f25; margin-top: 60px; padding: 18px 28px; }
+.demo-embed { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: 6px; background: #000; display: block; }
+</style></head><body>
+<header class="top"><span class="brand">The Computational Beauty of Nature</span><nav><a href="index.html" class="cur">Programs</a><a href="figures.html" class="">Figures</a><a href="glossary.html" class="">Glossary</a><a href="quotes.html" class="">Quotations</a><a href="about.html" class="">About the book</a><a href="../index.html" class="">flake.org</a></nav></header>
+<main><h1>FAQ (historical)</h1><h4>How do I compile the code under Windows?     New!</h4>
+<p>Thanks to Peter Ross for pointing out some difficulties. He writes:</p>
+<p>*On digging, the problem seems to lie with the lines that say things like</p>
+<p>```</p>
+<pre>#if __dest_os == __mac_os</pre>
+<p>```</p>
+<p>because, as near as I can tell, MS VC++ doesn't define either of these by default and so treats them as having value 0, so that the test succeeds! The simple fix is, in Project-&gt;Settings..-&gt;C++, under "Category: General", in "Preprocessor definitions:", add __dest_os (where WIN32 is already defined). Everything then compiles OK. You might like to include this somewhere in the FAQ for others who run into such problems?*</p>
+<p>Done. Thanks Peter.</p>
+<h4>How do I compile the code under Linux?</h4>
+<p>You'll need to tweak one or two things to build it all from scratch. I wrote the code a few years back when <code>/usr/X11</code> was a fairly reasonable default for the base directory of X-windows. These days, <code>/usr/X11R6</code> is much more common. As a result, you'll need to edit the file <code>cbn/code/bin/Makefile</code> so that it references the correct base directory of your X11 installation.</p>
+<h4>How do I view the man pages under Linux (or Unix)?</h4>
+<p>Depending on your installation, one of the following will probably work:</p>
+<ol>
+<li>If your shell is <code>csh</code> or <code>tcsh</code>, try inserting the line:</li>
+</ol>
+<p>```</p>
+<pre>setenv MANPATH $HOME/cbn/code/man:.:</pre>
+<p>```</p>
+<p>into your <code>.cshrc</code> file. If you use <code>sh</code>, <code>bash</code>, <code>ksh</code>, or some other Bourne shell-like variant, then insert the following into your <code>.profile</code> file:</p>
+<p>```</p>
+<pre>MANPATH=$HOME/cbn/code/man:.:</pre>
+<pre>export MANPATH</pre>
+<p>```</p>
+<p>When done, using the command '<code>man mandel</code>' should find the man page to the Mandelbrot program. Of course, all of the above assumes that the <em>CBofN</em> source code is installed in <code>cbn/code</code> relative to your home directory, so you may need to change the specifics to fit your needs.</p>
+<ol>
+<li>If the fix above does not work, try using the command:</li>
+</ol>
+<p>```</p>
+<pre>nroff -man mandel.1 | less</pre>
+<p>```</p>
+<p>while inside of the man page directory. You may use <code>more</code> instead of <code>less</code>, of course.</p>
+<ol>
+<li>Finally, if none of the above works, just use the HTML pages. Online versions can be found <a href="programs.html">here</a>.</li>
+</ol>
+<h4>How do I run the programs under Windows?</h4>
+<p>The software was originally developed under UNIX which uses what is know as a command-line interface. With a command-line interface, you give a program runtime options by specifying all of the options on the command-line.</p>
+<p>To make a long story short, fire up the DOS shell, issue the command "cd DIRECTORY" where DIRECTORY is the location of the CBofN programs, and try running the programs by typing in the program name. With any luck, you'll get two windows showing the program output; one contains text, the other contains graphics. To change the runtime options, alter the command with "PROGRAM -SOMEOPTION -SOMEPARAM PARAMVALUE". All of the legal command-line options are described in the book. You can also see them by typing "PROGRAM -help".</p>
+<p>Unfortunately, command-line interfaces are a hard thing for Windows users to understand. I am sorry about that. But this is the world that I live in. At some point in the future, I will attempt to create a more Windows-like interface to the programs.</p>
+<h4>LSYS doesn't work under Windows. How can I fix this?</h4>
+<p>This problem only occurs when you try to use the "|" characters in a rule. Unfortunately, the DOS shell under Windows not allow you to quote the pipe character (as far as I can tell). Thus, no matter how you form the command line argument, DOS (and Windows) will interpret the "|" character to be a functional pipe.</p>
+<p>I know of three ways to work around this problem:</p>
+<ol>
+<li>Use the UNIX version of LSYS or use the <a href="programs.html">Java Applets</a>. UNIX doesn't have a problem quoting characters. Moreover, the LSYS <a href="programs.html">Java applet</a> is much easier to use than the Windows version.</li>
+</ol>
+<ol>
+<li>Recompile the source, replacing the "|" character with something else, say "!". In the not so far future, I'll patch the source code myself, but I do not have access to a Windows compiler at this time.</li>
+</ol>
+<ol>
+<li>Install the Korn shell (ksh). Ksh handles quoting properly. Under ksh, I was able to run:</li>
+</ol>
+<p>```</p>
+<pre>lsys -rule &#x27;f=|[-f][+f]&#x27; -ds 0.6 -axiom &#x27;[f]--f&#x27;</pre>
+<p>```</p>
+<p>and everything worked fine. Ksh is part of the UWIN package, which can be downloaded from <a href="http://www.research.att.com/sw/tools/uwin/">ATT</a>. You can get it for free for research and educational use. You only need the base installation. Once it's in, run ksh with the icon, and use it instead of the DOS shell.</p>
+<h4>How Have the Programs Changed Since Publication of the Book</h4>
+<p>Duplicated from the the “<a href="errata.html">miscellany / errata</a>” section:</p>
+<ul>
+<li>Source code program usage: The <code>-term</code> command-line option can now take four new (or modified) values:</li>
+</ul>
+<ol>
+<li><code>-term X11</code>    color graphics under X11.</li>
+<li><code>-term x11</code>    grayscale graphics under X11.</li>
+<li><code>-term Win</code>    color graphics under Windows 95/98/NT.</li>
+<li><code>-term win</code>    grayscale graphics under Windows</li>
+<li><code>-term Mac</code>    color graphics under Mac OS.</li>
+<li><code>-term mac</code>    grayscale graphics under Mac OS.</li>
+</ol>
+<ul>
+<li>Source code program usage: All reference to the <code>-xmag</code> option should now be changed to <code>-mag</code> because this option now affects both Windows and X11.</li>
+</ul></main>
+<script src="../excerpt.js"></script>
+<footer>Gary William Flake, <em>The Computational Beauty of Nature: Computer Explorations of Fractals, Chaos, Complex Systems, and Adaptation</em>, MIT Press, 1998. Figures may be used freely for noncommercial purposes. Source code is GPL. Site text from the original companion site (1998-2002), rebuilt 2026.</footer>
+</body></html>

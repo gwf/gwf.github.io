@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<title>Self-Similarity and Fractal Geometry - The Computational Beauty of Nature</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* { box-sizing: border-box; }
+html { color-scheme: dark; }
+body { margin: 0; background: #0b0c0f; color: #cfd2d8; font: 16px/1.6 -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+a { color: #9cc4ff; text-decoration: none; } a:hover { text-decoration: underline; }
+header.top { border-bottom: 1px solid #1d1f25; padding: 14px 28px; display: flex; gap: 22px; align-items: baseline; flex-wrap: wrap; }
+header.top .brand { font: 400 18px Georgia, "Times New Roman", serif; color: #f2f2f2; }
+header.top nav a { color: #9aa0ab; margin-right: 16px; font-size: 14px; }
+header.top nav a.cur { color: #fff; }
+main { max-width: 980px; margin: 0 auto; padding: 36px 28px 80px; }
+h1 { font: 400 34px/1.15 Georgia, "Times New Roman", serif; color: #f4f4f4; margin: 0 0 8px; }
+h2 { font: 400 24px/1.2 Georgia, "Times New Roman", serif; color: #eee; margin: 38px 0 12px; }
+h3 { font: 500 17px/1.3 -apple-system, Helvetica, Arial, sans-serif; color: #e6e6e6; margin: 26px 0 8px; }
+.kicker { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a8f99; }
+.lede { color: #aab; font-size: 17px; margin-bottom: 26px; }
+p { margin: 0 0 14px; }
+blockquote { border-left: 2px solid #333; margin: 14px 0; padding: 2px 16px; color: #b9bcc4; font-style: italic; }
+pre, code { font: 13.5px Menlo, Consolas, monospace; } pre { background: #14161b; padding: 12px 14px; border-radius: 4px; overflow-x: auto; }
+code { color: #dde; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+.card { background: #101218; border: 1px solid #1d1f25; border-radius: 6px; overflow: hidden; }
+.card img { display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #000; }
+.card .b { padding: 10px 12px 12px; } .card b { color: #eee; font-weight: 500; display: block; } .card small { color: #8a8f99; }
+.card:hover { border-color: #444; }
+.parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+.part { border-top: 1px solid #23262d; padding-top: 12px; }
+.part h2 { margin: 4px 0 8px; font-size: 21px; }
+.part ol { margin: 0; padding-left: 22px; color: #aab; } .part li { margin: 3px 0; } .part li a { color: #cfd2d8; }
+.part .demo { color: #9cc4ff; font-size: 13px; margin-left: 6px; }
+ul.plain { list-style: none; columns: 2; column-gap: 30px; padding-left: 22px; color: #aab; margin: 0 0 8px; } ul.plain li { margin: 2px 0; } @media (max-width: 700px) { ul.plain { columns: 1; } }
+.figs { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+.figs a { display: block; background: #fff; border-radius: 4px; padding: 6px; }
+.figs img { width: 100%; height: 120px; object-fit: contain; display: block; }
+.figs span { display: block; font-size: 12px; color: #444; margin-top: 4px; }
+dl.gloss dt { color: #eee; font-weight: 500; margin-top: 14px; } dl.gloss dd { margin: 2px 0 0; color: #b5b9c2; }
+input.search { width: 100%; font: 16px inherit; padding: 10px 12px; background: #14161b; border: 1px solid #2a2d35; color: #eee; border-radius: 6px; margin: 14px 0 22px; }
+.chapnav { display: flex; justify-content: space-between; margin: 40px 0 0; color: #9aa0ab; font-size: 14px; }
+.opts td { vertical-align: top; padding: 4px 10px 4px 0; font-size: 14px; } .opts code { white-space: nowrap; }
+.muted { color: #8a8f99; font-size: 14px; }
+.hero { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+.hero .cover { width: 220px; border-radius: 4px; box-shadow: 0 6px 30px rgba(0,0,0,0.6); }
+.two { columns: 2; column-gap: 34px; } @media (max-width: 700px) { .two { columns: 1; } }
+footer { color: #6d727b; font-size: 13px; border-top: 1px solid #1d1f25; margin-top: 60px; padding: 18px 28px; }
+.demo-embed { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: 6px; background: #000; display: block; }
+</style></head><body>
+<header class="top"><span class="brand">The Computational Beauty of Nature</span><nav><a href="index.html" class="">Programs</a><a href="figures.html" class="">Figures</a><a href="glossary.html" class="">Glossary</a><a href="quotes.html" class="">Quotations</a><a href="about.html" class="cur">About the book</a><a href="../index.html" class="">flake.org</a></nav></header>
+<main><div class="kicker">Part II: Fractals</div>
+<h1>5. Self-Similarity and Fractal Geometry</h1>
+<p class="lede"><a href="#" onclick="CBNExcerpt.open('ch5', '../'); return false;">Read the opening pages</a> &middot; printed page 61</p>
+<h3>Diffusion-Limited Aggregation <span class="muted">(diffuse.c)</span></h3>
+<iframe class="demo-embed" loading="lazy" src="../demos/diffuse.html" title="Diffusion-Limited Aggregation"></iframe>
+<p>Particles wander at random until they touch the growing cluster, then freeze. Because a wandering particle is far more likely to bump into a tip than to find its way into a crevice, the cluster grows branches, and the branches grow branches. The result has a fractional dimension of about 1.7, the same as coral, frost, and electrical discharge. Runs alternate between one seed, several seeds, and a line seed along the bottom that grows a forest. <a href="../index.html#diffuse">Full screen &rarr;</a></p>
+<h2>Sections</h2><ol><li>The Cantor Set</li><li>The Koch Curve</li><li>The Peano Curve</li><li>Fractional Dimensions</li><li>Random Fractals in Nature and Brownian Motion</li><li>Further Exploration</li><li>Further Reading</li></ol>
+<h2>Figures</h2><div class="figs"><a href="../figures/svg/7.svg" title="The first few steps in constructing the Cantor set"><img loading="lazy" src="../figures/thumb/7.png" alt=""><span>Figure 5.1</span></a><a href="../figures/svg/8.svg" title="The Cantor set with points labeled"><img loading="lazy" src="../figures/thumb/8.png" alt=""><span>Figure 5.2</span></a><a href="../figures/svg/9.svg" title="The Cantor set with points labeled in ternary notation"><img loading="lazy" src="../figures/thumb/9.png" alt=""><span>Figure 5.3</span></a><a href="../figures/svg/10.svg" title="The first few steps in constructing the Koch curve"><img loading="lazy" src="../figures/thumb/10.png" alt=""><span>Figure 5.4</span></a><a href="../figures/svg/11.svg" title="One step of the Peano curve"><img loading="lazy" src="../figures/thumb/11.png" alt=""><span>Figure 5.5</span></a><a href="../figures/svg/12.svg" title="The second through fourth steps of the Peano curve"><img loading="lazy" src="../figures/thumb/12.png" alt=""><span>Figure 5.6</span></a><a href="../figures/svg/13.svg" title="Maps of the United States"><img loading="lazy" src="../figures/thumb/13.png" alt=""><span>Figure 5.7</span></a><a href="../figures/svg/14.svg" title="Random walks. (a) 100 big steps; (b) same as (a) except with 100 small steps between each big step; and (c) the first 100 small steps from (b)"><img loading="lazy" src="../figures/thumb/14.png" alt=""><span>Figure 5.8</span></a><a href="../figures/svg/15.svg" title="The S&amp;P 500 stock index shown on various time scales. (a) one year, (b) five years, (c) ten years"><img loading="lazy" src="../figures/thumb/15.png" alt=""><span>Figure 5.9</span></a><a href="../figures/svg/16.svg" title="An example of growth from diffusion limited aggregation"><img loading="lazy" src="../figures/thumb/16.png" alt=""><span>Figure 5.10</span></a><a href="../figures/svg/17.svg" title="Fractal mountain generated by xmountains (an X Windows program written by Steven Booth)"><img loading="lazy" src="../figures/thumb/17.png" alt=""><span>Figure 5.11</span></a></div>
+<div class="chapnav"><span></span><a href="chapter-6.html">L-Systems and Fractal Growth &rarr;</a></div></main>
+<script src="../excerpt.js"></script>
+<footer>Gary William Flake, <em>The Computational Beauty of Nature: Computer Explorations of Fractals, Chaos, Complex Systems, and Adaptation</em>, MIT Press, 1998. Figures may be used freely for noncommercial purposes. Source code is GPL. Site text from the original companion site (1998-2002), rebuilt 2026.</footer>
+</body></html>

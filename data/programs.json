@@ -1,0 +1,3661 @@
+[
+  {
+    "id": "assoc",
+    "name": "assoc",
+    "summary": "retrieve associative memories",
+    "category": "Adaptation",
+    "book_order": 29,
+    "blurb_md": "Attempts to reconstruct a corrupted image with a McCulloch-Pitts feedback neural network that acts as an associative memory. The weights of the network are determined via Hebb's rule after reading in multiple patterns. Weights can be pruned either by size, by locality, or randomly.",
+    "synopsis": "assoc -help\n  or\nassoc  [-pfile  ...]   [-tfile  string]  [-local  integer]\n       [-cut  double]  [-pprob  double]  [-noise   double]\n       [-seed integer] [-steps integer] [-inv] [-mag inte-\n       ger] [-term string]",
+    "description_md": "Attempt to reconstruct a potentially corrupted image from a McCulloch-Pitts feedback neural network that acts as an associative memory. The weights of the network are determined via Hebb's rule after reading in multiple patterns. Weights can be pruned either by size, locality, or randomly.\n\n### Miscellany\n\nAll pattern files must be in the PBM file format. You can\n\nrequest that multiple patterns be stored into the weights by using the -pfile option multiple time.\n\nThe dimensions of the stored patterns and the test pattern must be identical.\n\nFor weight pruning, the program first checks to see if a weight is \"non-local\" which means that for a weight that connects two neurons either the row indices or column indices differ by the amount greater than the value specified by the -local option. (If a value for local -local is zero, then all weights are used.) Next, the program prunes weights that are too small in size as specified by the -cut option. If a weights has not been removed at this stage, then it will still be pruned with probability as specified by the -pprob option.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-pfile",
+        "type": "other",
+        "default": null,
+        "help": "File with pattern to store."
+      },
+      {
+        "flag": "-tfile",
+        "type": "string",
+        "default": "data/a.pbm",
+        "help": "File with test pattern."
+      },
+      {
+        "flag": "-local",
+        "type": "integer",
+        "default": 0,
+        "help": "locality of permitted weights"
+      },
+      {
+        "flag": "-cut",
+        "type": "double",
+        "default": 0.0,
+        "help": "Cutoff size for weights."
+      },
+      {
+        "flag": "-pprob",
+        "type": "double",
+        "default": 0.0,
+        "help": "Probability of random pruning."
+      },
+      {
+        "flag": "-noise",
+        "type": "double",
+        "default": 0.0,
+        "help": "Amount of noise for test case."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed for initial state."
+      },
+      {
+        "flag": "-steps",
+        "type": "integer",
+        "default": 1000,
+        "help": "Number of time steps."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/assoc.c",
+    "man_page": "pages/assoc.md",
+    "java_port": null
+  },
+  {
+    "id": "bifur1d",
+    "name": "bifur1d",
+    "summary": "plot bifurcations from a one-dimensional map",
+    "category": "Chaos",
+    "book_order": 9,
+    "blurb_md": "Plots a bifurcation diagram for a one-dimensional map to illustrate how a change in a single parameter can move a system from fixed-point behavior, to periodic, and finally to chaos. Different regions can be zoomed in on.",
+    "synopsis": "bifur1d -help\n  or\nbifur1d\n       [-width  integer] [-height integer] [-skip integer]\n       [-rmin double] [-rmax double] [-func string] [-fac-\n       tor  double]  [-ymin  double]  [-ymax double] [-aux\n       double] [-box integer] [-brmin double] [-brmax dou-\n       ble]  [-bymin  double] [-bymax double] [-inv] [-mag\n       integer] [-term string]",
+    "description_md": "A bifurcation diagram is plotted for a one-dimensional map according to the specified options. In general, the map is iterated for several different values of the 'r' parameter so that the long term behavior of the map can be observed as a function of are supported. User defined maps can be added to the file maps1d.c, but you must recompile the program.\n\n### Maps\n\nThe following four one-dimensional maps are allowed:\n\nLogistic Map: x(t+1) = 4 * r * x(t) * (1.0 - x(t))\n\nTent Map: x(t+1) = (x(t) <= 0.5) ? 2 * r * x(t) : 2r * (1.0 x(t))\n\nSine Map: x(t+1) = sin(x(t) * PI * aux * 2 * r) / 2 + 0.5\n\nGaussian Map: x(t+1) = r * exp(-aux * (x(t) - 0.5) * (x(t) - 0.5))\n\nSee the file \"maps1d.c\" to see how to add user-defined maps.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 640,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-skip",
+        "type": "integer",
+        "default": 500,
+        "help": "Number of initial points to skip."
+      },
+      {
+        "flag": "-rmin",
+        "type": "double",
+        "default": 0.0,
+        "help": "Smallest value for r."
+      },
+      {
+        "flag": "-rmax",
+        "type": "double",
+        "default": 1.0,
+        "help": "Largest value for r."
+      },
+      {
+        "flag": "-func",
+        "type": "string",
+        "default": "log",
+        "help": "Map function to use (one of 'log', 'tent', 'sin', or 'gauss')."
+      },
+      {
+        "flag": "-factor",
+        "type": "double",
+        "default": 2.0,
+        "help": "Multiplicative factor for number of iterates."
+      },
+      {
+        "flag": "-ymin",
+        "type": "double",
+        "default": 0.0,
+        "help": "Smallest value for y range."
+      },
+      {
+        "flag": "-ymax",
+        "type": "double",
+        "default": 1.0,
+        "help": "Largest value for y range."
+      },
+      {
+        "flag": "-aux",
+        "type": "double",
+        "default": 1.0,
+        "help": "Auxiliary map parameter."
+      },
+      {
+        "flag": "-box",
+        "type": "integer",
+        "default": 0,
+        "help": "Line width for a box."
+      },
+      {
+        "flag": "-brmin",
+        "type": "double",
+        "default": 0.0,
+        "help": "Smallest r-value for the box."
+      },
+      {
+        "flag": "-brmax",
+        "type": "double",
+        "default": 0.0,
+        "help": "Largest r-value for the box."
+      },
+      {
+        "flag": "-bymin",
+        "type": "double",
+        "default": 0.0,
+        "help": "Smallest value for box y range."
+      },
+      {
+        "flag": "-bymax",
+        "type": "double",
+        "default": 0.0,
+        "help": "Largest value for box y range."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/bifur1d.c",
+    "man_page": "pages/bifur1d.md",
+    "java_port": "java/BifurcAlgorithm.java"
+  },
+  {
+    "id": "boids",
+    "name": "boids",
+    "summary": "simulate a flock of android birds from Brooklyn",
+    "category": "Complex Systems",
+    "book_order": 26,
+    "blurb_md": "Simulates a flock of boids according to rules that determine their individual behaviors as well as the “physics” of their universe. A boid greedily attempts to apply four rules with respect to its neighbors: It wants to fly in the same direction, be in the center of the local cluster of boids, avoid collisions with boids too close, and maintain a clear view ahead by skirting around others that block its view. Changing these rules can make the boids behave like birds, gnats, bees, fish, or magnetic particles.",
+    "synopsis": "boids -help\n  or\nboids  [-width  integer]  [-height integer] [-num integer]\n       [-steps integer] [-seed  integer]  [-angle  double]\n       [-vangle  double]  [-rcopy  double] [-rcent double]\n       [-rvoid double]  [-rviso  double]  [-wcopy  double]\n       [-wcent  double]  [-wvoid  double]  [-wviso double]\n       [-wrand double] [-dt double] [-ddt  double]  [-minv\n       double] [-len integer] [-psdump] [-inv] [-mag inte-\n       ger] [-term string]",
+    "description_md": "Simulate a flock of boids according to rules that determine their individual behaviors as well as the ``physics'' of their universe. A boid greedily attempts to apply four rules with respect to its neighbors: it wants to fly in the same direction, be in the center of the local cluster of boids, avoid collisions with boids too close, and maintain a clear view ahead by skirting around others that block its view. Changing these rules can make the boids behave like birds, gnats, bees, fish, or magnetic particles. See the RULES section of the manual pages for more details.\n\n### Rules\n\nAll of the rules have a weight option and a radius option. The radius option specifies how close a boid need to be to another in order for the rule to be acted upon. The weight is used when combining all of the rules actions into a single new velocity vector.\n\nThe four rules can be simply described as follows:\n\nCentering: move towards the center of any boids in my viewing area.\n\nCopying: attempt to move in the average direction of that all boids that can be seen are moving in.\n\nAvoidance: ``Please don't stand so close to me.'' Move away from any close flyers.\n\nVisual: move in such a way that the bonehead obstructing your view no longer interferes.\n\nThe four rules are then normalized and added together to make the next velocity vector of the boid. All radii in the rules are in terms of pixels.\n\nYou may wish to try turning on and off different combinations of the rules to see how the boids' behaviors change. For example, if you turn off the avoidance rule, increase the centering radius and weight, and increase the viewing angle to nearly 360 degrees, then the boids will behave like a pack of wolves fighting over the center. Other changes can yield similar surprises.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 640,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-num",
+        "type": "integer",
+        "default": 20,
+        "help": "Number of boids."
+      },
+      {
+        "flag": "-steps",
+        "type": "integer",
+        "default": 100000000,
+        "help": "Number of simulated steps."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed for initial state."
+      },
+      {
+        "flag": "-angle",
+        "type": "double",
+        "default": 270.0,
+        "help": "Number of viewing degrees."
+      },
+      {
+        "flag": "-vangle",
+        "type": "double",
+        "default": 90.0,
+        "help": "Visual avoidance angle."
+      },
+      {
+        "flag": "-rcopy",
+        "type": "double",
+        "default": 80.0,
+        "help": "Radius for copy vector."
+      },
+      {
+        "flag": "-rcent",
+        "type": "double",
+        "default": 30.0,
+        "help": "Radius for centroid vector."
+      },
+      {
+        "flag": "-rvoid",
+        "type": "double",
+        "default": 15.0,
+        "help": "Radius for avoidance vector."
+      },
+      {
+        "flag": "-rviso",
+        "type": "double",
+        "default": 40.0,
+        "help": "Radius for visual avoidance vector."
+      },
+      {
+        "flag": "-wcopy",
+        "type": "double",
+        "default": 0.2,
+        "help": "Weight for copy vector."
+      },
+      {
+        "flag": "-wcent",
+        "type": "double",
+        "default": 0.4,
+        "help": "Weight for centroid vector."
+      },
+      {
+        "flag": "-wvoid",
+        "type": "double",
+        "default": 1.0,
+        "help": "Weight for avoidance vector."
+      },
+      {
+        "flag": "-wviso",
+        "type": "double",
+        "default": 0.8,
+        "help": "Weight for visual avoidance vector."
+      },
+      {
+        "flag": "-wrand",
+        "type": "double",
+        "default": 0.0,
+        "help": "Weight for random vector."
+      },
+      {
+        "flag": "-dt",
+        "type": "double",
+        "default": 3.0,
+        "help": "Time-step increment."
+      },
+      {
+        "flag": "-ddt",
+        "type": "double",
+        "default": 0.95,
+        "help": "Momentum factor (0 < ddt < 1)."
+      },
+      {
+        "flag": "-minv",
+        "type": "double",
+        "default": 0.5,
+        "help": "Minimum velocity."
+      },
+      {
+        "flag": "-len",
+        "type": "integer",
+        "default": 20,
+        "help": "Tail length."
+      },
+      {
+        "flag": "-psdump",
+        "type": "switch",
+        "default": false,
+        "help": "Dump PS at the very end?"
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/boids.c",
+    "man_page": "pages/boids.md",
+    "java_port": "java/BoidsAlgorithm.java"
+  },
+  {
+    "id": "ca",
+    "name": "ca",
+    "summary": "simulate arbitrary one-dimensional cellular automata",
+    "category": "Complex Systems",
+    "book_order": 21,
+    "blurb_md": "Simulates arbitrary one-dimensional cellular automata with an arbitrary choice of simulation parameters. Random rules can be generated and used with a desired lambda value.",
+    "synopsis": "ca -help\n  or\nca     [-width  integer]  [-height integer] [-states inte-\n       ger]  [-radius  integer]  [-seed  integer]  [-wrap]\n       [-rules  string]  [-init  string]  [-lambda double]\n       [-sq] [-bin] [-inv] [-mag integer] [-term string]",
+    "description_md": "Computes a one-dimensional cellular automata. The evolution of the CA is determined by the number of states, the radius size, the initial state, and the supplied rule. A rule is specified by a (states - 1) * (radius * 2 + 1) length string. At each time step a sum of each cell plus all of its neighbors within the radius is computed. That sum is used as an index into the rules string which determines the next step For example, with radius = 1 and states = 2 the rule that sums of 0 and 3 map to the 0 state, and sums of 1 and 2 map to the 1 state. A negative init string randomly initializes the starting states. If the init string is of being non-zero.\n\n### Miscellany\n\nWhen supplying a lambda value for a random rule, it may not be possible to find a string with that lambda value because one may not exist. In this case, the program will do its best to find one as close as possible. In any event, the algorithm for finding random rules strings for a specified lambda value is non-deterministic and may not always find a perfect match even if one exists. However, it will work well with high probability, and even when it doesn't find a perfect match it almost always gets close.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 640,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-states",
+        "type": "integer",
+        "default": 2,
+        "help": "Number of CA states."
+      },
+      {
+        "flag": "-radius",
+        "type": "integer",
+        "default": 1,
+        "help": "Radius of CA neighborhood."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed."
+      },
+      {
+        "flag": "-wrap",
+        "type": "switch",
+        "default": true,
+        "help": "Use a wrap-around space?"
+      },
+      {
+        "flag": "-rules",
+        "type": "string",
+        "default": "0110",
+        "help": "CA rules to use."
+      },
+      {
+        "flag": "-init",
+        "type": "string",
+        "default": "11",
+        "help": "Starting state (< 0 is random)."
+      },
+      {
+        "flag": "-lambda",
+        "type": "double",
+        "default": -1.0,
+        "help": "Lambda value for random rules."
+      },
+      {
+        "flag": "-sq",
+        "type": "switch",
+        "default": true,
+        "help": "Enforce strong quiescence?"
+      },
+      {
+        "flag": "-bin",
+        "type": "switch",
+        "default": false,
+        "help": "Binary colors?"
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/ca.c",
+    "man_page": "pages/ca.md",
+    "java_port": "java/CAAlgorithm.java"
+  },
+  {
+    "id": "diffuse",
+    "name": "diffuse",
+    "summary": "simulate diffusion limited aggregation",
+    "category": "Fractals",
+    "book_order": 2,
+    "blurb_md": "Generates diffusion limited aggregate growth that looks like coral.",
+    "synopsis": "diffuse -help\n  or\ndiffuse\n       [-width  integer]  [-height integer] [-levels inte-\n       ger]  [-num  integer]  [-steps  integer]   [-invis]\n       [-seed   integer]   [-inv]  [-mag  integer]  [-term\n       string]",
+    "description_md": "A special type of stochastic fractal is created by the random action of many particles. The fractal starts out as a single point seed that is fixed in position. Particles float about via a random walk. Whenever a floating particle moves adjacent to fixed particle the floating particles become frozen in place. In this way, the fractal gradually grows in size.\n\n### Miscellany\n\nUsing invisible particle will make the simulation run much faster under interactive graphic terminals, especially X Windows.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 300,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 300,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-levels",
+        "type": "integer",
+        "default": 256,
+        "help": "Number of plot (gray) levels to use."
+      },
+      {
+        "flag": "-num",
+        "type": "integer",
+        "default": 20,
+        "help": "Number of floating particles."
+      },
+      {
+        "flag": "-steps",
+        "type": "integer",
+        "default": 1000000,
+        "help": "Number of simulated steps."
+      },
+      {
+        "flag": "-invis",
+        "type": "switch",
+        "default": false,
+        "help": "Invisible particles?"
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed for initial state."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/diffuse.c",
+    "man_page": "pages/diffuse.md",
+    "java_port": "java/DiffuseAlgorithm.java"
+  },
+  {
+    "id": "eipd",
+    "name": "eipd",
+    "summary": "simulate the ecological iterated Prisoner's Dilemma",
+    "category": "Complex Systems",
+    "book_order": 28,
+    "blurb_md": "Simulates the ecological iterated Prisoner's Dilemma over time according to the specified parameters. At every time step the population of each strategy is calculated as a function of the expected scores earned against all strategies weighted by the populations of the opponents. Possible strategies include “Always-Cooperate,” “Always-Defect,” “Random,” “Pavlov,” and “Tit-for-Tat.”",
+    "synopsis": "eipd -help\n  or\neipd   [-steps integer] [-rounds integer] [-seed  integer]\n       [-CC double] [-CD double] [-DC double] [-DD double]\n       [-Iallc  double]  [-Itft  double]  [-Irand  double]\n       [-Ipav   double]   [-Ialld  double]  [-rcp  double]\n       [-noise double]",
+    "description_md": "The ecological iterated Prisoner's Dilemma is simulated over time according to the specified parameters. At every time step the population of each strategy is calculated as a function of the expected scores earned against all strategies weighted by the populations of the opponents. Possible strategies include 'Always Cooperate,' 'Always Defect,'\n\n### Payoffs\n\nThe payoff matrix for the Prisoner's Dilemma game is usually expressed as: Player B's Move +-----------+-----------+ Player A's Move | cooperate | defect | +-----------+-----------+-----------+ | cooperate | CC, CC | CD, DC | +-----------+-----------+-----------+ | defect | DC, CD | DD, DD | +-----------+-----------+-----------+\n\nwhere the table entries are (A's payoff, B's payoff) and CC, CD, DC, and DD are the reward, sucker, temptation, and punish payoffs, respectively. For each of these four outcomes you will probably want the payoffs to reflect the relationships:\n\n(DC > CC > DD > CD) and ((CD + DC) / 2 < CC).\n\n### Miscellany\n\nrandom noise (via the -noise option) manifests itself as a cell making a randomly selected move in a single round. In this case, both the cell whose action was altered as well as that cell's opponents \"remember\" what the random move was on the next round.\n\nDuring each time step, every strategy plays against every other strategy as well as against itself.\n\nThe initial population levels for all strategies will be normalized, so the scaling of the option values is irrelevant.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-steps",
+        "type": "integer",
+        "default": 100000,
+        "help": "Number of steps to simulate."
+      },
+      {
+        "flag": "-rounds",
+        "type": "integer",
+        "default": 10,
+        "help": "Number of rounds per step."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed for initial state."
+      },
+      {
+        "flag": "-CC",
+        "type": "double",
+        "default": 3.0,
+        "help": "Reward Payoff."
+      },
+      {
+        "flag": "-CD",
+        "type": "double",
+        "default": 0.0,
+        "help": "Sucker Payoff."
+      },
+      {
+        "flag": "-DC",
+        "type": "double",
+        "default": 5.0,
+        "help": "Temptation Payoff."
+      },
+      {
+        "flag": "-DD",
+        "type": "double",
+        "default": 1.0,
+        "help": "Punish Payoff."
+      },
+      {
+        "flag": "-Iallc",
+        "type": "double",
+        "default": 0.2,
+        "help": "Initial population of All-C."
+      },
+      {
+        "flag": "-Itft",
+        "type": "double",
+        "default": 0.2,
+        "help": "Initial population of TFT."
+      },
+      {
+        "flag": "-Irand",
+        "type": "double",
+        "default": 0.2,
+        "help": "Initial population of Random."
+      },
+      {
+        "flag": "-Ipav",
+        "type": "double",
+        "default": 0.2,
+        "help": "Initial population of Pavlov."
+      },
+      {
+        "flag": "-Ialld",
+        "type": "double",
+        "default": 0.2,
+        "help": "Initial population of All-D."
+      },
+      {
+        "flag": "-rcp",
+        "type": "double",
+        "default": 0.5,
+        "help": "Probability of C for Random strategy."
+      },
+      {
+        "flag": "-noise",
+        "type": "double",
+        "default": 0.0,
+        "help": "Probability of noise."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/eipd.c",
+    "man_page": "pages/eipd.md",
+    "java_port": null
+  },
+  {
+    "id": "gabump",
+    "name": "gabump",
+    "summary": "find a bump's peak with a genetic algorithm",
+    "category": "Adaptation",
+    "book_order": 32,
+    "blurb_md": "Uses a genetic algorithm to find the maximum of a single-humped function that is centered at a user-specified location. This program serves as an example of how GAs can be used to optimize functions which take a floating-point argument.",
+    "synopsis": "gabump -help\n  or\ngabump [-target  double]  [-var  double]  [-size  integer]\n       [-len  integer]  [-gens  integer]  [-seed  integer]\n       [-crate double] [-mrate double]",
+    "description_md": "Use a genetic algorithm to find the maximum of a singlehumped function that is centered at a user-specified location. This program serves as an example of how GAs can be used to optimize functions which take a floating point argument. Reproduction of strings entails crossover and mutation with strings being selected based on fitness.\n\n### Miscellany\n\nThe bit strings are converted to floating point numbers with the formula (8 * int(string) / 2^len - 4) where int(string) is the integer value of a binary string. Thus, all numbers are forced to be between -4 and 4.\n\nA more sophisticated GA encoding would use Gray codes to represent the floating point numbers which arguably are better behaved under mutation.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-target",
+        "type": "double",
+        "default": 0.5,
+        "help": "Target value for function."
+      },
+      {
+        "flag": "-var",
+        "type": "double",
+        "default": 1.0,
+        "help": "Variance of bump."
+      },
+      {
+        "flag": "-size",
+        "type": "integer",
+        "default": 10,
+        "help": "Population size."
+      },
+      {
+        "flag": "-len",
+        "type": "integer",
+        "default": 16,
+        "help": "DNA length."
+      },
+      {
+        "flag": "-gens",
+        "type": "integer",
+        "default": 50,
+        "help": "Number of generations."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed."
+      },
+      {
+        "flag": "-crate",
+        "type": "double",
+        "default": 0.25,
+        "help": "Crossover rate."
+      },
+      {
+        "flag": "-mrate",
+        "type": "double",
+        "default": 0.01,
+        "help": "Mutation rate."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/gabump.c",
+    "man_page": "pages/gabump.md",
+    "java_port": null
+  },
+  {
+    "id": "gaipd",
+    "name": "gaipd",
+    "summary": "breed IPD strategies with a genetic algorithm",
+    "category": "Adaptation",
+    "book_order": 35,
+    "blurb_md": "Uses a genetic algorithm to evolve iterated Prisoner's Dilemma (IPD) strategies according to user-specified constraints. This program illustrates how GAs can demonstrate coevolution since IPD strategies can only be successful within the context of their likely opponents.",
+    "synopsis": "gaipd -help\n  or\ngaipd  [-size  integer]  [-gens  integer] [-bouts integer]\n       [-rounds integer] [-hlen integer]  [-seed  integer]\n       [-crate  double]  [-mrate  double]  [-noise double]\n       [-CC double] [-CD double] [-DC double] [-DD double]\n       [-dump]",
+    "description_md": "Use a genetic algorithm to evolve IPD strategies according to user-specified constraints. This program illustrates how GAs can demonstrate co-evolution since IPD strategies can only be successful within the context of their likely opponents. Reproduction of strategies entails crossover and mutation with strategies being selected based on fitness.\n\n### Payoffs\n\nThe payoff matrix for the Prisoner's Dilemma game is usually expressed as: Player B's Move +-----------+-----------+ Player A's Move | cooperate | defect | +-----------+-----------+-----------+ | cooperate | CC, CC | CD, DC | +-----------+-----------+-----------+ | defect | DC, CD | DD, DD | +-----------+-----------+-----------+\n\nwhere the table entries are (A's payoff, B's payoff) and CC, CD, DC, and DD are the reward, sucker, temptation, and punish payoffs, respectively. For each of these four outcomes you will probably want the payoffs to reflect the relationships:\n\n(DC > CC > DD > CD) and ((CD + DC) / 2 < CC).\n\n### Generations\n\nA single generation proceeds as follows. Each member of the population must play several bouts with randomly selected opponents. For each opponent, several rounds are played. The total score after these bouts is a strategy's raw fitness score.\n\n### Strings\n\nSince population strings may be optionally displayed at the end of the simulation, this section describes the format of these strings. Given two players, A and B, and the current time, t, and letting cooperation be denoted by 0 and defection by 1, form a bit string such as:\n\nA(t-1) B(t-1) A(t-2) B(t-2) ... A(t-H) B(t-H)\n\nwhere A(T) and B(T) are A and B's moves from time T, respectively, and H is the number of time steps \"remembered\" by each player. This bit string can take 2^(2 * H) values. To define a complete strategy, we must have a H + 1 separate tables of this form to describe each possible history. Thus, the rule table string used internally in the program and displayed at the end have as their first entry the move to make with no previous history, followed by four entries for H equals to 1, followed by sixteen entries for when H equals 2, and so on.\n\nAs an annotated example, Tit-for-Tat is encoded as \"CCDCD\" so that the first \"C\" indicates that the first move should be C while the last for characters indicate what to play if A(t-1) and B(t-1) is equal to (C, C), (C, D), (D, C), and (D, D), respectively.\n\n### Hints\n\nWithout any parameters (and assuming you have an uncorrupted version if this source code) running this program without any parameters will probably result in Tit-for- Tat, \"CCDCD\", dominating. If you run it with the -noise 0.1 option, then Pavlov, \"CCDDC\", will probably win in the end since it is more resistant to noise.\n\nSee the author's book, \"The Computational Beauty of Nature,\" for more details.\n\n### Miscellany\n\nThe fitness function relies on two steps done after the raw fitness scores are calculated. The raw fitness score from the previous step is divided by the total number of PD rounds played. (Note that this may vary among population members since opponents are selected at random.) This yields a scaled fitness score. The normalized fitness is then set to the scaled fitness divided by the sum of the scaled fitnesses. Thus the sum of the normalized fitnesses must be equal to one.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-size",
+        "type": "integer",
+        "default": 100,
+        "help": "Population size."
+      },
+      {
+        "flag": "-gens",
+        "type": "integer",
+        "default": 50,
+        "help": "Number of generations."
+      },
+      {
+        "flag": "-bouts",
+        "type": "integer",
+        "default": 50,
+        "help": "Bouts per generation."
+      },
+      {
+        "flag": "-rounds",
+        "type": "integer",
+        "default": 20,
+        "help": "Rounds per bout."
+      },
+      {
+        "flag": "-hlen",
+        "type": "integer",
+        "default": 1,
+        "help": "History length."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed."
+      },
+      {
+        "flag": "-crate",
+        "type": "double",
+        "default": 0.25,
+        "help": "Crossover rate."
+      },
+      {
+        "flag": "-mrate",
+        "type": "double",
+        "default": 0.001,
+        "help": "Mutation rate."
+      },
+      {
+        "flag": "-noise",
+        "type": "double",
+        "default": 0.0,
+        "help": "Chance of mistake in transaction."
+      },
+      {
+        "flag": "-CC",
+        "type": "double",
+        "default": 4.0,
+        "help": "Reward Payoff."
+      },
+      {
+        "flag": "-CD",
+        "type": "double",
+        "default": 0.0,
+        "help": "Sucker Payoff."
+      },
+      {
+        "flag": "-DC",
+        "type": "double",
+        "default": 5.0,
+        "help": "Temptation Payoff."
+      },
+      {
+        "flag": "-DD",
+        "type": "double",
+        "default": 1.0,
+        "help": "Punish Payoff."
+      },
+      {
+        "flag": "-dump",
+        "type": "switch",
+        "default": false,
+        "help": "Print entire population at end?"
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/gaipd.c",
+    "man_page": "pages/gaipd.md",
+    "java_port": null
+  },
+  {
+    "id": "gastring",
+    "name": "gastring",
+    "summary": "breed strings with a genetic algorithm",
+    "category": "Adaptation",
+    "book_order": 31,
+    "blurb_md": "Uses a genetic algorithm to breed strings that match a user-specified target string. This program illustrates how GAs can perform a type of stochastic search in a space of discrete objects. Reproduction of strings entails crossover and mutation with strings being selected based on fitness.",
+    "synopsis": "gastring -help\n  or\ngastring\n       [-target  string]  [-size integer] [-steps integer]\n       [-seed integer]  [-crate  double]  [-mrate  double]\n       [-pbase double]",
+    "description_md": "Use a genetic algorithm to breed strings that match a user-specified target string. This program illustrates how GAs can perform a type of stochastic search in a space of discrete objects. Reproduction of strings entails crossover and mutation with strings being selected based on fitness.\n\n### Miscellany\n\nThe fitness function works in three steps. First, the number of correct characters is tallied and denoted the raw fitness. The scaled fitness is then set to pow(PBASE, raw fitness - string len). The normalized fitness is then set to the scaled fitness divided by the sum of the scaled fitnesses. Thus the sum of the normalized fitnesses must be equal to one while a string with one letter more correct than another string is PBASE times as likely to reproduce, where PBASE is the value supplied with the -pbase option.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-target",
+        "type": "string",
+        "default": "furious green ideas sweat profusely",
+        "help": "Target string."
+      },
+      {
+        "flag": "-size",
+        "type": "integer",
+        "default": 500,
+        "help": "Population size."
+      },
+      {
+        "flag": "-steps",
+        "type": "integer",
+        "default": 50,
+        "help": "Number of generations."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed."
+      },
+      {
+        "flag": "-crate",
+        "type": "double",
+        "default": 0.75,
+        "help": "Crossover rate."
+      },
+      {
+        "flag": "-mrate",
+        "type": "double",
+        "default": 0.01,
+        "help": "Mutation rate."
+      },
+      {
+        "flag": "-pbase",
+        "type": "double",
+        "default": 2.0,
+        "help": "Power base for fitness."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/gastring.c",
+    "man_page": "pages/gastring.md",
+    "java_port": null
+  },
+  {
+    "id": "gasurf",
+    "name": "gasurf",
+    "summary": "find a surfaces peak with a genetic algorithm",
+    "category": "Adaptation",
+    "book_order": 33,
+    "blurb_md": "Uses a genetic algorithm to find the maximum of a multi-humped function. This program serves as an example of how GAs can be used to optimize functions which take multiple floating-point arguments.",
+    "synopsis": "gasurf -help\n  or\ngasurf [-size  integer]  [-len  integer]  [-gens  integer]\n       [-seed integer] [-crate double] [-mrate double]",
+    "description_md": "Use a genetic algorithm to find the maximum of a multihumped function. This program serves as an example of how GAs can be used to optimize function which take a multiple floating point arguments. Reproduction of strings entails crossover and mutation with strings being selected based on fitness.\n\n### Miscellany\n\nThe bit strings are converted to floating point numbers with the formula (8 * int(string) / 2^len - 4) where int(string) is the integer value of a binary string. Thus, all numbers are forced to be between -4 and 4.\n\nA more sophisticated GA encoding would use Gray codes to represent the floating point numbers which arguably are better behaved under mutation.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-size",
+        "type": "integer",
+        "default": 10,
+        "help": "Population size."
+      },
+      {
+        "flag": "-len",
+        "type": "integer",
+        "default": 16,
+        "help": "DNA length."
+      },
+      {
+        "flag": "-gens",
+        "type": "integer",
+        "default": 50,
+        "help": "Number of generations."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed."
+      },
+      {
+        "flag": "-crate",
+        "type": "double",
+        "default": 0.75,
+        "help": "Crossover rate."
+      },
+      {
+        "flag": "-mrate",
+        "type": "double",
+        "default": 0.01,
+        "help": "Mutation rate."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/gasurf.c",
+    "man_page": "pages/gasurf.md",
+    "java_port": null
+  },
+  {
+    "id": "gatask",
+    "name": "gatask",
+    "summary": "solve a task assignment problem via a genetic algorithm",
+    "category": "Adaptation",
+    "book_order": 34,
+    "blurb_md": "Uses a genetic algorithm to solve a task assignment problem with user-specified costs. This program illustrates how GAs can perform combinatorial optimization. Reproduction of strings entails special crossover and mutation operations which preserve constraints on the form of feasible solutions.",
+    "synopsis": "gatask -help\n  or\ngatask [-specs string]  [-size  integer]  [-gens  integer]\n       [-seed  integer]  [-crate  double]  [-mrate double]\n       [-pbase double]",
+    "description_md": "Use a genetic algorithm to solve a task assignment problem with user-specified costs. This program illustrates how GAs can perform combinatorial optimization. Reproduction of strings entails special crossover and mutation operations which preserve constraints on the form of feasible solutions with strings being selected based on fitness.\n\n### Miscellany\n\nFeasible solutions are represented as an array of LEN integers which must contain all integers between 0 and LEN - 1 to denote which person performs which task. As such, the mutation and crossover operators have to be subtly redefined so that candidate solutions are still feasible after they are crossed and mutated.\n\nFor mutation, we simply swap two locations in a solution array.\n\nCrossing two solutions is a little more complicated. Consult the source code to see how it's done in a manner that\n\npreserves the feasibility of the two children while blending portions of each parent solution.\n\nThe fitness function works in three steps. First, the score of a solution is calculated and denoted the raw fitness. The scaled fitness is then set to pow(PBASE, raw fitness - worst raw fitness). The normalized fitness is then set to the scaled fitness divided by the sum of the scaled fitnesses. Thus the sum of the normalized fitnesses must be equal to one while a string with a raw score of one better than another string is PBASE times as likely to reproduce, where PBASE is the value supplied with the -pbase option.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-specs",
+        "type": "string",
+        "default": "data/hop1.dat",
+        "help": "Problem specification file."
+      },
+      {
+        "flag": "-size",
+        "type": "integer",
+        "default": 10,
+        "help": "Population size."
+      },
+      {
+        "flag": "-gens",
+        "type": "integer",
+        "default": 30,
+        "help": "Number of generations."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed."
+      },
+      {
+        "flag": "-crate",
+        "type": "double",
+        "default": 0.75,
+        "help": "Crossover rate."
+      },
+      {
+        "flag": "-mrate",
+        "type": "double",
+        "default": 0.01,
+        "help": "Mutation rate."
+      },
+      {
+        "flag": "-pbase",
+        "type": "double",
+        "default": 2.0,
+        "help": "Exponentiation base."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/gatask.c",
+    "man_page": "pages/gatask.md",
+    "java_port": null
+  },
+  {
+    "id": "gen1d",
+    "name": "gen1d",
+    "summary": "generate time series from a one-dimensional map",
+    "category": "Chaos",
+    "book_order": 8,
+    "blurb_md": "Generates a time series from a one-dimensional map. Nothing fancy; it just shows how chaos can be seen in simple systems.",
+    "synopsis": "gen1d -help\n  or\ngen1d  [-points integer] [-skip integer] [-r double] [-aux\n       double] [-x0 double] [-func string]",
+    "description_md": "A time series data set is generated by a one-dimensional map according to the specified options. See the MAPS section of the manual page for details of what maps are supported. User defined maps can be added to the file maps1d.c, but you must recompile the program.\n\n### Maps\n\nThe following four one-dimensional maps are allowed:\n\nLogistic Map: x(t+1) = 4 * r * x(t) * (1.0 - x(t))\n\nTent Map: x(t+1) = (x(t) <= 0.5) ? 2 * r * x(t) : 2r * (1.0 x(t))\n\nSine Map: x(t+1) = sin(x(t) * PI * aux * 2 * r) / 2 + 0.5\n\nGaussian Map: x(t+1) = r * exp(-aux * (x(t) - 0.5) * (x(t) - 0.5))\n\nSee the file \"maps1d.c\" to see how to add user-defined\n\nmaps.\n\n### Miscellany\n\nUse a plotting program (such as gnuplot) or a spreadsheet to plot the data.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-points",
+        "type": "integer",
+        "default": 10,
+        "help": "Number of points to plot."
+      },
+      {
+        "flag": "-skip",
+        "type": "integer",
+        "default": 0,
+        "help": "Number of initial points to skip."
+      },
+      {
+        "flag": "-r",
+        "type": "double",
+        "default": 1.0,
+        "help": "Value for the r parameter."
+      },
+      {
+        "flag": "-aux",
+        "type": "double",
+        "default": 1.0,
+        "help": "Auxiliary map parameter."
+      },
+      {
+        "flag": "-x0",
+        "type": "double",
+        "default": 0.123456,
+        "help": "Initial value for x."
+      },
+      {
+        "flag": "-func",
+        "type": "string",
+        "default": "log",
+        "help": "Map function to use (one of 'log', 'tent', 'sin', or 'gauss')."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/gen1d.c",
+    "man_page": "pages/gen1d.md",
+    "java_port": "java/Gen1DAlgorithm.java"
+  },
+  {
+    "id": "gsw",
+    "name": "gsw",
+    "summary": "simulate a three species individual-based ecosystem",
+    "category": "Chaos",
+    "book_order": 17,
+    "blurb_md": "Simulates an individual-based three-species predator-prey ecosystem according to the specified parameters. The three species consist of plants, herbivores, and carnivores (grass, sheep, and wolves; hence the name, **gsw**). Updates are done synchronously, and each species has several parameters which can control their life cycles, from the ability to give birth, to the likelihood of starvation. Population statistics of the three species can be calculated over a subset of the entire grid.",
+    "synopsis": "gsw -help\n  or\ngsw    [-width integer] [-height integer] [-steps integer]\n       [-seed integer] [-plants integer] [-herbs  integer]\n       [-carns  integer]  [-pmin  integer] [-pmax integer]\n       [-Ep integer]  [-Eh  integer]  [-Ec  integer]  [-Ch\n       integer]  [-Cc  integer] [-Pt integer] [-samp inte-\n       ger]  [-stats]  [-pfreq  integer]  [-noext]  [-inv]\n       [-mag integer] [-term string]",
+    "description_md": "The time evolution of an individual-based three species predator-prey ecosystem is simulated according to the specified parameters. The three species consist of plants, herbivores, and carnivores (grass, sheep, and wolves; hence the name GSW). Updates are done synchronously, and each species has several parameters which can control the life cycle, from the ability to give birth, to the likelihood of starvation. Population statistics of the three species can be calculated over a subset of the entire grid.\n\n### Miscellany\n\nAn interesting change to this code would involve making the the updates asynchronous, which would avoid some subtle deadlock conditions that can occur in how the critters move. Moreover, the motion of the overall system would probably be more \"lifelike\".\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 100,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 100,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-steps",
+        "type": "integer",
+        "default": 1000000,
+        "help": "Number of simulated steps."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed for initial state."
+      },
+      {
+        "flag": "-plants",
+        "type": "integer",
+        "default": 5000,
+        "help": "Initial number of plants."
+      },
+      {
+        "flag": "-herbs",
+        "type": "integer",
+        "default": 500,
+        "help": "Initial number of herbivores."
+      },
+      {
+        "flag": "-carns",
+        "type": "integer",
+        "default": 50,
+        "help": "Initial number of carnivores."
+      },
+      {
+        "flag": "-pmin",
+        "type": "integer",
+        "default": 3,
+        "help": "Minimum plants in vicinity to make new plant."
+      },
+      {
+        "flag": "-pmax",
+        "type": "integer",
+        "default": 8,
+        "help": "Maximum allowed plants in vicinity to make new plant."
+      },
+      {
+        "flag": "-Ep",
+        "type": "integer",
+        "default": 15,
+        "help": "Energy of plant."
+      },
+      {
+        "flag": "-Eh",
+        "type": "integer",
+        "default": 50,
+        "help": "Energy of herbivore."
+      },
+      {
+        "flag": "-Ec",
+        "type": "integer",
+        "default": 200,
+        "help": "Energy of carnivore."
+      },
+      {
+        "flag": "-Ch",
+        "type": "integer",
+        "default": 5,
+        "help": "Step energy cost for herbivores."
+      },
+      {
+        "flag": "-Cc",
+        "type": "integer",
+        "default": 5,
+        "help": "Step energy cost for carnivores."
+      },
+      {
+        "flag": "-Pt",
+        "type": "integer",
+        "default": 0,
+        "help": "Number of steps to grow plant."
+      },
+      {
+        "flag": "-samp",
+        "type": "integer",
+        "default": -1,
+        "help": "Size of subsample statistaics."
+      },
+      {
+        "flag": "-stats",
+        "type": "switch",
+        "default": true,
+        "help": "Show statistics?"
+      },
+      {
+        "flag": "-pfreq",
+        "type": "integer",
+        "default": 1,
+        "help": "Plot frequency."
+      },
+      {
+        "flag": "-noext",
+        "type": "switch",
+        "default": true,
+        "help": "Prevent extinction?"
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/gsw.c",
+    "man_page": "pages/gsw.md",
+    "java_port": null
+  },
+  {
+    "id": "henbif",
+    "name": "henbif",
+    "summary": "plot a bifurcation diagram for the Henon system",
+    "category": "Chaos",
+    "book_order": 12,
+    "blurb_md": "Plots a bifurcation diagram for the Hénon system. This is similar to **bifur1d** but shows that bifurcations apply to multidimensional systems as well.",
+    "synopsis": "henbif -help\n  or\nhenbif [-width  integer] [-height integer] [-skip integer]\n       [-abmin double] [-abmax double] [-ab]  [-A  double]\n       [-B  double] [-factor double] [-ymin double] [-ymax\n       double] [-box integer] [-brmin double] [-brmax dou-\n       ble]  [-bymin  double] [-bymax double] [-inv] [-mag\n       integer] [-term string]",
+    "description_md": "A bifurcation diagram of the Henon system, which is described by the equation x(t+1) = A - x(t)^2 + B * x(t - 1), is plotted according to the specified parameters. Either of the parameters (A or B) can be varied in the plot.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 640,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-skip",
+        "type": "integer",
+        "default": 500,
+        "help": "Number of initial points to skip."
+      },
+      {
+        "flag": "-abmin",
+        "type": "double",
+        "default": 0.0,
+        "help": "Smallest value for A (or B)."
+      },
+      {
+        "flag": "-abmax",
+        "type": "double",
+        "default": 1.4,
+        "help": "Largest value for A (or B)."
+      },
+      {
+        "flag": "-ab",
+        "type": "switch",
+        "default": true,
+        "help": "If TRUE, plot for A; B otherwise."
+      },
+      {
+        "flag": "-A",
+        "type": "double",
+        "default": 1.29,
+        "help": "Value of the A parameter."
+      },
+      {
+        "flag": "-B",
+        "type": "double",
+        "default": 0.3,
+        "help": "Value of the B parameter."
+      },
+      {
+        "flag": "-factor",
+        "type": "double",
+        "default": 2.0,
+        "help": "Multiplicative factor for iterates."
+      },
+      {
+        "flag": "-ymin",
+        "type": "double",
+        "default": -1.75,
+        "help": "Smallest value for y range."
+      },
+      {
+        "flag": "-ymax",
+        "type": "double",
+        "default": 1.75,
+        "help": "Largest value for y range."
+      },
+      {
+        "flag": "-box",
+        "type": "integer",
+        "default": 0,
+        "help": "Line width for a box."
+      },
+      {
+        "flag": "-brmin",
+        "type": "double",
+        "default": 0.0,
+        "help": "Smallest r-value for the box."
+      },
+      {
+        "flag": "-brmax",
+        "type": "double",
+        "default": 0.0,
+        "help": "Largest r-value for the box."
+      },
+      {
+        "flag": "-bymin",
+        "type": "double",
+        "default": 0.0,
+        "help": "Smallest value for box y range."
+      },
+      {
+        "flag": "-bymax",
+        "type": "double",
+        "default": 0.0,
+        "help": "Largest value for box y range."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/henbif.c",
+    "man_page": "pages/henbif.md",
+    "java_port": "java/HenonBifurcAlgorithm.java"
+  },
+  {
+    "id": "hencon",
+    "name": "hencon",
+    "summary": "control the Henon system with the OGY control law",
+    "category": "Chaos",
+    "book_order": 20,
+    "blurb_md": "Controls the Hénon system with the OGY control law for arbitrary choices of the system parameters. The control law is analytically calculated based on the system parameters. The user can select times in which control is turned on and off so that time-to-control and transients can be observed. Gaussian noise can be injected into the system.",
+    "synopsis": "hencon -help\n  or\nhencon [-points integer]  [-on1  integer]  [-off  integer]\n       [-on2  integer]  [-skip  integer]  [-seed  integer]\n       [-plimit double] [-A double]  [-B  double]  [-gauss\n       double]",
+    "description_md": "Control the Henon system, x(t+1) = A - x(t)^2 + B * x(t - 1), with the OGY control law for arbitrary choices of A and B. The control law is analytically calculated based on the system parameters. The user can select times in which control is turned on and off so that time-to-control and transients can be observed. Gaussian noise can also be injected into the system. The control timing options are constrained to obey (0 <= on1 <= off <= on2 <= points).\n\n### Bugs\n\nFew sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-points",
+        "type": "integer",
+        "default": 300,
+        "help": "The length of the time series."
+      },
+      {
+        "flag": "-on1",
+        "type": "integer",
+        "default": 50,
+        "help": "Where to turn control on."
+      },
+      {
+        "flag": "-off",
+        "type": "integer",
+        "default": 100,
+        "help": "Where to turn control off."
+      },
+      {
+        "flag": "-on2",
+        "type": "integer",
+        "default": 200,
+        "help": "Where to turn control on again."
+      },
+      {
+        "flag": "-skip",
+        "type": "integer",
+        "default": 100,
+        "help": "Amount to skip initially."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed."
+      },
+      {
+        "flag": "-plimit",
+        "type": "double",
+        "default": 0.2,
+        "help": "Largest allowed size for p."
+      },
+      {
+        "flag": "-A",
+        "type": "double",
+        "default": 1.29,
+        "help": "Value of the A parameter."
+      },
+      {
+        "flag": "-B",
+        "type": "double",
+        "default": 0.3,
+        "help": "Value of the B parameter."
+      },
+      {
+        "flag": "-gauss",
+        "type": "double",
+        "default": 0.0,
+        "help": "Magnitude of Gaussian noise."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/hencon.c",
+    "man_page": "pages/hencon.md",
+    "java_port": "java/HenonControlAlgorithm.java"
+  },
+  {
+    "id": "henon",
+    "name": "henon",
+    "summary": "plot the phase space of the Henon system",
+    "category": "Chaos",
+    "book_order": 11,
+    "blurb_md": "Plots the phase space of the Hénon map, a two-dimensional system with a fractal shape. Different regions can be zoomed in on.",
+    "synopsis": "henon -help\n  or\nhenon  [-width  integer] [-height integer] [-skip integer]\n       [-swap] [-points integer] [-delay integer] [-A dou-\n       ble]  [-B double] [-ulx double] [-uly double] [-lly\n       double] [-box integer] [-bulx double]  [-buly  dou-\n       ble]  [-blly  double] [-data] [-inv] [-mag integer]\n       [-term string]",
+    "description_md": "The phase space of the Henon system, which is described by the equation x(t+1) = A - x(t)^2 + B * x(t - 1), is plotted according to the specified parameters.\n\n### Miscellany\n\nThe method for choosing the viewable region may seem counter-intuitive at first, but it has some nice properties. In particular, selecting the exact (x, y) coordinates for the upper-left corner and only selecting the lower right y coordinate forces both the x and y scales to be identical since all scales are uniquely determined by these values along with the plot width and height. If you then change the width or height of the plot, the relative scales will still match up. The options for making a box work similarly.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 480,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-skip",
+        "type": "integer",
+        "default": 100,
+        "help": "Number of initial points to skip."
+      },
+      {
+        "flag": "-swap",
+        "type": "switch",
+        "default": true,
+        "help": "Swap the x and y axis?"
+      },
+      {
+        "flag": "-points",
+        "type": "integer",
+        "default": 1000,
+        "help": "Number of points to plot."
+      },
+      {
+        "flag": "-delay",
+        "type": "integer",
+        "default": 1,
+        "help": "Time steps to delay for."
+      },
+      {
+        "flag": "-A",
+        "type": "double",
+        "default": 1.29,
+        "help": "Value of the A parameter."
+      },
+      {
+        "flag": "-B",
+        "type": "double",
+        "default": 0.3,
+        "help": "Value of the B parameter."
+      },
+      {
+        "flag": "-ulx",
+        "type": "double",
+        "default": -1.75,
+        "help": "Upper-left corner x-coordinate."
+      },
+      {
+        "flag": "-uly",
+        "type": "double",
+        "default": 1.75,
+        "help": "Upper-left corner y-coordinate."
+      },
+      {
+        "flag": "-lly",
+        "type": "double",
+        "default": -1.75,
+        "help": "Lower-left corner y-coordinate."
+      },
+      {
+        "flag": "-box",
+        "type": "integer",
+        "default": 0,
+        "help": "Line width for a box."
+      },
+      {
+        "flag": "-bulx",
+        "type": "double",
+        "default": 0.0,
+        "help": "Box's upper-left x-coordinate."
+      },
+      {
+        "flag": "-buly",
+        "type": "double",
+        "default": 0.0,
+        "help": "Box's upper-left y-coordinate."
+      },
+      {
+        "flag": "-blly",
+        "type": "double",
+        "default": 0.0,
+        "help": "Box's lower-left y-coordinate."
+      },
+      {
+        "flag": "-data",
+        "type": "switch",
+        "default": false,
+        "help": "Don't plot, but print points."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/henon.c",
+    "man_page": "pages/henon.md",
+    "java_port": "java/HenonAlgorithm.java"
+  },
+  {
+    "id": "henwarp",
+    "name": "henwarp",
+    "summary": "warps a square into the phase space of the Henon system",
+    "category": "Chaos",
+    "book_order": 13,
+    "blurb_md": "Takes a square of a specified area and “warps” it a fixed number of times by the Hénon system. This illustrates the stretching and folding motion of chaotic systems as well as shows how points within an attractor's basin of attraction are eventually forced into a strange attractor.",
+    "synopsis": "henwarp -help\n  or\nhenwarp\n       [-width  integer]  [-height  integer] [-swap] [-len\n       integer] [-count integer] [-A double]  [-B  double]\n       [-ulx  double]  [-uly  double] [-lly double] [-inv]\n       [-mag integer] [-term string]",
+    "description_md": "A square (initially centered about the origin) is transformed by the Henon system, which is described by the equation x(t+1) = A - x(t)^2 + B * x(t - 1), a fixed number of times according to the specified parameters.\n\n### Miscellany\n\nYou may wish to try this with a small length for the size of square and watch how the resulting plot changes as you slowly increase the value passed to the -count option starting at zero. The square will slowly spread out and converge to the attractor of the system.\n\nThe method for choosing the viewable region may seem counter-intuitive at first, but it has some nice properties. In particular, selecting the exact (x, y) coordinates for the upper-left corner and only selecting the lower right y coordinate forces both the x and y scales to be identical since all scales are uniquely determined by these values along with the plot width and height. If you then change the width or height of the plot, the relative scales will still match up. The options for making a box work similarly.\n\n### Bugs\n\nThe length of the square is in pixels and works best if it is an odd value. With even numbered values it can produce a gap in the plot for small values supplied with the -count option.\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 480,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-swap",
+        "type": "switch",
+        "default": true,
+        "help": "Swap the x and y axis."
+      },
+      {
+        "flag": "-len",
+        "type": "integer",
+        "default": 301,
+        "help": "Length of edge of square."
+      },
+      {
+        "flag": "-count",
+        "type": "integer",
+        "default": 1,
+        "help": "Number of transformations."
+      },
+      {
+        "flag": "-A",
+        "type": "double",
+        "default": 1.29,
+        "help": "Value of the A parameter."
+      },
+      {
+        "flag": "-B",
+        "type": "double",
+        "default": 0.3,
+        "help": "Value of the B parameter."
+      },
+      {
+        "flag": "-ulx",
+        "type": "double",
+        "default": -1.75,
+        "help": "Upper-left corner x-coordinate."
+      },
+      {
+        "flag": "-uly",
+        "type": "double",
+        "default": 1.75,
+        "help": "Upper-left corner y-coordinate."
+      },
+      {
+        "flag": "-lly",
+        "type": "double",
+        "default": -1.75,
+        "help": "Lower-left corner y-coordinate."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/henwarp.c",
+    "man_page": "pages/henwarp.md",
+    "java_port": null
+  },
+  {
+    "id": "hopfield",
+    "name": "hopfield",
+    "summary": "solve a task assignment problem via a Hopfield network",
+    "category": "Adaptation",
+    "book_order": 30,
+    "blurb_md": "Solves a task assignment problem via a Hopfield neural network while plotting the activations of the neurons over time. The program uses the *k*-out-of-*n* rule for setting the external inputs and synapse strength of the neurons.",
+    "synopsis": "hopfield -help\n  or\nhopfield\n       [-specs  string]  [-dt double] [-tau double] [-gain\n       double] [-scale  double]  [-seed  integer]  [-steps\n       integer]  [-gray  integer]  [-inv]  [-mag  integer]\n       [-term string]",
+    "description_md": "Solve a task assignment problem via a Hopfield neural network while plotting the activations of the neurons over time. The program uses the K-out-of-N rule for setting the external inputs and synapse strength of the neurons.\n\n### Miscellany\n\nAs mentioned before, the weights and external inputs are\n\nset according to the K-out-of-N rule which states that if we have N neurons in a mutually connected sub-network and that we wish this subset to converge with exactly K neurons activated, then each neuron should be connected to every other neuron with a weights of -2 and receive an external input of (2K - 1). Since we must produce solutions that look like permutation matrices, each neuron is in 2 K-out-of-N subsets, one for the column and one for the row. Thus, all neurons inhibit all other neurons in the same column or row with -2 and must (on average) receive a net input of 2 since they are all in two sets. The external inputs are slightly adjusted to favor neurons that represent more productive task performers. See the source code for more details.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.\n\nThe final cost of the solution is printed at the end of the simulation; however, no check is done to insure that the system has actually converged. Hence, it may print out nonsense results.",
+    "options": [
+      {
+        "flag": "-specs",
+        "type": "string",
+        "default": "data/hop1.dat",
+        "help": "Problem specification file."
+      },
+      {
+        "flag": "-dt",
+        "type": "double",
+        "default": 0.1,
+        "help": "Time step increment."
+      },
+      {
+        "flag": "-tau",
+        "type": "double",
+        "default": 10.0,
+        "help": "Decay term."
+      },
+      {
+        "flag": "-gain",
+        "type": "double",
+        "default": 0.5,
+        "help": "Sigmoidal gain."
+      },
+      {
+        "flag": "-scale",
+        "type": "double",
+        "default": 0.5,
+        "help": "Scaling for inputs."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed for initial state."
+      },
+      {
+        "flag": "-steps",
+        "type": "integer",
+        "default": 1000,
+        "help": "Number of time steps."
+      },
+      {
+        "flag": "-gray",
+        "type": "integer",
+        "default": 256,
+        "help": "Number of gray levels."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 10,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/hopfield.c",
+    "man_page": "pages/hopfield.md",
+    "java_port": null
+  },
+  {
+    "id": "hp",
+    "name": "hp",
+    "summary": "simulate the hodgepodge machine",
+    "category": "Complex Systems",
+    "book_order": 23,
+    "blurb_md": "Simulates and plots the time evolution of the hodgepodge machine according to specified parameters. With a proper choice of parameters, this system resembles the Belousov-Zhabotinsky reaction which forms self-perpetuating spirals in a lattice.",
+    "synopsis": "hp -help\n  or\nhp     [-width  integer]  [-height integer] [-states inte-\n       ger]  [-steps  integer]  [-seed  integer]   [-diag]\n       [-wrap]  [-g  double]  [-k1  double]  [-k2  double]\n       [-freq  integer]  [-inv]  [-mag   integer]   [-term\n       string]",
+    "description_md": "The time evolution of the hodgepodge machine is simulated and plotted according to the specified parameters. The neighborhood of a cell can optionally include or not include diagonal cells in a 3x3 area; Moreover, the neighborhood can also wrap around the edges so that the grid is topologically toroidal. With a proper choice of parameters, this system resembles the Belousov-Zhabotinsky reaction which forms self-perpetuating spirals in a lattice. See the RULES section of the manual pages or the source code for an explanation of how the cells change over time.\n\n### Rules\n\nIf each cell can be in one of N states (labelled 0 to n - 1), then cells in state 0 are ``healthy,'' cells in state n - 1 are ``ill,'' and all other cells are ``infected.''\n\nWithin a cell's neighborhood, let Nill, Ninf, and S, denote the number of ill cells, the number of infected cells, and the sum of the states of all neighbors plus this cell's state. The next state is determined by the three rules:\n\nHealthy: floor( Ninf / k1 ) + floor( Nill / k2 )\n\nInfected: floor( S / ( Ninf + 1 ) ) + g\n\nIll: magically becomes healthy, thus 0.\n\nWhere k1, k2, and g are the parameters specified by the command line options.\n\n### Miscellany\n\nIf you move from (to) an 8 cell neighborhood to (from) a 4 cell neighborhood try dividing (multiplying) k1 and k2 by 2 to produce a similar time evolution that occurred with the previous neighborhood size.\n\nFor some reason, 4 cell neighborhoods seem to produce patterns with more spirals.\n\nThis simulation can be frustratingly slow at times, so you may wish to use the -freq option to cut down on the overhead of plotting the states.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 50,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 50,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-states",
+        "type": "integer",
+        "default": 100,
+        "help": "Number of cell states."
+      },
+      {
+        "flag": "-steps",
+        "type": "integer",
+        "default": 1000,
+        "help": "Number of simulated steps."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed for initial state."
+      },
+      {
+        "flag": "-diag",
+        "type": "switch",
+        "default": true,
+        "help": "Diagonal cells are neighbors?"
+      },
+      {
+        "flag": "-wrap",
+        "type": "switch",
+        "default": true,
+        "help": "Use a wrap-around space?"
+      },
+      {
+        "flag": "-g",
+        "type": "double",
+        "default": 34.0,
+        "help": "Infection progression rate."
+      },
+      {
+        "flag": "-k1",
+        "type": "double",
+        "default": 2.0,
+        "help": "First weighting parameter."
+      },
+      {
+        "flag": "-k2",
+        "type": "double",
+        "default": 3.0,
+        "help": "Second weighting parameter."
+      },
+      {
+        "flag": "-freq",
+        "type": "integer",
+        "default": 1,
+        "help": "Plot frequency."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/hp.c",
+    "man_page": "pages/hp.md",
+    "java_port": "java/HPAlgorithm.java"
+  },
+  {
+    "id": "ifs",
+    "name": "ifs",
+    "summary": "generate fractals with an IFS",
+    "category": "Fractals",
+    "book_order": 5,
+    "blurb_md": "Similar to **mrcm** but uses Iterated Functional Systems for finer granularity.",
+    "synopsis": "ifs -help\n  or\nifs    [-infile string] [-width integer] [-height integer]\n       [-border integer] [-its  integer]  [-skip  integer]\n       [-term string] [-inv] [-mag integer]",
+    "description_md": "An affine fractal is computed via an Iterated Functional System. The rules must be supplied from a file with each line consisting of six values (A-F) such that the values of A-D describe a 2x2 matrix (A, B; C, D), while E and F describes a 2x1 column vector (E; F).\n\n### Miscellany\n\nThere is a shell script called 'ifscma' supplied with the source code that has a simple interface that allows you to reference sets of predefined rules by name. You may also wish to see the author's book, \"The Computational Beauty of Nature,\" for some more examples.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.\n\nThe maximum number of affine rules is determined by the constant MAXRULES, which you may need to adjust under exceptional circumstances.",
+    "options": [
+      {
+        "flag": "-infile",
+        "type": "string",
+        "default": "-",
+        "help": "Data input file."
+      },
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 640,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-border",
+        "type": "integer",
+        "default": 10,
+        "help": "Number of pixels in border."
+      },
+      {
+        "flag": "-its",
+        "type": "integer",
+        "default": 1000,
+        "help": "Number of iterations."
+      },
+      {
+        "flag": "-skip",
+        "type": "integer",
+        "default": 50,
+        "help": "Number of iteration to skip."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/ifs.c",
+    "man_page": "pages/ifs.md",
+    "java_port": "java/IFSAlgorithm.java"
+  },
+  {
+    "id": "julia",
+    "name": "julia",
+    "summary": "make a plot a Julia set",
+    "category": "Fractals",
+    "book_order": 7,
+    "blurb_md": "Generates Julia sets, which are related to the Mandelbrot set. Has options similar to **mandel**.",
+    "synopsis": "julia -help\n  or\njulia  [-width integer] [-height integer] [-maxit integer]\n       [-levels  integer]  [-bail  double]  [-ulx  double]\n       [-uly  double] [-lly double] [-cr double] [-ci dou-\n       ble] [-box integer] [-bulx double]  [-buly  double]\n       [-blly  double] [-idiv integer] [-rev] [-inv] [-mag\n       integer] [-term string]",
+    "description_md": "A Julia set is drawn according to the specified parameters. The image is computed by iterating the complex equation z(t) = (z(t-1))^2 + c, where c = (cr + ci) is the complex point that determines which Julia set is being computed and z = (x + yi) corresponds to an (x, y) screen coordinate with the initial value of z(0) = 0. If the system diverges at time k (i.e., |z(k)| > BAIL) then a point at (x, y) is plotted with the grayscale color (k / IDIV + (k % IDIV) * (LEVELS / IDIV)) % LEVELS), which reduces to (k % LEVELS) with an IDIV of 1.\n\n### Colors\n\nThe four permutations of using or not using -rev and -inv will yield four different coloring schemes. Try it and see.\n\n### Miscellany\n\nThe method for choosing the viewable region may seem counter-intuitive at first, but it has some nice properties. In particular, selecting the exact (x, y) coordinates for the upper-left corner and only selecting the lower right y coordinate forces both the x and y scales to be identical since all scales are uniquely determined by these values along with the plot width and height. If you then change the width or height of the plot, the relative scales will still match up. The options for making a box work similarly.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense. In particular, the bounding corners can be screwed up, and division by zero can occur with a malicious setting of IDIV.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 640,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-maxit",
+        "type": "integer",
+        "default": 160,
+        "help": "Maximum number of iterations before automatic bailout."
+      },
+      {
+        "flag": "-levels",
+        "type": "integer",
+        "default": 256,
+        "help": "Number of plot (gray) levels to use."
+      },
+      {
+        "flag": "-bail",
+        "type": "double",
+        "default": 16.0,
+        "help": "Value of |z| to end iteration, i.e., the bailout value."
+      },
+      {
+        "flag": "-ulx",
+        "type": "double",
+        "default": -2.0,
+        "help": "Upper-left corner x-coordinate."
+      },
+      {
+        "flag": "-uly",
+        "type": "double",
+        "default": 1.5,
+        "help": "Upper-left corner y-coordinate."
+      },
+      {
+        "flag": "-lly",
+        "type": "double",
+        "default": -1.5,
+        "help": "Lower-left corner y-coordinate."
+      },
+      {
+        "flag": "-cr",
+        "type": "double",
+        "default": 0.3,
+        "help": "Real component of c."
+      },
+      {
+        "flag": "-ci",
+        "type": "double",
+        "default": 0.6,
+        "help": "imaginary component of c."
+      },
+      {
+        "flag": "-box",
+        "type": "integer",
+        "default": 0,
+        "help": "Line width for a box. If zero, no box is drawn."
+      },
+      {
+        "flag": "-bulx",
+        "type": "double",
+        "default": 0.0,
+        "help": "Box's upper-left x-coordinate."
+      },
+      {
+        "flag": "-buly",
+        "type": "double",
+        "default": 0.0,
+        "help": "Box's upper-left y-coordinate."
+      },
+      {
+        "flag": "-blly",
+        "type": "double",
+        "default": 0.0,
+        "help": "Box's lower-left y-coordinate."
+      },
+      {
+        "flag": "-idiv",
+        "type": "integer",
+        "default": 1,
+        "help": "Iteration divisor. When greater than one, this creates a banding effect."
+      },
+      {
+        "flag": "-rev",
+        "type": "switch",
+        "default": false,
+        "help": "Reverse all colors but first?"
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "how to plot points"
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/julia.c",
+    "man_page": "pages/julia.md",
+    "java_port": "java/JuliaAlgorithm.java"
+  },
+  {
+    "id": "life",
+    "name": "life",
+    "summary": "play Conway's Game of Life",
+    "category": "Complex Systems",
+    "book_order": 22,
+    "blurb_md": "Simulates Conway's Game of Life with an arbitrary set of initial conditions. Input files need to be in the PBM file format.",
+    "synopsis": "life -help\n  or\nlife   [-width integer] [-height integer] [-extra integer]\n       [-wrap] [-infile string]  [-steps  integer]  [-inv]\n       [-mag integer] [-term string]",
+    "description_md": "Simulate Conway's Game of Life with an arbitrary set of initial conditions. Input files need to be in the PBM file format.\n\n### Miscellany\n\nYou will need to use the -extra option in conjuction with the -wrap option if you wish to simulate moving objects that tend to fly off in one direction. Periodic patterns may need the -extra option to give them a little bit of extra room to work in.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.\n\n### Credits\n\nThe data files for the initial states supplied with this\n\nprogram were lifted and converted from the excellent and free program xlife.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 0,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 0,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-extra",
+        "type": "integer",
+        "default": 5,
+        "help": "Number of extra border pixels."
+      },
+      {
+        "flag": "-wrap",
+        "type": "switch",
+        "default": true,
+        "help": "Wrap around world?"
+      },
+      {
+        "flag": "-infile",
+        "type": "string",
+        "default": "data/life/p8.pbm",
+        "help": "Initial configuration file"
+      },
+      {
+        "flag": "-steps",
+        "type": "integer",
+        "default": 1000,
+        "help": "Number of time steps to simulate."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": true,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 10,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/life.c",
+    "man_page": "pages/life.md",
+    "java_port": "java/LifeAlgorithm.java"
+  },
+  {
+    "id": "lorenz",
+    "name": "lorenz",
+    "summary": "plot the phase space of the Lorenz system",
+    "category": "Chaos",
+    "book_order": 14,
+    "blurb_md": "Plots the phase space of the Lorenz system, a three-dimensional system described by differential equations with a fractal shape. Both plain phase-space plots and delayed state-space plots are possible.",
+    "synopsis": "lorenz -help\n  or\nlorenz [-width  integer] [-height integer] [-skip integer]\n       [-points integer] [-A double] [-B double] [-C  dou-\n       ble]  [-delta  integer]  [-dt  double] [-x0 double]\n       [-y0 double] [-z0 double] [-data] [-xp string] [-yp\n       string]  [-factor  double]  [-inv]  [-mag  integer]\n       [-term string]",
+    "description_md": "The phase space of the Lorenz system, which is described by the three differential equations\n\ndx/dt = A * (y - x),\n\ndy/dt = B * x - y - z * x, and\n\ndz/dt = x * y - C * z,\n\nis plotted according to the specified parameters. Valid arguments passed with the -xp and -yp options can be any one of x(t), y(t), z(t), x(t-delta), y(t-delta), or z(tdelta). Thus, the displayed plot can take the form of a state space plot or a delayed coordinate plot.\n\n### Miscellany\n\nThe plot region is determined by the points that are initially skipped. If this number is too small (i.e., it is not very representative of the range of the plotted values), then you may need to increase the number specified by the -skip option. Alternatively, you can adjust the value given to -factor, which simply fractionally increases the border of the plot.\n\nThe program uses a second-order Euler's method to perform the numerical integration, which is sufficient for simple tasks such as this.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 480,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-skip",
+        "type": "integer",
+        "default": 2000,
+        "help": "Number of initial points to skip."
+      },
+      {
+        "flag": "-points",
+        "type": "integer",
+        "default": 5000,
+        "help": "Number of points to plot."
+      },
+      {
+        "flag": "-A",
+        "type": "double",
+        "default": 5.0,
+        "help": "Value of the A parameter."
+      },
+      {
+        "flag": "-B",
+        "type": "double",
+        "default": 15.0,
+        "help": "Value of the B parameter."
+      },
+      {
+        "flag": "-C",
+        "type": "double",
+        "default": 1.0,
+        "help": "Value of The C parameter."
+      },
+      {
+        "flag": "-delta",
+        "type": "integer",
+        "default": 20,
+        "help": "Time delay term."
+      },
+      {
+        "flag": "-dt",
+        "type": "double",
+        "default": 0.02,
+        "help": "Time step."
+      },
+      {
+        "flag": "-x0",
+        "type": "double",
+        "default": 1.0,
+        "help": "Initial X value."
+      },
+      {
+        "flag": "-y0",
+        "type": "double",
+        "default": 1.0,
+        "help": "Initial Y value."
+      },
+      {
+        "flag": "-z0",
+        "type": "double",
+        "default": 1.0,
+        "help": "Initial Z value."
+      },
+      {
+        "flag": "-data",
+        "type": "switch",
+        "default": false,
+        "help": "Don't plot, but print points."
+      },
+      {
+        "flag": "-xp",
+        "type": "string",
+        "default": "x(t)",
+        "help": "X-coordinate for plot."
+      },
+      {
+        "flag": "-yp",
+        "type": "string",
+        "default": "y(t)",
+        "help": "Y-coordinate for plot."
+      },
+      {
+        "flag": "-factor",
+        "type": "double",
+        "default": 0.2,
+        "help": "Auto-scale expansion factor."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/lorenz.c",
+    "man_page": "pages/lorenz.md",
+    "java_port": "java/LorenzAlgorithm.java"
+  },
+  {
+    "id": "lotka",
+    "name": "lotka",
+    "summary": "integrate the Lotka-Volterra system",
+    "category": "Chaos",
+    "book_order": 19,
+    "blurb_md": "Simulates the two-species Lotka-Volterra predator-prey system with a second-order Euler's method. This program serves as a simple introduction to differential equations.",
+    "synopsis": "predprey -help\n  or\npredprey\n       [-seed integer] [-points integer] [-f0 double] [-s0\n       double] [-a double] [-b  double]  [-c  double]  [-d\n       double] [-dt double]",
+    "description_md": "Integrates the two-species Lotka-Volterra predator-prey system,\n\ndF/dt = F(a - bS), dS/dt = S(cF - d),\n\naccording to the specified parameters.\n\n### Miscellany\n\nThe program uses a second-order Euler's method to perform the numerical integration, which is sufficient for simple tasks such as this.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of\n\nthe options make sense.",
+    "options": [
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": -1,
+        "help": "Seed for random parameters."
+      },
+      {
+        "flag": "-points",
+        "type": "integer",
+        "default": 2500,
+        "help": "Number of points to produce."
+      },
+      {
+        "flag": "-f0",
+        "type": "double",
+        "default": 1.0,
+        "help": "Initial fish population."
+      },
+      {
+        "flag": "-s0",
+        "type": "double",
+        "default": 0.2,
+        "help": "Initial shark population."
+      },
+      {
+        "flag": "-a",
+        "type": "double",
+        "default": 1.5,
+        "help": "Fish growth rate."
+      },
+      {
+        "flag": "-b",
+        "type": "double",
+        "default": 1.5,
+        "help": "Shark consumption rate."
+      },
+      {
+        "flag": "-c",
+        "type": "double",
+        "default": 0.5,
+        "help": "Fish nutritional value."
+      },
+      {
+        "flag": "-d",
+        "type": "double",
+        "default": 1.5,
+        "help": "Shark death rate."
+      },
+      {
+        "flag": "-dt",
+        "type": "double",
+        "default": 0.1,
+        "help": "Time step increment."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/lotka.c",
+    "man_page": "pages/lotka.md",
+    "java_port": "java/LotkaAlgorithm.java"
+  },
+  {
+    "id": "lsys",
+    "name": "lsys",
+    "summary": "builds an L-system fractal from multiple rules",
+    "category": "Fractals",
+    "book_order": 3,
+    "blurb_md": "Builds L-system fractals. Accepts multiple rules so that complicated fractals (such as a Penrose tiling) can be expressed. Great for generating plantlike fractals.",
+    "synopsis": "lsys -help\n  or\nlsys   [-width  integer]  [-height integer] [-border inte-\n       ger] [-depth integer]  [-a0  double]  [-da  double]\n       [-ds  double] [-unoise double] [-rule ... ] [-axiom\n       string] [-inv] [-mag integer] [-term string]",
+    "description_md": "An L-system is computed according to the specified axiom, rules, and step angle. The L-system axiom is recursively expanded for the specified depth, with 'F', 'G', and '|' actions resulting in movement of the virtual plotter, and '+' and '-' commands resulting in rotation of the virtual plotter. See the RULES section of the manual page for more information on the format for legal rules.\n\n### Rules\n\nThe L-system rules should always take the form \"x=...\" where \"x\" is a letter and the remaining portion is a sequence of turtle graphics commands, which operate as described below.\n\n'F' is the draw forward command, which moves the plotter forward by a fixed length, drawing a line from the old position to the new position.\n\n'G' (Go Forward) is similar to 'F', but only moves the plotter and does not draw a line.\n\n'+' and '-' turn the plotter to the right (or left) by a fixed angle determined by the -da switch. If an integer precedes the '+' or '-' symbol, then the plotter effectively makes that number of right-hand turns.\n\n'[' saves the current position and angle of the plotter for later use, which is restored by the ']' command.\n\n'|' move the turtle forward by a length computed from the execution depth, drawing a line from the old position to the new. Thus, this command is similar to 'F' but it is not recursively expanded. If DS is the value supplied by the -ds switch, then the step size will be proportional to DS^depth. This allows for certain types of figures to be drawn that would otherwise be difficult to express without this command.\n\n### Miscellany\n\nIf you are using a UNIX command shell, be sure to quote any rules with brackets so that the shell passes them to the program correctly.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.\n\nThe border size is only approximately calculated because the author felt a bit lazy at the time of writing this program. However, it's pretty close for most values.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 480,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-border",
+        "type": "integer",
+        "default": 10,
+        "help": "Approximate number of border pixels."
+      },
+      {
+        "flag": "-depth",
+        "type": "integer",
+        "default": 5,
+        "help": "Recursion depth to use."
+      },
+      {
+        "flag": "-a0",
+        "type": "double",
+        "default": 90.0,
+        "help": "Initial angle."
+      },
+      {
+        "flag": "-da",
+        "type": "double",
+        "default": 90.0,
+        "help": "Delta angle for '+' and '-' commands."
+      },
+      {
+        "flag": "-ds",
+        "type": "double",
+        "default": 1.0,
+        "help": "Delta step size. Only affects '|' commands and should be less than 1."
+      },
+      {
+        "flag": "-unoise",
+        "type": "double",
+        "default": 0.0,
+        "help": "Amount of uniform noise to add to step angle."
+      },
+      {
+        "flag": "-rule",
+        "type": "other",
+        "default": null,
+        "help": "Specify a production rule. See RULES section of manual page."
+      },
+      {
+        "flag": "-axiom",
+        "type": "string",
+        "default": "f",
+        "help": "Starting axiom."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [
+      {
+        "label": "A weed",
+        "command": "lsys -da 20 -rule \"F=|[-F]|[+F][-F]F\""
+      },
+      {
+        "label": "Kock curve",
+        "command": "lsys -da 60 -rule F=F-F++F-F"
+      },
+      {
+        "label": "Penrose Snowflake",
+        "command": "lsys -da 18 -axiom F4-F4-F4-F4-F -rule F=F4-F4-F10-F++F4-F"
+      },
+      {
+        "label": "Sierpinski Arrowhead",
+        "command": "lsys -da 60 -rule \"F=[-G+++F][-G+F][GG--F]\" -rule G=GG"
+      },
+      {
+        "label": null,
+        "note": "See the author's book, \"The Computational Beauty of Nature,\" for more examples."
+      }
+    ],
+    "c_source": "code/src/lsys.c",
+    "man_page": "pages/lsys.md",
+    "java_port": "java/LsysAlgorithm.java"
+  },
+  {
+    "id": "mandel",
+    "name": "mandel",
+    "summary": "make a plot the Mandelbrot set",
+    "category": "Fractals",
+    "book_order": 6,
+    "blurb_md": "Plots the famous Mandelbrot set. There are options for the displayed coordinates, zoom level, coloring schemes, etc.",
+    "synopsis": "mandel -help\n  or\nmandel [-width integer] [-height integer] [-maxit integer]\n       [-levels  integer]  [-bail  double]  [-ulx  double]\n       [-uly  double]  [-lly double] [-box integer] [-bulx\n       double] [-buly double] [-blly double] [-idiv  inte-\n       ger] [-rev] [-inv] [-mag integer] [-term string]",
+    "description_md": "The Mandelbrot set is drawn according to the specified parameters. The image is computed by iterating the complex equation z(t) = (z(t-1))^2 + c, where c is the complex point (x + yi) that corresponds to an (x, y) screen coordinate and the initial value of z(0) = 0. If the system diverges at time k (i.e., |z(k)| > BAIL) then a point at (x, y) is plotted with the grayscale color (k / IDIV + (k % IDIV) * (LEVELS / IDIV)) % LEVELS), which reduces to (k % LEVELS) with an IDIV of 1.\n\n### Colors\n\nThe four permutations of using or not using -rev and -inv will yield four different coloring schemes. Try it and see.\n\n### Miscellany\n\nThe method for choosing the viewable region may seem counter-intuitive at first, but it has some nice properties. In particular, selecting the exact (x, y) coordinates for the upper-left corner and only selecting the lower right y coordinate forces both the x and y scales to be identical since all scales are uniquely determined by these values along with the plot width and height. If you then change the width or height of the plot, the relative scales will still match up. The options for making a box work similarly.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense. In particular, the bounding corners can be screwed up, and division by zero can occur with a malicious setting of IDIV.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 640,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-maxit",
+        "type": "integer",
+        "default": 160,
+        "help": "Maximum number of iterations before automatic bailout."
+      },
+      {
+        "flag": "-levels",
+        "type": "integer",
+        "default": 256,
+        "help": "Number of plot (gray) levels to use."
+      },
+      {
+        "flag": "-bail",
+        "type": "double",
+        "default": 16.0,
+        "help": "Value of |z| to end iteration, i.e., the bailout value."
+      },
+      {
+        "flag": "-ulx",
+        "type": "double",
+        "default": -2.4,
+        "help": "Upper-left corner x-coordinate."
+      },
+      {
+        "flag": "-uly",
+        "type": "double",
+        "default": 1.4,
+        "help": "Upper-left corner y-coordinate."
+      },
+      {
+        "flag": "-lly",
+        "type": "double",
+        "default": -1.4,
+        "help": "Lower-left corner y-coordinate."
+      },
+      {
+        "flag": "-box",
+        "type": "integer",
+        "default": 0,
+        "help": "Line width for a box. If zero, no box is drawn."
+      },
+      {
+        "flag": "-bulx",
+        "type": "double",
+        "default": 0.0,
+        "help": "Box's upper-left x-coordinate."
+      },
+      {
+        "flag": "-buly",
+        "type": "double",
+        "default": 0.0,
+        "help": "Box's upper-left y-coordinate."
+      },
+      {
+        "flag": "-blly",
+        "type": "double",
+        "default": 0.0,
+        "help": "Box's lower-left y-coordinate."
+      },
+      {
+        "flag": "-idiv",
+        "type": "integer",
+        "default": 1,
+        "help": "Iteration divisor. When greater than one, this creates a banding effect."
+      },
+      {
+        "flag": "-rev",
+        "type": "switch",
+        "default": false,
+        "help": "Reverse all colors but first?"
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/mandel.c",
+    "man_page": "pages/mandel.md",
+    "java_port": "java/MandelAlgorithm.java"
+  },
+  {
+    "id": "mg",
+    "name": "mg",
+    "summary": "plot the phase space of the Mackey-Glass system",
+    "category": "Chaos",
+    "book_order": 16,
+    "blurb_md": "Plots a two-dimensional embedding of the phase space of the Mackey-Glass system, a delay-differential system, with arbitrary parameters.",
+    "synopsis": "mg -help\n  or\nmg     [-width  integer] [-height integer] [-skip integer]\n       [-points integer] [-delta integer]  [-tau  integer]\n       [-A  double]  [-B double] [-dt double] [-x0 double]\n       [-factor  double]  [-data]  [-inv]  [-mag  integer]\n       [-term string]",
+    "description_md": "The phase space of the Mackey-Glass system, which is described by the delay differential equation\n\ndx(t)/dt = A * x(t-Tau) / (1 + x(t-Tau)^10) - B * x(t),\n\nis plotted according to the specified parameters. The xcoordinate of the plot is determined by x(t) while the ycoordinate is determined by x(t-delta).\n\n### Miscellany\n\nThe plot region is determined by the points that are initially skipped. If this number is too small (i.e., it is not very representative of the range of the plotted values), then you may need to increase the number specified by the -skip option. Alternatively, you can adjust the value given to -factor, which simply fractionally increases the border of the plot.\n\nThe program uses a second-order Euler's method to perform the numerical integration, which is sufficient for simple tasks such as this.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 480,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-skip",
+        "type": "integer",
+        "default": 2000,
+        "help": "Number of initial points to skip."
+      },
+      {
+        "flag": "-points",
+        "type": "integer",
+        "default": 10000,
+        "help": "Number of points to plot."
+      },
+      {
+        "flag": "-delta",
+        "type": "integer",
+        "default": 6,
+        "help": "Time steps to delay for."
+      },
+      {
+        "flag": "-tau",
+        "type": "integer",
+        "default": 17,
+        "help": "Value of the Tau parameter."
+      },
+      {
+        "flag": "-A",
+        "type": "double",
+        "default": 0.2,
+        "help": "Value of the A parameter."
+      },
+      {
+        "flag": "-B",
+        "type": "double",
+        "default": 0.1,
+        "help": "Value of the B parameter."
+      },
+      {
+        "flag": "-dt",
+        "type": "double",
+        "default": 0.1,
+        "help": "Time step size."
+      },
+      {
+        "flag": "-x0",
+        "type": "double",
+        "default": 1.23456789,
+        "help": "Initial X value."
+      },
+      {
+        "flag": "-factor",
+        "type": "double",
+        "default": 0.2,
+        "help": "Auto-scale expansion factor."
+      },
+      {
+        "flag": "-data",
+        "type": "switch",
+        "default": false,
+        "help": "Don't plot, but print points."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/mg.c",
+    "man_page": "pages/mg.md",
+    "java_port": "java/MackeyGlassAlgorithm.java"
+  },
+  {
+    "id": "mlp",
+    "name": "mlp",
+    "summary": "train a multilayer perceptron with backprop",
+    "category": "Adaptation",
+    "book_order": 38,
+    "blurb_md": "Trains a multilayer perceptron with a single hidden layer of neurons on a set of data contained in a file using the backpropagation learning algorithm with momentum. Output units can be linear or sigmoidal, allowing you to model both discrete and continuous output target values.",
+    "synopsis": "mlp -help\n  or\nmlp    [-dfile  string]  [-steps  integer] [-seed integer]\n       [-freq integer] [-numin integer] [-numhid  integer]\n       [-numout  integer]  [-lrate double] [-mrate double]\n       [-winit double] [-linout] [-pdump] [-gdump]",
+    "description_md": "Train a multilayer perceptron with a single hidden layer of neurons on a set of data contained in a file using the backpropagation learning algorithm with momentum. Output units can be linear or sigmoidal, allowing you to model both discrete and continuous output target values.\n\n### Miscellany\n\nThe number of inputs and outputs must agree with the format of your training data file. The program expects to find training patterns listed one after another with each training pattern consisting of the inputs followed by the target outputs.\n\nIf the -pdump switch is used, then the patterns will printed to stdout. Hence,redirect this to a file if you want to save it.\n\nYou should always use linear outputs if your target values are continuous.\n\nThe error value displayed via stderr is the root mean squared error taken over the entire data step. Calculating this error measure is typically far more expensive than a single training step, so you may wish to use the -freq option to make it happen less frequently.\n\nIf you network doesn't converge to anything useful, try increasing the number of hidden nodes. Moreover, you may need to tweak the learning rate and momentum term. This is just one of the curses of backprop.\n\n### Bugs\n\nThe -gplot switch isn't very useful as it only works on the first output neuron.\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-dfile",
+        "type": "string",
+        "default": "data/xor.dat",
+        "help": "Training data file."
+      },
+      {
+        "flag": "-steps",
+        "type": "integer",
+        "default": 2000,
+        "help": "Number of simulated steps."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed for initial state."
+      },
+      {
+        "flag": "-freq",
+        "type": "integer",
+        "default": 1,
+        "help": "Status print frequency."
+      },
+      {
+        "flag": "-numin",
+        "type": "integer",
+        "default": 2,
+        "help": "Number of inputs."
+      },
+      {
+        "flag": "-numhid",
+        "type": "integer",
+        "default": 2,
+        "help": "Number of hidden nodes."
+      },
+      {
+        "flag": "-numout",
+        "type": "integer",
+        "default": 1,
+        "help": "Number of outputs."
+      },
+      {
+        "flag": "-lrate",
+        "type": "double",
+        "default": 0.25,
+        "help": "Learning rate."
+      },
+      {
+        "flag": "-mrate",
+        "type": "double",
+        "default": 0.5,
+        "help": "Momentum rate."
+      },
+      {
+        "flag": "-winit",
+        "type": "double",
+        "default": 0.1,
+        "help": "Weight init factor"
+      },
+      {
+        "flag": "-linout",
+        "type": "switch",
+        "default": false,
+        "help": "Use linear outputs?"
+      },
+      {
+        "flag": "-pdump",
+        "type": "switch",
+        "default": false,
+        "help": "Dump patterns at end of run?"
+      },
+      {
+        "flag": "-gdump",
+        "type": "switch",
+        "default": false,
+        "help": "Dump gnuplot commands at end?"
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/mlp.c",
+    "man_page": "pages/mlp.md",
+    "java_port": null
+  },
+  {
+    "id": "mrcm",
+    "name": "mrcm",
+    "summary": "generate fractals with the MRCM algorithm",
+    "category": "Fractals",
+    "book_order": 4,
+    "blurb_md": "Uses the Multiple Reduction Copy Machine algorithm to generate affine fractals. Accepts an arbitrary number of transformations. Good for making snowflakes and mosaic patterns.",
+    "synopsis": "mrcm -help\n  or\nmrcm   [-infile string] [-width integer] [-height integer]\n       [-depth integer]  [-border  integer]  [-bw  double]\n       [-bh double] [-L] [-term string] [-inv] [-mag inte-\n       ger]",
+    "description_md": "An affine fractal is computed via the Multiple Reduction Copy Machine Algorithm. The rules must be supplied from a file with each line consisting of six values (A-F) such that the values of A-D describe a 2x2 matrix (A, B; C, D), while E and F describes a 2x1 column vector (E; F).\n\n### Miscellany\n\nThere is a shell script called 'ifscma' supplied with the source code that has a simple interface that allows you to reference sets of predefined rules by name. You may also\n\nwish to see the author's book, \"The Computational Beauty of Nature,\" for some more examples.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.\n\nThe maximum number of affine rules is determined by the constant MAXRULES, which you may need to adjust under exceptional circumstances.",
+    "options": [
+      {
+        "flag": "-infile",
+        "type": "string",
+        "default": "-",
+        "help": "Data input file."
+      },
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 640,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-depth",
+        "type": "integer",
+        "default": 5,
+        "help": "Depth of recursive calls."
+      },
+      {
+        "flag": "-border",
+        "type": "integer",
+        "default": 10,
+        "help": "Number of pixels in border."
+      },
+      {
+        "flag": "-bw",
+        "type": "double",
+        "default": 1.0,
+        "help": "Width of the seed box."
+      },
+      {
+        "flag": "-bh",
+        "type": "double",
+        "default": 1.0,
+        "help": "Height of the seed box."
+      },
+      {
+        "flag": "-L",
+        "type": "switch",
+        "default": false,
+        "help": "Draw an 'L' in each box?"
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/mrcm.c",
+    "man_page": "pages/mrcm.md",
+    "java_port": "java/MRCMAlgorithm.java"
+  },
+  {
+    "id": "phase1d",
+    "name": "phase1d",
+    "summary": "plot phase-space of a one-dimensional map",
+    "category": "Chaos",
+    "book_order": 10,
+    "blurb_md": "Plots the phase space and trajectories of a one-dimensional map. Showing trajectories in the phase space more clearly illustrates why fixed-points and limit cycles occur. This can also be used to show the exponential divergence of nearby trajectories.",
+    "synopsis": "phase1d -help\n  or\nphase1d\n       [-width  integer]  [-height integer] [-points inte-\n       ger] [-skip integer] [-r double] [-aux double] [-x0\n       double]   [-dx  double]  [-func  string]  [-arrows]\n       [-inv] [-mag integer] [-term string]",
+    "description_md": "A phase-space diagram is plotted for a one-dimensional map according to the specified options. If the option for -dx is non-zero, then two trajectories are plotted: one staring at x0, and the other starting at (x0 + dx). See the MAPS section of the manual page for details of what maps are supported. User defined maps can be added to the file maps1d.c, but you must recompile the program.\n\n### Maps\n\nThe following four one-dimensional maps are allowed:\n\nLogistic Map: x(t+1) = 4 * r * x(t) * (1.0 - x(t))\n\nTent Map: x(t+1) = (x(t) <= 0.5) ? 2 * r * x(t) : 2r * (1.0 x(t))\n\nSine Map: x(t+1) = sin(x(t) * PI * aux * 2 * r) / 2 + 0.5\n\nGaussian Map: x(t+1) = r * exp(-aux * (x(t) - 0.5) * (x(t) - 0.5))\n\nSee the file \"maps1d.c\" to see how to add user-defined maps.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 640,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-points",
+        "type": "integer",
+        "default": 10,
+        "help": "Number of points to plot."
+      },
+      {
+        "flag": "-skip",
+        "type": "integer",
+        "default": 0,
+        "help": "Number of points to skip."
+      },
+      {
+        "flag": "-r",
+        "type": "double",
+        "default": 1.0,
+        "help": "Value for r."
+      },
+      {
+        "flag": "-aux",
+        "type": "double",
+        "default": 1.0,
+        "help": "Auxiliary map parameter."
+      },
+      {
+        "flag": "-x0",
+        "type": "double",
+        "default": 0.123456,
+        "help": "Initial value for x."
+      },
+      {
+        "flag": "-dx",
+        "type": "double",
+        "default": 0.0,
+        "help": "Difference for second trajectory."
+      },
+      {
+        "flag": "-func",
+        "type": "string",
+        "default": "log",
+        "help": "Map function to use (one of 'log', 'tent', 'sin', or 'gauss')."
+      },
+      {
+        "flag": "-arrows",
+        "type": "switch",
+        "default": true,
+        "help": "Show arrows to indicate directions?"
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/phase1d.c",
+    "man_page": "pages/phase1d.md",
+    "java_port": "java/Phase1DAlgorithm.java"
+  },
+  {
+    "id": "predprey",
+    "name": "predprey",
+    "summary": "plot the phase space of a predator-prey system",
+    "category": "Chaos",
+    "book_order": 18,
+    "blurb_md": "Plots the phase space of a three-species predator-prey system (described by differential equations) which may be fractal in shape. Both plain phase-space plots and delayed state-space plots are possible.",
+    "synopsis": "predprey -help\n  or\npredprey\n       [-width  integer] [-height integer] [-skip integer]\n       [-points integer] [-alpha double] [-delta  integer]\n       [-dt double] [-x0 double] [-y0 double] [-z0 double]\n       [-data] [-xp string] [-yp string] [-factor  double]\n       [-inv] [-mag integer] [-term string]",
+    "description_md": "The phase space of a three species predator-prey system, which is described by the three differential equations\n\ndx/dt = x * (1.1 - x / 2 - y / 2 - z / 10),\n\ndy/dt = y * (-0.5 + x / 2 + y / 10 - z / 10), and\n\ndz/dt = z * (alpha + 0.2 - alpha * x - y / 10 - z / 10),\n\nis plotted according to the specified parameters. Valid arguments passed with the -xp and -yp options can be any one of x(t), y(t), z(t), x(t-delta), y(t-delta), or z(tdelta). Thus, the displayed plot can take the form of a state space plot or a delayed coordinate plot.\n\n### Miscellany\n\nThe plot region is determined by the points that are initially skipped. If this number is too small (i.e., it is not very representative of the range of the plotted values), then you may need to increase the number specified by the -skip option. Alternatively, you can adjust the value given to -factor, which simply fractionally increases the border of the plot.\n\nThe program uses a second-order Euler's method to perform the numerical integration, which is sufficient for simple tasks such as this.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 480,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-skip",
+        "type": "integer",
+        "default": 2000,
+        "help": "Number of initial points to skip."
+      },
+      {
+        "flag": "-points",
+        "type": "integer",
+        "default": 5000,
+        "help": "Number of points to plot."
+      },
+      {
+        "flag": "-alpha",
+        "type": "double",
+        "default": 1.5,
+        "help": "Value of the alpha parameter."
+      },
+      {
+        "flag": "-delta",
+        "type": "integer",
+        "default": 20,
+        "help": "Time delay term."
+      },
+      {
+        "flag": "-dt",
+        "type": "double",
+        "default": 0.1,
+        "help": "Time step."
+      },
+      {
+        "flag": "-x0",
+        "type": "double",
+        "default": 0.5,
+        "help": "Initial X value."
+      },
+      {
+        "flag": "-y0",
+        "type": "double",
+        "default": 0.5,
+        "help": "Initial Y value."
+      },
+      {
+        "flag": "-z0",
+        "type": "double",
+        "default": 0.5,
+        "help": "Initial Z value."
+      },
+      {
+        "flag": "-data",
+        "type": "switch",
+        "default": false,
+        "help": "Don't plot, but print points."
+      },
+      {
+        "flag": "-xp",
+        "type": "string",
+        "default": "x(t)",
+        "help": "X-coordinate for plot."
+      },
+      {
+        "flag": "-yp",
+        "type": "string",
+        "default": "y(t)",
+        "help": "Y-coordinate for plot."
+      },
+      {
+        "flag": "-factor",
+        "type": "double",
+        "default": 0.2,
+        "help": "Auto-scale expansion factor."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/predprey.c",
+    "man_page": "pages/predprey.md",
+    "java_port": null
+  },
+  {
+    "id": "rossler",
+    "name": "rossler",
+    "summary": "plot the phase space of the Rossler system",
+    "category": "Chaos",
+    "book_order": 15,
+    "blurb_md": "Similar to **lorenz**, but uses the Rossler system.",
+    "synopsis": "rossler -help\n  or\nrossler\n       [-width  integer] [-height integer] [-skip integer]\n       [-points integer] [-A double] [-B double] [-C  dou-\n       ble]  [-delta  integer]  [-dt  double] [-x0 double]\n       [-y0 double] [-z0 double] [-data] [-xp string] [-yp\n       string]  [-factor  double]  [-inv]  [-mag  integer]\n       [-term string]",
+    "description_md": "The phase space of the Rossler system, which is described by the three differential equations\n\ndx/dt = -y - z,\n\ndy/dt = A * y + x, and\n\ndz/dt = B + x * z - C * z,\n\nis plotted according to the specified parameters. Valid arguments passed with the -xp and -yp options can be any one of x(t), y(t), z(t), x(t-delta), y(t-delta), or z(tdelta). Thus, the displayed plot can take the form of a state space plot or a delayed coordinate plot.\n\n### Miscellany\n\nThe plot region is determined by the points that are initially skipped. If this number is too small (i.e., it is not very representative of the range of the plotted values), then you may need to increase the number specified by the -skip option. Alternatively, you can adjust the value given to -factor, which simply fractionally increases the border of the plot.\n\nThe program uses a second-order Euler's method to perform the numerical integration, which is sufficient for simple tasks such as this.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 480,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 480,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-skip",
+        "type": "integer",
+        "default": 2000,
+        "help": "Number of initial points to skip."
+      },
+      {
+        "flag": "-points",
+        "type": "integer",
+        "default": 5000,
+        "help": "Number of points to plot."
+      },
+      {
+        "flag": "-A",
+        "type": "double",
+        "default": 0.2,
+        "help": "Value of the A parameter."
+      },
+      {
+        "flag": "-B",
+        "type": "double",
+        "default": 0.2,
+        "help": "Value of the B parameter."
+      },
+      {
+        "flag": "-C",
+        "type": "double",
+        "default": 5.7,
+        "help": "Value of The C parameter."
+      },
+      {
+        "flag": "-delta",
+        "type": "integer",
+        "default": 20,
+        "help": "Time delay term."
+      },
+      {
+        "flag": "-dt",
+        "type": "double",
+        "default": 0.02,
+        "help": "Time step."
+      },
+      {
+        "flag": "-x0",
+        "type": "double",
+        "default": 1.0,
+        "help": "Initial X value."
+      },
+      {
+        "flag": "-y0",
+        "type": "double",
+        "default": 1.0,
+        "help": "Initial Y value."
+      },
+      {
+        "flag": "-z0",
+        "type": "double",
+        "default": 1.0,
+        "help": "Initial Z value."
+      },
+      {
+        "flag": "-data",
+        "type": "switch",
+        "default": false,
+        "help": "Don't plot, but print points."
+      },
+      {
+        "flag": "-xp",
+        "type": "string",
+        "default": "x(t)",
+        "help": "X-coordinate for plot."
+      },
+      {
+        "flag": "-yp",
+        "type": "string",
+        "default": "y(t)",
+        "help": "Y-coordinate for plot."
+      },
+      {
+        "flag": "-factor",
+        "type": "double",
+        "default": 0.2,
+        "help": "Auto-scale expansion factor."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/rossler.c",
+    "man_page": "pages/rossler.md",
+    "java_port": "java/RosslerAlgorithm.java"
+  },
+  {
+    "id": "sipd",
+    "name": "sipd",
+    "summary": "simulate the spatial iterated Prisoner's Dilemma",
+    "category": "Complex Systems",
+    "book_order": 27,
+    "blurb_md": "Simulates and plots the spatial iterated Prisoner's Dilemma over time according to the specified parameters. Each cell in a grid plays a specific strategy against its eight neighbors for several rounds. At the end of the last round, each cell copies the strategy of its most successful neighbor, which is then used for the next time step. Possible strategies include “Always-Cooperate,” “Always-Defect”, “Random,” “Pavlov,” and “Tit-for-Tat.”",
+    "synopsis": "sipd -help\n  or\nsipd   [-width integer] [-height integer] [-steps integer]\n       [-rounds integer] [-seed integer] [-CC double] [-CD\n       double]  [-DC  double] [-DD double] [-Iallc double]\n       [-Itft  double]  [-Irand  double]  [-Ipav   double]\n       [-Ialld   double]  [-rcp  double]  [-noise  double]\n       [-mute  double]  [-stats]  [-inv]  [-mag   integer]\n       [-term string]",
+    "description_md": "The spatial iterated Prisoner's Dilemma is simulated and plotted over time according to the specified parameters. Each cell in a grid plays a specific strategy against its eight neighbors for several rounds. At the end of the last round, each cell copies the strategy of its most succesful neighbor, which is then used for the next time step. Possible strategies include 'Always Cooperate,' 'Always Defect,'\n\n### Payoffs\n\nThe payoff matrix for the Prisoner's Dilemma game is usually expressed as: Player B's Move +-----------+-----------+ Player A's Move | cooperate | defect | +-----------+-----------+-----------+ | cooperate | CC, CC | CD, DC | +-----------+-----------+-----------+ | defect | DC, CD | DD, DD | +-----------+-----------+-----------+\n\nwhere the table entries are (A's payoff, B's payoff) and CC, CD, DC, and DD are the reward, sucker, temptation, and punish payoffs, respectively. For each of these four outcomes you will probably want the payoffs to reflect the relationships:\n\n(DC > CC > DD > CD) and ((CD + DC) / 2 < CC).\n\n### Miscellany\n\nThe option for the probability of mutation (-mute) corresponds to the act of a cell spontaneously changing to a\n\nrandomly selected strategy independent of the outcome of the most recent set of rounds.\n\nrandom noise (via the -noise option) manifests itself as a cell making a randomly selected move in a single round. In this case, both the cell whose action was altered as well as that cell's opponents \"remember\" what the random move was on the next round.\n\nThe value supplied with the -term option may be \"none,\" in which case no graphic output is performed. This is useful if you simply want the statistics to be calculated for each time step (via the -stats option).\n\nThe initial population levels for all strategies will be normalized, so the scaling of the option values is irrelevant.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 100,
+        "help": "Width of world."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 100,
+        "help": "Height of world."
+      },
+      {
+        "flag": "-steps",
+        "type": "integer",
+        "default": 10000000,
+        "help": "Number of steps to simulate."
+      },
+      {
+        "flag": "-rounds",
+        "type": "integer",
+        "default": 5,
+        "help": "Number of rounds per step."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed for initial state."
+      },
+      {
+        "flag": "-CC",
+        "type": "double",
+        "default": 3.0,
+        "help": "Reward Payoff."
+      },
+      {
+        "flag": "-CD",
+        "type": "double",
+        "default": 0.0,
+        "help": "Sucker Payoff."
+      },
+      {
+        "flag": "-DC",
+        "type": "double",
+        "default": 5.0,
+        "help": "Temptation Payoff."
+      },
+      {
+        "flag": "-DD",
+        "type": "double",
+        "default": 1.0,
+        "help": "Punish Payoff."
+      },
+      {
+        "flag": "-Iallc",
+        "type": "double",
+        "default": 0.2,
+        "help": "Initial population of All-C."
+      },
+      {
+        "flag": "-Itft",
+        "type": "double",
+        "default": 0.2,
+        "help": "Initial population of TFT."
+      },
+      {
+        "flag": "-Irand",
+        "type": "double",
+        "default": 0.2,
+        "help": "Initial population of Random."
+      },
+      {
+        "flag": "-Ipav",
+        "type": "double",
+        "default": 0.2,
+        "help": "Initial population of Pavlov."
+      },
+      {
+        "flag": "-Ialld",
+        "type": "double",
+        "default": 0.2,
+        "help": "Initial population of All-D."
+      },
+      {
+        "flag": "-rcp",
+        "type": "double",
+        "default": 0.5,
+        "help": "Probability of C for Random strategy."
+      },
+      {
+        "flag": "-noise",
+        "type": "double",
+        "default": 0.0,
+        "help": "Probability of noise."
+      },
+      {
+        "flag": "-mute",
+        "type": "double",
+        "default": 0.0,
+        "help": "Probability of mutation."
+      },
+      {
+        "flag": "-stats",
+        "type": "switch",
+        "default": false,
+        "help": "Print statistics?"
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/sipd.c",
+    "man_page": "pages/sipd.md",
+    "java_port": null
+  },
+  {
+    "id": "stutter",
+    "name": "stutter",
+    "summary": "a simple lisp interpreter",
+    "category": "Computation",
+    "book_order": 1,
+    "blurb_md": "interprets simple lisp and only understands car, cdr, cons, if, set, equal, quote, and lambda, but is still Turing-complete. Uses stop-and-copy garbage collection and has an adjustable heap size. Examples that implement integer and floating-point arithmetic are provided. There is even an example **stutter** function to compute the square root of a floating-point argument with nothing but the primitives listed above.",
+    "synopsis": "stutter -help\n  or\nstutter\n       [-heap integer]",
+    "description_md": "This is a simple lisp interpreter that only understands car, cdr, cons, if, set, equal, quote, and lambda, but is still Turing-complete. It uses stop-and-copy garbage collection and has an adjustable heap size. Besides the primitive functions listed above, STUTTER only knows about two cells, t and nil. See the examples for how integer arithmetic and more complicated programming constructs can be formed with the primitives.\n\n### Bugs\n\nIf STUTTER can free no cell after a call to the garbage collector, it will exit.\n\n### See Also\n\nIn the data directory are the STUTTER examples demo.slp, sample.slp and float.slp, which may be helpful.",
+    "options": [
+      {
+        "flag": "-heap",
+        "type": "integer",
+        "default": null,
+        "help": "Number of cells in the heap."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/stutter.c",
+    "man_page": "pages/stutter.md",
+    "java_port": null
+  },
+  {
+    "id": "termites",
+    "name": "termites",
+    "summary": "simulate a population of termites",
+    "category": "Complex Systems",
+    "book_order": 24,
+    "blurb_md": "Simulates a population of termites which do a random walk while possibly carrying a wood chip. Under normal circumstances, the termites will self-organize and move the wood chips into piles without a global leader. The termites' behavior is dictated by the following set of rules: If a termite is not carrying anything and it bumps into a chip, then it picks it up, reverses direction, and continues with the random walk. If it is carrying a chip and bumps into another, it drops the chip, turns around, and starts walking again. Otherwise, it just does a random walk whether it is carrying a chip or not.",
+    "synopsis": "termite -help\n  or\ntermite\n       [-width  integer]  [-height integer] [-num integer]\n       [-dense double] [-steps  integer]  [-seed  integer]\n       [-inv] [-mag integer] [-term string]",
+    "description_md": "Simulate a population of termites which do a random walk while possibly carrying a wood chip. Under normal circumstances, the termites will self-organize and move the wood chips into piles without a global leader. The termites' behavior is dictated by the following set of rules: If a termite is not carrying anything and she bumps into a chip, then she picks it up, reverses direction, and continues with the random walk. If she is carrying a chip and bumps into another, she drops her chip, turns around, and starts walking again. Otherwise, she just does a random walk whether she is carrying a chip or not.\n\n### Miscellany\n\nThe walking pattern of the termites is not actually a strict random walk. Instead, at each time step they\n\nrandomly turn -45, 0, or 45 degrees with equal probability.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 100,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 100,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-num",
+        "type": "integer",
+        "default": 20,
+        "help": "Number of termites in population."
+      },
+      {
+        "flag": "-dense",
+        "type": "double",
+        "default": 0.3,
+        "help": "Density of chips at start."
+      },
+      {
+        "flag": "-steps",
+        "type": "integer",
+        "default": 10000000,
+        "help": "Number of simulated steps."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed for initial state."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 2,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/termites.c",
+    "man_page": "pages/termites.md",
+    "java_port": "java/TermitesAlgorithm.java"
+  },
+  {
+    "id": "vants",
+    "name": "vants",
+    "summary": "simulate a population of generalized virtual ants",
+    "category": "Complex Systems",
+    "book_order": 25,
+    "blurb_md": "Simulates and plots a population of generalized virtual ants (vants). The behavior of the vants is determined by a bit string with length equal to the number of states that each cell in the vants' grid world can take. If a vant walks on a cell in state *s*, then the vant turns right if the *s*'th bit of the rule string is 1 and left if it is 0. As it leaves the cell the vant changes the state of the old cell to *(s + 1)* modulo the number of states.",
+    "synopsis": "vants -help\n  or\nvants  [-width  integer]  [-height integer] [-num integer]\n       [-rule string]  [-dense  double]  [-steps  integer]\n       [-seed   integer]   [-inv]  [-mag  integer]  [-term\n       string]",
+    "description_md": "Simulate and plot a population of virtual ants (vants). The behavior of the vants is determined by a bit string with length equal to the number of states that each cell in the vants' grid world can take. If a vant walks on a cell in state S, then the vant turns right if the S'th bit of the rule string is 1 and left if it's 0. As it leaves the cell the vant changes the state of the old cell to (S + 1) % NUMSTATES.\n\n### Miscellany\n\nIt is definitely worthwhile to simulate multiple vants as the possible composite behavior of multiple vants is far\n\ndifferent than a single vant. In fact, multiple vants can invert the work of other vants, which yields interesting deconstructive behavior.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-width",
+        "type": "integer",
+        "default": 200,
+        "help": "Width of the plot in pixels."
+      },
+      {
+        "flag": "-height",
+        "type": "integer",
+        "default": 200,
+        "help": "Height of the plot in pixels."
+      },
+      {
+        "flag": "-num",
+        "type": "integer",
+        "default": 1,
+        "help": "Number of ants."
+      },
+      {
+        "flag": "-rule",
+        "type": "string",
+        "default": "10",
+        "help": "Rule string."
+      },
+      {
+        "flag": "-dense",
+        "type": "double",
+        "default": 0.0,
+        "help": "Density of random crud."
+      },
+      {
+        "flag": "-steps",
+        "type": "integer",
+        "default": 100000000,
+        "help": "Number of simulated steps."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed for initial state."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": false,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 1,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/vants.c",
+    "man_page": "pages/vants.md",
+    "java_port": "java/VantsAlgorithm.java"
+  },
+  {
+    "id": "zcs",
+    "name": "zcs",
+    "summary": "run a zeroth level classifier system on a terrain",
+    "category": "Adaptation",
+    "book_order": 36,
+    "blurb_md": "Adapts a zeroth level classifier system (ZCS) with the implicit bucket brigade algorithm and a genetic algorithm so that the ZCS can traverse a two-dimensional terrain, avoid obstacles, and find food. At the beginning of each step the ZCS is placed at a random location of its world. It interacts with its environment until it finds food, which yields a reward. The simulation then restarts with the ZCS placed at a new random location. The progress of the ZCS is continuously plotted, while the statistics on the time to find food are calculated and displayed. At the end of the simulation the classifiers that make up the final ZCS are saved to a log file.",
+    "synopsis": "zcs -help\n  or\nzcs    [-specs  string]  [-steps  integer] [-seed integer]\n       [-size integer]  [-sinit  double]  [-lrate  double]\n       [-drate  double]  [-trate  double]  [-crate double]\n       [-mrate double]  [-grate  double]  [-cover  double]\n       [-wild double] [-avelen integer] [-inv] [-mag inte-\n       ger] [-term string]",
+    "description_md": "Train a zeroth level classifier system (ZCS) to traverse a two-dimensional terrain, avoid obstacles, and find food with the implicit bucket brigade algorithm and a genetic algorithm. At the beginning of each step the ZCS is placed at a random location of it's world. It interacts with its environment until it finds food, which yields a reward. The simulation then restarts with the ZCS placed at a new random location. The progress of the ZCS is continuously plotted, while the statistics on the time to find food are calculated and displayed. At the end of the simulation the classifiers that make up the final ZCS are saved to a log file.\n\n### Miscellany\n\nThe file format for the specifications files must contain the width and height of the world followed by the details of the world in ASCII format, where '.' is an empty cell, 'O' is a rock, and 'F' represent food. See any of the examples in the 'data' subdirectory of this distribution for more details.\n\nThe log file, 'zcs.log', contains one line per classifier with the condition string, the action string, and the strength of the classifier. The classifiers are sorted so the the strongest classifiers are printed first.\n\nThe ASCII output of the program shows the most recent, windowed average and the total average for the number of steps needed to find food.\n\n### Hints\n\nSee the author's book, \"The Computational Beauty of Nature,\" for more details.\n\n### Bugs\n\nNo sanity checks are performed to make sure that any of the options make sense.",
+    "options": [
+      {
+        "flag": "-specs",
+        "type": "string",
+        "default": "data/woods1.txt",
+        "help": "World specification file."
+      },
+      {
+        "flag": "-steps",
+        "type": "integer",
+        "default": 5000,
+        "help": "Number of simulated trials."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 0,
+        "help": "Random seed for initial state."
+      },
+      {
+        "flag": "-size",
+        "type": "integer",
+        "default": 400,
+        "help": "Population size."
+      },
+      {
+        "flag": "-sinit",
+        "type": "double",
+        "default": 20.0,
+        "help": "Initial classifier strength."
+      },
+      {
+        "flag": "-lrate",
+        "type": "double",
+        "default": 0.2,
+        "help": "BB learning rate."
+      },
+      {
+        "flag": "-drate",
+        "type": "double",
+        "default": 0.71,
+        "help": "BB discount rate."
+      },
+      {
+        "flag": "-trate",
+        "type": "double",
+        "default": 0.1,
+        "help": "Tax rate for strength reduce."
+      },
+      {
+        "flag": "-crate",
+        "type": "double",
+        "default": 0.5,
+        "help": "GA crossover rate."
+      },
+      {
+        "flag": "-mrate",
+        "type": "double",
+        "default": 0.002,
+        "help": "GA mutation rate."
+      },
+      {
+        "flag": "-grate",
+        "type": "double",
+        "default": 0.25,
+        "help": "GA invocation rate."
+      },
+      {
+        "flag": "-cover",
+        "type": "double",
+        "default": 0.5,
+        "help": "Covering factor."
+      },
+      {
+        "flag": "-wild",
+        "type": "double",
+        "default": 0.33,
+        "help": "Probability of # in cover."
+      },
+      {
+        "flag": "-avelen",
+        "type": "integer",
+        "default": 50,
+        "help": "Length of windowed average."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": true,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 10,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/zcs.c",
+    "man_page": "pages/zcs.md",
+    "java_port": null
+  },
+  {
+    "id": "zcscup",
+    "name": "zcscup",
+    "summary": "run a zeroth level classifier system on the cups problem",
+    "category": "Adaptation",
+    "book_order": 37,
+    "blurb_md": "Trains a zeroth level classifier system (ZCS) to solve the cups problem with the implicit bucket brigade algorithm and a genetic algorithm. Solving this problem requires the ZCS to learn to remember important features from previous states, which makes this problem very challenging. The ZCS always starts in the same initial position. It interacts with its environment until it finds both cups, which (only at that point) yields a reward. The simulation then restarts with the ZCS placed at the original location. The progress of the ZCS is continuously plotted, while the statistics on the time to find both cups are calculated and displayed. At the end of the simulation the classifiers that make up the final ZCS are saved to a log file.",
+    "synopsis": "zcscup -help\n  or\nzcscup [-specs  string]  [-steps  integer] [-seed integer]\n       [-size integer]  [-sinit  double]  [-lrate  double]\n       [-drate  double]  [-trate  double]  [-crate double]\n       [-mrate double]  [-grate  double]  [-cover  double]\n       [-wild double] [-avelen integer] [-inv] [-mag inte-\n       ger] [-term string]",
+    "description_md": "Train a zeroth level classifier system (ZCS) to solve the cups problem with the implicit bucket brigade algorithm and a genetic algorithm. Solving this problem requires the ZCS to learn to remember important features from previous states, which makes this problem very challenging. The ZCS always starts in the same initial position. It interacts with its environment until it finds both cups, which (only at that point) yields a reward. The simulation then restarts with the ZCS placed at the original location. The progress of the ZCS is continuously plotted, while the statistics on the time to find both cups are calculated and displayed. At the end of the simulation the classifiers that make up the final ZCS are saved to a log file.\n\n### Miscellany\n\nThe file format for the specifications files must contain the width and height of the world followed by the details of the world in ASCII format, where '.' is an empty cell, 'O' is a wall, and 'F' represent a cup. See any of the examples in the 'data' subdirectory of this distribution for more details.\n\nThe log file, 'zcscup.log', contains one line per classifier with the condition string, the action string, and the strength of the classifier. The classifiers are sorted so the the strongest classifiers are printed first.\n\nThe ASCII output of the program shows the most recent, windowed average and the total average for the number of steps needed to find both cups.\n\n### Hints\n\nSee the author's book, \"The Computational Beauty of Nature,\" for more details.\n\n### Bugs\n\nThe simulation always restarts with the ZCS location at position (0, 4), which really only makes sense for the data file to work around this or tweak the source code to try a different problem variation.\n\nNo sanity checks are performed to make sure that any of\n\nthe options make sense.",
+    "options": [
+      {
+        "flag": "-specs",
+        "type": "string",
+        "default": "data/cup1.txt",
+        "help": "World specification file."
+      },
+      {
+        "flag": "-steps",
+        "type": "integer",
+        "default": 100,
+        "help": "Number of simulated trials."
+      },
+      {
+        "flag": "-seed",
+        "type": "integer",
+        "default": 1,
+        "help": "Random seed for initial state."
+      },
+      {
+        "flag": "-size",
+        "type": "integer",
+        "default": 100,
+        "help": "Population size."
+      },
+      {
+        "flag": "-sinit",
+        "type": "double",
+        "default": 20.0,
+        "help": "Initial classifier strength."
+      },
+      {
+        "flag": "-lrate",
+        "type": "double",
+        "default": 0.2,
+        "help": "BB learning rate."
+      },
+      {
+        "flag": "-drate",
+        "type": "double",
+        "default": 0.71,
+        "help": "BB discount rate."
+      },
+      {
+        "flag": "-trate",
+        "type": "double",
+        "default": 0.1,
+        "help": "Tax rate for strength reduce."
+      },
+      {
+        "flag": "-crate",
+        "type": "double",
+        "default": 0.1,
+        "help": "GA crossover rate."
+      },
+      {
+        "flag": "-mrate",
+        "type": "double",
+        "default": 0.002,
+        "help": "GA mutation rate."
+      },
+      {
+        "flag": "-grate",
+        "type": "double",
+        "default": 0.25,
+        "help": "GA invocation rate."
+      },
+      {
+        "flag": "-cover",
+        "type": "double",
+        "default": 0.5,
+        "help": "Covering factor."
+      },
+      {
+        "flag": "-wild",
+        "type": "double",
+        "default": 0.33,
+        "help": "Probability of # in cover."
+      },
+      {
+        "flag": "-avelen",
+        "type": "integer",
+        "default": 50,
+        "help": "Length of windowed average."
+      },
+      {
+        "flag": "-inv",
+        "type": "switch",
+        "default": true,
+        "help": "Invert all colors?"
+      },
+      {
+        "flag": "-mag",
+        "type": "integer",
+        "default": 10,
+        "help": "Magnification factor."
+      },
+      {
+        "flag": "-term",
+        "type": "string",
+        "default": null,
+        "help": "How to plot points."
+      }
+    ],
+    "examples": [],
+    "c_source": "code/src/zcscup.c",
+    "man_page": "pages/zcscup.md",
+    "java_port": null
+  }
+]

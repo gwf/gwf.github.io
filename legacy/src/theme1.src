@@ -1,0 +1,268 @@
+#include "defaults.inc"
+#define THEMES_OPTS HIGHLIGHT_COLOR
+#define THEMES_PRE HBEG<b>
+#define THEMES_POST </b>HEND
+#define TITLE Three Themes: #1
+#define BORDER_CELL_COLOR "#cccccc"
+#include "top.inc"
+
+
+<p>
+<table border=0 cellspacing=0 cellpadding=1 bgcolor="#000000" width="100%"><tr><td>
+<table border=0 cellspacing=0 cellpadding=5 bgcolor="OFFWHITE" width="100%"><tr><td>
+<small>
+<b>1. The whole is greater than the sum of the parts</b><br><br>
+By this I mean that the topics of computation, fractals, chaos,
+complex systems, and adaptation are far more interesting considered
+together than by themselves.  Each of the topics is related to the
+others in a non-trivial way; moreover, each can be seen as the result
+of a few simple principles such as recursion, parallelism, and
+nonlinearity.
+</small>
+</td></tr></table>
+</td></tr></table>
+</p>
+
+<p>
+Let's examine this idea further.  Starting from a computational
+framework, fractals are special ``programs'' that build self-similar
+structures.
+</p>
+
+<p>
+<table align=center border=0 cellspacing=2 cellpadding=0><tr>
+  <td>Computation</td>
+  <td>
+  <table border=0 cellspacing=2 cellpadding=0>
+  <tr align=center><td><small><i>structural</i></small></td></tr>
+  <tr align=center><td><img alt="---&gt;" src="graphics/rarrow.gif" width="60" height="10"></td></tr>
+  <tr align=center><td><small><i>self-similarity</i></small></td></tr>
+  </table>
+  </td>
+  <td>Fractals</td>
+</table>
+</p>
+
+<p> The program in this case often involves a form of recursion that
+specifies how one part of a fractal 
+<a href="graphics/figa3.gif">looks like another portion</a>
+of it
+(or of the whole fractal).  Other times, as in the case of the
+<a href="graphics/figc3.jpg">Mandelbrot set</a>
+and in
+<a href="graphics/figc4.jpg">Julia sets</a>,
+structural self-similarity appears
+almost as a side-effect because the compact rules that describe such
+objects do not explicitly contain specifications for how things should
+look.
+</p>
+
+<p> In either case, when one allows the rules of a fractal to be
+expressed <i>ad infinitum</i> strange mathematical properties can be
+found in the structural forms of the fractal.  In the most extreme
+cases, fractals such as the Mandelbrot set can be seen as mathematical
+statements that are similar in complexity to incomputable problems
+found in computer science.
+</p>
+
+<hr align=center size=1 noshade width="300">
+
+<p> Chaotic systems are similar to fractals but contain functional
+self-similarity that occurs at different scales.
+
+<p>
+<table align=center border=0 cellspacing=2 cellpadding=0><tr>
+  <td>Fractals</td>
+  <td>
+  <table border=0 cellspacing=2 cellpadding=0>
+  <tr align=center><td><small><i>functional</i></small></td></tr>
+  <tr align=center><td><img alt="---&gt;" src="graphics/rarrow.gif" width="60" height="10"></td></tr>
+  <tr align=center><td><small><i>self-similarity</i></small></td></tr>
+  </table>
+  </td>
+  <td>Chaos</td>
+</tr></table>
+</p>
+
+<p> More specifically, while we could visually confirm that a portion
+of a fractal is similar to itself, it is also possible to see how a
+chaotic system is functionally self-similar.  Often times, this
+functional self-similarity shows itself as a characteristic behavior
+that occurs on multiple time and/or spatial scales.  This is why a
+<a href="graphics/figd4.gif">strange attractor</a>
+(which is a characterization of a chaotic system's
+behavior) will usually have a fractal shape to it.
+
+</p>
+
+<hr align=center size=1 noshade width="300">
+
+<p> Chaos, which depends on nonlinearity, is usually studied in systems
+that can be described with only a few equations.  However, another type
+of chaos is found in large collections that operate in parallel.
+Examples of this latter type include ecosystems, economies, and
+chemical soups.  We refer to such collections as complex systems
+because even though a single agent in the collection can be understood
+(e.g., a predator, stock trader, or reactant) the composite behavior
+of the system is far more complicated.
+</p>
+
+<p>
+<table align=center border=0 cellspacing=2 cellpadding=0><tr>
+  <td>Chaos</td>
+  <td>
+  <table border=0 cellspacing=2 cellpadding=0>
+  <tr align=center><td><small><i>multiplicity</i></small></td></tr>
+  <tr align=center><td><img alt="---&gt;" src="graphics/rarrow.gif" width="60" height="10"></td></tr>
+  <tr align=center><td><small><i>&amp; parallelism</i></small></td></tr>
+  </table>
+  </td>
+  <td>Complex Systems</td>
+</tr></table>
+</p>
+
+<p> Hence, by adding multiplicity and parallelism to collections of
+simple nonlinear agents, it is possible to produce behavior that is
+not only chaotic, but computationally profound as well.
+</p>
+
+
+<hr align=center size=1 noshade width="300">
+
+<p>
+One of the more interesting facts concerning complex systems is that
+sophisticated behavior can be found even when the interactions among
+the system's agents are constrained to be local.  Sometimes the
+details of how the interaction occur can be subtly modified, as in the
+case when a synapse that connects two neurons is allowed to strengthen
+or weaken.
+</p>
+
+<p>
+<table align=center border=0 cellspacing=2 cellpadding=0><tr>
+  <td>Complex Systems</td>
+  <td>
+  <table border=0 cellspacing=2 cellpadding=0>
+  <tr align=center><td><small><i>feedback</i></small></td></tr>
+  <tr align=center><td><img alt="---&gt;" src="graphics/rarrow.gif" width="60" height="10"></td></tr>
+  <tr align=center><td><small><i>&nbsp;</i></small></td></tr>
+  </table>
+  </td>
+  <td>Adaptation</td>
+</tr></table>
+</p>
+
+<p>
+Since agents in a complex system are all indirectly coupled to one
+another, it is possible for a sophisticated form of feedback to occur
+that allows the agents (and the system as a whole) to adapt in a
+seemingly intelligent manner.  While an obvious form of adaptation
+through feedback is found in the brain, more subtle forms can be found
+in market economies, immune systems, and through evolution.
+</p>
+
+<hr align=center size=1 noshade width="300">
+
+<p>
+Since adaptation is ultimately a form of modeling (where events
+external to the adapted system are mirrored internally), adaptive
+systems that alter their environment are indirectly altering
+themselves. 
+</p>
+
+<p>
+<table align=center border=0 cellspacing=2 cellpadding=0><tr>
+  <td>Adaptation</td>
+  <td>
+  <table border=0 cellspacing=2 cellpadding=0>
+  <tr align=center><td><small><i>self-</i></small></td></tr>
+  <tr align=center><td><img alt="---&gt;" src="graphics/rarrow.gif" width="60" height="10"></td></tr>
+  <tr align=center><td><small><i>reference</i></small></td></tr>
+  </table>
+  </td>
+  <td>Computation</td>
+</tr></table>
+</p>
+
+<p> This means that some adaptive systems can be self-referential (or
+recursive), which is a requirement for the ability to perform complex
+computations.  Adaptive systems that contain such self-reference (such
+as recurrent neural networks) are capable of universal computation.
+</p>
+
+<hr align=center size=1 noshade width="300">
+
+<p>
+Having come full-circle in seeing how all of these topics relate in a
+sequential manner, it is now worthwhile to see what some of the
+cross-connections are between the five topics.  The table below
+contains a list of subjects that relate to two or more of the book
+topics.
+</p>
+
+
+<p>
+<table align=center border=1 cellspacing=1
+ cellpadding=3 bgcolor="#ffffff">
+  <tr align=center>
+    <td bgcolor="#000000">&nbsp;</td>
+    <td bgcolor="BLUE"><b>Computation</b></td>
+    <td bgcolor="BLUE"><b>Fractals</b></td>
+    <td bgcolor="BLUE"><b>Chaos</b></td>
+    <td bgcolor="BLUE"><b>Complex Systems</b></td>
+    <td bgcolor="BLUE"><b>Adaptation</b></td>
+  </tr>
+  <tr align=center>
+    <td bgcolor="BLUE"><b>Computation</b></td>
+    <td bgcolor="#ffffff">---</td>
+    <td><small>recursion</small></td>
+    <td><small>incomputability</small></td>
+    <td><small>cellular automata</small></td>
+    <td><small>coadaptation</small></td>
+  </tr>
+  <tr align=center>
+    <td bgcolor="BLUE"><b>Fractals</b></td>
+    <td><small>recursion</small></td>
+    <td bgcolor="#ffffff">---</td>
+    <td><small>strange attractors</small></td>
+    <td><small>growth models</small></td>
+    <td><small>hierarchical models</small></td>
+  </tr>
+  <tr align=center>
+    <td bgcolor="BLUE"><b>Chaos</b></td>
+    <td><small>incomputability</small></td>
+    <td><small>strange attractors</small></td>
+    <td bgcolor="#ffffff">---</td>
+    <td><small>phase transitions</small></td>
+    <td><small>emergence</small></td>
+  </tr>
+  <tr align=center>
+    <td bgcolor="BLUE"><b>Complex Systems</b></td>
+    <td><small>cellular automata</small></td>
+    <td><small>growth models</small></td>
+    <td><small>phase transitions</small></td>
+    <td bgcolor="#ffffff">---</td>
+    <td><small>self-organization</small></td>
+  </tr>
+  <tr align=center>
+    <td bgcolor="BLUE"><b>Adaptation</b></td>
+    <td><small>coadaptation</small></td>
+    <td><small>hierarchical models</small></td>
+    <td><small>emergence</small></td>
+    <td><small>self-organization</small></td>
+    <td bgcolor="#ffffff">---</td>
+  </tr>
+</table>
+</p>
+
+<p>
+As can be seen, there are many subjects that are clearly related to
+more than one book part.  By viewing all of these topics in a
+multidisciplinary manner, one can appreciate how the topics of
+computation, fractals, chaos, complex system, and adaptation are far
+more interesting when considered together.
+</p>
+
+
+
+#include "bottom.inc"

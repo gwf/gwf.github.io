@@ -1,0 +1,114 @@
+#include "defaults.inc"
+#define ORDERING_OPTS HIGHLIGHT_COLOR
+#define ORDERING_PRE HBEG<b>
+#define ORDERING_POST </b>HEND
+#define TITLE Ordering Information
+#include "top.inc"
+
+
+<b>Newsflash</b> (4 Jul 00): <i>The Computational Beauty of
+Nature</i> is now available in paperback.  See the ordering links
+below for more information.
+
+<p>
+A more affordable online price for <i>CBofN</i> may be found at 
+one of the following metasearch book engines:
+<ul>
+<li>
+Best Book Buys:
+<a
+href="http://www.bestbookbuys.com/cgi-bin/bbb.cgi?ISBN=0262062003">hardcover</a>
+and
+<a href="http://www.bestbookbuys.com/cgi-bin/bbb.cgi?ISBN=0262561271">paperback</a>. 
+
+<li>
+AddAll:
+<a
+href="http://www.addall.com/New/compare.cgi?dispCurr=USD&id=17353&isbn=0262062003">hardcover</a>
+and 
+<a
+href="http://www.addall.com/New/compare.cgi?dispCurr=USD&id=17353&isbn=0262561271">paperback</a>.
+
+<li>
+mySimon:
+
+<a
+href="http://www.mysimon.com/books_c_music_and_movies/books/AdvancedBookSearch?c=booknew&InputSearch=Title&InputISBN=0262062003">hardcover</a>
+and 
+<a
+href="http://www.mysimon.com/books_c_music_and_movies/books/AdvancedBookSearch?c=booknew&InputSearch=Title&InputISBN=0262561271">paperback</a>.
+
+
+</ul>
+
+
+<p>If you are feeling particularly generous, you can order from one of
+the major online booksellers below, which will line the author's
+pockets with a few extra bucks:
+
+<ul>
+<li>
+<table>
+<tr><td> 
+<a href="http://www.amazon.com/exec/obidos/ASIN/0262062003/thecomputatbeaut">
+<img src="graphics/amazon.gif" width="130" height="70" border=0 alt="amazon.com"></a>
+</td>
+<td>
+<font face="Tahoma,Verdana,Arial,Helvetica" size=2>
+<a href="http://www.amazon.com/exec/obidos/ASIN/0262062003/thecomputatbeaut">
+hardcover</a>
+<br>
+<a href="http://www.amazon.com/exec/obidos/ASIN/0262561271/thecomputatbeaut">
+paperback</a>
+</font>
+</td></tr>
+</table>
+
+<li>
+<table>
+<tr><td> 
+<a
+href="http://barnesandnoble.bfast.com/booklink/click?sourceid=271152&ISBN=0262062003">
+<img src="graphics/barnesandnoble.gif" width="121" height="38" border=0
+ alt="Barnes and Noble"></a>
+</td>
+<td>
+<font face="Tahoma,Verdana,Arial,Helvetica" size=2>
+<a
+href="http://barnesandnoble.bfast.com/booklink/click?sourceid=271152&ISBN=0262062003">
+hardcover</a>
+<br>
+<a
+href="http://barnesandnoble.bfast.com/booklink/click?sourceid=271152&ISBN=0262561271">
+paperback</a>
+</font>
+</td></tr>
+</table>
+
+<li>
+<table>
+<tr><td> 
+<a href="http://www1.fatbrain.com/asp/bookinfo/bookinfo.asp?theisbn=0262561271&from=cbnature">
+<img src="graphics/fblogo.gif" width="120" height="60" border=0
+alt="computerliteracy"></a>
+</td>
+<td>
+<font face="Tahoma,Verdana,Arial,Helvetica" size=2>
+<a href="http://www1.fatbrain.com/asp/bookinfo/bookinfo.asp?theisbn=0262561271&from=cbnature">
+hardcover</a>
+<br>
+<a href="http://www1.fatbrain.com/asp/bookinfo/bookinfo.asp?theisbn=0262062003&from=cbnature">
+paperback</a>
+</font>
+</td></tr>
+</table>
+
+</ul>
+
+<p>
+Better yet, go to your local bookstore and insist that they keep it in
+stock!
+
+
+#include "bottom.inc"
+

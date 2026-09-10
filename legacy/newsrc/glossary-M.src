@@ -1,0 +1,185 @@
+#include "defaults.inc"
+#define GLOSSARY_OPTS HIGHLIGHT_COLOR
+#define GLOSSARY_PRE HBEG<b>
+#define GLOSSARY_POST </b>HEND
+#define TITLE Glossary - M
+#include "top.inc"
+
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="M-section">M</a></h1>
+
+
+<p><b><a name="mackey-glass_system">Mackey-Glass System</a></b> &nbsp; &nbsp;
+A delay <a href="glossary-D.html#differential_equation">differential equation</a> (dx/dt = (ax(t-tau))/(1 +
+x^10(t-tau)) - bx(t)) that can display a wide variety of behaviors
+via an adjustable delay term, tau.  Even though this system
+generates a single <a href="glossary-S.html#scalar">scalar</a> <a href="glossary-T.html#time_series">time series</a>, it can be extremely
+<a href="glossary-C.html#chaos/chaotic">chaotic</a> because its value at any time may depend on its entire
+previous history.  
+
+<p><b><a name="mandelbrot_set">Mandelbrot Set</a></b> &nbsp; &nbsp;
+An extremely complex <a href="glossary-F.html#fractal">fractal</a> that is related to <a href="glossary-J.html#julia_set">Julia sets</a>
+in the way that it is constructed and by the fact that it acts as a
+sort of index to the Julia sets.  Like the Julia sets, the Mandelbrot
+set is calculated via an <a href="glossary-I.html#iterate/iterative">iterative</a> procedure.  Starting
+conditions that do not <a href="glossary-D.html#diverge">diverge</a> after an infinite number of
+iterations are considered to be inside the set.  If, and only if, a
+<a href="glossary-C.html#complex_number">complex number</a> is in the Mandelbrot set, then the Julia set that
+uses that complex number as a constant will be connected; otherwise,
+the corresponding Julia set will be unconnected.  
+
+<p><b><a name="map">Map</a></b> &nbsp; &nbsp;
+A <a href="glossary-F.html#function">function</a> that is usually understood to be <a href="glossary-I.html#iterate/iterative">iterated</a> in
+<a href="glossary-D.html#discrete">discrete</a> time steps.  
+
+<p><b><a name="matrix">Matrix</a></b> &nbsp; &nbsp;
+A rectangular two-dimensional array of numbers that can be thought of
+as a <a href="glossary-L.html#linear">linear</a> operator on <a href="glossary-V.html#vector">vectors</a>.  Matrix-vector
+multiplication can be used to describe geometric transformations such
+as scaling, rotation, reflection, and translation.  They can also
+describe the <a href="glossary-A.html#affine">affine</a> transformation used to construct <a href="glossary-I.html#ifs">IFS</a> and
+<a href="glossary-M.html#mrcm">MRCM</a> <a href="glossary-F.html#fractal">fractals</a>. 
+
+<p><b><a name="mean">Mean</a></b> &nbsp; &nbsp;
+The arithmetical average of a collection of numbers; the center of a
+<a href="glossary-G.html#gaussian">Gaussian</a> distribution. 
+
+<p><b><a name="meme">Meme</a></b> &nbsp; &nbsp;
+A unit of cultural information that represents a basic idea that can
+be transferred from one individual to another, and subjected to
+<a href="glossary-M.html#mutation">mutation</a>, <a href="glossary-C.html#crossover">crossover</a>, and <a href="glossary-A.html#adaptation">adaptation</a>. 
+
+<p><b><a name="message">Message</a></b> &nbsp; &nbsp;
+The basic unit of information in a <a href="glossary-C.html#classifier_system">classifier system</a> that is
+stored in the <a href="glossary-M.html#message_list">message list</a>.  A message may correspond to an
+external state of an <a href="glossary-E.html#environment">environment</a> or an internal state of the
+classifier system.  
+
+<p><b><a name="message_list">Message List</a></b> &nbsp; &nbsp;
+The portion of a <a href="glossary-C.html#classifier_system">classifier system</a> that retains information in
+the form of <a href="glossary-M.html#message">messages</a>.  
+
+<p><b><a name="mixed_strategy">Mixed Strategy</a></b> &nbsp; &nbsp;
+In <a href="glossary-G.html#game_theory">game theory</a>, a <a href="glossary-S.html#strategy">strategy</a> that uses <a href="glossary-R.html#random/randomness">randomness</a> by
+employing different actions in identical circumstances with different
+<a href="glossary-P.html#probability">probabilities</a>. 
+
+<p><b><a name="model">Model</a></b> &nbsp; &nbsp;
+In the sciences, a model is an estimate of how something works.  A
+model will usually have inputs and outputs that correspond to its
+real-world counterpart.  An <a href="glossary-A.html#adaptive">adaptive</a> <a href="glossary-S.html#system">system</a> also contains an
+implicit model of its <a href="glossary-E.html#environment">environment</a> that allows it to change its
+behavior in anticipation of what will happen in the environment.  
+
+<p><b><a name="model_of_computation">Model of Computation</a></b> &nbsp; &nbsp;
+An idealized version of a computing device that usually has some
+simplifications such as infinite memory.  A <a href="glossary-T.html#turing_machine">Turing machine</a>, the
+<a href="glossary-L.html#lambda_calculus">lambda calculus</a>, and <a href="glossary-P.html#post_production_system">Post production systems</a> are all models
+of computation.
+
+<p><b><a name="monotonic">Monotonic</a></b> &nbsp; &nbsp;
+The property of a <a href="glossary-F.html#function">function</a> that is always strictly increasing or
+strictly decreasing, but never both.  The <a href="glossary-S.html#sigmoidal">sigmoidal</a>
+<a href="glossary-A.html#activation">activation</a> function of a <a href="glossary-M.html#multilayer_perceptron_(mlp)">multilayer perceptron</a> is
+monotonically increasing. 
+
+<p><b><a name="mrcm">MRCM</a></b> &nbsp; &nbsp;
+The Multiple Reduction Copy Machine <a href="glossary-A.html#algorithm">algorithm</a>, which can be used
+to make <a href="glossary-A.html#affine">affine</a> <a href="glossary-F.html#fractal">fractals</a>.  MRCM fractals are related to
+<a href="glossary-I.html#ifs">IFS</a> fractals in that they both use the same types of affine
+transformations.  The MRCM algorithm performs several affine
+transformations of a seed image in <a href="glossary-P.html#parallel/parallelism">parallel</a> to yield a secondary
+seed image.  The output of the MRCM is <a href="glossary-R.html#recursive">recursively</a> passed back
+through to its input multiple times, to yield the fractal. 
+
+<p><b><a name="multilayer_perceptron_(mlp)">Multilayer Perceptron  (MLP)</a></b> &nbsp; &nbsp;
+A type of <a href="glossary-F.html#feedforward_neural_network">feedforward neural network</a> that is an extension of the
+<a href="glossary-P.html#perceptron">perceptron</a> in that it has at least one <a href="glossary-H.html#hidden_layer">hidden layer</a> of
+<a href="glossary-N.html#neuron">neurons</a>.  Layers are updated by starting at the inputs and ending
+with the outputs.  Each neuron computes a weighted sum of the incoming
+signals, to yield a <a href="glossary-N.html#net_input">net input</a>, and passes this value through its
+<a href="glossary-S.html#sigmoidal">sigmoidal</a> <a href="glossary-A.html#activation_function">activation function</a> to yield the neuron's
+<a href="glossary-A.html#activation">activation</a> value.  Unlike the perceptron, an MLP can solve
+<a href="glossary-L.html#linearly_(in)separable">linearly inseparable</a> problems.  
+
+<p><b><a name="mutation">Mutation</a></b> &nbsp; &nbsp;
+A <a href="glossary-R.html#random/randomness">random</a> change in any portion of genetic material.  For a
+<a href="glossary-G.html#genetic_algorithm_(ga)">genetic algorithm</a>, this means that a value in a <a href="glossary-B.html#bit">bit</a>
+<a href="glossary-S.html#string">string</a> is randomly set. 
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+
+
+#include "bottom.inc"

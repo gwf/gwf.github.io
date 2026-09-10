@@ -1,0 +1,289 @@
+#include "defaults.inc"
+#define HOME_OPTS HIGHLIGHT_COLOR
+#define HOME_PRE HBEG<b>
+#define HOME_POST </b>HEND
+#define TOPBAR
+#define HYPHEN
+#define BOTTOMBAR
+#define PAGETITLE <title>The Computational Beauty of Nature</title>
+#include "top.inc"
+
+Welcome! This is the home page for <i>The Computational Beauty of
+Nature</i>, affectionately known as ``The Fish and Chips Book.''
+
+<p>
+Here, you will find information about the book, source code
+for simulations involving fractals, chaos, complex systems, and
+adaptation, and a whole slew of goodies for people interested in 
+multidisciplinary topics involving computers, philosophy, and
+science.
+
+<p>Some recent news items concerning the book and author are
+highlighted below.  However, please check out the navigation menus on
+the left, which will take you to the main content of this web site.
+
+<p><center><hr align=center size=1 noshade width="300"></center>
+
+<p>
+BOXBEG
+<font color="#dd3333"><b>New!</b></font>
+    <b>Web Communities Self-Organize</b>
+BOXMID
+Gary William Flake (and co-authors) published ``Self-Organization and
+Identification of Web Communities '' in the journal <i>IEEE Computer</i>,
+35:3, March 2002.  The paper has a companion website located at
+<tt><a href=http://webselforganization.com/>http://webselforganization.com/</a></tt>.
+<p>
+Several news outlets covered the work, including:
+<a href=http://www.nature.com/nsu/020304/020304-8.html><i>Nature</i> Science Update</a>,
+<a href=http://www.washingtonpost.com/ac2/wp-dyn?pagename=article&node=&contentId=A58309-2002Apr3&notFound=true><i>The Washington Post</i><a>,
+<a href=http://www.msnbc.com/news/750507.asp?cp1=1>MSNBC</a>, <a href=http://www.trnmag.com/Stories/2002/031302/Ties_that_bind_boost_searches_031302.html>TRN News</a>, as well as NJN News from the NJ PBS affiliate.
+BOXEND
+
+<p>
+BOXBEG
+<font color="#dd3333"><b>New!</b></font>
+    <b>Children's Games are Underrated</b>
+BOXMID
+Gary William Flake and Eric Baum published 
+``<i>Rush Hour</i> is PSPACE-complete, or "Why you should generously tip parking lot attendants."'' in the journal <i>Theoretical Computer Science</i> 270 (January) : 895-911. 
+
+<p><i>Rush Hour</i> is a deceptively simple children's game that is
+so computationally profound that it can actually ``compute'' things.
+Who would of thunk it?
+
+<p>It turns out that our proof technique has wide applicability to answering the complexity status of many open planning problems.  Ivars Petersen wrote an excellent overview article of our work at <a href=http://www.sciencenews.org/20020817/bob10.asp>Science News Online</a>.
+BOXEND
+
+<p>
+BOXBEG
+    <b>All figures from <i>CBofN</i> released for noncommercial use</b>
+BOXMID
+The MIT Press is graciously allowing the figures from <i>CBofN</i> to
+be used for personal, scholarly, or educational use.  The figures (all
+of them!) can now be downloaded in several formats, or browsed via a
+thumbnail gallery.  See the ``<a href="fig.html">Book Contents / all figures from book</a>''
+section for more information.
+BOXEND
+
+
+<!--
+<p>
+BOXBEG
+<font color="#dd3333"><b>New!</b></font>
+    <b>Cool Commercial Fractal Art Inspired by <i>CBofN</i></b>
+BOXMID
+Collegeville, PA artist Stan Schwartz uses formal, mathematical, and
+abstract transformations to realistic figural depictions to produce
+art that's, well, not your father's artwork.  Modifying the IFS code
+from <i>CBofN</i>, Stan has produced several interesting images that
+juxtapose fractals with more traditional methods.  For more
+information, see his Fractals Gallery at
+<a
+href="http://www.stanschwartzmeta-arts.com/art.html">http://www.stanschwartzmeta-arts.com/art.html</a>.
+BOXEND
+-->
+
+<p>
+BOXBEG
+    <b>AI Magazine - Summer 2000 - Reviews <i>CBofN</i></b>
+BOXMID
+``The text is well crafted, and the scholarship is both broad and
+deep.  The author is clearly a renaissance man as well as a wonderful
+teacher.  He is equally good at succinct summaries and painting the
+big picture, and he makes particularly effective use of examples.
+Best of all is his infectious joy about his subject: The text is full
+of percolations of delight at the beauty of some concept or equation or
+at the sheer fun of hacking code.  This book would be great for a
+course, as a reference, or just plain old recreational reading.''
+<br><br>
+The complete review can be found <a
+href="http://www.findarticles.com/m2483/2_21/63365803/p1/article.jhtml">online</a>.
+<br><br>
+--<a href="http://ece-www.colorado.edu/faculty/bradley.html">Elizabeth Bradley</a>
+BOXEND
+
+
+<p>
+BOXBEG
+    <b><i>CBofN</i> Reviewed in the American Mathematical Monthly</b>  
+BOXMID
+``... I know of no book, other than [ <i>The Computational Beauty of
+Nature</i> ], that covers this interesting mix of related topics.  I
+think this book would make a fine source for a senior seminar or for
+thesis students.  Code is available on the web for those who want to
+experiment; in my opinion, this should be everyone.  Adequate
+references to other sources are provided, and the author's style is
+generally engaging.
+<br><br>
+--<a href="http://www.math.union.edu/people/faculty/framem.html">Michael Frame</a>
+BOXEND
+
+
+<p>
+BOXBEG
+<b>GWF Interviewed on <i>Beyond Computers</i> Radio Show</b>
+BOXMID
+Gary Flake gave a brief interview on the <a
+href="http://www.beyondcomputers.org/may_0300.html">3 May 2000</a>
+edition of  <a href="http://www.beyondcomputers.org/">Beyond
+Computers</a>.
+
+<p>
+A Real Audio taping of the show is <a
+href="http://www.beyondcomputers.org/BC_153.ram">available</a>.  Skip ahead
+about 39 minutes into the show to find GWF's interview.
+BOXEND
+
+
+<p>
+BOXBEG
+  <b>The Journal of Artificial Societies and Social Simulation on <i>CBofN</i></b>
+BOXMID
+``The theme of the book is wildly ambitious: to describe, explain and
+inter-relate fundamental ideas from computation, fractals, chaos,
+complex systems and adaptation. It could have very easily gone
+wrong. But in fact it is a triumph, because Flake is always clear and
+precise.''
+<br><br>
+--<a href="http://jasss.soc.surrey.ac.uk/3/1/review/gilbert.html">Nigel Gilbert</a>
+BOXEND
+
+
+<p>
+BOXBEG
+<b>Review of <i>CBofN</i> by The British Computer Society</b>
+BOXMID
+``This is an outstanding book which can be recommended to all computer
+professionals but especially undergraduate and postgraduate computer
+scientists and mathematicians.''
+<br><br>
+--<a
+href="http://www.bcs.org.uk/books/comput.htm">J. W. Bruce</a>
+BOXEND
+
+
+<p>
+BOXBEG
+<b>Review of <i>CBofN</i> in  The London Times - Higher Educational Supplement</b>
+BOXMID
+`This is a book that deserves 15 different sorts of review. If
+computers touch your life, then here is a way of entering the
+excitement of closing the gap between technology and life, between
+computers and nature.  If you have any sense of fun, get the book, get
+on the internet, download the programs and start to play your way into
+exploring the boundaries of science.''
+
+<p>``That is one review. Another might be one that persuades those
+stuffy people who write A-level computing and information technology
+syllabuses to read this book and use it to design a syllabus that
+would give teenagers a real subject. <i>The Computational Beauty of
+Nature</i> provides a wealth of ideas that are relevant, challenging,
+stretching, deeply absorbing, and ideal for school treatment.  Yet
+another review would trigger daydreams of a world we might have been
+drawn into had we read this book when we were teenagers. In receptive
+hands. this book will inspire degree choices life choices, and a
+greater appreciation of computers and nature.''
+
+<br>...
+
+<br><br>
+<p>
+<a href="reviews.html"><b>Read More</b></a>
+<br><br>
+--<a href="http://www.cs.mdx.ac.uk/harold/">Harold Thimbleby</a>
+BOXEND
+
+
+<p>
+BOXBEG
+<b>What Readers are Saying</b>
+BOXMID
+``... suffice it to say that if you've any formal computer
+  training or applied maths: algorithms, background
+  graphics, information theory, number theory, domain
+  theory, you will love this book. It's a coffee table
+  book in the finest tradition, not for the layman who
+  puts "A brief history of time" out to make out he's a
+  scientist, this is a book to leave around for yourself,
+  to pick up, to flick through, to appreciate nature.
+  ... I love to
+  just dip into this, to re-read descriptions of
+  equations and methods. If you like, to remind myself
+  of what my discipline can be about when I get so
+  involved in the minutae of my work that I've
+  forgotten what the bigger picture is all about. ''
+<br><br>
+--<a
+href="http://www.lowfield.co.uk/books/science.html">Chris Harrison</a>
+BOXEND
+
+
+<p>
+BOXBEG
+<b>What Critics are Saying</b>
+BOXMID
+``This is a wonderful book. The author lucidly describes the
+computational beauty of nature from four different perspectives:
+`Computer Explorations,' `Chaos,' `Complex Systems,' and `Adaptation.'
+... Using all four approaches, Flake not only clearly
+describes nature, but also presents the same phenomena with each
+approach. This strategy gives the reader a very broad-based
+educational experience and promotes critical thinking. Without such a
+presentation, explaining models that purport to describe `nature' can be
+quite intimidating.  Flexibility is another major plus of this
+publication: Readers may skip a portion of any section or even an
+entire section without loss of continuity. ... reading
+this awe-inspiring book will be a colorful experience for the mind.''
+
+<br><br>
+--Jason R. Taylor, <i><a
+href="http://www.sbfonline.com/">SB&amp;F</a></i>, May/June 1999
+BOXEND
+
+
+<p>
+BOXBEG
+    <b>Dr. Dobb's Does <i>CBofN</i></b>
+BOXMID
+  The August 1999 issue <i><a
+  href="http://www.ddj.com/">Dr. Dobbs's</a></i> has a <a
+  href="http://www.ercb.com/ddj/1999/ddj.9908.html">review</a> of
+  <i>CBofN</i>: <br><br>
+``[ <i>The Computational Beauty of Nature</i> ] is a solid starting point
+for anyone with a serious interest in computational approaches to
+complex systems.''
+<br><br>
+--<a href="http://www.interlog.com/~gvwilson/books.html">Gregory
+V. Wilson</a>: 
+BOXEND
+
+
+<p>
+BOXBEG
+    <b>Undergrad and Graduate Courses Use <i>CBofN</i></b>
+BOXMID
+  At least ten courses have used <i>CBofN</i> as a primary or supplementary
+  text.  Are you an instructer looking for course ideas? Check our
+  the ``<a href="edu.html">miscellany / for educators</a>''
+  section to see what others are doing with <i>CBofN</i>.
+BOXEND
+
+
+<p>
+BOXBEG
+    <b><i>CBofN</i> Wins PSP Book Award</b>
+BOXMID
+    <i>CBofN</i> received the
+    Best New Professional/Scholarly Publishing Division Honorable
+    Mention in the category of Computer Science, awarded by the
+    <a href="http://www.publishers.org/">Association of American
+    Publishers</a>.  See the ``<a
+    href="reviews.html">miscellany / reviews &amp; awards</a>''
+    section for more details.
+BOXEND
+
+
+#include "tracker.inc"
+#include "bottom.inc"
+

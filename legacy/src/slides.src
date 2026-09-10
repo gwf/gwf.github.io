@@ -1,0 +1,25 @@
+#include "defaults.inc"
+#define SLIDES_OPTS HIGHLIGHT_COLOR
+#define SLIDES_PRE HBEG<b>
+#define SLIDES_POST </b>HEND
+#define TITLE Slide Show
+#include "top.inc"
+
+<p>
+All of the images below were produced with the software from the
+book.  To keep the size and bandwidth requirements of this web page at
+a reasonable size, the images (including the enlarged ones) are
+relatively crude.  That is to say, the software can do much better.
+To compensate for this, I've added some color to images that would
+normally be black-and-white.  Also, the Mandelbrot and Julia Set
+images have a color-maps that were produced by <a
+href="http://www.gimp.org/">The Gimp</a>.
+
+<p>
+Click on any of the thumbnail images to see a larger version.
+
+#include "slide.inc"
+
+
+#include "bottom.inc"
+

@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<title>gsw - The Computational Beauty of Nature</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* { box-sizing: border-box; }
+html { color-scheme: dark; }
+body { margin: 0; background: #0b0c0f; color: #cfd2d8; font: 16px/1.6 -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+a { color: #9cc4ff; text-decoration: none; } a:hover { text-decoration: underline; }
+header.top { border-bottom: 1px solid #1d1f25; padding: 14px 28px; display: flex; gap: 22px; align-items: baseline; flex-wrap: wrap; }
+header.top .brand { font: 400 18px Georgia, "Times New Roman", serif; color: #f2f2f2; }
+header.top nav a { color: #9aa0ab; margin-right: 16px; font-size: 14px; }
+header.top nav a.cur { color: #fff; }
+main { max-width: 980px; margin: 0 auto; padding: 36px 28px 80px; }
+h1 { font: 400 34px/1.15 Georgia, "Times New Roman", serif; color: #f4f4f4; margin: 0 0 8px; }
+h2 { font: 400 24px/1.2 Georgia, "Times New Roman", serif; color: #eee; margin: 38px 0 12px; }
+h3 { font: 500 17px/1.3 -apple-system, Helvetica, Arial, sans-serif; color: #e6e6e6; margin: 26px 0 8px; }
+.kicker { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a8f99; }
+.lede { color: #aab; font-size: 17px; margin-bottom: 26px; }
+p { margin: 0 0 14px; }
+blockquote { border-left: 2px solid #333; margin: 14px 0; padding: 2px 16px; color: #b9bcc4; font-style: italic; }
+pre, code { font: 13.5px Menlo, Consolas, monospace; } pre { background: #14161b; padding: 12px 14px; border-radius: 4px; overflow-x: auto; }
+code { color: #dde; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+.card { background: #101218; border: 1px solid #1d1f25; border-radius: 6px; overflow: hidden; }
+.card img { display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #000; }
+.card .b { padding: 10px 12px 12px; } .card b { color: #eee; font-weight: 500; display: block; } .card small { color: #8a8f99; }
+.card:hover { border-color: #444; }
+.parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+.part { border-top: 1px solid #23262d; padding-top: 12px; }
+.part h2 { margin: 4px 0 8px; font-size: 21px; }
+.part ol { margin: 0; padding-left: 22px; color: #aab; } .part li { margin: 3px 0; } .part li a { color: #cfd2d8; }
+.part .demo { color: #9cc4ff; font-size: 13px; margin-left: 6px; }
+ul.plain { list-style: none; columns: 2; column-gap: 30px; padding-left: 22px; color: #aab; margin: 0 0 8px; } ul.plain li { margin: 2px 0; } @media (max-width: 700px) { ul.plain { columns: 1; } }
+.figs { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+.figs a { display: block; background: #fff; border-radius: 4px; padding: 6px; }
+.figs img { width: 100%; height: 120px; object-fit: contain; display: block; }
+.figs span { display: block; font-size: 12px; color: #444; margin-top: 4px; }
+dl.gloss dt { color: #eee; font-weight: 500; margin-top: 14px; } dl.gloss dd { margin: 2px 0 0; color: #b5b9c2; }
+input.search { width: 100%; font: 16px inherit; padding: 10px 12px; background: #14161b; border: 1px solid #2a2d35; color: #eee; border-radius: 6px; margin: 14px 0 22px; }
+.chapnav { display: flex; justify-content: space-between; margin: 40px 0 0; color: #9aa0ab; font-size: 14px; }
+.opts td { vertical-align: top; padding: 4px 10px 4px 0; font-size: 14px; } .opts code { white-space: nowrap; }
+.muted { color: #8a8f99; font-size: 14px; }
+.hero { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+.hero .cover { width: 220px; border-radius: 4px; box-shadow: 0 6px 30px rgba(0,0,0,0.6); }
+.two { columns: 2; column-gap: 34px; } @media (max-width: 700px) { .two { columns: 1; } }
+footer { color: #6d727b; font-size: 13px; border-top: 1px solid #1d1f25; margin-top: 60px; padding: 18px 28px; }
+.demo-embed { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: 6px; background: #000; display: block; }
+</style></head><body>
+<header class="top"><span class="brand">The Computational Beauty of Nature</span><nav><a href="../index.html" class="">Programs</a><a href="../figures.html" class="">Figures</a><a href="../glossary.html" class="">Glossary</a><a href="../quotes.html" class="">Quotations</a><a href="../about.html" class="">About the book</a><a href="../../index.html" class="">flake.org</a></nav></header>
+<main><div class="kicker">Source code</div><h1><code>gsw</code></h1>
+<p class="lede">simulate a three species individual-based ecosystem</p><iframe class="demo-embed" loading="lazy" src="../../demos/gsw.html"></iframe><p><a href="../../index.html#gsw">Full screen &rarr;</a></p>
+<pre>gsw -help
+  or
+gsw    [-width integer] [-height integer] [-steps integer]
+       [-seed integer] [-plants integer] [-herbs  integer]
+       [-carns  integer]  [-pmin  integer] [-pmax integer]
+       [-Ep integer]  [-Eh  integer]  [-Ec  integer]  [-Ch
+       integer]  [-Cc  integer] [-Pt integer] [-samp inte-
+       ger]  [-stats]  [-pfreq  integer]  [-noext]  [-inv]
+       [-mag integer] [-term string]</pre>
+<p>Simulates an individual-based three-species predator-prey ecosystem according to the specified parameters. The three species consist of plants, herbivores, and carnivores (grass, sheep, and wolves; hence the name, <strong>gsw</strong>). Updates are done synchronously, and each species has several parameters which can control their life cycles, from the ability to give birth, to the likelihood of starvation. Population statistics of the three species can be calculated over a subset of the entire grid.</p><p>The time evolution of an individual-based three species predator-prey ecosystem is simulated according to the specified parameters. The three species consist of plants, herbivores, and carnivores (grass, sheep, and wolves; hence the name GSW). Updates are done synchronously, and each species has several parameters which can control the life cycle, from the ability to give birth, to the likelihood of starvation. Population statistics of the three species can be calculated over a subset of the entire grid.</p>
+<h4>Miscellany</h4>
+<p>An interesting change to this code would involve making the the updates asynchronous, which would avoid some subtle deadlock conditions that can occur in how the critters move. Moreover, the motion of the overall system would probably be more "lifelike".</p>
+<h4>Bugs</h4>
+<p>No sanity checks are performed to make sure that any of the options make sense.</p><h2>Options</h2><table class="opts"><tr><td><code>-width</code></td><td>Width of the plot in pixels.</td><td class="muted">100</td></tr><tr><td><code>-height</code></td><td>Height of the plot in pixels.</td><td class="muted">100</td></tr><tr><td><code>-steps</code></td><td>Number of simulated steps.</td><td class="muted">1000000</td></tr><tr><td><code>-seed</code></td><td>Random seed for initial state.</td><td class="muted">0</td></tr><tr><td><code>-plants</code></td><td>Initial number of plants.</td><td class="muted">5000</td></tr><tr><td><code>-herbs</code></td><td>Initial number of herbivores.</td><td class="muted">500</td></tr><tr><td><code>-carns</code></td><td>Initial number of carnivores.</td><td class="muted">50</td></tr><tr><td><code>-pmin</code></td><td>Minimum plants in vicinity to make new plant.</td><td class="muted">3</td></tr><tr><td><code>-pmax</code></td><td>Maximum allowed plants in vicinity to make new plant.</td><td class="muted">8</td></tr><tr><td><code>-Ep</code></td><td>Energy of plant.</td><td class="muted">15</td></tr><tr><td><code>-Eh</code></td><td>Energy of herbivore.</td><td class="muted">50</td></tr><tr><td><code>-Ec</code></td><td>Energy of carnivore.</td><td class="muted">200</td></tr><tr><td><code>-Ch</code></td><td>Step energy cost for herbivores.</td><td class="muted">5</td></tr><tr><td><code>-Cc</code></td><td>Step energy cost for carnivores.</td><td class="muted">5</td></tr><tr><td><code>-Pt</code></td><td>Number of steps to grow plant.</td><td class="muted">0</td></tr><tr><td><code>-samp</code></td><td>Size of subsample statistaics.</td><td class="muted">-1</td></tr><tr><td><code>-stats</code></td><td>Show statistics?</td><td class="muted">True</td></tr><tr><td><code>-pfreq</code></td><td>Plot frequency.</td><td class="muted">1</td></tr><tr><td><code>-noext</code></td><td>Prevent extinction?</td><td class="muted">True</td></tr><tr><td><code>-inv</code></td><td>Invert colors?</td><td class="muted">False</td></tr><tr><td><code>-mag</code></td><td>Magnification factor.</td><td class="muted">1</td></tr><tr><td><code>-term</code></td><td>How to plot points.</td><td class="muted">None</td></tr></table>
+<p class="muted"><a href="https://github.com/gwf/CBofN/blob/master/src/gsw.c">gsw.c on GitHub</a></p></main>
+<script src="../../excerpt.js"></script>
+<footer>Gary William Flake, <em>The Computational Beauty of Nature: Computer Explorations of Fractals, Chaos, Complex Systems, and Adaptation</em>, MIT Press, 1998. Figures may be used freely for noncommercial purposes. Source code is GPL. Site text from the original companion site (1998-2002), rebuilt 2026.</footer>
+</body></html>

@@ -1,0 +1,433 @@
+{
+  "_comment": "Per-demo manifests for the flake.org shell and the book site. pdf pages are 1-based pages of book/cbn.pdf; printed page = pdf page - 20. Chapter numbering counts the Introduction as chapter 1 and the postscripts as chapters.",
+  "demos": [
+    {
+      "id": "life",
+      "title": "The Game of Life",
+      "part": "IV",
+      "partName": "Complex Systems",
+      "chapter": 15,
+      "chapterTitle": "Cellular Automata",
+      "section": "Conway's Game of Life",
+      "pdf": [
+        251,
+        280
+      ],
+      "program": "life.c",
+      "figPrefix": "15",
+      "terms": [
+        "Conway's Game of Life",
+        "Cellular Automaton (CA)",
+        "Glider",
+        "Emergent",
+        "Universal Computation"
+      ],
+      "blurb": "Every cell on the grid follows one rule about its eight neighbors: a live cell with two or three live neighbors stays alive, a dead cell with exactly three is born, and everything else dies. That is the whole program. Gliders, blinkers, and the debris fields you see are not designed; they fall out of the rule. This version never resets. When the world settles into still lifes and blinkers, a patch of random soup rains in and the invasion starts again. Cells born in the last few generations glow slightly warmer, so you can see where the action is."
+    },
+    {
+      "id": "life-classic",
+      "title": "The Game of Life (the old flake.org page)",
+      "part": "IV",
+      "partName": "Complex Systems",
+      "chapter": 15,
+      "chapterTitle": "Cellular Automata",
+      "section": "Conway's Game of Life",
+      "pdf": [
+        251,
+        280
+      ],
+      "program": "life.c",
+      "figPrefix": "15",
+      "terms": [
+        "Conway's Game of Life",
+        "Cellular Automaton (CA)"
+      ],
+      "blurb": "The page that was flake.org for years: Conway's Life with a slow gray fade on dead cells. Kept as it was.",
+      "rotate": false
+    },
+    {
+      "id": "ifs",
+      "title": "Iterated Function Systems",
+      "part": "II",
+      "partName": "Fractals",
+      "chapter": 7,
+      "chapterTitle": "Affine Transformation Fractals",
+      "section": "Iterated Functional Systems",
+      "pdf": [
+        115,
+        130
+      ],
+      "program": "ifs.c (and mrcm.c)",
+      "figPrefix": "7",
+      "terms": [
+        "IFS",
+        "MRCM",
+        "Affine",
+        "Attractor",
+        "Self-Similar"
+      ],
+      "blurb": "A handful of affine maps, each one a shrink, rotate, and shift, played as a chaos game: pick a map at random, apply it to the current point, plot, repeat. The cloud of points converges onto the one shape that all the maps together leave unchanged. The fern, the tree, the snowflake, and the dragon here are each just three to six lines of numbers from the book's data file. Between shapes the numbers are interpolated, so the attractor itself morphs, passing through strange intermediate forms that no one designed."
+    },
+    {
+      "id": "lsys",
+      "title": "L-Systems",
+      "part": "II",
+      "partName": "Fractals",
+      "chapter": 6,
+      "chapterTitle": "L-Systems and Fractal Growth",
+      "section": "Production Systems and Turtle Graphics",
+      "pdf": [
+        97,
+        114
+      ],
+      "program": "lsys.c",
+      "figPrefix": "6",
+      "terms": [
+        "L-System",
+        "Turtle Graphics",
+        "Axiom",
+        "Fractal",
+        "Recursive"
+      ],
+      "blurb": "Lindenmayer systems grow a string by rewriting: every F becomes a longer phrase of Fs, turns, and bracketed side branches, and after a few rounds a turtle walks the string and draws it. The rule for the weed is one line, F=|[-F]|[+F][-F]F, exactly as the book's program takes it on the command line. The same interpreter draws the Koch and Penrose snowflakes, the Sierpinski arrowhead, the dragon, and the Hilbert and Peano curves. Plants here grow in turtle order and sway because the turn angle drifts a little each frame."
+    },
+    {
+      "id": "mandel",
+      "title": "The Mandelbrot Set",
+      "part": "II",
+      "partName": "Fractals",
+      "chapter": 8,
+      "chapterTitle": "The Mandelbrot Set and Julia Sets",
+      "section": "The Mandelbrot Set",
+      "pdf": [
+        131,
+        158
+      ],
+      "program": "mandel.c",
+      "figPrefix": "8",
+      "terms": [
+        "Mandelbrot Set",
+        "Complex Number",
+        "Iterate/Iterative",
+        "Julia Set",
+        "Fractal"
+      ],
+      "blurb": "For each point c of the plane, iterate z = z squared plus c starting from zero and count how many steps it takes to escape. Points that never escape are the set; the colors outside are the escape counts. That is all the program does, and the boundary is infinitely detailed. The zoom follows curated targets (seahorse valley, elephant valley, miniature copies of the whole set) as deep as the graphics hardware's arithmetic allows, then fades and starts again from the book's framing.",
+      "webgl": true
+    },
+    {
+      "id": "julia",
+      "title": "Julia Sets",
+      "part": "II",
+      "partName": "Fractals",
+      "chapter": 8,
+      "chapterTitle": "The Mandelbrot Set and Julia Sets",
+      "section": "The M-Set as the Master Julia Set",
+      "pdf": [
+        131,
+        158
+      ],
+      "program": "julia.c",
+      "figPrefix": "8",
+      "terms": [
+        "Julia Set",
+        "Mandelbrot Set",
+        "Complex Number",
+        "Basin of Attraction"
+      ],
+      "blurb": "Same iteration as the Mandelbrot set, but now c is fixed and the starting point z varies across the screen. Every c gives a different Julia set, and the Mandelbrot set is the catalog: c inside it gives a connected Julia set, c outside gives dust. Here c walks slowly around the edge of the Mandelbrot set's main cardioid, drifting a little inside and outside, so the picture morphs continuously between solid, dendrite, and dust.",
+      "webgl": true
+    },
+    {
+      "id": "diffuse",
+      "title": "Diffusion-Limited Aggregation",
+      "part": "II",
+      "partName": "Fractals",
+      "chapter": 5,
+      "chapterTitle": "Self-Similarity and Fractal Geometry",
+      "section": "Random Fractals in Nature and Brownian Motion",
+      "pdf": [
+        81,
+        96
+      ],
+      "program": "diffuse.c",
+      "figPrefix": "5",
+      "terms": [
+        "Diffusion Limited Aggregation",
+        "Brown Noise/Brownian Motion",
+        "Random Walk",
+        "Fractal Dimension"
+      ],
+      "blurb": "Particles wander at random until they touch the growing cluster, then freeze. Because a wandering particle is far more likely to bump into a tip than to find its way into a crevice, the cluster grows branches, and the branches grow branches. The result has a fractional dimension of about 1.7, the same as coral, frost, and electrical discharge. Runs alternate between one seed, several seeds, and a line seed along the bottom that grows a forest."
+    },
+    {
+      "id": "bifur1d",
+      "title": "The Bifurcation Diagram",
+      "part": "III",
+      "partName": "Chaos",
+      "chapter": 10,
+      "chapterTitle": "Nonlinear Dynamics in Simple Maps",
+      "section": "Bifurcations and Universality",
+      "pdf": [
+        159,
+        178
+      ],
+      "program": "bifur1d.c (and gen1d.c, phase1d.c)",
+      "figPrefix": "10",
+      "terms": [
+        "Logistic Map",
+        "Bifurcation",
+        "Feigenbaum Constant",
+        "Chaos/Chaotic",
+        "Fixed Point"
+      ],
+      "blurb": "The logistic map, x becomes 4rx(1-x), is a one-line model of a population with limited food. For each value of r the program runs the map a while and plots where it ends up. Small r gives a single steady value, then it splits in two, then four, then eight, at intervals shrinking by Feigenbaum's constant, until the values fill whole bands: chaos, with windows of order inside it. The view starts just before the first split and then zooms into the cascade to show that the whole diagram repeats inside itself."
+    },
+    {
+      "id": "lorenz",
+      "title": "Strange Attractors",
+      "part": "III",
+      "partName": "Chaos",
+      "chapter": 11,
+      "chapterTitle": "Strange Attractors",
+      "section": "The Lorenz Attractor, the Mackey-Glass System",
+      "pdf": [
+        179,
+        200
+      ],
+      "program": "lorenz.c, rossler.c, predprey.c, mg.c",
+      "figPrefix": "11",
+      "terms": [
+        "Strange Attractor",
+        "Lorenz System",
+        "Mackey-Glass System",
+        "Sensitivity",
+        "Phase Space"
+      ],
+      "blurb": "Three coupled differential equations, integrated step by step. Every trajectory is pulled onto the same butterfly-shaped surface, yet two trajectories that start a hair apart end up in different wings within seconds. Here thousands of particles are released together in a tiny ball; you watch the ball stretch along the attractor and fold until it covers the whole thing. The page cycles through Lorenz (both the book's and the classic parameters), Rossler, a three-species predator-prey system, and the Mackey-Glass delay equation."
+    },
+    {
+      "id": "henwarp",
+      "title": "Stretching and Folding",
+      "part": "III",
+      "partName": "Chaos",
+      "chapter": 11,
+      "chapterTitle": "Strange Attractors",
+      "section": "The Henon Attractor",
+      "pdf": [
+        179,
+        200
+      ],
+      "program": "henwarp.c (and henon.c)",
+      "figPrefix": "11",
+      "terms": [
+        "Hénon Map",
+        "Strange Attractor",
+        "Dissipative System",
+        "Basin of Attraction"
+      ],
+      "blurb": "Take a square of points and push every one of them through the Henon map once. The square is stretched, bent into a horseshoe, and squeezed. Do it again and again and the horseshoe of horseshoes converges onto the Henon attractor, a curve that is a fractal in cross section. The checkerboard and hue gradient are painted on the original square so you can follow where each region goes."
+    },
+    {
+      "id": "ca",
+      "title": "One-Dimensional Cellular Automata",
+      "part": "IV",
+      "partName": "Complex Systems",
+      "chapter": 15,
+      "chapterTitle": "Cellular Automata",
+      "section": "One-Dimensional CA, Wolfram's Classification, Langton's Lambda",
+      "pdf": [
+        251,
+        280
+      ],
+      "program": "ca.c",
+      "figPrefix": "15",
+      "terms": [
+        "Cellular Automaton (CA)",
+        "Edge of Chaos",
+        "Complex System",
+        "Phase Transition"
+      ],
+      "blurb": "A row of cells, each looking at itself and its neighbors, computes the next row from a rule table; time runs upward. The famous two-state rules (30, 90, 110) appear alongside three- and four-state rules drawn at random near Langton's lambda, the parameter the book uses to find the edge between order and chaos. Instead of switching to an unrelated rule, the page mutates the current rule by a few table entries, so you see how much behavior can change from one bit."
+    },
+    {
+      "id": "hp",
+      "title": "The Hodgepodge Machine",
+      "part": "IV",
+      "partName": "Complex Systems",
+      "chapter": 15,
+      "chapterTitle": "Cellular Automata",
+      "section": "Natural CA-like Phenomena",
+      "pdf": [
+        251,
+        280
+      ],
+      "program": "hp.c",
+      "figPrefix": "15",
+      "terms": [
+        "Cellular Automaton (CA)",
+        "Self-Organization",
+        "Emergent",
+        "Feedback"
+      ],
+      "blurb": "A cellular automaton where each cell is healthy, infected, or ill and catches the infection from its neighbors, then recovers. From random noise it organizes into spiral waves that look like the Belousov-Zhabotinsky chemical reaction. The parameters are the book's own, and the spirals form within the first minute; over longer runs a single giant spiral tends to take over."
+    },
+    {
+      "id": "vants",
+      "title": "Virtual Ants",
+      "part": "IV",
+      "partName": "Complex Systems",
+      "chapter": 16,
+      "chapterTitle": "Autonomous Agents and Self-Organization",
+      "section": "Virtual Ants",
+      "pdf": [
+        281,
+        300
+      ],
+      "program": "vants.c",
+      "figPrefix": "16",
+      "terms": [
+        "Vant",
+        "Autonomous Agent",
+        "Emergent",
+        "Self-Organization"
+      ],
+      "blurb": "Langton's ant follows two rules: on a white cell turn right, on a black cell turn left, and flip the cell you leave. For about ten thousand steps it makes a chaotic mess, then, for reasons no one has proved, it starts building a diagonal highway and never stops. The book generalizes this to any number of cell states with a rule string; the page starts with the classic ant and moves on to the multi-state variants with a few ants at once."
+    },
+    {
+      "id": "termites",
+      "title": "Termites",
+      "part": "IV",
+      "partName": "Complex Systems",
+      "chapter": 16,
+      "chapterTitle": "Autonomous Agents and Self-Organization",
+      "section": "Termites",
+      "pdf": [
+        281,
+        300
+      ],
+      "program": "termites.c",
+      "figPrefix": "16",
+      "terms": [
+        "Autonomous Agent",
+        "Self-Organization",
+        "Emergent",
+        "Bottom-Up"
+      ],
+      "blurb": "Each termite wanders at random. If it bumps into a wood chip while empty-handed it picks the chip up; if it bumps into a chip while carrying one it drops what it has. Nobody plans anything and no termite can see more than one cell, yet the chips end up in a few large piles. The piles form within a minute; each run uses a different chip density."
+    },
+    {
+      "id": "boids",
+      "title": "Boids",
+      "part": "IV",
+      "partName": "Complex Systems",
+      "chapter": 16,
+      "chapterTitle": "Autonomous Agents and Self-Organization",
+      "section": "Flocks, Herds, and Schools",
+      "pdf": [
+        281,
+        300
+      ],
+      "program": "boids.c",
+      "figPrefix": "16",
+      "terms": [
+        "Boid",
+        "Autonomous Agent",
+        "Self-Organization",
+        "Emergent"
+      ],
+      "blurb": "Reynolds's boids: each bird tries to fly in the direction its neighbors fly, toward the center of its neighbors, away from anyone too close, and around anyone blocking its view. Four local rules, no leader, and a flock appears. The rule weights drift between regimes over time, so the same birds behave like starlings, then gnats, then a pack fighting over the center, then a school."
+    },
+    {
+      "id": "gsw",
+      "title": "Grass, Sheep, and Wolves",
+      "part": "III",
+      "partName": "Chaos",
+      "chapter": 12,
+      "chapterTitle": "Producer-Consumer Dynamics",
+      "section": "Individual-Based Ecology",
+      "pdf": [
+        201,
+        222
+      ],
+      "program": "gsw.c",
+      "figPrefix": "12",
+      "terms": [
+        "Predator-Prey System",
+        "Lotka-Volterra System",
+        "Ecosystem",
+        "Limit Cycle"
+      ],
+      "blurb": "The Lotka-Volterra equations describe predators and prey as smooth population totals. This is the same story told one individual at a time: grass grows where there is grass nearby, sheep wander, eat, and breed when fed, wolves do the same to sheep, and everything starves without food. Waves of sheep eat holes in the grass, wolves follow the sheep, and the populations chase each other in a cycle nobody wrote down."
+    },
+    {
+      "id": "sipd",
+      "title": "The Spatial Prisoner's Dilemma",
+      "part": "IV",
+      "partName": "Complex Systems",
+      "chapter": 17,
+      "chapterTitle": "Competition and Cooperation",
+      "section": "Ecological and Spatial Worlds",
+      "pdf": [
+        301,
+        326
+      ],
+      "program": "sipd.c (and eipd.c)",
+      "figPrefix": "17",
+      "terms": [
+        "Prisoner's Dilemma",
+        "Iterated Prisoner's Dilemma",
+        "Tit-for-Tat",
+        "Game Theory",
+        "Evolutionary Stable Strategy (ESS)"
+      ],
+      "blurb": "Every cell on the grid plays the iterated Prisoner's Dilemma against its eight neighbors using one of five strategies (always cooperate, always defect, random, tit-for-tat, Pavlov), then copies whichever neighbor scored best. Cooperators survive by clustering; defectors invade the clusters and then starve. A little noise keeps the map churning between tit-for-tat and Pavlov with blooms of defection."
+    },
+    {
+      "id": "hopfield",
+      "title": "Associative Memory",
+      "part": "IV",
+      "partName": "Complex Systems",
+      "chapter": 18,
+      "chapterTitle": "Natural and Analog Computation",
+      "section": "Associative Memory and Hebbian Learning",
+      "pdf": [
+        327,
+        358
+      ],
+      "program": "assoc.c (and hopfield.c)",
+      "figPrefix": "18",
+      "terms": [
+        "Hebbian Learning",
+        "Associative Memory",
+        "Hopfield Network",
+        "Feedback Neural Network",
+        "Attractor"
+      ],
+      "blurb": "A network of neurons where every neuron is wired to every other, trained by Hebb's rule: neurons that fire together strengthen their connection. Show it a handful of patterns and each becomes a valley in an energy landscape. Start the network from a badly corrupted pattern and let each neuron update in turn; it rolls downhill into the nearest memory. The page dissolves each recovered pattern into noise and lets the next memory crystallize out of it."
+    },
+    {
+      "id": "mlp",
+      "title": "Backpropagation",
+      "part": "V",
+      "partName": "Adaptation",
+      "chapter": 22,
+      "chapterTitle": "Neural Networks and Learning",
+      "section": "Multilayer Perceptrons and Backpropagation",
+      "pdf": [
+        403,
+        444
+      ],
+      "program": "mlp.c",
+      "figPrefix": "22",
+      "terms": [
+        "Multilayer Perceptron (MLP)",
+        "Backpropagation",
+        "Steepest Descent (Ascent)",
+        "Linearly (In)separable",
+        "Hidden Layer"
+      ],
+      "blurb": "A multilayer perceptron with forty hidden units learns to separate two classes of points by gradient descent on its error. The colored field is the network's opinion about every point on the screen; the bright ridge is where it is undecided. The data set changes every minute or so (moons, spirals, rings, XOR blobs, a checkerboard) and the weights are kept, so you watch the boundary bend from the old fit to the new one, and occasionally get stuck in a local minimum."
+    }
+  ]
+}

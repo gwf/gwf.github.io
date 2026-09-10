@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<title>gaipd - The Computational Beauty of Nature</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* { box-sizing: border-box; }
+html { color-scheme: dark; }
+body { margin: 0; background: #0b0c0f; color: #cfd2d8; font: 16px/1.6 -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+a { color: #9cc4ff; text-decoration: none; } a:hover { text-decoration: underline; }
+header.top { border-bottom: 1px solid #1d1f25; padding: 14px 28px; display: flex; gap: 22px; align-items: baseline; flex-wrap: wrap; }
+header.top .brand { font: 400 18px Georgia, "Times New Roman", serif; color: #f2f2f2; }
+header.top nav a { color: #9aa0ab; margin-right: 16px; font-size: 14px; }
+header.top nav a.cur { color: #fff; }
+main { max-width: 980px; margin: 0 auto; padding: 36px 28px 80px; }
+h1 { font: 400 34px/1.15 Georgia, "Times New Roman", serif; color: #f4f4f4; margin: 0 0 8px; }
+h2 { font: 400 24px/1.2 Georgia, "Times New Roman", serif; color: #eee; margin: 38px 0 12px; }
+h3 { font: 500 17px/1.3 -apple-system, Helvetica, Arial, sans-serif; color: #e6e6e6; margin: 26px 0 8px; }
+.kicker { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a8f99; }
+.lede { color: #aab; font-size: 17px; margin-bottom: 26px; }
+p { margin: 0 0 14px; }
+blockquote { border-left: 2px solid #333; margin: 14px 0; padding: 2px 16px; color: #b9bcc4; font-style: italic; }
+pre, code { font: 13.5px Menlo, Consolas, monospace; } pre { background: #14161b; padding: 12px 14px; border-radius: 4px; overflow-x: auto; }
+code { color: #dde; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+.card { background: #101218; border: 1px solid #1d1f25; border-radius: 6px; overflow: hidden; }
+.card img { display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #000; }
+.card .b { padding: 10px 12px 12px; } .card b { color: #eee; font-weight: 500; display: block; } .card small { color: #8a8f99; }
+.card:hover { border-color: #444; }
+.parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+.part { border-top: 1px solid #23262d; padding-top: 12px; }
+.part h2 { margin: 4px 0 8px; font-size: 21px; }
+.part ol { margin: 0; padding-left: 22px; color: #aab; } .part li { margin: 3px 0; } .part li a { color: #cfd2d8; }
+.part .demo { color: #9cc4ff; font-size: 13px; margin-left: 6px; }
+ul.plain { list-style: none; columns: 2; column-gap: 30px; padding-left: 22px; color: #aab; margin: 0 0 8px; } ul.plain li { margin: 2px 0; } @media (max-width: 700px) { ul.plain { columns: 1; } }
+.figs { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+.figs a { display: block; background: #fff; border-radius: 4px; padding: 6px; }
+.figs img { width: 100%; height: 120px; object-fit: contain; display: block; }
+.figs span { display: block; font-size: 12px; color: #444; margin-top: 4px; }
+dl.gloss dt { color: #eee; font-weight: 500; margin-top: 14px; } dl.gloss dd { margin: 2px 0 0; color: #b5b9c2; }
+input.search { width: 100%; font: 16px inherit; padding: 10px 12px; background: #14161b; border: 1px solid #2a2d35; color: #eee; border-radius: 6px; margin: 14px 0 22px; }
+.chapnav { display: flex; justify-content: space-between; margin: 40px 0 0; color: #9aa0ab; font-size: 14px; }
+.opts td { vertical-align: top; padding: 4px 10px 4px 0; font-size: 14px; } .opts code { white-space: nowrap; }
+.muted { color: #8a8f99; font-size: 14px; }
+.hero { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+.hero .cover { width: 220px; border-radius: 4px; box-shadow: 0 6px 30px rgba(0,0,0,0.6); }
+.two { columns: 2; column-gap: 34px; } @media (max-width: 700px) { .two { columns: 1; } }
+footer { color: #6d727b; font-size: 13px; border-top: 1px solid #1d1f25; margin-top: 60px; padding: 18px 28px; }
+.demo-embed { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: 6px; background: #000; display: block; }
+</style></head><body>
+<header class="top"><span class="brand">The Computational Beauty of Nature</span><nav><a href="../index.html" class="">Programs</a><a href="../figures.html" class="">Figures</a><a href="../glossary.html" class="">Glossary</a><a href="../quotes.html" class="">Quotations</a><a href="../about.html" class="">About the book</a><a href="../../index.html" class="">flake.org</a></nav></header>
+<main><div class="kicker">Source code</div><h1><code>gaipd</code></h1>
+<p class="lede">breed IPD strategies with a genetic algorithm</p>
+<pre>gaipd -help
+  or
+gaipd  [-size  integer]  [-gens  integer] [-bouts integer]
+       [-rounds integer] [-hlen integer]  [-seed  integer]
+       [-crate  double]  [-mrate  double]  [-noise double]
+       [-CC double] [-CD double] [-DC double] [-DD double]
+       [-dump]</pre>
+<p>Uses a genetic algorithm to evolve iterated Prisoner's Dilemma (IPD) strategies according to user-specified constraints. This program illustrates how GAs can demonstrate coevolution since IPD strategies can only be successful within the context of their likely opponents.</p><p>Use a genetic algorithm to evolve IPD strategies according to user-specified constraints. This program illustrates how GAs can demonstrate co-evolution since IPD strategies can only be successful within the context of their likely opponents. Reproduction of strategies entails crossover and mutation with strategies being selected based on fitness.</p>
+<h4>Payoffs</h4>
+<p>The payoff matrix for the Prisoner's Dilemma game is usually expressed as: Player B's Move +-----------+-----------+ Player A's Move | cooperate | defect | +-----------+-----------+-----------+ | cooperate | CC, CC | CD, DC | +-----------+-----------+-----------+ | defect | DC, CD | DD, DD | +-----------+-----------+-----------+</p>
+<p>where the table entries are (A's payoff, B's payoff) and CC, CD, DC, and DD are the reward, sucker, temptation, and punish payoffs, respectively. For each of these four outcomes you will probably want the payoffs to reflect the relationships:</p>
+<p>(DC &gt; CC &gt; DD &gt; CD) and ((CD + DC) / 2 &lt; CC).</p>
+<h4>Generations</h4>
+<p>A single generation proceeds as follows. Each member of the population must play several bouts with randomly selected opponents. For each opponent, several rounds are played. The total score after these bouts is a strategy's raw fitness score.</p>
+<h4>Strings</h4>
+<p>Since population strings may be optionally displayed at the end of the simulation, this section describes the format of these strings. Given two players, A and B, and the current time, t, and letting cooperation be denoted by 0 and defection by 1, form a bit string such as:</p>
+<p>A(t-1) B(t-1) A(t-2) B(t-2) ... A(t-H) B(t-H)</p>
+<p>where A(T) and B(T) are A and B's moves from time T, respectively, and H is the number of time steps "remembered" by each player. This bit string can take 2^(2 * H) values. To define a complete strategy, we must have a H + 1 separate tables of this form to describe each possible history. Thus, the rule table string used internally in the program and displayed at the end have as their first entry the move to make with no previous history, followed by four entries for H equals to 1, followed by sixteen entries for when H equals 2, and so on.</p>
+<p>As an annotated example, Tit-for-Tat is encoded as "CCDCD" so that the first "C" indicates that the first move should be C while the last for characters indicate what to play if A(t-1) and B(t-1) is equal to (C, C), (C, D), (D, C), and (D, D), respectively.</p>
+<h4>Hints</h4>
+<p>Without any parameters (and assuming you have an uncorrupted version if this source code) running this program without any parameters will probably result in Tit-for- Tat, "CCDCD", dominating. If you run it with the -noise 0.1 option, then Pavlov, "CCDDC", will probably win in the end since it is more resistant to noise.</p>
+<p>See the author's book, "The Computational Beauty of Nature," for more details.</p>
+<h4>Miscellany</h4>
+<p>The fitness function relies on two steps done after the raw fitness scores are calculated. The raw fitness score from the previous step is divided by the total number of PD rounds played. (Note that this may vary among population members since opponents are selected at random.) This yields a scaled fitness score. The normalized fitness is then set to the scaled fitness divided by the sum of the scaled fitnesses. Thus the sum of the normalized fitnesses must be equal to one.</p>
+<h4>Bugs</h4>
+<p>No sanity checks are performed to make sure that any of the options make sense.</p><h2>Options</h2><table class="opts"><tr><td><code>-size</code></td><td>Population size.</td><td class="muted">100</td></tr><tr><td><code>-gens</code></td><td>Number of generations.</td><td class="muted">50</td></tr><tr><td><code>-bouts</code></td><td>Bouts per generation.</td><td class="muted">50</td></tr><tr><td><code>-rounds</code></td><td>Rounds per bout.</td><td class="muted">20</td></tr><tr><td><code>-hlen</code></td><td>History length.</td><td class="muted">1</td></tr><tr><td><code>-seed</code></td><td>Random seed.</td><td class="muted">0</td></tr><tr><td><code>-crate</code></td><td>Crossover rate.</td><td class="muted">0.25</td></tr><tr><td><code>-mrate</code></td><td>Mutation rate.</td><td class="muted">0.001</td></tr><tr><td><code>-noise</code></td><td>Chance of mistake in transaction.</td><td class="muted">0.0</td></tr><tr><td><code>-CC</code></td><td>Reward Payoff.</td><td class="muted">4.0</td></tr><tr><td><code>-CD</code></td><td>Sucker Payoff.</td><td class="muted">0.0</td></tr><tr><td><code>-DC</code></td><td>Temptation Payoff.</td><td class="muted">5.0</td></tr><tr><td><code>-DD</code></td><td>Punish Payoff.</td><td class="muted">1.0</td></tr><tr><td><code>-dump</code></td><td>Print entire population at end?</td><td class="muted">False</td></tr></table>
+<p class="muted"><a href="https://github.com/gwf/CBofN/blob/master/src/gaipd.c">gaipd.c on GitHub</a></p></main>
+<script src="../../excerpt.js"></script>
+<footer>Gary William Flake, <em>The Computational Beauty of Nature: Computer Explorations of Fractals, Chaos, Complex Systems, and Adaptation</em>, MIT Press, 1998. Figures may be used freely for noncommercial purposes. Source code is GPL. Site text from the original companion site (1998-2002), rebuilt 2026.</footer>
+</body></html>

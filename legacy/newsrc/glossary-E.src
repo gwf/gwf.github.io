@@ -1,0 +1,193 @@
+#include "defaults.inc"
+#define GLOSSARY_OPTS HIGHLIGHT_COLOR
+#define GLOSSARY_PRE HBEG<b>
+#define GLOSSARY_POST </b>HEND
+#define TITLE Glossary - E
+#include "top.inc"
+
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="E-section">E</a></h1>
+
+
+<p><b><a name="ecology">Ecology</a></b> &nbsp; &nbsp;
+The study of the relationships and interactions between organisms and
+<a href="glossary-E.html#environment">environments</a>.  
+
+<p><b><a name="ecosystem">Ecosystem</a></b> &nbsp; &nbsp;
+A biological <a href="glossary-S.html#system">system</a> consisting of many organisms from different
+species.  
+
+<p><b><a name="edge_of_chaos">Edge of Chaos</a></b> &nbsp; &nbsp;
+The hypothesis that many natural <a href="glossary-S.html#system">systems</a> tend toward
+<a href="glossary-D.html#dynamics/dynamical">dynamical</a> behavior that borders static patterns and the
+<a href="glossary-C.html#chaos/chaotic">chaotic</a> regime.  
+
+<p><b><a name="effector">Effector</a></b> &nbsp; &nbsp;
+The part of a <a href="glossary-C.html#classifier_system">classifier system</a> that can translate <a href="glossary-M.html#message">messages</a>
+into actions that can manipulate a <a href="glossary-S.html#system">system</a> or an <a href="glossary-E.html#environment">environment</a>. 
+
+<p><b><a name="eigenvalue">Eigenvalue</a></b> &nbsp; &nbsp;
+The change in length that occurs when the corresponding
+<a href="glossary-E.html#eigenvector">eigenvector</a> is multiplied by its <a href="glossary-M.html#matrix">matrix</a>. 
+
+<p><b><a name="eigenvector">Eigenvector</a></b> &nbsp; &nbsp;
+A unit length <a href="glossary-V.html#vector">vector</a> that retains its direction when multiplied
+to the <a href="glossary-M.html#matrix">matrix</a> that it corresponds to.  An (<i>n</i> * <i>n</i>) matrix
+can have as many as <i>n</i> unique eigenvectors, each of which will have
+its own <a href="glossary-E.html#eigenvalue">eigenvalue</a>.  
+
+<p><b><a name="embedding">Embedding</a></b> &nbsp; &nbsp;
+A method of taking a <a href="glossary-S.html#scalar">scalar</a> <a href="glossary-T.html#time_series">time series</a> and using delayed
+snapshots of the values at fixed time intervals in the past so that
+the <a href="glossary-D.html#dynamics/dynamical">dynamics</a> of the underlying <a href="glossary-S.html#system">system</a> can be observed as a
+<a href="glossary-F.html#function">function</a> of the previously observed states. 
+
+<p><b><a name="emergent">Emergent</a></b> &nbsp; &nbsp;
+Refers to a property of a collection of simple subunits that comes
+about through the interactions of the subunits and is not a property
+of any single subunit.  For example, the organization of an ant colony
+is said to ``emerge'' from the interactions of the lower-level
+behaviors of the ants, and not from any single ant.  Usually, the
+emergent behavior is unanticipated and cannot be directly deduced from
+the lower-level behaviors. <a href="glossary-C.html#complex_system">Complex systems</a> are usually
+emergent. 
+
+<p><b><a name="entropy">Entropy</a></b> &nbsp; &nbsp;
+A measure of a <a href="glossary-S.html#system">system</a>'s degree of <a href="glossary-R.html#random/randomness">randomness</a> or disorder.  
+
+<p><b><a name="environment">Environment</a></b> &nbsp; &nbsp;
+If that which is under study is a <a href="glossary-S.html#system">system</a>, then the rest of the
+world is the environment. 
+
+<p><b><a name="equilibrium">Equilibrium</a></b> &nbsp; &nbsp;
+A state of a <a href="glossary-S.html#system">system</a> that, if not subjected to <a href="glossary-P.html#perturbation">perturbation</a>,
+will remain unchanged.  
+
+<p><b><a name="ergodic">Ergodic</a></b> &nbsp; &nbsp;
+The property of a <a href="glossary-D.html#dynamical_system">dynamical system</a> such that all regions of a
+<a href="glossary-S.html#state_space">state space</a> are visited with similar frequency and that all
+regions will be revisited (within a small proximity) if given enough
+time. 
+
+<p><b><a name="euclidean">Euclidean</a></b> &nbsp; &nbsp;
+Pertaining to standard geometry, i.e., points, lines, planes, volumes,
+squares, cubes, triangles, etc.  
+
+<p><b><a name="eulers_method">Euler's Method</a></b> &nbsp; &nbsp;
+The simplest method of obtaining a <a href="glossary-N.html#numerical_solution">numerical solution</a> of a
+<a href="glossary-D.html#differential_equation">differential equation</a>.  There are many other numerical techniques
+that are more accurate; however, an <a href="glossary-A.html#analytical_solution">analytical solution</a> (i.e., a
+closed form of an <a href="glossary-I.html#integral">integral</a>) is always preferred but not always
+possible.  
+
+<p><b><a name="evolution">Evolution</a></b> &nbsp; &nbsp;
+A process operating on populations that involves <a href="glossary-V.html#variation">variation</a> among
+individuals, traits being <a href="glossary-I.html#inheritable">inheritable</a>, and a level of
+<a href="glossary-F.html#fitness">fitness</a> for individuals that is a <a href="glossary-F.html#function">function</a> of the possessed
+traits.  Over relatively long periods of time, the distribution of
+inheritable traits will tend to reflect the fitness that the traits
+convey to the individual; thus, evolution acts as a filter that
+selects fitness-yielding traits over other traits.  
+
+<p><b><a name="evolutionary_stable_strategy_(ess)">Evolutionary Stable Strategy (ESS)</a></b> &nbsp; &nbsp;
+In <a href="glossary-G.html#game_theory">game theory</a> and biology, a <a href="glossary-S.html#strategy">strategy</a> that, when possessed
+by an entire population, results in an <a href="glossary-E.html#equilibrium">equilibrium</a> such that
+<a href="glossary-M.html#mutation">mutation</a> of the strategy can never result in an improvement for an
+individual.  <a href="glossary-A.html#always_defect">Always Defect</a> is an ESS, while
+<a href="glossary-A.html#always_cooperate">Always Cooperate</a> is not.  
+
+<p><b><a name="excitatory">Excitatory</a></b> &nbsp; &nbsp;
+Refers to a neural <a href="glossary-S.html#synapse">synapse</a> or <a href="glossary-W.html#weight">weight</a> that is positive such
+that activity in the source <a href="glossary-N.html#neuron">neuron</a> encourages activity in the
+connected neuron; the opposite of <a href="glossary-I.html#inhibitory">inhibitory</a>. 
+
+<p><b><a name="experimentation">Experimentation</a></b> &nbsp; &nbsp;
+One process by which scientists attempt to understand nature.  A
+phenomenon is observed and/or manipulated so that changes in the
+phenomenon's state can be seen.  The resulting data can be used to
+derive new <a href="glossary-M.html#model">models</a> of a process or to confirm an existing model.
+Experimentation is the complement of <a href="glossary-T.html#theorization">theorization</a>.  See also
+<a href="glossary-S.html#simulate/simulation">simulation</a>. 
+
+<p><b><a name="expert_system">Expert System</a></b> &nbsp; &nbsp;
+A special <a href="glossary-P.html#program">program</a> that resembles a collection of ``if ...
+then'' rules.  The rules usually represent knowledge contained by a
+domain expert (such as a physician adept at diagnosis) and can be used
+to <a href="glossary-S.html#simulate/simulation">simulate</a> how a human expert would perform a task.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+
+
+#include "bottom.inc"

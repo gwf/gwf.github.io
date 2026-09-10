@@ -1,0 +1,55 @@
+#include "defaults.inc"
+#define BACK_OPTS HIGHLIGHT_COLOR
+#define BACK_PRE HBEG<b>
+#define BACK_POST </b>HEND
+#define TITLE Jacket Text
+#include "top.inc"
+
+
+<font face="arial, helvetica" size=5><B>The Computational Beauty of Nature</B></font><BR>
+
+<font face="arial, helvetica" size=3>
+<B>Computer Explorations of Fractals, Chaos,<br>Complex Systems, and Adaptation</B>
+</FONT><BR><BR>
+<font face="arial, helvetica" size="-1">by Gary William Flake</FONT>
+<p>
+<br>
+<blockquote>
+``This book is a delight.''<br>
+-- <b><a href="http://www.cs.unm.edu/~bap/">Barak Pearlmutter</a></b>,
+<a href="http://www.unm.edu/">The University of New Mexico</a> 
+<p>
+``This delightful book illustrates beautifully the paradigm shift
+in physics from writing equations and solving them to computer
+modeling and experimentation.''<br> -- <b>
+<a href="http://www.cs.auckland.ac.nz/CDMTCS/chaitin/">Greg Chaitin</a></b>, author 
+of <i><a href="http://www.springer-ny.com/press/chaitin/">The Limits
+of Mathematics</a></i> 
+</blockquote>
+<p>
+``Simulation,'' writes Gary Flake in his preface,
+``becomes a form of experimentation in a universe of theories. The
+primary purpose of this book is to celebrate this fact.''
+<p>
+In this book, Gary William Flake develops in depth the simple idea
+that recurrent rules can produce rich and complicated
+behaviors. Distinguishing ``agents'' (e.g., molecules, cells,
+animals, and species) from their interactions (e.g., chemical
+reactions, immune system responses, sexual reproduction, and
+evolution), Flake argues that it is the computational properties of
+interactions that account for much of what we think of as
+``beautiful'' and ``interesting.'' From this basic
+thesis, Flake explores what he considers to be today's four most
+interesting computational topics: fractals, chaos, complex systems,
+and adaptation.
+<p>
+Each of the book's parts can be read independently, enabling even the
+casual reader to understand and work with the basic equations and
+programs. Yet the parts are bound together by the theme of the
+computer as a laboratory and a metaphor for understanding the
+universe. The inspired reader will experiment further with the ideas
+presented to create fractal landscapes, chaotic systems, artificial
+life forms, genetic algorithms, and artificial neural networks.
+
+
+#include "bottom.inc"

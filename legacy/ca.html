@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+	  "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<meta name="description" content="The Computational Beauty of Nature -
+Computer Explorations of Fractals, Chaos, Complex Systems, and
+Adaptation">
+<meta name="keywords" content="computation, fractals, chaos,
+complex systems, adaptation, source code, java, Mandelbrot, Julia set,
+mathematics, logistic map, Henon map, strange attractor, dynamical
+system, system theory, nature, cellular automata, boids, game theory,
+prisoners dilemma, flocking, neural, neural network, genetic
+algorithm, classifier system, evolution, learning"> <meta
+name="robots" content="all, index, follow">
+<title>CBofN - CA Documentation</title>
+<link rel="stylesheet" href="format.css" type="text/css"
+ media="screen, print">
+</head>
+<body>
+
+<h1>The Computational Beauty of Nature <p>Computer Explorations of
+Fractals, Chaos, Complex Systems, and Adaptation</p></h1>
+
+<div id="right">
+<div id="vmenu">
+<h1>About the Book</h1>
+<a href="home.html">home</a>
+<a href="cover.html">cover artwork</a>
+<a href="back.html">jacket text</a>
+<a href="toc.html">table of contents</a>
+<a href="author.html">the author</a>
+<a href="ordering.html">ordering information</a>
+
+<br>
+<h1>Book Contents</h1>
+<a href="themes.html">three themes</a>
+<a href="parts.html">part synopses</a>
+<a href="excerpts0.html">selected excerpts</a>
+<a href="fig.html">all figures from book</a>
+<a href="quotes.html">quotes from book</a>
+<a href="glossary-intro.html">glossary from book</a>
+<a href="bibliography.html">bibliography</a>
+<a href="slides.html">slide show</a>
+
+<br>
+<h1>Source Code</h1>
+<a href="source.html">overview &amp;<br>documentation</a>
+<a href="faq.html">FAQ list</a>
+<a href="download.html">download source code</a>
+<a href="java.html">java applets</a>
+
+<br>
+<h1>Miscellany</h1>
+<a href="news.html">news</a>
+<a href="reviews.html">reviews &amp; awards</a>
+<a href="errata.html">errata</a>
+<a href="edu.html">for educators</a>
+<a href="cbofn.bib">bibliography (BibTeX format)</a>
+<a href="other.html">other links</a>
+
+</div>
+</div>
+
+<div id="content">
+
+
+&nbsp;
+</font>
+<font size="+0">
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+
+</PRE>
+<H4>NAME</H4><PRE>
+       ca - simulate arbitrary one-dimensional cellular automata
+
+
+</PRE>
+<H4>SYNOPSIS</H4><PRE>
+       <B>ca</B> <B>-help</B>
+         or
+       <B>ca</B>     <B>[-width</B>  <I>integer</I><B>]</B>  <B>[-height</B> <I>integer</I><B>]</B> <B>[-states</B> <I>inte-</I>
+              <I>ger</I><B>]</B>  <B>[-radius</B>  <I>integer</I><B>]</B>  <B>[-seed</B>  <I>integer</I><B>]</B>  <B>[-wrap]</B>
+              <B>[-rules</B>  <I>string</I><B>]</B>  <B>[-init</B>  <I>string</I><B>]</B>  <B>[-lambda</B> <I>double</I><B>]</B>
+              <B>[-sq]</B> <B>[-bin]</B> <B>[-inv]</B> <B>[-mag</B> <I>integer</I><B>]</B> <B>[-term</B> <I>string</I><B>]</B>
+
+
+</PRE>
+<H4>DESCRIPTION</H4><PRE>
+       Computes a one-dimensional cellular automata.  The  evolu-
+       tion  of the CA is determined by the number of states, the
+       radius size, the initial state, and the supplied rule.   A
+       rule  is  specified  by  a (states - 1) * (radius * 2 + 1)
+       length string.  At each time step a sum of each cell  plus
+       all  of its neighbors within the radius is computed.  That
+       sum is used as an index into the rules string which deter-
+       mines  the  next  step  For  example,  with radius = 1 and
+       states = 2 the rule that sums of 0 and  3  map  to  the  0
+       state, and sums of 1 and 2 map to the 1 state.  A negative
+       init string randomly initializes the starting  states.  If
+       the init string is of being non-zero.
+
+
+</PRE>
+<H4>OPTIONS</H4><PRE>
+       <B>-width</B> <I>integer</I>
+              Width of the plot in pixels.
+
+       <B>-height</B> <I>integer</I>
+              Height of the plot in pixels.
+
+       <B>-states</B> <I>integer</I>
+              Number of CA states.
+
+       <B>-radius</B> <I>integer</I>
+              Radius of CA neighborhood.
+
+       <B>-seed</B> <I>integer</I>
+              Random seed.
+
+       <B>-wrap</B>  Use a wrap-around space?
+
+       <B>-rules</B> <I>string</I>
+              CA rules to use.
+
+       <B>-init</B> <I>string</I>
+              Starting state (&lt; 0 is random).
+
+       <B>-lambda</B> <I>double</I>
+              Lambda value for random rules.
+
+       <B>-sq</B>    Enforce strong quiescence?
+
+
+       <B>-bin</B>   Binary colors?
+
+       <B>-inv</B>   Invert all colors?
+
+       <B>-mag</B> <I>integer</I>
+              Magnification factor.
+
+       <B>-term</B> <I>string</I>
+              How to plot points.
+
+
+</PRE>
+<H4>MISCELLANY</H4><PRE>
+       When  supplying  a  lambda value for a random rule, it may
+       not be possible to find a string with  that  lambda  value
+       because one may not exist.  In this case, the program will
+       do its best to find one as  close  as  possible.   In  any
+       event,  the algorithm for finding random rules strings for
+       a specified lambda value is non-deterministic and may  not
+       always  find a perfect match even if one exists.  However,
+       it will work well with high probability, and even when  it
+       doesn't  find a perfect match it almost always gets close.
+
+
+</PRE>
+<H4>BUGS</H4><PRE>
+       No sanity checks are performed to make sure  that  any  of
+       the options make sense.
+
+
+</PRE>
+<H4>AUTHOR</H4><PRE>
+       Copyright (c) 1997, Gary William Flake.
+
+       Permission  granted  for any use according to the standard
+       GNU ``copyleft'' agreement provided that the author's com-
+       ments  are  neither  modified nor removed.  No warranty is
+       given or implied.
+
+</PRE>
+
+<br>
+<br>
+<br>
+<p><small>
+Copyright &#169; <a href="mailto:gary.flake AT usa.net">Gary
+William Flake</a>, 1998-2005. All Rights Reserved.</small>
+</div>
+</body>
+</html>
+

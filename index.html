@@ -4,47 +4,215 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Gary William Flake. Live programs from The Computational Beauty of Nature.">
 <style>
-  * { margin: 0; padding: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 100%; height: 100%; background: #000; overflow: hidden; }
   iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  /* The affordance: one small glyph that shows up when the pointer moves. */
+  #mark {
+    position: fixed; right: 18px; bottom: 16px; width: 34px; height: 34px;
+    border-radius: 50%; border: 1px solid rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.75); font: 500 17px/32px Georgia, "Times New Roman", serif;
+    text-align: center; cursor: pointer; user-select: none;
+    opacity: 0; transition: opacity 0.6s; background: rgba(0,0,0,0.35);
+  }
+  #mark.show, #mark:hover { opacity: 1; }
+  body.open #mark { opacity: 0; pointer-events: none; }
+
+  /* The panel. */
+  #panel {
+    position: fixed; right: 0; bottom: 0; top: 0; width: min(560px, 100%);
+    background: rgba(8, 9, 12, 0.86); color: #cfd2d8;
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-left: 1px solid rgba(255,255,255,0.08);
+    transform: translateX(102%); transition: transform 0.35s cubic-bezier(.2,.8,.2,1);
+    overflow-y: auto; padding: 34px 34px 40px;
+    font: 15px/1.55 -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  body.open #panel { transform: none; }
+  #panel a { color: #9cc4ff; text-decoration: none; }
+  #panel a:hover { text-decoration: underline; }
+  #close { position: absolute; top: 14px; right: 18px; color: #888; font-size: 22px; cursor: pointer; background: none; border: 0; }
+  .kicker { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a8f99; }
+  h1 { font: 400 28px/1.15 Georgia, "Times New Roman", serif; color: #f2f2f2; margin: 6px 0 14px; }
+  p.blurb { color: #d8dbe0; margin-bottom: 18px; }
+  .row { display: flex; gap: 14px; flex-wrap: wrap; margin: 14px 0 22px; font-size: 14px; }
+  .row a.btn { border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; padding: 6px 11px; color: #e6e9ef; }
+  .row a.btn:hover { background: rgba(255,255,255,0.06); text-decoration: none; }
+  h2 { font: 500 12px/1 -apple-system, Helvetica, Arial, sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: #8a8f99; margin: 22px 0 10px; }
+  .figs { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+  .figs a { flex: 0 0 auto; width: 150px; }
+  .figs img { width: 150px; height: 100px; object-fit: contain; background: #fff; border-radius: 3px; display: block; }
+  .figs span { display: block; font-size: 11px; color: #9a9fa8; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  dl.terms dt { color: #eee; margin-top: 8px; font-weight: 500; }
+  dl.terms dd { color: #aab; font-size: 14px; }
+  .nav { display: flex; justify-content: space-between; margin-top: 26px; font-size: 14px; }
+  .all { columns: 2; font-size: 13.5px; line-height: 1.7; margin-top: 8px; }
+  .all a.cur { color: #fff; }
+  .hint { color: #6d727b; font-size: 12px; margin-top: 26px; }
+  code { font: 13px Menlo, Consolas, monospace; color: #dde; }
+  @media (max-width: 600px) { #panel { padding: 26px 20px 40px; } .all { columns: 1; } }
 </style>
+<script src="excerpt.js"></script>
 <script type="text/javascript">
 //////////////////////////////////////////////////////////////////////////////
 //
-//  flake.org - each visit shows one program from "The Computational Beauty
-//  of Nature" full screen, chosen at random.  No UI; click to pause.
-//
-//  - #name in the URL pins a demo (flake.org/#lorenz).
-//  - The last few demos shown in this browser are remembered so a return
-//    visit gets something different.
-//  - The WebGL demos are skipped if the browser has no WebGL.
-//  - gallery.html lists everything.
+//  flake.org - one program from "The Computational Beauty of Nature" per
+//  visit, full screen.  A single faint glyph appears when the pointer
+//  moves; it opens a panel with what you are looking at, where it is in
+//  the book, the book's own figures for that chapter, the glossary terms
+//  it depends on, and the source.  Arrow keys move between programs,
+//  Escape closes the panel, #name in the URL pins a program.
 //
 //////////////////////////////////////////////////////////////////////////////
-window.onload = function() {
-  var DEMOS = [
-    "life", "ifs", "lsys", "mandel", "julia", "bifur1d", "lorenz", "henwarp",
-    "ca", "hp", "vants", "termites", "boids", "diffuse", "gsw", "sipd",
-    "hopfield", "mlp"
-  ];
-  var WEBGL = { mandel: 1, julia: 1 };
-  var pick = decodeURIComponent(location.hash.slice(1));
-  if (DEMOS.indexOf(pick) < 0) {
-    var pool = DEMOS.slice(), recent = [];
-    try { recent = JSON.parse(localStorage.getItem("flake.recent") || "[]"); } catch (e) {}
-    var gl = 0;
-    try { var c = document.createElement("canvas"); gl = !!(c.getContext("webgl") || c.getContext("experimental-webgl")); } catch (e) {}
-    pool = pool.filter(function(d) { return (gl || !WEBGL[d]) && recent.indexOf(d) < 0; });
-    if (!pool.length) pool = DEMOS.slice();
-    pick = pool[Math.floor(Math.random() * pool.length)];
-    recent.push(pick); while (recent.length > 6) recent.shift();
-    try { localStorage.setItem("flake.recent", JSON.stringify(recent)); } catch (e) {}
+(function() {
+  var DATA = "data/", DEMOS = "demos/", GITHUB = "https://github.com/gwf/CBofN/blob/master/src/";
+  var demos = [], byId = {}, figures = null, glossary = null, cur = null;
+  var frame, mark, panel, hideTimer;
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function(c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function load(url, cb) {
+    var x = new XMLHttpRequest(); x.open("GET", url); x.onload = function() {
+      var j = null; try { j = x.status < 400 ? JSON.parse(x.responseText) : null; } catch (e) {}
+      try { cb(j); } catch (e) { if (window.console) console.error("panel: " + url + ": " + (e && e.message)); }
+    }; x.onerror = function() { cb(null); }; x.send();
   }
-  var f = document.createElement("iframe");
-  f.src = pick + ".html";
-  f.setAttribute("allow", "fullscreen");
-  document.body.appendChild(f);
-  window.onhashchange = function() { location.reload(); };
-};
+
+  // ---- choosing a demo ----------------------------------------------------
+  function hasWebGL() { try { var c = document.createElement("canvas"); return !!(c.getContext("webgl") || c.getContext("experimental-webgl")); } catch (e) { return false; } }
+  function pickRandom() {
+    var recent = []; try { recent = JSON.parse(localStorage.getItem("flake.recent") || "[]"); } catch (e) {}
+    var gl = hasWebGL();
+    var pool = demos.filter(function(d) { return d.rotate !== false && (gl || !d.webgl) && recent.indexOf(d.id) < 0; });
+    if (!pool.length) pool = demos.filter(function(d) { return d.rotate !== false; });
+    var d = pool[Math.floor(Math.random() * pool.length)];
+    recent.push(d.id); while (recent.length > 6) recent.shift();
+    try { localStorage.setItem("flake.recent", JSON.stringify(recent)); } catch (e) {}
+    return d;
+  }
+  function show(d, setHash) {
+    cur = d;
+    frame.src = DEMOS + d.id + ".html";
+    document.title = "flake.org";
+    if (setHash) history.replaceState(null, "", "#" + d.id);
+    render();
+  }
+  function step(k) {
+    var list = demos.filter(function(d) { return d.rotate !== false; });
+    var i = list.indexOf(cur); if (i < 0) i = 0;
+    show(list[(i + k + list.length) % list.length], true);
+  }
+
+  // ---- the panel --------------------------------------------------------------
+  function figsFor(d) {
+    if (!figures) return [];
+    return figures.filter(function(f) { return String(f.number || "").split(".")[0] === String(d.chapter); });
+  }
+  function termsFor(d) {
+    if (!glossary || !d.terms) return [];
+    var out = [];
+    d.terms.forEach(function(t) {
+      var norm = function(x) { return String(x).toLowerCase().normalize("NFD").replace(/[^a-z0-9]/g, ""); };
+      var tl = norm(t);
+      var g = glossary.filter(function(e) { return norm(e.term) === tl; })[0] ||
+              glossary.filter(function(e) { var el = norm(e.term); return el.indexOf(tl) === 0 || tl.indexOf(el) === 0; })[0];
+      if (g && out.indexOf(g) < 0) out.push(g);
+    });
+    return out;
+  }
+  function render() {
+    var d = cur; if (!d) return;
+    var h = '<button id="close" title="close (Esc)">&times;</button>';
+    h += '<div class="kicker">Part ' + esc(d.part) + ' &middot; ' + esc(d.partName) + ' &middot; Chapter ' + esc(d.chapter) + '</div>';
+    h += '<h1>' + esc(d.title) + '</h1>';
+    h += '<p class="blurb">' + esc(d.blurb) + '</p>';
+    h += '<div class="row">';
+    h += '<a class="btn" href="#" id="excerpt">From the book: chapter ' + esc(d.chapter) + ', ' + esc(d.chapterTitle) + '</a>';
+    h += '<a class="btn" href="' + GITHUB + esc(d.program.split(/[ ,(]/)[0]) + '" target="_blank">C source: ' + esc(d.program) + '</a>';
+    h += '<a class="btn" href="site/programs/' + esc(d.program.split(/[ ,(.]/)[0]) + '.html" target="_blank">Manual page</a>';
+    h += '</div>';
+    var fs = figsFor(d);
+    if (fs.length) {
+      h += '<h2>Figures from the book, chapter ' + esc(d.chapter) + '</h2><div class="figs">';
+      fs.forEach(function(f) {
+        h += '<a href="figures/svg/' + f.index + '.svg" target="_blank" title="' + esc(f.caption || "") + '"><img loading="lazy" src="figures/thumb/' + f.index + '.png" alt=""><span>Figure ' + esc(f.number) + '</span></a>';
+      });
+      h += '</div>';
+    }
+    var ts = termsFor(d);
+    if (ts.length) {
+      h += '<h2>From the glossary</h2><dl class="terms">';
+      ts.forEach(function(t) { h += '<dt>' + esc(t.term) + '</dt><dd>' + esc(t.definition || t.definition_md || "").replace(/\[([^\]]+)\]\([^)]*\)/g, "$1") + '</dd>'; });
+      h += '</dl>';
+    } else if (d.terms && d.terms.length) {
+      h += '<h2>Terms</h2><p style="color:#aab">' + esc(d.terms.join(", ")) + '</p>';
+    }
+    h += '<div class="nav"><a href="#" id="prev">&larr; previous</a><a href="site/index.html">the book &amp; everything else</a><a href="#" id="next">next &rarr;</a></div>';
+    h += '<h2>All programs</h2><div class="all">';
+    demos.filter(function(x) { return x.rotate !== false; }).forEach(function(x) {
+      h += '<a href="#' + x.id + '" class="' + (x === d ? "cur" : "") + '">' + esc(x.title) + '</a><br>';
+    });
+    h += '</div>';
+    h += '<p class="hint">Click the picture to pause it. Arrow keys change programs. Everything here is a single HTML file you can view source on; the algorithms are the ones in the book.</p>';
+    panel.innerHTML = h;
+    $("close").onclick = closePanel;
+    $("excerpt").onclick = function(e) { e.preventDefault(); CBNExcerpt.open("ch" + d.chapter, ""); };
+    $("prev").onclick = function(e) { e.preventDefault(); step(-1); };
+    $("next").onclick = function(e) { e.preventDefault(); step(1); };
+    panel.querySelectorAll(".all a").forEach(function(a) {
+      a.onclick = function(e) { e.preventDefault(); var d2 = byId[a.getAttribute("href").slice(1)]; if (d2) show(d2, true); };
+    });
+  }
+  function openPanel() { document.body.classList.add("open"); }
+  function closePanel() { document.body.classList.remove("open"); }
+  function poke() {
+    mark.classList.add("show");
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(function() { mark.classList.remove("show"); }, 2800);
+  }
+
+  // ---- boot -------------------------------------------------------------------
+  window.onload = function() {
+    frame = $("frame"); mark = $("mark"); panel = $("panel");
+    load(DATA + "demos.json", function(j) {
+      demos = (j && j.demos) || [];
+      demos.forEach(function(d) { byId[d.id] = d; });
+      // Bring in optional data lazily; the panel re-renders when it arrives.
+      load(DATA + "figures.json", function(f) { figures = Array.isArray(f) ? f : (f && f.figures) || null; if (cur) render(); });
+      load(DATA + "glossary.json", function(g) { glossary = Array.isArray(g) ? g : (g && g.entries) || null; if (cur) render(); });
+      var pin = byId[decodeURIComponent(location.hash.slice(1))];
+      show(pin || pickRandom(), !!pin);
+    });
+    mark.onclick = function() { openPanel(); mark.classList.remove("show"); };
+    document.addEventListener("mousemove", poke);
+    document.addEventListener("touchstart", poke, { passive: true });
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") closePanel();
+      else if (e.key === "ArrowRight") step(1);
+      else if (e.key === "ArrowLeft") step(-1);
+      else if (e.key === "?" || e.key === "i") { document.body.classList.toggle("open"); }
+    });
+    // The iframe swallows pointer events, so listen inside it too once loaded.
+    frame.addEventListener("load", function() {
+      try {
+        var w = frame.contentWindow;
+        w.document.addEventListener("mousemove", poke);
+        w.document.addEventListener("touchstart", poke, { passive: true });
+        w.document.addEventListener("keydown", function(e) {
+          if (e.key === "Escape") closePanel();
+          else if (e.key === "ArrowRight") step(1);
+          else if (e.key === "ArrowLeft") step(-1);
+          else if (e.key === "?" || e.key === "i") document.body.classList.toggle("open");
+        });
+      } catch (e) {}
+    });
+    window.onhashchange = function() { var d = byId[decodeURIComponent(location.hash.slice(1))]; if (d && d !== cur) show(d, false); };
+  };
+})();
 </script></head>
-<body></body></html>
+<body>
+<iframe id="frame" title="a program from The Computational Beauty of Nature"></iframe>
+<div id="mark" title="what is this?">?</div>
+<div id="panel"></div>
+</body></html>

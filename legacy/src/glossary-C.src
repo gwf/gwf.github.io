@@ -1,0 +1,234 @@
+#include "defaults.inc"
+#define GLOSSARY_OPTS HIGHLIGHT_COLOR
+#define GLOSSARY_PRE HBEG<b>
+#define GLOSSARY_POST </b>HEND
+#define TITLE Glossary - C
+#include "top.inc"
+
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="C-section">C</a></h1>
+
+
+<p><b><a name="cantor_set">Cantor Set</a></b> &nbsp; &nbsp;
+A simple <a href="glossary-F.html#fractal">fractal</a> <a href="glossary-S.html#set">set</a> composed of an <a href="glossary-U.html#uncountable_infinity">uncountable
+infinity</a> of dust-like points, but that also has 0 measure (meaning
+that the sum width of all points is 0).  The Cantor set is constructed
+by removing the middle third of a unit line segment, and then
+<a href="glossary-R.html#recursive">recursively</a> removing the middle third of any remaining line
+segments, for an infinite number of steps.   
+
+<p><b><a name="cellular_automaton_(ca)">Cellular Automaton (CA)</a></b> &nbsp; &nbsp;
+A <a href="glossary-D.html#discrete">discrete</a> <a href="glossary-D.html#dynamical_system">dynamical system</a> that is composed of an array of
+cells, each of which behaves like a <a href="glossary-F.html#finite-state_automaton_(fsa)">finite-state automaton</a>.  All
+interactions are local, with the next state of a cell being a
+<a href="glossary-F.html#function">function</a> of the current state of itself and its neighbors.
+<a href="glossary-C.html#conways_game_of_life">Conway's Game of Life</a> is a CA.
+
+<p><b><a name="chaos/chaotic">Chaos/Chaotic</a></b> &nbsp; &nbsp;
+Irregular motion of a <a href="glossary-D.html#dynamical_system">dynamical system</a> that is
+<a href="glossary-D.html#deterministic">deterministic</a>, <a href="glossary-S.html#sensitivity">sensitive</a> to initial conditions, and impossible
+to predict in the long term with anything less than an infinite and
+perfect representation of <a href="glossary-A.html#analog">analog</a> values.  
+
+<p><b><a name="chomsky_hierarchy">Chomsky Hierarchy</a></b> &nbsp; &nbsp;
+Four classes of languages (or computing machines) that have increasing
+complexity: regular (<a href="glossary-F.html#finite-state_automaton_(fsa)">finite-state automata</a>), context-free
+(push-down automata), context-sensitive (linear bounded automata), and
+<a href="glossary-R.html#recursive">recursive</a> (<a href="glossary-T.html#turing_machine">Turing machines</a>).  
+
+<p><b><a name="classifier">Classifier</a></b> &nbsp; &nbsp;
+A rule that is part of a <a href="glossary-C.html#classifier_system">classifier system</a> and has a condition
+that must be matched before its <a href="glossary-M.html#message">message</a> (or action) can be posted
+(or effected).  The <a href="glossary-S.html#strength">strength</a> of a classifier determines the
+likelihood that it can outbid other classifiers if more than one
+condition is matched.
+
+<p><b><a name="classifier_system">Classifier System</a></b> &nbsp; &nbsp;
+An <a href="glossary-A.html#adaptive">adaptive</a> <a href="glossary-S.html#system">system</a> similar to a <a href="glossary-P.html#post_production_system">Post production system</a>
+that contains many ``if ... then'' rules called <a href="glossary-C.html#classifier">classifiers</a>.
+The state of the <a href="glossary-E.html#environment">environment</a> is encoded as a <a href="glossary-M.html#message">message</a> by a
+<a href="glossary-D.html#detector">detector</a> and placed on the <a href="glossary-M.html#message_list">message list</a> from which
+the condition portion of the classifiers can be matched.  ``Winning''
+classifiers can then post their own messages to the message list,
+ultimately forming a type of <a href="glossary-C.html#computation">computation</a> that may result in a message
+being translated into an action by an <a href="glossary-E.html#effector">effector</a>.  The
+<a href="glossary-S.html#strength">strengths</a> of the classifiers are modified by the <a href="glossary-B.html#bucket_brigade_algorithm">bucket
+brigade</a> <a href="glossary-A.html#algorithm">algorithm</a>, and new rules can be introduced via a <a href="glossary-G.html#genetic_algorithm_(ga)">genetic
+algorithm</a>. 
+
+<p><b><a name="coevolution">Coevolution</a></b> &nbsp; &nbsp;
+Two or more entities experience <a href="glossary-E.html#evolution">evolution</a> in response to one
+another.  Due to <a href="glossary-F.html#feedback">feedback</a> mechanisms, this often results in a
+biological <a href="glossary-A.html#arms_race">arms race</a>.  
+
+<p><b><a name="complement">Complement</a></b> &nbsp; &nbsp;
+A <a href="glossary-S.html#set">set</a> composed of all elements that are not members of another
+set.  
+
+<p><b><a name="combinatorial_optimization">Combinatorial Optimization</a></b> &nbsp; &nbsp;
+A class of problems in which the number of candidate solutions is
+combinatorial in size.  Each possible solution has an associated cost.
+The goal is to find the solution with the lowest cost. Because of the
+vast numbers involved, explicit <a href="glossary-S.html#search/search_method">search</a> an entire
+<a href="glossary-S.html#search_space">search space</a> is not always possible. 
+
+<p><b><a name="complete">Complete</a></b> &nbsp; &nbsp;
+Describes a <a href="glossary-F.html#formal_system">formal system</a> in which all <a href="glossary-S.html#statement">statements</a> can be
+proved as being true or false.  Most interesting formal systems are
+not complete, as proved in <a href="glossary-G.html#gödels_incompleteness_theorem">Gödel's Incompleteness Theorem</a>.  
+
+<p><b><a name="complex_number">Complex Number</a></b> &nbsp; &nbsp;
+A number that has a <a href="glossary-R.html#real_number">real</a> component and an <a href="glossary-I.html#imaginary_number">imaginary</a>
+component and is characterized as a point on a plane (instead of the
+<a href="glossary-R.html#real_number">real number</a> line). 
+
+<p><b><a name="complex_system">Complex System</a></b> &nbsp; &nbsp;
+A collection of many simple <a href="glossary-N.html#nonlinear">nonlinear</a> units that operate in
+<a href="glossary-P.html#parallel/parallelism">parallel</a> and interact locally with each other so as to produce
+<a href="glossary-E.html#emergent">emergent</a> behavior.  
+
+<p><b><a name="complexity">Complexity</a></b> &nbsp; &nbsp;
+An ill-defined term that means many things to many people.  Complex
+things are neither <a href="glossary-R.html#random/randomness">random</a> nor regular, but hover somewhere in
+between.  Intuitively, complexity is a measure of how interesting
+something is.  Other types of complexity may be well defined; see the
+index for other references.  
+
+<p><b><a name="compressible">Compressible</a></b> &nbsp; &nbsp;
+Having a description that is smaller than itself; not <a href="glossary-R.html#random/randomness">random</a>;
+possessing regularity.  
+
+<p><b><a name="computable">Computable</a></b> &nbsp; &nbsp;
+Expressible as a yes/no question that can be answered in any case by a
+computer in finite time.  
+
+<p><b><a name="computation">Computation</a></b> &nbsp; &nbsp;
+The realization of a <a href="glossary-P.html#program">program</a> in a computer.  
+
+<p><b><a name="connectivity">Connectivity</a></b> &nbsp; &nbsp;
+The amount of interaction in a <a href="glossary-S.html#system">system</a>, the structure of the
+<a href="glossary-W.html#weight">weights</a> in a <a href="glossary-N.html#neural_network_(nn)">neural network</a>, or the relative number of
+edges in a <a href="glossary-G.html#graph">graph</a>. 
+
+<p><b><a name="conservative_system">Conservative System</a></b> &nbsp; &nbsp;
+A <a href="glossary-D.html#dynamical_system">dynamical system</a> that preserves the volume of its <a href="glossary-S.html#state_space">state
+space</a> under motion and, therefore, does not display the types of
+behavior found in <a href="glossary-D.html#dissipative_system">dissipative systems</a>.  
+
+<p><b><a name="consistence">Consistence</a></b> &nbsp; &nbsp;
+In <a href="glossary-F.html#formal_system">formal systems</a>, having the property that all <a href="glossary-S.html#statement">statements</a>
+are either true or false. 
+
+<p><b><a name="continuous">Continuous</a></b> &nbsp; &nbsp;
+Taking a <a href="glossary-R.html#real_number">real</a> value, i.e., not <a href="glossary-D.html#discrete">discrete</a>.  <a href="glossary-D.html#dynamical_system">Dynamical
+systems</a> may operate in continuous time or space.  
+
+<p><b><a name="control">Control</a></b> &nbsp; &nbsp;
+Exerting actions to manipulate a <a href="glossary-S.html#system">system</a> or <a href="glossary-E.html#environment">environment</a> in a
+goal-seeking manner.  
+
+<p><b><a name="convergence">Convergence</a></b> &nbsp; &nbsp;
+For computers, halting with an answer; for <a href="glossary-D.html#dynamical_system">dynamical systems</a>,
+falling into an <a href="glossary-A.html#attractor">attractor</a>; for <a href="glossary-S.html#search/search_method">searches</a> (e.g.,
+<a href="glossary-B.html#backpropagation">backpropagation</a> and
+<a href="glossary-G.html#genetic_algorithm_(ga)">genetic algorithms</a>), finding a location that cannot be improved
+upon; for infinite summations, approaching a definite value. 
+
+<p><b><a name="conways_game_of_life">Conway's Game of Life</a></b> &nbsp; &nbsp;
+A <a href="glossary-C.html#cellular_automaton_(ca)">cellular automaton</a> rule set that operates on a two-dimensional
+grid.  Each cell changes its state according to the states of its
+eight nearest neighbors: dead cells come alive with exactly three live
+neighbors, and cells die if they have anything but two or three
+neighbors.  The Game of Life can display complex patterns such as
+<a href="glossary-G.html#glider">gliders</a>, <a href="glossary-F.html#fish">fish</a>, and <a href="glossary-G.html#glider_gun">glider guns</a>, and is also capable of
+<a href="glossary-U.html#universal_computation">universal computation</a>.  
+
+<p><b><a name="co-recursively_enumerable_(co-re)">Co-Recursively Enumerable (CO-RE)</a></b> &nbsp; &nbsp;
+The <a href="glossary-C.html#complement">complement</a> of a <a href="glossary-S.html#set">set</a> that can be <a href="glossary-R.html#recursively_enumerable_(re)">recursively
+enumerated</a>.  
+
+<p><b><a name="countable_infinity">Countable Infinity</a></b> &nbsp; &nbsp;
+Having the same number of objects as the <a href="glossary-S.html#set">set</a> of <a href="glossary-N.html#natural_number">natural
+numbers</a>.  
+
+<p><b><a name="crossover">Crossover</a></b> &nbsp; &nbsp;
+A genetic operator that splices information from two or more parents
+to form a composite offspring that has genetic material from all
+parents.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+
+
+#include "bottom.inc"

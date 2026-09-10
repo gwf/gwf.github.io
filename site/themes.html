@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<title>Three themes - The Computational Beauty of Nature</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* { box-sizing: border-box; }
+html { color-scheme: dark; }
+body { margin: 0; background: #0b0c0f; color: #cfd2d8; font: 16px/1.6 -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+a { color: #9cc4ff; text-decoration: none; } a:hover { text-decoration: underline; }
+header.top { border-bottom: 1px solid #1d1f25; padding: 14px 28px; display: flex; gap: 22px; align-items: baseline; flex-wrap: wrap; }
+header.top .brand { font: 400 18px Georgia, "Times New Roman", serif; color: #f2f2f2; }
+header.top nav a { color: #9aa0ab; margin-right: 16px; font-size: 14px; }
+header.top nav a.cur { color: #fff; }
+main { max-width: 980px; margin: 0 auto; padding: 36px 28px 80px; }
+h1 { font: 400 34px/1.15 Georgia, "Times New Roman", serif; color: #f4f4f4; margin: 0 0 8px; }
+h2 { font: 400 24px/1.2 Georgia, "Times New Roman", serif; color: #eee; margin: 38px 0 12px; }
+h3 { font: 500 17px/1.3 -apple-system, Helvetica, Arial, sans-serif; color: #e6e6e6; margin: 26px 0 8px; }
+.kicker { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #8a8f99; }
+.lede { color: #aab; font-size: 17px; margin-bottom: 26px; }
+p { margin: 0 0 14px; }
+blockquote { border-left: 2px solid #333; margin: 14px 0; padding: 2px 16px; color: #b9bcc4; font-style: italic; }
+pre, code { font: 13.5px Menlo, Consolas, monospace; } pre { background: #14161b; padding: 12px 14px; border-radius: 4px; overflow-x: auto; }
+code { color: #dde; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+.card { background: #101218; border: 1px solid #1d1f25; border-radius: 6px; overflow: hidden; }
+.card img { display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #000; }
+.card .b { padding: 10px 12px 12px; } .card b { color: #eee; font-weight: 500; display: block; } .card small { color: #8a8f99; }
+.card:hover { border-color: #444; }
+.parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+.part { border-top: 1px solid #23262d; padding-top: 12px; }
+.part h2 { margin: 4px 0 8px; font-size: 21px; }
+.part ol { margin: 0; padding-left: 22px; color: #aab; } .part li { margin: 3px 0; } .part li a { color: #cfd2d8; }
+.part .demo { color: #9cc4ff; font-size: 13px; margin-left: 6px; }
+ul.plain { list-style: none; columns: 2; column-gap: 30px; padding-left: 22px; color: #aab; margin: 0 0 8px; } ul.plain li { margin: 2px 0; } @media (max-width: 700px) { ul.plain { columns: 1; } }
+.figs { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+.figs a { display: block; background: #fff; border-radius: 4px; padding: 6px; }
+.figs img { width: 100%; height: 120px; object-fit: contain; display: block; }
+.figs span { display: block; font-size: 12px; color: #444; margin-top: 4px; }
+dl.gloss dt { color: #eee; font-weight: 500; margin-top: 14px; } dl.gloss dd { margin: 2px 0 0; color: #b5b9c2; }
+input.search { width: 100%; font: 16px inherit; padding: 10px 12px; background: #14161b; border: 1px solid #2a2d35; color: #eee; border-radius: 6px; margin: 14px 0 22px; }
+.chapnav { display: flex; justify-content: space-between; margin: 40px 0 0; color: #9aa0ab; font-size: 14px; }
+.opts td { vertical-align: top; padding: 4px 10px 4px 0; font-size: 14px; } .opts code { white-space: nowrap; }
+.muted { color: #8a8f99; font-size: 14px; }
+.hero { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+.hero .cover { width: 220px; border-radius: 4px; box-shadow: 0 6px 30px rgba(0,0,0,0.6); }
+.two { columns: 2; column-gap: 34px; } @media (max-width: 700px) { .two { columns: 1; } }
+footer { color: #6d727b; font-size: 13px; border-top: 1px solid #1d1f25; margin-top: 60px; padding: 18px 28px; }
+.demo-embed { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: 6px; background: #000; display: block; }
+</style></head><body>
+<header class="top"><span class="brand">The Computational Beauty of Nature</span><nav><a href="index.html" class="cur">Programs</a><a href="figures.html" class="">Figures</a><a href="glossary.html" class="">Glossary</a><a href="quotes.html" class="">Quotations</a><a href="about.html" class="">About the book</a><a href="../index.html" class="">flake.org</a></nav></header>
+<main><h1>Three themes</h1><h2>Three Themes</h2>
+<p>Basically, there are three key ideas that keep reappearing throughout the book. Each idea is relatively simple in principle, but all three must be presented within the context of the entire book in order to be appreciated since all of them make some reference to the contents of the five book parts: <a href="parts.html#computation">computation</a>, <a href="parts.html#fractals">fractals</a>, <a href="parts.html#chaos">chaos</a>, <a href="parts.html#compsys">complex systems</a>, and <a href="parts.html#adaptation">adaptation</a>.</p>
+<p>Taken in order, these three ideas roughly build on one another, so it helps to consider them in the following order:</p>
+<h3>Theme #1</h3>
+<h4><a href="themes.html">The whole is greater than the sum of the parts</a></h4>
+<p>By this I mean that the topics of computation, fractals, chaos, complex systems, and adaptation are far more interesting considered together than by themselves. Each of the topics is related to the others in a non-trivial way; moreover, each can be seen as the result of a few simple principles such as recursion, parallelism, and nonlinearity.</p>
+<h3>Theme #2</h3>
+<h4><a href="themes.html">The interesting stuff is in the middle</a></h4>
+<p>“Beauty,” i.e., that which makes something interesting, is related to a mixture of regularity and irregularity. When things are too regular, we usually find them to be uninteresting because they yield no surprises for us. Complementary to this, highly irregular things are often uninteresting because they make no sense. In the middle, between regularity and irregularity, lies a place where things can be understood, but not completely.</p>
+<h3>Theme #3</h3>
+<h4><a href="themes.html">Science is doomed to uncertainty---but this is a good thing</a></h4>
+<p>The interesting things mentioned above are often found to have computationally profound qualities. For instance, even if you had a perfect model or theory of how something worked, chances are that it would still be impossible to perfectly predict the future of that which you have modeled. A related result guarantees just the opposite: regardless of how much “data” one collects, it's not always possible to build a perfect theory. Taken together, these two results insure that there will never be an end to science, or suprises.</p><p><strong>1. The whole is greater than the sum of the parts</strong></p>
+<p>By this I mean that the topics of computation, fractals, chaos, complex systems, and adaptation are far more interesting considered together than by themselves. Each of the topics is related to the others in a non-trivial way; moreover, each can be seen as the result of a few simple principles such as recursion, parallelism, and nonlinearity.</p>
+<p>Let's examine this idea further. Starting from a computational framework, fractals are special “programs” that build self-similar structures.</p>
+<p>Computation</p>
+<p><em>structural</em> <img alt="---&gt;" src="../legacy/graphics/rarrow.gif"> <em>self-similarity</em></p>
+<p>Fractals</p>
+<p>The program in this case often involves a form of recursion that specifies how one part of a fractal <a href="../legacy/graphics/figa3.gif">looks like another portion</a> of it (or of the whole fractal). Other times, as in the case of the <a href="../legacy/graphics/figc3.jpg">Mandelbrot set</a> and in <a href="../legacy/graphics/figc4.jpg">Julia sets</a>, structural self-similarity appears almost as a side-effect because the compact rules that describe such objects do not explicitly contain specifications for how things should look.</p>
+<p>In either case, when one allows the rules of a fractal to be expressed <em>ad infinitum</em> strange mathematical properties can be found in the structural forms of the fractal. In the most extreme cases, fractals such as the Mandelbrot set can be seen as mathematical statements that are similar in complexity to incomputable problems found in computer science.</p>
+<hr>
+<p>Chaotic systems are similar to fractals but contain functional self-similarity that occurs at different scales.</p>
+<p>Fractals</p>
+<p><em>functional</em> <img alt="---&gt;" src="../legacy/graphics/rarrow.gif"> <em>self-similarity</em></p>
+<p>Chaos</p>
+<p>More specifically, while we could visually confirm that a portion of a fractal is similar to itself, it is also possible to see how a chaotic system is functionally self-similar. Often times, this functional self-similarity shows itself as a characteristic behavior that occurs on multiple time and/or spatial scales. This is why a <a href="../legacy/graphics/figd4.gif">strange attractor</a> (which is a characterization of a chaotic system's behavior) will usually have a fractal shape to it.</p>
+<hr>
+<p>Chaos, which depends on nonlinearity, is usually studied in systems that can be described with only a few equations. However, another type of chaos is found in large collections that operate in parallel. Examples of this latter type include ecosystems, economies, and chemical soups. We refer to such collections as complex systems because even though a single agent in the collection can be understood (e.g., a predator, stock trader, or reactant) the composite behavior of the system is far more complicated.</p>
+<p>Chaos</p>
+<p><em>multiplicity</em> <img alt="---&gt;" src="../legacy/graphics/rarrow.gif"> <em>&amp; parallelism</em></p>
+<p>Complex Systems</p>
+<p>Hence, by adding multiplicity and parallelism to collections of simple nonlinear agents, it is possible to produce behavior that is not only chaotic, but computationally profound as well.</p>
+<hr>
+<p>One of the more interesting facts concerning complex systems is that sophisticated behavior can be found even when the interactions among the system's agents are constrained to be local. Sometimes the details of how the interaction occur can be subtly modified, as in the case when a synapse that connects two neurons is allowed to strengthen or weaken.</p>
+<p>Complex Systems</p>
+<p><em>feedback</em> <img alt="---&gt;" src="../legacy/graphics/rarrow.gif"></p>
+<p>Adaptation</p>
+<p>Since agents in a complex system are all indirectly coupled to one another, it is possible for a sophisticated form of feedback to occur that allows the agents (and the system as a whole) to adapt in a seemingly intelligent manner. While an obvious form of adaptation through feedback is found in the brain, more subtle forms can be found in market economies, immune systems, and through evolution.</p>
+<hr>
+<p>Since adaptation is ultimately a form of modeling (where events external to the adapted system are mirrored internally), adaptive systems that alter their environment are indirectly altering themselves.</p>
+<p>Adaptation</p>
+<p><em>self-</em> <img alt="---&gt;" src="../legacy/graphics/rarrow.gif"> <em>reference</em></p>
+<p>Computation</p>
+<p>This means that some adaptive systems can be self-referential (or recursive), which is a requirement for the ability to perform complex computations. Adaptive systems that contain such self-reference (such as recurrent neural networks) are capable of universal computation.</p>
+<hr>
+<p>Having come full-circle in seeing how all of these topics relate in a sequential manner, it is now worthwhile to see what some of the cross-connections are between the five topics. The table below contains a list of subjects that relate to two or more of the book topics.</p>
+<p>Computation Fractals Chaos Complex Systems Adaptation Computation - recursion incomputability cellular automata coadaptation Fractals recursion - strange attractors growth models hierarchical models Chaos incomputability strange attractors - phase transitions emergence Complex Systems cellular automata growth models phase transitions - self-organization Adaptation coadaptation hierarchical models emergence self-organization -</p>
+<p>As can be seen, there are many subjects that are clearly related to more than one book part. By viewing all of these topics in a multidisciplinary manner, one can appreciate how the topics of computation, fractals, chaos, complex system, and adaptation are far more interesting when considered together.</p><p><strong>2. The interesting stuff is in the middle</strong></p>
+<p>“Beauty,” i.e., that which makes something interesting, is related to a mixture of regularity and irregularity. When things are too regular, we usually find them to be uninteresting because they yield no surprises for us. Complementary to this, highly irregular things are often uninteresting because they make no sense. In the middle, between regularity and irregularity, lies a place where things can be understood, but not completely.</p>
+<p>This idea is best illustrated with an example that appears in the book (paraphrased from Section 22.6, “Internal Representations”).</p>
+<p>Consider the task of finding a good movie to see. You have at your disposal several movie reviews and some prior knowledge concerning the relative tastes of the individual movie reviewers. Some reviewers seem to like everything ever put on film, so what they say about any movie is useless, in that it tells you nothing at all about whether or not you will like a movie. Other movie reviewers have such complex tastes that you may be hard pressed to ever guess what kind of movie they would like or dislike. However, if you find that your taste in science fiction films is similar to one particular critic's, or that your preferences for comedy films are exactly opposite to those of another critic, then these are both useful pieces of information for you to use when picking a movie.</p>
+<p>The key point here is that the usefulness of a movie review depends on the relative complexity of the critic: if he or she is either too simplistic or too complex, then the information they provide is negligible.</p>
+<p>We can extend the analogy to partially describe what makes a movie entertaining. Both predictable and random plots or boring. But something in between, that contains both familiarity and surprise, makes a movie fun to watch.</p>
+<p>Still not convinced? Then consider music. Very few people enjoy listening to simple scales, no matter how precisely they are played. Nor do people enjoy listening to random beeps. Interestingly, analysis of classical music often reveals a fractal representation for the notes, which gets to the heart of the idea that “beautiful” things contain a mixture of regularity and irregularity.</p>
+<p>This basic idea, that neat things are at the midpoint between computability (simplicity) and incomputability (randomness) can be extended to just about every conceivable domain. The table below (adapted from a table in Chapter 24) is a partial listing of a broad range of things that seem to fit with this idea.</p>
+<p><strong>Computable</strong> <strong>Partially Computable</strong> <strong>Incomputable</strong> <strong>Sets</strong> recursive RE and CO-RE not RE &amp; not CO-RE <strong>Numbers</strong> rational computable irrational incomputable <strong>Programs</strong> trivially (never) halt possibly halt --- <strong>Proofs</strong> true or false profound statements unprovable <strong>NP-Complete Problems</strong> underconstrained critically constrained overconstrained <img alt="" src="../legacy/graphics/blank.gif"> <strong>Deterministic Geometry</strong> Euclidean deterministic fractal  --- <strong>Stochastic Geometry</strong>  --- stochastic fractal pure noise <strong>AC</strong> compressible possibly incompressible incompressible <strong>Mandelbrot Set</strong> white regions border regions black regions <img alt="" src="../legacy/graphics/blank.gif"> <strong>Continuous Dynamics</strong> fixed point chaotic high-dimensional chaos or stochastic <strong>Discrete Dynamics</strong> regular from over-sampling complex at mid-sampling irregular from under-sampling <strong>Attractors</strong> integral dimensions strange infinite dimensional <strong>Mater</strong> solid liquid gas <img alt="" src="../legacy/graphics/blank.gif"> <strong>Wolfram CA</strong> class I or II class IV class III <strong>Langton's lambda</strong> lambda &lt; 1/3 lambda near 1/2 lambda &gt; 2/3 <strong>Agent Interactions</strong> globally coordinated or always cooperative locally coordinated or cooperative and cooperative uncoordinated or always competitive <strong>NK Nets</strong> K = 1 K = 2 2 &lt; K &lt;= N <strong>Sandpiles</strong> flat and stable critical tall and unstable <strong>Economics</strong> communism free but regulated unrestrained <strong>Governments</strong> dictatorial democracy anarchy <img alt="" src="../legacy/graphics/blank.gif"> <strong>Patterns</strong> consistent hidden order inconsistent <strong>Models</strong> not self-referential coadaptive or recurrent hopelessly self-referential <strong>Search Methods</strong> local or greedy hybrid exhaustive <strong>Search Spaces</strong> smooth complex structured pathological</p>
+<p>Many of the topics listed in the table may not be familiar to you, but most of them are covered in considerable detail in the book. In particular, each book part is concluded with a “Postscript” chapter that reviews all of the topics covered in a part as they relate to the ideas from the theory of computation. In this way, it is possible to see how all of these diverse areas relate to the fundamental region between computability and incomputability.</p><p><strong>3. Science is doomed to uncertainty---but this is a good thing</strong></p>
+<p>The interesting things mentioned above are often found to have computationally profound qualities. For instance, even if you had a perfect model or theory of how something worked, chances are that it would still be impossible to perfectly predict the future of that which you have modeled. A related result guarantees just the opposite: regardless of how much “data” one collects, it's not always possible to build a perfect theory. Taken together, these two results insure that there will never be an end to science, or suprises.</p>
+<p>The bottom line here is that whenever something is so rich as to be related to something akin to a universal computer, it is impossible (in the general case) to completely understand the underlying phenomenon. This has deep implications for how we do science. Consider the figure below (from Chapter 24).</p>
+<p><img alt="Figure" src="../legacy/graphics/world2.gif"></p>
+<p>In the past, there were two different methods for how science was performed. In one method, an experimentalist fiddles with some natural phenomenon so that data can be collected in the form of observations. These data are then compared with the current state of knowledge.</p>
+<p>Coming from the opposite direction, a theorist derives a model for how a natural process works. The new model is then used to make predictions for how the natural process will behave at a future time.</p>
+<p>With the advent of computers, a new and hybrid method of science has emerged. This new type of scientist, known as a simulationist, simultaneously performs experimentation in a universe of theories by simulating natural phenomena within the confines of a computer.</p>
+<p>Neither of these methods of performing science is intrinsically superior to the others. Each of them are, in a sense, incomplete. But simulation allows for a type of exploration that neither experimentation nor theorization can provide. Pure theory fails when a phenomenon does not obey models that can be analytically solved. Pure experimentation fails when complex effects cannot be correlated to simple causes. But simulation hovers about these two extremes, allowing for a new type of science that mirrors (if only approximately) the complexity and beauty that we see in the real world.</p>
+<p>The good news here is that there will never be an end to science. For science to end, one of two things must happen: (1) we would need a Theory of Everything that could be used to predict and explain all things, or (2) we would reach a clear and identifiable point at which no further progress could be made. But because nature's most beautiful phenomenon contain computational richness, there will always be surprises and new discoveries just beyond our reach.</p></main>
+<script src="../excerpt.js"></script>
+<footer>Gary William Flake, <em>The Computational Beauty of Nature: Computer Explorations of Fractals, Chaos, Complex Systems, and Adaptation</em>, MIT Press, 1998. Figures may be used freely for noncommercial purposes. Source code is GPL. Site text from the original companion site (1998-2002), rebuilt 2026.</footer>
+</body></html>

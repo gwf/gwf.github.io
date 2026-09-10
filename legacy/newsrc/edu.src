@@ -1,0 +1,134 @@
+#include "defaults.inc"
+#define EDU_OPTS HIGHLIGHT_COLOR
+#define EDU_PRE HBEG<b>
+#define EDU_POST </b>HEND
+#define TITLE For Educators
+#include "top.inc"
+
+
+BOXBEG
+<b>A Little Give and Take</b>
+BOXMID
+To date, I have received a couple of emails from people starting
+up classes based on the book (even a high school class---very cool).
+Would you like to exchange ideas for class activities,
+projects, lectures, and experiments?  If so, this is the place to do
+it.  Send me <a
+href="mailto:gary.flake@usa.net">email</a> with any questions that
+your have, or with resources that you want to share.
+
+<p>
+Possible contributions could be:
+<ul>
+<li>   lecture transparencies in power-point, PS, or PDF,
+<li>   a compilation of student project ideas,
+<li>   problem sets and solutions within specific areas,
+<li>   quizzes, tests, homework or program assignments,
+<li>   actual student projects, or
+<li>   source code for new and improved examples.                   
+</ul>
+
+<p>
+So, in a nutshell, if you have something to contribute, <a
+href="mailto:gary.flake@usa.net">send it to me</a>.
+If you need something and want to post a request, <a
+href="mailto:gary.flake@usa.net">send that as well</a>. 
+
+<p>This page will have a download section for class / instructor
+resources as soon as critical mass on contributions is achieved,
+BOXEND
+
+<p>
+BOXBEG
+<b>Recent <i>CBofN</i> Sightings</b>
+BOXMID
+The following is a partial list of classes that use (or have used)
+<i>CBofN</i>.
+
+<ul> 
+
+<li>
+<a href="http://www.cs.unm.edu/~forrest/">Stephanie Forrest</a> of the
+<a href="http://www.unm.edu/">University of New Mexico</a> is teaching
+Topics in Complex Adaptive Systems with <i>CBofN</i>.
+<br><br>
+
+
+<li>
+<a href="http://www.usc.edu/dept/LAS/ir/faculty/tr-alker.htm">Hayward
+Alker</a> of the <a href="http://www.usc.edu/">University of Southern
+California</a> taught an advanced International Relations course based
+on <i>CBofN</i>.
+<br><br>
+
+
+<li> <a href="http://www.ruhr-uni-bochum.de/lmi/mschmitt/">Michael
+Schmitt</a> of Ruhr-Universit&auml;t Bochum teaches <a
+href="http://www.ruhr-uni-bochum.de/ffm/sommer/300.htm">Algorithmic
+Description of Complex Systems</a> and uses <i>CBofN</i> as the
+primary text.
+<br><br>
+
+
+<li>
+<a href="http://snyflcaa.fingerlakes.edu/~SAMANTPG/">Sam Samanta</a> of
+<a href="http://www.fingerlakes.edu/">Finger Lakes Community College</a> uses
+<i>CBofN</i> as the primary text in his course entitled
+<a href="http://www.sln.suny.edu/ADMIN/SLN/catalog/slncat.nsf/7002dad410c84b91852568b700528f88/c61e2ed17a4d4f0e852568b90048a535?OpenDocument">CHAOS: The Self Organizing Universe</a>.
+<br><br>  
+
+<li>
+<a href="http://eclectic.ss.uci.edu/~drwhite/">Douglas White</a> of the
+<a href="http://www.uci.edu/">University of California Irvine</a> uses
+<i>CBofN</i> as a recommended and collateral reading in his 
+<a
+href="http://eclectic.ss.uci.edu/~drwhite/Anthro179a/syllabus.htm">Social
+Dynamics and Self Organizing Systems</a> course.
+<br><br>  
+
+<li>
+<a href="http://hornacek.coa.edu/dave/index.html">David P. Feldman</a>
+of the <a href="http://www.coa.edu/">College of the Atlantic</a>
+teaches a course on <a
+href="http://hornacek.coa.edu/dave/Teaching/Chaotic_Dynamics/index.html">Chaotic
+Dynamics</a> and uses <i>CBofN</i> as a supplementary text. 
+<br><br>
+
+<li>
+<a href="http://white.ece.ncsu.edu/">Mark White</a> of
+<a href="http://www.ncsu.edu/">North Carolina State University</a>
+uses <i>CBofN</i> in his <a
+href="http://white.ece.ncsu.edu/ECE791N/">Distributed Computation</a>
+course.
+<br><br>
+  
+<li>
+<a href="http://www.cs.laurentian.ca/dgoforth/home.html">Dave
+Goforth</a> of <a href="http://www.cs.laurentian.ca/">Laurentian
+University</a> has plans to use part five of <i>CBofN</i> in his
+<a
+href="http://www.cs.laurentian.ca/dgoforth/cosc4117/outline.html">Artificial
+Intelligence</a> course.
+<br><br>
+
+<li>
+<a href="http://www.daimi.au.dk/~krink/">Thiemo Krink</a> of the
+<a href="http://www.au.dk/">University of Aarhus</a>, Denmark, uses
+<i>CBofN</i> in his
+<a href="http://www.evalife.dk/seminar_fall_1999/index.html">EvALife
+Seminar</a>, ``Multiagent systems in interdisciplinary research on
+information technology and life sciences''.
+<br><br>
+
+<li> 
+<a href="http://www.sar.usf.edu/~ncmath/dave.html">David Mullins</a> of
+the <a href="http://www.newcollege.usf.edu/">New College</a> of
+the University of South Florida used <i>CBofN</i> for a student directed
+self-study course on artificial life and complex systems.
+<br><br>
+
+</ul>  
+BOXEND
+
+#include "bottom.inc"
+

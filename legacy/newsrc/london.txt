@@ -1,0 +1,72 @@
+The Times Higher October 29, 1999 Harold Thimbleby
+
+<p>
+<font size="+2"><i>Natural beauty of computer land</i></font>
+
+<p> This is a book that deserves 15 different sorts of review. If
+computers touch your life. then here is a way of entering the
+excitesnent of closing the gap between technology and life, between
+computers and nature.  If you have any sense of fun, get the book, get
+on the internet, download the programs and start to play your way into
+exploring the boundaries of science.
+
+<p> That is one review. Another might be one that persuades those
+stuffy people who write A-level computing and information technology
+syllabuses to read this book and use it to design a syllabus that
+would give teenagers a real subject. <i>The Computational Beauty of
+Nature</i> provides a wealth of ideas that are relevant, challenging,
+stretching, deeply absorbing, and ideal for school treatment.  Yet
+another review would trigger daydreams of a world we might have been
+drawn into had we read this book when we were teenagers. In receptive
+hands. this book will inspire degree choices life choices, and a
+greater appreciation of computers and nature.
+
+<p> The book's ponderous title belies the decade's work of love that
+it is. A substantial selection of core subject areas are covered in 24
+chapters that require a modest level of mathematics. If you do not
+understand calculus, you are not going to learn it from this hook, but
+the summaries provided are useful revision, and not so tedious that
+they would put off less numerate readers.
+
+<b> Besides, it is easy enough and quite satisfying to play with the
+many versatile programs: the book's website can be explored at
+<tt>http://mitpress.mit.edu/0262062003.html</tt>.  Every chapter is
+illustrated by programs, from simulating predator-prey systems to
+applications of genetic algorithms. The programs can be run directly
+and the source code is available for anyone wanting to try their hand
+at programming.
+
+<p> The programs are well documented, both in the book and on the
+website.  Indeed, the website looks like it will become a lively
+centre of activity for the subject, and for pedagogic developments.
+
+<p> Perhaps the best review of the book would see it as popular
+science.  <i>The Computational Beauty of Nature</i> makes science
+accessible to anyone who enjoys, say, the level of <i>Scientific
+American</i>.  A temptation of popularising science is to sink into
+reportage.  That is, you watch the lives of scientists, but do not
+become a scientist. Fortunately this book is crammed with ideas and
+programs that are both flexible and powerful.
+
+<p> It starts with a clear exposition of computability that leads up to
+a discussion of Turing and Gödel's ideas on what computers can and
+cannot do in principle; the associated program is an interactive Lisp
+system that can be used to explore recursion and other concepts in a
+general way.  You can also draw all sorts of coloured Mandelbrot sets
+and watch flocks of birds fly across your screen.
+
+<p> The book takes the view that computing and natural systems ideas
+are unified in a pentagram of relations. This philosophy is a bit
+wobbly --- I do not mean this as a criticism --- in the sense that it
+makes one want to rush in and sort it out. In fact this is its
+characteristic strength: the reader is invited to experiment with
+ideas, formulas, pictures and programs --- and is left on the edge of
+a new personal understanding, or even on the edge of genuine new
+discovery.
+
+<p> The balance is tantalising. A useful glossary, a substantial
+bibliography and a good index also mean that the book will make a good
+travel guide for the journeys it will inspire.
+
+<p>
+Harold Thimbleby Is professor of computing research, Middlesex Universlty.

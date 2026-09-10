@@ -1,0 +1,83 @@
+#include "defaults.inc"
+#define FIGURES_OPTS HIGHLIGHT_COLOR
+#define FIGURES_PRE HBEG<b>
+#define FIGURES_POST </b>HEND
+#define TITLE Book Figures
+#include "top.inc"
+
+<p> Thanks to the good people at the MIT Press, all of the figures
+from <i>CBofN</i> may be freely used for non-commercial purposes.
+Thus, if you are teaching a class, giving a lecture, or just want to
+have them to look at, feel free to download and use any of the figures.
+
+<p>
+You may browse or download individual figures by selecting one of the
+following thumbnail pages:
+
+<br><br><center>
+[ <a href=fig1.html>1</a> | 
+<a href=fig2.html>2</a> | 
+<a href=fig3.html>3</a> | 
+<a href=fig4.html>4</a> | 
+<a href=fig5.html>5</a> | 
+<a href=fig6.html>6</a> | 
+<a href=fig7.html>7</a> | 
+<a href=fig8.html>8</a> | 
+<a href=fig9.html>9</a> | 
+<a href=fig10.html>10</a> | 
+<a href=fig11.html>11</a> | 
+<a href=fig12.html>12</a> | 
+<a href=fig13.html>13</a> | 
+<a href=fig14.html>14</a> | 
+<a href=fig15.html>15</a> | 
+<a href=fig16.html>16</a> | 
+<a href=fig17.html>17</a> | 
+<a href=fig18.html>18</a> | 
+<a href=fig19.html>19</a> ]
+</center><br><br>
+
+<p> If you would like to have all of the figures, pick a distribution
+that is appropriate for you.  Unix users will probably want tarballs
+(<tt>TGZ</tt> format) and windows users should probably stick to the
+ZIP files.  Distributions that contain GIF images, have figure
+versions in 24, 100, and 300 DPI.
+
+<ul> <li><a href="cbn-figs-all.tgz">cbn-figs-all.tgz</a> - Gzip'ed tar
+file containing all figures in all formats and sizes. (35.19
+MB)<br><br>
+
+<li><a href="cbn-figs-all.zip">cbn-figs-all.zip</a> - ZIP file
+containing all figures in all formats and sizes.  (35.18 MB)<br><br>
+
+<li><a href="cbn-figs-eps.tgz">cbn-figs-eps.tgz</a> - Gzip'ed tar file
+containing all figures in encapsulated PostScript format.
+(14.48 MB)<br><br>
+
+<li><a href="cbn-figs-eps.zip">cbn-figs-eps.zip</a> -  ZIP file
+containing all figures in encapsulated PostScript format. (14.39
+MB)<br><br>
+
+<li><a href="cbn-figs-gif.tgz">cbn-figs-gif.tgz</a> - Gzip'ed tar file
+containing all figures in GIF format and all sizes. (15.09 MB)<br><br>
+
+<li><a href="cbn-figs-gif.zip">cbn-figs-gif.zip</a> - ZIP file
+containing all figures in GIF format and all sizes (15.12 MB)<br><br>
+
+<li><a href="cbn-figs-pdf.tgz">cbn-figs-pdf.tgz</a> - Gzip'ed tar file
+containing all figures in portable document format.  (5.60
+MB)<br><br>
+
+<li><a href="cbn-figs-pdf.zip">cbn-figs-pdf.zip</a> - ZIP file
+containing all figures in portable document format.  (5.65 MB)<br><br>
+
+</ul>
+
+
+<p> Make sure to "shift click" these bad boys.  Because these are so
+large, I'd be delighted to have volunteers mirror this site.  Any
+takers?
+
+
+#include "bottom.inc"
+
+

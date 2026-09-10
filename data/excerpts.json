@@ -1,0 +1,19 @@
+{
+  "_comment": "Short excerpts from the book shown in the in-page reader. Pages are 1-based pages of the author's cbn.pdf (printed page = pdf page - 20). Edit freely; run tools/excerpts.py to re-render. The PDF itself is never published.",
+  "source_pdf": "/tmp/cbn.pdf.keep",
+  "excerpts": [
+    { "id": "preface",  "title": "Preface (opening)",                 "pages": [13, 14] },
+    { "id": "ch5",  "chapter": 5,  "title": "Self-Similarity and Fractal Geometry (opening)", "pages": [81, 82] },
+    { "id": "ch6",  "chapter": 6,  "title": "L-Systems and Fractal Growth (opening)",         "pages": [97, 98] },
+    { "id": "ch7",  "chapter": 7,  "title": "Affine Transformation Fractals (opening)",       "pages": [115, 116] },
+    { "id": "ch8",  "chapter": 8,  "title": "The Mandelbrot Set and Julia Sets (opening)",   "pages": [131, 132] },
+    { "id": "ch10", "chapter": 10, "title": "Nonlinear Dynamics in Simple Maps (opening)",   "pages": [159, 160] },
+    { "id": "ch11", "chapter": 11, "title": "Strange Attractors (opening)",                  "pages": [179, 180] },
+    { "id": "ch12", "chapter": 12, "title": "Producer-Consumer Dynamics (opening)",          "pages": [201, 202] },
+    { "id": "ch15", "chapter": 15, "title": "Cellular Automata (opening)",                   "pages": [251, 252] },
+    { "id": "ch16", "chapter": 16, "title": "Autonomous Agents and Self-Organization (opening)", "pages": [281, 282] },
+    { "id": "ch17", "chapter": 17, "title": "Competition and Cooperation (opening)",         "pages": [301, 302] },
+    { "id": "ch18", "chapter": 18, "title": "Natural and Analog Computation (opening)",      "pages": [327, 328] },
+    { "id": "ch22", "chapter": 22, "title": "Neural Networks and Learning (opening)",        "pages": [403, 404] }
+  ]
+}

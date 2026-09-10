@@ -1,0 +1,139 @@
+#include "defaults.inc"
+#define EXCERPTS_OPTS HIGHLIGHT_COLOR
+#define EXCERPTS_PRE HBEG<b>
+#define EXCERPTS_POST </b>HEND
+#define TITLE Selected Excerpts - Section 18.0
+#include "top.inc"
+#include "excerpts-top.inc"
+
+<p><font size="+1"><b>Section 18.0: Natural and Analog Computation</b></font>
+
+<blockquote><p align=right><i>
+A technique succeeds in mathematical physics, not by a clever
+trick, or a happy accident, but because it expresses some aspect of a
+physical truth.
+</i>
+</p>
+<p align=right>--O. G. Sutton</p>
+</blockquote>
+<br>
+<p>
+
+
+<blockquote><p align=right><i>
+What is important is that complex systems, richly
+cross-connected internally, have complex behaviours, and that these
+behaviours can be goal-seeking in complex patterns.
+</i>
+</p>
+<p align=right>--W. Ross Ashby</p>
+</blockquote>
+<br>
+<p>
+
+
+<blockquote><p align=right><i>
+I see the world in very fluid, contradictory, emerging,
+interconnected terms, and with that kind of circuitry I just don't
+feel the need to say what is going to happen  or will not
+happen.
+</i>
+</p>
+<p align=right>--Jerry Brown</p>
+</blockquote>
+<br>
+<br>
+
+
+<p> <font size="+3">S</font>oap bubbles, the
+mechanism behind associative memory, and
+approximate solutions to combinatorial optimization problems all share
+a common trait.  Let's start with soap bubbles.  With some soap,
+water, a small circular wand, and a good gust of breath, you can
+create a large number of bubbles, limited only by the endurance of
+your diaphragm and the volume of your lungs.  Now, in your mind's eye,
+slow down the process of how a single bubble is made.  It starts with
+a thin film of soap-water stretched across the circular opening of the
+wand.  You exhale a sufficient amount of air to force the film to
+expand outward.  As the film expands, it envelops more and more of
+the air that you exhale, taking on an oval-like shape.  Eventually, a
+combination of air pressure and surface tension forces the end of the
+expanding film near the wand to contract.  The film collapses into a
+point and the bubble breaks away.
+
+<p>
+Here is the interesting part.  When the bubble is first formed, it is
+not in the shape of a sphere.  Instead, the bubble may contain
+imperfections, making it elongated along one or more directions.  With
+an elastic snap, the bubble wobbles back and forth, expanding and
+contracting along different directions, to finally coalesce into a
+near perfect sphere.  But why does the bubble seem to ``want'' to be
+in a sphere?  Why doesn't it look like a cube, pyramid, or football?
+Like a rubber band, a film of soap-water can be stretched but, given
+the option, rubber bands and soap films will always ``prefer'' to be
+in an unstretched state.  Moreover, within the interior of a soap
+bubble there is a constant volume of air.  Putting these two facts
+together, we see that the soap bubble has two conflicting goals that
+it must come to terms with before it can reach a ``relaxed'' state: It
+``wants'' to minimize its surface area so as to minimize the amount
+that it is stretched while simultaneously maintaining a constant
+volume.  Among the countless number of shapes that one could imagine a
+bubble taking, there is exactly one form that minimizes surface area
+while preserving volume, and that shape is a perfect sphere.
+
+<p>
+Flash back to your first course in physics and to some of the dynamical
+system ideas from Part III.  If energy is the potential for change,
+then placing a ball on the top of a hill results in a system in a high
+energy state; that is, if we slightly perturb the ball, it will
+roll down the hill, resulting in a low-energy system.  Similarly, a
+soap bubble in any shape other than a sphere is in a high energy
+state.  As the bubble changes from non-sphere to sphere shape, it may
+overshoot the desired goal and temporarily move in the wrong
+direction, just as a rolling ball can be carried beyond the low point
+of a valley to momentarily move uphill.  Balls can temporarily move
+uphill as long as they have sufficient momentum to do so.  Momentum
+is responsible for the wavy motion that a bubble experiences as well.
+
+<p>
+The total amount of energy in either of these two systems is the sum
+of the potential energy---the height of the ball or the
+``unsphereness'' of the bubble---and the kinetic energy, that is, the
+momentum of the moving portions of the systems.  With this definition
+of total energy, a dissipative system will always move from a state of
+higher energy into a state of lower energy, and it will never go
+uphill.  The energy doesn't just disappear, however.  Instead, it is
+transformed and moved outside of the system, usually as friction but
+ultimately as heat.  So when we say that the bubble ``wants'' to be in
+the shape of a sphere and that it ``prefers'' to be unstretched, we
+are really saying that all systems tend toward low energy states as
+time goes by.  The energy low point for the system is the ``relaxed''
+state.
+
+<p>
+But what has any of this to do with associative memory and
+combinatorial optimization problems?  The lowly bubble and the mundane
+ball both turn out to be useful metaphors for distributed dynamical
+systems that can compute interesting things.  Recall that the bubble
+``wanted'' to minimize its surface area.  Surface area is not a
+property of soap-water molecules, but of an entire soap film.  Yet
+each molecule in a soap solution interacts only with a relatively
+small number of neighboring molecules.  Hence, a global
+property---surface area---is minimized by only local interactions.
+Similarly, global properties such as the collection of neural
+activations that compose a distributed memory or the solution to an
+optimization problem may emerge from only local interactions.
+
+<p>
+In the remainder of this chapter we will examine artificial neural
+networks with fixed synapses that can act as associative memories and
+find approximate solutions to combinatorial optimization problems.  In
+each case, we will be able to use a formula to set the synaptic
+strength of the neural networks; hence, learning, that is, the process of
+adaptively changing synaptic strength based on experience, will not be
+covered in this chapter.  After looking at the neural network models
+we will once again turn our attention to energy surfaces to see how
+all of these things are similar.
+
+#include "excerpts-bottom.inc"
+#include "bottom.inc"

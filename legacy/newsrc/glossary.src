@@ -1,0 +1,2654 @@
+#include "defaults.inc"
+#define GLOSSARY_OPTS HIGHLIGHT_COLOR
+#define GLOSSARY_PRE HBEG<b>
+#define GLOSSARY_POST </b>HEND
+#define TITLE Glossary
+#include "top.inc"
+
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%">
+
+
+<p><h1><a name="A-section">A</a></h1>
+
+
+<p><b><a name="activation">Activation</a></b> &nbsp; &nbsp;
+The time-varying value that is the output of a <a href="glossary-N.html#neuron">neuron</a>.  
+
+<p><b><a name="activation_function">Activation Function</a></b> &nbsp; &nbsp;
+A <a href="glossary-F.html#function">function</a> that translates a <a href="glossary-N.html#neuron">neuron</a>'s <a href="glossary-N.html#net_input">net input</a> to an
+<a href="glossary-A.html#activation">activation</a> value.
+
+<p><b><a name="adaptive">Adaptive</a></b> &nbsp; &nbsp;
+Subject to <a href="glossary-A.html#adaptation">adaptation</a>; can change over time to improve fitness or
+accuracy.
+
+<p><b><a name="adaptation">Adaptation</a></b> &nbsp; &nbsp;
+An internal change in a <a href="glossary-S.html#system">system</a> that mirrors an external event in
+the system's <a href="glossary-E.html#environment">environment</a>.  
+
+<p><b><a name="affine">Affine</a></b> &nbsp; &nbsp;
+An equation that can be written in terms of
+<a href="glossary-M.html#matrix">matrix</a>-<a href="glossary-V.html#vector">vector</a> multiplication and vector addition.  
+
+<p><b><a name="agent">Agent</a></b> &nbsp; &nbsp;
+See <a href="glossary-A.html#autonomous_agent">Autonomous Agent</a>.  
+
+<p><b><a name="ai">AI</a></b> &nbsp; &nbsp;
+An abbreviation for <a href="glossary-A.html#artificial_intelligence">Artificial Intelligence</a>.  
+
+<p><b><a name="algorithm">Algorithm</a></b> &nbsp; &nbsp;
+A detailed and unambiguous sequence of instructions that describes how
+a <a href="glossary-C.html#computation">computation</a> is to proceed and can be implemented as a
+<a href="glossary-P.html#program">program</a>.  
+
+<p><b><a name="algorithmic_complexity">Algorithmic Complexity</a></b> &nbsp; &nbsp;
+The size of the smallest <a href="glossary-P.html#program">program</a> that can produce a particular
+sequence of numbers.  Regular patterns have low algorithmic complexity
+and <a href="glossary-R.html#random/randomness">random</a> sequences have high algorithmic complexity.  
+
+<p><b><a name="always_cooperate">Always Cooperate</a></b> &nbsp; &nbsp;
+A <a href="glossary-P.html#prisoners_dilemma">Prisoner's Dilemma</a> <a href="glossary-S.html#strategy">strategy</a> that cooperates with its
+opponent under all circumstances (the exact opposite of <a href="glossary-A.html#always_defect">always
+defect</a>).  
+
+<p><b><a name="always_defect">Always Defect</a></b> &nbsp; &nbsp;
+A <a href="glossary-P.html#prisoners_dilemma">Prisoner's Dilemma</a> <a href="glossary-S.html#strategy">strategy</a> that never cooperates with its
+opponent under any circumstance (the exact opposite of
+<a href="glossary-A.html#always_cooperate">always cooperate</a>).  
+
+<p><b><a name="analog">Analog</a></b> &nbsp; &nbsp;
+Having a <a href="glossary-C.html#continuous">continuous</a> value.  
+
+<p><b><a name="analytical">Analytical</a></b> &nbsp; &nbsp;
+Can be symbolically represented in a closed form that does not require
+any of the complex aspects of a <a href="glossary-P.html#program">program</a> such as an <a href="glossary-I.html#iterate/iterative">iterative</a>
+sum.  
+
+<p><b><a name="analytical_solution">Analytical Solution</a></b> &nbsp; &nbsp;
+An exact solution to a problem that can be calculated symbolically by
+manipulating equations (unlike a <a href="glossary-N.html#numerical_solution">numerical solution</a>).  
+
+<p><b><a name="arms_race">Arms Race</a></b> &nbsp; &nbsp;
+Two or more species experience <a href="glossary-A.html#adaptation">adaptation</a> to one another in a
+<a href="glossary-C.html#coevolution">coevolutionary</a> manner.  This often seen in <a href="glossary-P.html#predator-prey_system">predator-prey
+systems</a>.  
+
+<p><b><a name="artificial_intelligence">Artificial Intelligence</a></b> &nbsp; &nbsp;
+The science of making computers do interesting things that humans do
+effortlessly.  
+
+<p><b><a name="artificial_life">Artificial Life</a></b> &nbsp; &nbsp;
+The study of life processes within the confines of a computer.  
+
+<p><b><a name="associative_memory">Associative Memory</a></b> &nbsp; &nbsp;
+Memory that can be referenced by content, as opposed to location.
+<a href="glossary-H.html#hopfield_network">Hopfield networks</a> will act as associative memories
+when trained with the <a href="glossary-H.html#hebbian_learning">Hebbian learning</a> rule.  
+
+<p><b><a name="asynchronous">Asynchronous</a></b> &nbsp; &nbsp;
+Describes events that occur independently of each other but on a
+similar time scale.  
+
+<p><b><a name="attractor">Attractor</a></b> &nbsp; &nbsp;
+A characterization of the long-term behavior of a <a href="glossary-D.html#dissipative_system">dissipative</a>
+<a href="glossary-D.html#dynamical_system">dynamical system</a>.  Over long periods of time, the <a href="glossary-S.html#state_space">state
+space</a> of some <a href="glossary-D.html#dynamical_system">dynamical systems</a> will contract toward this
+region.  Attractors may be <a href="glossary-F.html#fixed_point">fixed points</a>, <a href="glossary-P.html#periodic">periodic</a>,
+<a href="glossary-Q.html#quasiperiodic">quasiperiodic</a>, or <a href="glossary-C.html#chaos/chaotic">chaotic</a>.  They may also be
+<a href="glossary-S.html#stable">stable</a> or <a href="glossary-U.html#unstable">unstable</a>. 
+
+<p><b><a name="autonomous_agent">Autonomous Agent</a></b> &nbsp; &nbsp;
+An entity with limited perception of its <a href="glossary-E.html#environment">environment</a> that can
+process information to calculate an action so as to be goal-seeking on
+a local scale.  A <a href="glossary-B.html#boid">boid</a> is an example of an autonomous agent.  
+
+<p><b><a name="axiom">Axiom</a></b> &nbsp; &nbsp;
+A <a href="glossary-S.html#statement">statement</a> that is assumed to be true and can later be used
+along with <a href="glossary-T.html#theorem">theorems</a> to prove other theorems.  Also, the starting
+configuration of an <a href="glossary-L.html#l-system">L-System</a>.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="B-section">B</a></h1>
+
+
+<p><b><a name="backpropagation">Backpropagation</a></b> &nbsp; &nbsp;
+An <a href="glossary-A.html#algorithm">algorithm</a> for efficiently calculating the error
+<a href="glossary-G.html#gradient">gradient</a> of a <a href="glossary-N.html#neural_network_(nn)">neural network</a>, which can then be used
+as the basis of <a href="glossary-L.html#learning">learning</a>.  Backpropagation is equivalent to the
+<a href="glossary-D.html#delta_rule">delta rule</a> for <a href="glossary-P.html#perceptron">perceptrons</a>, but can also calculate
+appropriate <a href="glossary-W.html#weight">weight</a> changes for the <a href="glossary-H.html#hidden_layer">hidden layer</a> weights of
+a <a href="glossary-M.html#multilayer_perceptron_(mlp)">multilayer perceptron</a> by generalizing the notion of an error
+correction term.  In the simplest case, backpropagation is a type of
+<a href="glossary-S.html#steepest_descent_(ascent)">steepest descent</a> in the <a href="glossary-S.html#search_space">search space</a> of the network
+weights, and it will usually <a href="glossary-C.html#convergence">converge</a> to a <a href="glossary-L.html#local_minimum_(maximum)">local minimum</a>. 
+
+<p><b><a name="basin_of_attraction">Basin of Attraction</a></b> &nbsp; &nbsp;
+A region of <a href="glossary-S.html#state_space">state space</a> in which all included states of a
+<a href="glossary-D.html#dynamical_system">dynamical system</a> ultimately lead into the <a href="glossary-A.html#attractor">attractor</a>. 
+
+<p><b><a name="bias">Bias</a></b> &nbsp; &nbsp;
+See <a href="glossary-T.html#threshold">threshold</a>.  
+
+<p><b><a name="bifurcation">Bifurcation</a></b> &nbsp; &nbsp;
+The splitting of a single mode of a <a href="glossary-S.html#system">system</a>'s behavior into two
+new modes.  This usually occurs as a <a href="glossary-F.html#function">function</a> of a
+<a href="glossary-C.html#continuous">continuously</a> varying <a href="glossary-C.html#control">control</a> parameter.  A cascade of
+bifurcations will usually precede the onset of <a href="glossary-C.html#chaos/chaotic">chaos</a>.  
+
+<p><b><a name="binary">Binary</a></b> &nbsp; &nbsp;
+Written in a form that uses only 0s and 1s.  A <a href="glossary-S.html#string">string</a> of
+<a href="glossary-B.html#bit">bits</a>.
+
+<p><b><a name="bit">Bit</a></b> &nbsp; &nbsp;
+The smallest unit of information; the answer to a yes/no question; the
+outcome of a coin toss; a 0 or a 1.  
+
+<p><b><a name="boid">Boid</a></b> &nbsp; &nbsp;
+An <a href="glossary-A.html#autonomous_agent">autonomous agent</a> that behaves like a simplified bird but will
+display flocking patterns in the presence of other boids.  
+
+<p><b><a name="boolean">Boolean</a></b> &nbsp; &nbsp;
+Taking only 0/1, true/false, yes/no values.  
+
+<p><b><a name="bottom-up">Bottom-Up</a></b> &nbsp; &nbsp;
+A description that uses the lower-level details to explain
+higher-level patterns; related to <a href="glossary-R.html#reductionism">reductionism</a>.  
+
+<p><b><a name="brown_noise/brownian_motion">Brown Noise/Brownian Motion</a></b> &nbsp; &nbsp;
+A form of <a href="glossary-R.html#random/randomness">randomness</a> that is the result of cumulatively adding
+<a href="glossary-W.html#white_noise">white noise</a>, to yield a <a href="glossary-R.html#random_walk">random walk</a> pattern.
+
+<p><b><a name="bucket_brigade_algorithm">Bucket Brigade Algorithm</a></b> &nbsp; &nbsp;
+A <a href="glossary-L.html#learning">learning</a> <a href="glossary-A.html#algorithm">algorithm</a> that is a method for adjusting the
+<a href="glossary-S.html#strength">strengths</a> of the <a href="glossary-C.html#classifier">classifiers</a> of a  <a href="glossary-C.html#classifier_system">classifier system</a>.
+``Winning'' classifiers pay a portion of their earnings to other
+classifiers that assisted them in being activated, similar to an
+economic <a href="glossary-S.html#system">system</a>.  
+
+<p><b><a name="byte">Byte</a></b> &nbsp; &nbsp;
+Eight <a href="glossary-B.html#bit">bits</a>.  In programming, often used to store a single text
+character.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="C-section">C</a></h1>
+
+
+<p><b><a name="cantor_set">Cantor Set</a></b> &nbsp; &nbsp;
+A simple <a href="glossary-F.html#fractal">fractal</a> <a href="glossary-S.html#set">set</a> composed of an <a href="glossary-U.html#uncountable_infinity">uncountable
+infinity</a> of dust-like points, but that also has 0 measure (meaning
+that the sum width of all points is 0).  The Cantor set is constructed
+by removing the middle third of a unit line segment, and then
+<a href="glossary-R.html#recursive">recursively</a> removing the middle third of any remaining line
+segments, for an infinite number of steps.   
+
+<p><b><a name="cellular_automaton_(ca)">Cellular Automaton (CA)</a></b> &nbsp; &nbsp;
+A <a href="glossary-D.html#discrete">discrete</a> <a href="glossary-D.html#dynamical_system">dynamical system</a> that is composed of an array of
+cells, each of which behaves like a <a href="glossary-F.html#finite-state_automaton_(fsa)">finite-state automaton</a>.  All
+interactions are local, with the next state of a cell being a
+<a href="glossary-F.html#function">function</a> of the current state of itself and its neighbors.
+<a href="glossary-C.html#conways_game_of_life">Conway's Game of Life</a> is a CA.
+
+<p><b><a name="chaos/chaotic">Chaos/Chaotic</a></b> &nbsp; &nbsp;
+Irregular motion of a <a href="glossary-D.html#dynamical_system">dynamical system</a> that is
+<a href="glossary-D.html#deterministic">deterministic</a>, <a href="glossary-S.html#sensitivity">sensitive</a> to initial conditions, and impossible
+to predict in the long term with anything less than an infinite and
+perfect representation of <a href="glossary-A.html#analog">analog</a> values.  
+
+<p><b><a name="chomsky_hierarchy">Chomsky Hierarchy</a></b> &nbsp; &nbsp;
+Four classes of languages (or computing machines) that have increasing
+complexity: regular (<a href="glossary-F.html#finite-state_automaton_(fsa)">finite-state automata</a>), context-free
+(push-down automata), context-sensitive (linear bounded automata), and
+<a href="glossary-R.html#recursive">recursive</a> (<a href="glossary-T.html#turing_machine">Turing machines</a>).  
+
+<p><b><a name="classifier">Classifier</a></b> &nbsp; &nbsp;
+A rule that is part of a <a href="glossary-C.html#classifier_system">classifier system</a> and has a condition
+that must be matched before its <a href="glossary-M.html#message">message</a> (or action) can be posted
+(or effected).  The <a href="glossary-S.html#strength">strength</a> of a classifier determines the
+likelihood that it can outbid other classifiers if more than one
+condition is matched.
+
+<p><b><a name="classifier_system">Classifier System</a></b> &nbsp; &nbsp;
+An <a href="glossary-A.html#adaptive">adaptive</a> <a href="glossary-S.html#system">system</a> similar to a <a href="glossary-P.html#post_production_system">Post production system</a>
+that contains many ``if ... then'' rules called <a href="glossary-C.html#classifier">classifiers</a>.
+The state of the <a href="glossary-E.html#environment">environment</a> is encoded as a <a href="glossary-M.html#message">message</a> by a
+<a href="glossary-D.html#detector">detector</a> and placed on the <a href="glossary-M.html#message_list">message list</a> from which
+the condition portion of the classifiers can be matched.  ``Winning''
+classifiers can then post their own messages to the message list,
+ultimately forming a type of <a href="glossary-C.html#computation">computation</a> that may result in a message
+being translated into an action by an <a href="glossary-E.html#effector">effector</a>.  The
+<a href="glossary-S.html#strength">strengths</a> of the classifiers are modified by the <a href="glossary-B.html#bucket_brigade_algorithm">bucket
+brigade</a> <a href="glossary-A.html#algorithm">algorithm</a>, and new rules can be introduced via a <a href="glossary-G.html#genetic_algorithm_(ga)">genetic
+algorithm</a>. 
+
+<p><b><a name="coevolution">Coevolution</a></b> &nbsp; &nbsp;
+Two or more entities experience <a href="glossary-E.html#evolution">evolution</a> in response to one
+another.  Due to <a href="glossary-F.html#feedback">feedback</a> mechanisms, this often results in a
+biological <a href="glossary-A.html#arms_race">arms race</a>.  
+
+<p><b><a name="complement">Complement</a></b> &nbsp; &nbsp;
+A <a href="glossary-S.html#set">set</a> composed of all elements that are not members of another
+set.  
+
+<p><b><a name="combinatorial_optimization">Combinatorial Optimization</a></b> &nbsp; &nbsp;
+A class of problems in which the number of candidate solutions is
+combinatorial in size.  Each possible solution has an associated cost.
+The goal is to find the solution with the lowest cost. Because of the
+vast numbers involved, explicit <a href="glossary-S.html#search/search_method">search</a> an entire
+<a href="glossary-S.html#search_space">search space</a> is not always possible. 
+
+<p><b><a name="complete">Complete</a></b> &nbsp; &nbsp;
+Describes a <a href="glossary-F.html#formal_system">formal system</a> in which all <a href="glossary-S.html#statement">statements</a> can be
+proved as being true or false.  Most interesting formal systems are
+not complete, as proved in <a href="glossary-G.html#gödels_incompleteness_theorem">Gödel's Incompleteness Theorem</a>.  
+
+<p><b><a name="complex_number">Complex Number</a></b> &nbsp; &nbsp;
+A number that has a <a href="glossary-R.html#real_number">real</a> component and an <a href="glossary-I.html#imaginary_number">imaginary</a>
+component and is characterized as a point on a plane (instead of the
+<a href="glossary-R.html#real_number">real number</a> line). 
+
+<p><b><a name="complex_system">Complex System</a></b> &nbsp; &nbsp;
+A collection of many simple <a href="glossary-N.html#nonlinear">nonlinear</a> units that operate in
+<a href="glossary-P.html#parallel/parallelism">parallel</a> and interact locally with each other so as to produce
+<a href="glossary-E.html#emergent">emergent</a> behavior.  
+
+<p><b><a name="complexity">Complexity</a></b> &nbsp; &nbsp;
+An ill-defined term that means many things to many people.  Complex
+things are neither <a href="glossary-R.html#random/randomness">random</a> nor regular, but hover somewhere in
+between.  Intuitively, complexity is a measure of how interesting
+something is.  Other types of complexity may be well defined; see the
+index for other references.  
+
+<p><b><a name="compressible">Compressible</a></b> &nbsp; &nbsp;
+Having a description that is smaller than itself; not <a href="glossary-R.html#random/randomness">random</a>;
+possessing regularity.  
+
+<p><b><a name="computable">Computable</a></b> &nbsp; &nbsp;
+Expressible as a yes/no question that can be answered in any case by a
+computer in finite time.  
+
+<p><b><a name="computation">Computation</a></b> &nbsp; &nbsp;
+The realization of a <a href="glossary-P.html#program">program</a> in a computer.  
+
+<p><b><a name="connectivity">Connectivity</a></b> &nbsp; &nbsp;
+The amount of interaction in a <a href="glossary-S.html#system">system</a>, the structure of the
+<a href="glossary-W.html#weight">weights</a> in a <a href="glossary-N.html#neural_network_(nn)">neural network</a>, or the relative number of
+edges in a <a href="glossary-G.html#graph">graph</a>. 
+
+<p><b><a name="conservative_system">Conservative System</a></b> &nbsp; &nbsp;
+A <a href="glossary-D.html#dynamical_system">dynamical system</a> that preserves the volume of its <a href="glossary-S.html#state_space">state
+space</a> under motion and, therefore, does not display the types of
+behavior found in <a href="glossary-D.html#dissipative_system">dissipative systems</a>.  
+
+<p><b><a name="consistence">Consistence</a></b> &nbsp; &nbsp;
+In <a href="glossary-F.html#formal_system">formal systems</a>, having the property that all <a href="glossary-S.html#statement">statements</a>
+are either true or false. 
+
+<p><b><a name="continuous">Continuous</a></b> &nbsp; &nbsp;
+Taking a <a href="glossary-R.html#real_number">real</a> value, i.e., not <a href="glossary-D.html#discrete">discrete</a>.  <a href="glossary-D.html#dynamical_system">Dynamical
+systems</a> may operate in continuous time or space.  
+
+<p><b><a name="control">Control</a></b> &nbsp; &nbsp;
+Exerting actions to manipulate a <a href="glossary-S.html#system">system</a> or <a href="glossary-E.html#environment">environment</a> in a
+goal-seeking manner.  
+
+<p><b><a name="convergence">Convergence</a></b> &nbsp; &nbsp;
+For computers, halting with an answer; for <a href="glossary-D.html#dynamical_system">dynamical systems</a>,
+falling into an <a href="glossary-A.html#attractor">attractor</a>; for <a href="glossary-S.html#search/search_method">searches</a> (e.g.,
+<a href="glossary-B.html#backpropagation">backpropagation</a> and
+<a href="glossary-G.html#genetic_algorithm_(ga)">genetic algorithms</a>), finding a location that cannot be improved
+upon; for infinite summations, approaching a definite value. 
+
+<p><b><a name="conways_game_of_life">Conway's Game of Life</a></b> &nbsp; &nbsp;
+A <a href="glossary-C.html#cellular_automaton_(ca)">cellular automaton</a> rule set that operates on a two-dimensional
+grid.  Each cell changes its state according to the states of its
+eight nearest neighbors: dead cells come alive with exactly three live
+neighbors, and cells die if they have anything but two or three
+neighbors.  The Game of Life can display complex patterns such as
+<a href="glossary-G.html#glider">gliders</a>, <a href="glossary-F.html#fish">fish</a>, and <a href="glossary-G.html#glider_gun">glider guns</a>, and is also capable of
+<a href="glossary-U.html#universal_computation">universal computation</a>.  
+
+<p><b><a name="co-recursively_enumerable_(co-re)">Co-Recursively Enumerable (CO-RE)</a></b> &nbsp; &nbsp;
+The <a href="glossary-C.html#complement">complement</a> of a <a href="glossary-S.html#set">set</a> that can be <a href="glossary-R.html#recursively_enumerable_(re)">recursively
+enumerated</a>.  
+
+<p><b><a name="countable_infinity">Countable Infinity</a></b> &nbsp; &nbsp;
+Having the same number of objects as the <a href="glossary-S.html#set">set</a> of <a href="glossary-N.html#natural_number">natural
+numbers</a>.  
+
+<p><b><a name="crossover">Crossover</a></b> &nbsp; &nbsp;
+A genetic operator that splices information from two or more parents
+to form a composite offspring that has genetic material from all
+parents.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="D-section">D</a></h1>
+
+
+<p><b><a name="darwinism">Darwinism</a></b> &nbsp; &nbsp;
+The theory of <a href="glossary-E.html#evolution">evolution</a> as proposed by Charles Darwin, which
+combined <a href="glossary-V.html#variation">variation</a> of <a href="glossary-I.html#inheritable">inheritable</a> traits with <a href="glossary-N.html#natural_selection">natural
+selection</a>.  After the discovery of the physical mechanism of
+genetics, this was further refined into <a href="glossary-N.html#neo-darwinism">neo-Darwinism</a>.  
+
+<p><b><a name="delta_rule">Delta Rule</a></b> &nbsp; &nbsp;
+The <a href="glossary-P.html#perceptron">perceptron</a> <a href="glossary-L.html#learning">learning</a> rule that specifies that <a href="glossary-W.html#weight">weight</a>
+changes should be proportional to the product of a weight's input and
+the error (or delta) term for the perceptron.  
+
+<p><b><a name="derivative">Derivative</a></b> &nbsp; &nbsp;
+An expression that characterizes how the output of a <a href="glossary-F.html#function">function</a>
+changes as the input is varied.  Unlike <a href="glossary-I.html#integral">integrals</a>, derivatives
+can be calculated in an <a href="glossary-A.html#analytical">analytical</a> manner very easily. 
+
+<p><b><a name="decision_problem">Decision Problem</a></b> &nbsp; &nbsp;
+A problem in which all questions take the form ``Is something a member
+of a particular <a href="glossary-S.html#set">set</a>?'' and all answers are either ``yes'' or
+``no.''  
+
+<p><b><a name="detector">Detector</a></b> &nbsp; &nbsp;
+A sensor that translates the state of a <a href="glossary-C.html#classifier">classifier</a>'s
+<a href="glossary-E.html#environment">environment</a> into a <a href="glossary-M.html#message">message</a> that is suitable for posting to
+the <a href="glossary-M.html#message_list">message list</a> of the <a href="glossary-C.html#classifier_system">classifier system</a>. 
+
+<p><b><a name="determinant">Determinant</a></b> &nbsp; &nbsp;
+A quantity of a <a href="glossary-M.html#matrix">matrix</a> that characterizes the amount of expansion
+or contraction that the matrix inflicts on a <a href="glossary-V.html#vector">vector</a> when that
+vector is multiplied by the matrix.  
+
+<p><b><a name="deterministic">Deterministic</a></b> &nbsp; &nbsp;
+Occurring in a non-<a href="glossary-R.html#random/randomness">random</a> manner such that the next state of a
+<a href="glossary-S.html#system">system</a> depends only on prior states of the system or the
+<a href="glossary-E.html#environment">environment</a>.  Perfect knowledge of previous states implies
+perfect knowledge of the next state. 
+
+<p><b><a name="diagonal_matrix">Diagonal Matrix</a></b> &nbsp; &nbsp;
+A <a href="glossary-M.html#matrix">matrix</a> that has 0 entries along all nondiagonal entries,
+i.e., only the main diagonal may have non-zero values.  
+
+<p><b><a name="difference_equation">Difference Equation</a></b> &nbsp; &nbsp;
+An equation that describes how something changes in <a href="glossary-D.html#discrete">discrete</a> time
+steps.  <a href="glossary-N.html#numerical_solution">Numerical solutions</a> to <a href="glossary-I.html#integral">integrals</a> are usually
+realized as difference equations.  
+
+<p><b><a name="differential_equation">Differential Equation</a></b> &nbsp; &nbsp;
+A description of how something <a href="glossary-C.html#continuous">continuously</a> changes over time.
+Some differential equations can have an <a href="glossary-A.html#analytical_solution">analytical solution</a>
+such that all future states can be known without <a href="glossary-S.html#simulate/simulation">simulation</a> of
+the time evolution of the <a href="glossary-S.html#system">system</a>.  However, most can have a
+<a href="glossary-N.html#numerical_solution">numerical solution</a> with only limited accuracy.  
+
+<p><b><a name="differentiation">Differentiation</a></b> &nbsp; &nbsp;
+The act of calculating a <a href="glossary-D.html#derivative">derivative</a>; the inverse operation of
+calculating an <a href="glossary-I.html#integral">integral</a>.  
+
+<p><b><a name="diffusion_limited_aggregation">Diffusion Limited Aggregation</a></b> &nbsp; &nbsp;
+A type of <a href="glossary-S.html#stochastic">stochastic</a> <a href="glossary-F.html#fractal">fractal</a> formed by particles floating
+about in a <a href="glossary-R.html#random/randomness">random</a> manner until they stick to something solid.  
+
+<p><b><a name="discrete">Discrete</a></b> &nbsp; &nbsp;
+Taking only non-<a href="glossary-C.html#continuous">continuous</a> values, e.g., <a href="glossary-B.html#boolean">Boolean</a> or
+<a href="glossary-N.html#natural_number">natural numbers</a>. 
+
+<p><b><a name="dissipative_system">Dissipative System</a></b> &nbsp; &nbsp;
+A <a href="glossary-D.html#dynamical_system">dynamical system</a> that contains internal friction that deforms
+the structure of its <a href="glossary-A.html#attractor">attractor</a>, thus making motion such as
+<a href="glossary-F.html#fixed_point">fixed points</a>, <a href="glossary-L.html#limit_cycle">limit cycles</a>, <a href="glossary-Q.html#quasiperiodic">quasiperiodicity</a>, and
+<a href="glossary-C.html#chaos/chaotic">chaos</a> possible.  Dissipative systems often have internal
+structure despite being far from <a href="glossary-E.html#equilibrium">equilibrium</a>, like a whirlpool
+that preserves its basic form despite being in the midst of constant
+change.  
+
+<p><b><a name="diverge">Diverge</a></b> &nbsp; &nbsp;
+For <a href="glossary-A.html#algorithm">algorithms</a> or computers, to run forever and never halt; for
+<a href="glossary-I.html#iterate/iterative">iterative</a> <a href="glossary-S.html#system">systems</a> (like the equations for the <a href="glossary-M.html#mandelbrot_set">Mandelbrot
+set</a>), reaching a state such that all future states explode in size. 
+
+<p><b><a name="dot_product">Dot Product</a></b> &nbsp; &nbsp;
+The <a href="glossary-I.html#inner_product">inner product</a> of two <a href="glossary-V.html#vector">vectors</a>.  
+
+<p><b><a name="dynamical_system">Dynamical System</a></b> &nbsp; &nbsp;
+A <a href="glossary-S.html#system">system</a> that changes over time according to a set of fixed rules
+that determine how one state of the system moves to another state.  
+
+<p><b><a name="dynamics/dynamical">Dynamics/Dynamical</a></b> &nbsp; &nbsp;
+Pertaining to the change in behavior of a <a href="glossary-S.html#system">system</a> over time.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="E-section">E</a></h1>
+
+
+<p><b><a name="ecology">Ecology</a></b> &nbsp; &nbsp;
+The study of the relationships and interactions between organisms and
+<a href="glossary-E.html#environment">environments</a>.  
+
+<p><b><a name="ecosystem">Ecosystem</a></b> &nbsp; &nbsp;
+A biological <a href="glossary-S.html#system">system</a> consisting of many organisms from different
+species.  
+
+<p><b><a name="edge_of_chaos">Edge of Chaos</a></b> &nbsp; &nbsp;
+The hypothesis that many natural <a href="glossary-S.html#system">systems</a> tend toward
+<a href="glossary-D.html#dynamics/dynamical">dynamical</a> behavior that borders static patterns and the
+<a href="glossary-C.html#chaos/chaotic">chaotic</a> regime.  
+
+<p><b><a name="effector">Effector</a></b> &nbsp; &nbsp;
+The part of a <a href="glossary-C.html#classifier_system">classifier system</a> that can translate <a href="glossary-M.html#message">messages</a>
+into actions that can manipulate a <a href="glossary-S.html#system">system</a> or an <a href="glossary-E.html#environment">environment</a>. 
+
+<p><b><a name="eigenvalue">Eigenvalue</a></b> &nbsp; &nbsp;
+The change in length that occurs when the corresponding
+<a href="glossary-E.html#eigenvector">eigenvector</a> is multiplied by its <a href="glossary-M.html#matrix">matrix</a>. 
+
+<p><b><a name="eigenvector">Eigenvector</a></b> &nbsp; &nbsp;
+A unit length <a href="glossary-V.html#vector">vector</a> that retains its direction when multiplied
+to the <a href="glossary-M.html#matrix">matrix</a> that it corresponds to.  An (<i>n</i> * <i>n</i>) matrix
+can have as many as <i>n</i> unique eigenvectors, each of which will have
+its own <a href="glossary-E.html#eigenvalue">eigenvalue</a>.  
+
+<p><b><a name="embedding">Embedding</a></b> &nbsp; &nbsp;
+A method of taking a <a href="glossary-S.html#scalar">scalar</a> <a href="glossary-T.html#time_series">time series</a> and using delayed
+snapshots of the values at fixed time intervals in the past so that
+the <a href="glossary-D.html#dynamics/dynamical">dynamics</a> of the underlying <a href="glossary-S.html#system">system</a> can be observed as a
+<a href="glossary-F.html#function">function</a> of the previously observed states. 
+
+<p><b><a name="emergent">Emergent</a></b> &nbsp; &nbsp;
+Refers to a property of a collection of simple subunits that comes
+about through the interactions of the subunits and is not a property
+of any single subunit.  For example, the organization of an ant colony
+is said to ``emerge'' from the interactions of the lower-level
+behaviors of the ants, and not from any single ant.  Usually, the
+emergent behavior is unanticipated and cannot be directly deduced from
+the lower-level behaviors. <a href="glossary-C.html#complex_system">Complex systems</a> are usually
+emergent. 
+
+<p><b><a name="entropy">Entropy</a></b> &nbsp; &nbsp;
+A measure of a <a href="glossary-S.html#system">system</a>'s degree of <a href="glossary-R.html#random/randomness">randomness</a> or disorder.  
+
+<p><b><a name="environment">Environment</a></b> &nbsp; &nbsp;
+If that which is under study is a <a href="glossary-S.html#system">system</a>, then the rest of the
+world is the environment. 
+
+<p><b><a name="equilibrium">Equilibrium</a></b> &nbsp; &nbsp;
+A state of a <a href="glossary-S.html#system">system</a> that, if not subjected to <a href="glossary-P.html#perturbation">perturbation</a>,
+will remain unchanged.  
+
+<p><b><a name="ergodic">Ergodic</a></b> &nbsp; &nbsp;
+The property of a <a href="glossary-D.html#dynamical_system">dynamical system</a> such that all regions of a
+<a href="glossary-S.html#state_space">state space</a> are visited with similar frequency and that all
+regions will be revisited (within a small proximity) if given enough
+time. 
+
+<p><b><a name="euclidean">Euclidean</a></b> &nbsp; &nbsp;
+Pertaining to standard geometry, i.e., points, lines, planes, volumes,
+squares, cubes, triangles, etc.  
+
+<p><b><a name="eulers_method">Euler's Method</a></b> &nbsp; &nbsp;
+The simplest method of obtaining a <a href="glossary-N.html#numerical_solution">numerical solution</a> of a
+<a href="glossary-D.html#differential_equation">differential equation</a>.  There are many other numerical techniques
+that are more accurate; however, an <a href="glossary-A.html#analytical_solution">analytical solution</a> (i.e., a
+closed form of an <a href="glossary-I.html#integral">integral</a>) is always preferred but not always
+possible.  
+
+<p><b><a name="evolution">Evolution</a></b> &nbsp; &nbsp;
+A process operating on populations that involves <a href="glossary-V.html#variation">variation</a> among
+individuals, traits being <a href="glossary-I.html#inheritable">inheritable</a>, and a level of
+<a href="glossary-F.html#fitness">fitness</a> for individuals that is a <a href="glossary-F.html#function">function</a> of the possessed
+traits.  Over relatively long periods of time, the distribution of
+inheritable traits will tend to reflect the fitness that the traits
+convey to the individual; thus, evolution acts as a filter that
+selects fitness-yielding traits over other traits.  
+
+<p><b><a name="evolutionary_stable_strategy_(ess)">Evolutionary Stable Strategy (ESS)</a></b> &nbsp; &nbsp;
+In <a href="glossary-G.html#game_theory">game theory</a> and biology, a <a href="glossary-S.html#strategy">strategy</a> that, when possessed
+by an entire population, results in an <a href="glossary-E.html#equilibrium">equilibrium</a> such that
+<a href="glossary-M.html#mutation">mutation</a> of the strategy can never result in an improvement for an
+individual.  <a href="glossary-A.html#always_defect">Always Defect</a> is an ESS, while
+<a href="glossary-A.html#always_cooperate">Always Cooperate</a> is not.  
+
+<p><b><a name="excitatory">Excitatory</a></b> &nbsp; &nbsp;
+Refers to a neural <a href="glossary-S.html#synapse">synapse</a> or <a href="glossary-W.html#weight">weight</a> that is positive such
+that activity in the source <a href="glossary-N.html#neuron">neuron</a> encourages activity in the
+connected neuron; the opposite of <a href="glossary-I.html#inhibitory">inhibitory</a>. 
+
+<p><b><a name="experimentation">Experimentation</a></b> &nbsp; &nbsp;
+One process by which scientists attempt to understand nature.  A
+phenomenon is observed and/or manipulated so that changes in the
+phenomenon's state can be seen.  The resulting data can be used to
+derive new <a href="glossary-M.html#model">models</a> of a process or to confirm an existing model.
+Experimentation is the complement of <a href="glossary-T.html#theorization">theorization</a>.  See also
+<a href="glossary-S.html#simulate/simulation">simulation</a>. 
+
+<p><b><a name="expert_system">Expert System</a></b> &nbsp; &nbsp;
+A special <a href="glossary-P.html#program">program</a> that resembles a collection of ``if ...
+then'' rules.  The rules usually represent knowledge contained by a
+domain expert (such as a physician adept at diagnosis) and can be used
+to <a href="glossary-S.html#simulate/simulation">simulate</a> how a human expert would perform a task.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="F-section">F</a></h1>
+
+
+<p><b><a name="feedback">Feedback</a></b> &nbsp; &nbsp;
+A loop in information flow or in cause and effect.  
+
+<p><b><a name="feedback_neural_network">Feedback Neural Network</a></b> &nbsp; &nbsp;
+A <a href="glossary-N.html#neural_network_(nn)">neural network</a> that has every <a href="glossary-N.html#neuron">neuron</a> potentially connected
+to every other neuron.  The <a href="glossary-A.html#activation">activations</a> of all neurons are
+updated in <a href="glossary-P.html#parallel/parallelism">parallel</a> (<a href="glossary-S.html#synchronous">synchronous</a> or <a href="glossary-A.html#asynchronous">asynchronous</a>
+order), unlike a
+<a href="glossary-F.html#feedforward_neural_network">feedforward</a> or <a href="glossary-R.html#recurrent_neural_network">recurrent neural network</a>.   
+
+<p><b><a name="feedforward_neural_network">Feedforward Neural Network</a></b> &nbsp; &nbsp;
+A <a href="glossary-N.html#neural_network_(nn)">neural network</a> that is organized with separate layers of
+<a href="glossary-N.html#neuron">neurons</a>.  Connections in such a network are limited to one
+direction such that the <a href="glossary-A.html#activation">activations</a> of the input neurons are
+updated first, followed by any <a href="glossary-H.html#hidden_layer">hidden layers</a>, and then finished
+with the outputs. 
+
+<p><b><a name="feigenbaum_constant">Feigenbaum Constant</a></b> &nbsp; &nbsp;
+A constant number that characterizes when bump-like <a href="glossary-M.html#map">maps</a> such as
+the <a href="glossary-L.html#logistic_map">logistic map</a> will <a href="glossary-B.html#bifurcation">bifurcate</a>.  
+
+<p><b><a name="finite-state_automaton_(fsa)">Finite-State Automaton (FSA)</a></b> &nbsp; &nbsp;
+The simplest computing device.  Although it is not nearly powerful
+enough to perform <a href="glossary-U.html#universal_computation">universal computation</a>, it can recognize
+<a href="glossary-R.html#regular_expression">regular expressions</a>.  FSAs are defined by a state transition table
+that specifies how the FSA moves from one state to another when
+presented with a particular input.  FSAs can be drawn as
+<a href="glossary-G.html#graph">graphs</a>. 
+
+<p><b><a name="fish">Fish</a></b> &nbsp; &nbsp;
+A simple object in <a href="glossary-C.html#conways_game_of_life">Conway's Game of Life</a> that swims vertically or
+horizontally.  
+
+<p><b><a name="fitness">Fitness</a></b> &nbsp; &nbsp;
+A measure of an object's ability to reproduce viable offspring.  
+
+<p><b><a name="fitness_landscape">Fitness Landscape</a></b> &nbsp; &nbsp;
+A representation of how <a href="glossary-M.html#mutation">mutations</a> can change the <a href="glossary-F.html#fitness">fitness</a> of
+one or more organisms.  If high fitness corresponds to high locations
+in the landscape, and if changes in genetic material are mapped to
+movements in the landscape, then <a href="glossary-E.html#evolution">evolution</a> will tend to make
+populations move in an uphill direction on the fitness landscape.  
+
+<p><b><a name="fixed_point">Fixed Point</a></b> &nbsp; &nbsp;
+A point in a <a href="glossary-D.html#dynamical_system">dynamical system</a>'s <a href="glossary-S.html#state_space">state space</a> that maps back
+to itself, i.e., the system will stay at the fixed point if it does
+not undergo a <a href="glossary-P.html#perturbation">perturbation</a>.  
+
+<p><b><a name="formal_system">Formal System</a></b> &nbsp; &nbsp;
+A mathematical formalism in which <a href="glossary-S.html#statement">statements</a> can be constructed
+and manipulated with logical rules.  Some formal systems are built
+around a few basic <a href="glossary-A.html#axiom">axioms</a> (such as <a href="glossary-E.html#euclidean">Euclidean</a> geometry) and
+can be expanded with <a href="glossary-T.html#theorem">theorems</a> that can be deduced through
+<a href="glossary-P.html#proof">proofs</a>. 
+
+<p><b><a name="fractal">Fractal</a></b> &nbsp; &nbsp;
+An object with a <a href="glossary-F.html#fractal_dimension">fractal dimension</a>.  Fractals are
+<a href="glossary-S.html#self-similar">self-similar</a> and may be <a href="glossary-D.html#deterministic">deterministic</a> or <a href="glossary-S.html#stochastic">stochastic</a>.
+See also <a href="glossary-C.html#cantor_set">Cantor Set</a>, <a href="glossary-D.html#diffusion_limited_aggregation">Diffusion Limited Aggregation</a>,
+<a href="glossary-I.html#ifs">IFS</a>, <a href="glossary-J.html#julia_set">Julia Set</a>, <a href="glossary-L.html#l-system">L-Systems</a>, <a href="glossary-M.html#mrcm">MRCM</a>, <a href="glossary-M.html#mandelbrot_set">Mandelbrot
+Set</a>, and <a href="glossary-S.html#strange_attractor">Strange Attractor</a>. 
+
+<p><b><a name="fractal_dimension">Fractal Dimension</a></b> &nbsp; &nbsp;
+An extension of the notion of dimension found in <a href="glossary-E.html#euclidean">Euclidean</a>
+geometry.  Fractal dimensions can be non-integer, meaning that objects
+can be ``more than a line but less than a plane'' and so on.  There is
+more than one way of computing a fractal dimension, one common type
+being the Hausdorff-Besicovich dimension.  Roughly speaking, a fractal
+dimension can be calculated as the quotient of the logarithm of the
+object's size and the logarithm of the measuring scale, in the limit
+as the scale approaches 0.  Under this definition, standard Euclidean
+objects retain their original dimension.  
+
+<p><b><a name="function">Function</a></b> &nbsp; &nbsp;
+A mapping from one space to another.  This is usually understood to be
+a relationship between numbers.  Functions that are <a href="glossary-C.html#computable">computable</a>
+can be calculated by a <a href="glossary-U.html#universal_computer">universal computer</a>.  
+
+<p><b><a name="function_approximation">Function Approximation</a></b> &nbsp; &nbsp;
+The task of finding an instance from a class of <a href="glossary-F.html#function">functions</a> that is
+minimally different from an unknown function.  This is a common task
+for <a href="glossary-N.html#neural_network_(nn)">neural networks</a>.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="G-section">G</a></h1>
+
+
+<p><b><a name="game_theory">Game Theory</a></b> &nbsp; &nbsp;
+A mathematical formalism used to study human games, economics,
+military conflicts, and biology.  The goal of game theory is to find
+the optimal <a href="glossary-S.html#strategy">strategy</a> for one player to use when his opponent also
+plays optimally.  A strategy may incorporate <a href="glossary-R.html#random/randomness">randomness</a>, in which
+case it is referred to as a <a href="glossary-M.html#mixed_strategy">mixed strategy</a>.  
+
+
+<p><b><a name="gaussian">Gaussian</a></b> &nbsp; &nbsp;
+Normally distributed (with a bell-shaped curve) and having a <a href="glossary-M.html#mean">mean</a>
+at the center of the curve with tail widths proportional to the
+<a href="glossary-S.html#standard_deviation">standard deviation</a> of the data about the mean.  
+
+<p><b><a name="generalized_delta_rule">Generalized Delta Rule</a></b> &nbsp; &nbsp;
+Another name for <a href="glossary-B.html#backpropagation">backpropagation</a>.  
+
+<p><b><a name="genetic_algorithm_(ga)">Genetic Algorithm (GA)</a></b> &nbsp; &nbsp;
+A method of <a href="glossary-S.html#simulate/simulation">simulating</a> the action of <a href="glossary-E.html#evolution">evolution</a> within a
+computer.  A population of fixed-length <a href="glossary-S.html#string">strings</a> is evolved with a
+GA by employing <a href="glossary-C.html#crossover">crossover</a> and <a href="glossary-M.html#mutation">mutation</a> operators along with
+a <a href="glossary-F.html#fitness">fitness</a> <a href="glossary-F.html#function">function</a> that determines how likely individuals
+are to reproduce.  GAs perform a type of <a href="glossary-S.html#search/search_method">search</a> in a
+<a href="glossary-F.html#fitness_landscape">fitness landscape</a>. 
+
+<p><b><a name="genetic_programming_(gp)">Genetic Programming (GP)</a></b> &nbsp; &nbsp;
+A method of applying simulated <a href="glossary-E.html#evolution">evolution</a> on <a href="glossary-P.html#program">programs</a> or
+program fragments.  Modified forms of <a href="glossary-M.html#mutation">mutation</a> and <a href="glossary-C.html#crossover">crossover</a>
+are used along with a <a href="glossary-F.html#fitness">fitness</a> function.  
+
+
+<p><b><a name="glider">Glider</a></b> &nbsp; &nbsp;
+A simple object in <a href="glossary-C.html#conways_game_of_life">Conway's Game of Life</a> that swims diagonally
+through the grid space.  
+
+<p><b><a name="glider_gun">Glider Gun</a></b> &nbsp; &nbsp;
+An object in <a href="glossary-C.html#conways_game_of_life">Conway's Game of Life</a> that builds and emits
+<a href="glossary-G.html#glider">gliders</a>, which can then be collided in purposeful ways to
+construct more complicated objects.
+ 
+
+<p><b><a name="global_minimum_(maximum)">Global Minimum (Maximum)</a></b> &nbsp; &nbsp;
+In a <a href="glossary-S.html#search_space">search space</a>, the lowest (or highest) point of the surface,
+which usually represents the best possible solution in the space with
+respect to some problem.  
+
+<p><b><a name="gödel_number">Gödel Number</a></b> &nbsp; &nbsp;
+A <a href="glossary-N.html#natural_number">natural number</a> computed via a <a href="glossary-G.html#gödelization">Gödelization</a> procedure
+that uniquely corresponds to a <a href="glossary-S.html#string">string</a>.  
+
+<p><b><a name="gödelization">Gödelization</a></b> &nbsp; &nbsp;
+A method for mapping arbitrary <a href="glossary-S.html#string">strings</a> to <a href="glossary-N.html#natural_number">natural numbers</a>
+such that the process is <a href="glossary-O.html#one-to-one">one-to-one</a> and <a href="glossary-I.html#invertible">invertible</a>.  The
+process usually exploits the properties of <a href="glossary-P.html#prime_number">prime numbers</a>.  Since
+Gödelization can be defined as a <a href="glossary-C.html#computable">computable</a>
+<a href="glossary-F.html#function">function</a>, and since functions can be Gödelized, some
+functions (or <a href="glossary-P.html#program">programs</a>) can assert <a href="glossary-S.html#statement">statements</a> about other
+functions or programs, or themselves. 
+
+<p><b><a name="gödels_incompleteness_theorem">Gödel's Incompleteness Theorem</a></b> &nbsp; &nbsp;
+Any sufficiently interesting <a href="glossary-F.html#formal_system">formal system</a> can express true
+<a href="glossary-S.html#statement">statements</a> for which there can be no <a href="glossary-P.html#proof">proof</a> in the original
+formal system.  
+
+<p><b><a name="gödels_statement">Gödel's Statement</a></b> &nbsp; &nbsp;
+Given the formal <a href="glossary-S.html#statement">statement</a> ``There does not exist any <a href="glossary-P.html#proof">proof</a>
+for the statement with <a href="glossary-G.html#gödel_number">Gödel number</a> <i>x</i> applied to <i>x</i>,'' which
+has it own Gödel number, <i>g</i>, Gödel's statement paraphrased is
+``There does not exist a proof of the statement with Gödel number
+<i>g</i> applied to itself.''  Gödel's statement is true, but cannot be
+proven true in the <a href="glossary-F.html#formal_system">formal system</a> in which it is constructed,
+which leads to <a href="glossary-G.html#gödels_incompleteness_theorem">Gödel's Incompleteness Theorem</a>.  
+
+<p><b><a name="gradient">Gradient</a></b> &nbsp; &nbsp;
+A <a href="glossary-V.html#vector">vector</a> of partial <a href="glossary-D.html#derivative">derivatives</a> of a <a href="glossary-F.html#function">function</a> that
+operates on vectors.  Intuitively, the gradient represents the slope
+of a high-dimensional surface.  
+
+<p><b><a name="graph">Graph</a></b> &nbsp; &nbsp;
+A construct that consists of many nodes connected with edges.  The
+edges usually represent a relationship between the objects represented
+by the nodes.  For example, if the nodes are cities, then the edges
+may have numerical values that correspond to the distances between the
+cities.  A graph can be equivalently represented as a <a href="glossary-M.html#matrix">matrix</a>.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="H-section">H</a></h1>
+
+
+<p><b><a name="halting_problem">Halting Problem</a></b> &nbsp; &nbsp;
+The problem of determining if a <a href="glossary-P.html#program">program</a> halts or doesn't halt on
+a particular input.  This is an <a href="glossary-I.html#incomputable">incomputable</a> problem.  
+
+<p><b><a name="halting_set">Halting Set</a></b> &nbsp; &nbsp;
+The <a href="glossary-R.html#recursively_enumerable_(re)">recursively enumerable</a> <a href="glossary-S.html#set">set</a> of <a href="glossary-G.html#gödel_number">Gödel numbers</a> that
+correspond to <a href="glossary-P.html#program">programs</a> that halt if given their own Gödel
+number as input.  
+
+<p><b><a name="hebbian_learning">Hebbian Learning</a></b> &nbsp; &nbsp;
+A rule that specifies that the strength of a <a href="glossary-S.html#synapse">synapse</a> between two
+<a href="glossary-N.html#neuron">neurons</a> should be proportional to the product of the <a href="glossary-A.html#activation">activations</a>
+of the two neurons. 
+
+cd <p><b><a name="hénon_map">Hénon Map</a></b> &nbsp; &nbsp;
+A <a href="glossary-C.html#chaos/chaotic">chaotic</a> <a href="glossary-S.html#system">system</a> (defined by the two equations <i>x(t+1) = a
+- x(t)^2 + b y(t)</i> and <i>y(t+1) = x(t)</i>) that has a <a href="glossary-F.html#fractal">fractal</a>
+<a href="glossary-S.html#strange_attractor">strange attractor</a> and operates in <a href="glossary-D.html#discrete">discrete</a> time. 
+
+<p><b><a name="hidden_layer">Hidden Layer</a></b> &nbsp; &nbsp;
+In a <a href="glossary-F.html#feedforward_neural_network">feedforward</a> or <a href="glossary-R.html#recursive">recurrent</a> <a href="glossary-N.html#neural_network_(nn)">neural network</a>, a layer
+of <a href="glossary-N.html#neuron">neurons</a> that is neither the input layer nor the output layer
+but is physically between the two.  
+
+<p><b><a name="hill-climbing">Hill-Climbing</a></b> &nbsp; &nbsp;
+One of the simplest <a href="glossary-S.html#search/search_method">search</a> methods that attempts to find a
+<a href="glossary-L.html#local_minimum_(maximum)">local maximum</a> by moving in an uphill direction.  It is related
+to <a href="glossary-S.html#steepest_descent_(ascent)">steepest ascent</a>.  Hill-climbing may use <a href="glossary-G.html#gradient">gradient</a>
+information, or <a href="glossary-R.html#random/randomness">random</a> sampling of nearby points, in order to
+estimate the uphill direction.  
+
+<p><b><a name="holism">Holism</a></b> &nbsp; &nbsp;
+The idea that ``the whole is greater than the sum of the parts.''
+Holism is credible on the basis of <a href="glossary-E.html#emergent">emergence</a> alone, since
+<a href="glossary-R.html#reductionism">reductionism</a> and <a href="glossary-B.html#bottom-up">bottom-up</a> descriptions of nature often fail
+to predict complex higher-level patterns.  See also <a href="glossary-T.html#top-down">top-down</a>.  
+
+<p><b><a name="hopfield_network">Hopfield Network</a></b> &nbsp; &nbsp;
+A type of <a href="glossary-F.html#feedback_neural_network">feedback neural network</a> that is often used as an
+<a href="glossary-A.html#associative_memory">associative memory</a> or as a solution to a <a href="glossary-C.html#combinatorial_optimization">combinatorial
+optimization</a> problem. 
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="I-section">I</a></h1>
+
+
+<p><b><a name="ifs">IFS</a></b> &nbsp; &nbsp;
+An iterated functional system; it constructs a <a href="glossary-F.html#fractal">fractal</a> by
+<a href="glossary-I.html#iterate/iterative">iterating</a> a <a href="glossary-V.html#vector">vector</a> quantity through an <a href="glossary-A.html#affine">affine</a> equation that
+is <a href="glossary-R.html#random/randomness">randomly</a> selected on each iteration.  
+
+<p><b><a name="imaginary_number">Imaginary Number</a></b> &nbsp; &nbsp;
+The square root of a negative number.  The square root of -1 is often
+denoted as <i>i</i> for the purpose of writing out <a href="glossary-C.html#complex_number">complex numbers</a>.  
+
+<p><b><a name="implicit_parallelism">Implicit Parallelism</a></b> &nbsp; &nbsp;
+The idea that <a href="glossary-G.html#genetic_algorithm_(ga)">genetic algorithms</a> have an extra built-in form of
+<a href="glossary-P.html#parallel/parallelism">parallelism</a> that is expressed when a GA <a href="glossary-S.html#search/search_method">searches</a> through a
+<a href="glossary-S.html#search_space">search space</a>.  Implicit parallelism depends on the similarities
+and differences between individuals in the population.  The theory
+posits that GAs process more <a href="glossary-S.html#schema/schemata">schemata</a> than there are <a href="glossary-S.html#string">strings</a>
+in a population, thus getting something of a free lunch.  See also 
+<a href="glossary-N.html#no_free_lunch_(nfl)">no free lunch</a>. 
+
+<p><b><a name="incomputable">Incomputable</a></b> &nbsp; &nbsp;
+Something that cannot be characterized by a <a href="glossary-P.html#program">program</a> that always
+halts.  <a href="glossary-S.html#set">Sets</a> that are incomputable may be <a href="glossary-R.html#recursively_enumerable_(re)">recursively
+enumerable</a> (like the <a href="glossary-H.html#halting_set">halting set</a>),
+<a href="glossary-C.html#co-recursively_enumerable_(co-re)">co-recursively enumerable</a>
+(e.g., the halting set's <a href="glossary-C.html#complement">complement</a>),
+or <a href="glossary-N.html#not_recursively_enumerable_(not-re)">not recursively enumerable</a>
+(which, if also not CO-RE, is a <a href="glossary-R.html#random/randomness">random</a>
+set).  
+
+<p><b><a name="incomputable_number">Incomputable Number</a></b> &nbsp; &nbsp;
+A <a href="glossary-R.html#real_number">real number</a> with an infinite decimal (or <a href="glossary-B.html#binary">binary</a>) expansion
+that cannot be enumerated by any <a href="glossary-U.html#universal_computer">universal computer</a>.  
+
+<p><b><a name="inheritable">Inheritable</a></b> &nbsp; &nbsp;
+Refers to a trait that can be genetically passed from parent to
+offspring.  
+
+<p><b><a name="inhibitory">Inhibitory</a></b> &nbsp; &nbsp;
+Refers to a neural <a href="glossary-S.html#synapse">synapse</a> or <a href="glossary-W.html#weight">weight</a> that is negative such
+that activity in the source <a href="glossary-N.html#neuron">neuron</a> encourages inactivity in the
+connected neuron.  The opposite of <a href="glossary-E.html#excitatory">excitatory</a>.  
+
+<p><b><a name="inner_product">Inner Product</a></b> &nbsp; &nbsp;
+For two <a href="glossary-V.html#vector">vectors</a> of the same dimensionality, the sum of the
+pairwise products of the two vector components.  
+
+<p><b><a name="integral">Integral</a></b> &nbsp; &nbsp;
+The cumulative <a href="glossary-C.html#continuous">continuous</a> sum of a <a href="glossary-F.html#function">function</a>.  The integral
+of a <a href="glossary-D.html#differential_equation">differential equation</a> represents the future state of a
+<a href="glossary-D.html#dynamical_system">dynamical system</a>; however, most integrals do not have an
+<a href="glossary-A.html#analytical_solution">analytical solution</a>, which means that they may only have
+<a href="glossary-N.html#numerical_solution">numerical solutions</a>, an admittedly inexact process. 
+
+<p><b><a name="integration">Integration</a></b> &nbsp; &nbsp;
+The act of calculating an <a href="glossary-I.html#integral">integral</a>, by either a <a href="glossary-N.html#numerical_solution">numerical</a> or
+an <a href="glossary-A.html#analytical_solution">analytical solution</a>; the inverse operation of
+<a href="glossary-D.html#differentiation">differentiation</a>.  
+
+<p><b><a name="invertible">Invertible</a></b> &nbsp; &nbsp;
+A <a href="glossary-F.html#function">function</a> is invertible (with a unique inverse) if the output
+uniquely determines the input (i.e., it is <a href="glossary-O.html#one-to-one">one-to-one</a>) and the
+set of legal outputs is equal to the set of legal inputs.  The
+function <i>x^2</i> is not strictly invertible, while <i>x^3</i> has an inverse.
+For operations the definition is slightly looser.  While
+<a href="glossary-I.html#integration">integration</a> and <a href="glossary-D.html#differentiation">differentiation</a> are considered to be
+inverse operations, there are an infinite number of
+<a href="glossary-I.html#integral">integrals</a> that are valid results for integrating any function;
+thus, the process is not one-to-one. 
+
+<p><b><a name="irrational_number">Irrational Number</a></b> &nbsp; &nbsp;
+A <a href="glossary-R.html#real_number">real number</a> that cannot be represented as a fraction.  
+
+<p><b><a name="iterated_prisoners_dilemma">Iterated Prisoner's Dilemma</a></b> &nbsp; &nbsp;
+The <a href="glossary-P.html#prisoners_dilemma">Prisoner's Dilemma</a> game played in an <a href="glossary-I.html#iterate/iterative">iterative</a> manner
+for a number of rounds that is unknown to both players.  
+
+<p><b><a name="iterate/iterative">Iterate/Iterative</a></b> &nbsp; &nbsp;
+Doing something repeatedly.  Doing something repeatedly.  Doing
+something repeatedly.  Doing something repeatedly.  Doing something
+repeatedly.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="J-section">J</a></h1>
+
+
+<p><b><a name="julia_set">Julia Set</a></b> &nbsp; &nbsp;
+A <a href="glossary-S.html#set">set</a> of <a href="glossary-C.html#complex_number">complex numbers</a> that do not <a href="glossary-D.html#diverge">diverge</a> if
+<a href="glossary-I.html#iterate/iterative">iterated</a> an infinite number of times via a simple equation.  The
+points form an extremely complex <a href="glossary-F.html#fractal">fractal</a>. There is an
+<a href="glossary-U.html#uncountable_infinity">uncountable infinity</a>  of Julia sets, each of which
+corresponds to a particular complex number that appears as a constant
+in the iterative procedure.  Julia sets are similar to
+<a href="glossary-C.html#co-recursively_enumerable_(co-re)">co-recursively enumerable</a> sets because only points that are not a
+members of the set can actually be identified as such.  All of the
+Julia sets are related to the <a href="glossary-M.html#mandelbrot_set">Mandelbrot set</a>.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="K-section">K</a></h1>
+
+
+<p><b><a name="koch_curve">Koch Curve</a></b> &nbsp; &nbsp;
+A <a href="glossary-F.html#fractal">fractal</a> curve that looks like the edge of a snowflake.  It has
+no <a href="glossary-D.html#derivative">derivative</a> at any point.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="L-section">L</a></h1>
+
+
+<p><b><a name="lamarckism">Lamarckism</a></b> &nbsp; &nbsp;
+A method of heredity that does not apply to genetics but is applicable
+to social <a href="glossary-A.html#adaptation">adaptation</a>.  Lamarckism posits that acquired traits can
+be passed from parent to offspring.  
+
+<p><b><a name="lambda_calculus">Lambda Calculus</a></b> &nbsp; &nbsp;
+A <a href="glossary-M.html#model_of_computation">model of computation</a> that is capable of <a href="glossary-U.html#universal_computation">universal
+computation</a>.  The <a href="glossary-L.html#lisp">Lisp</a> programming language was inspired by
+Lambda calculus.  
+
+<p><b><a name="learning">Learning</a></b> &nbsp; &nbsp;
+A process of <a href="glossary-A.html#adaptation">adaptation</a> by which <a href="glossary-S.html#synapse">synapses</a>, <a href="glossary-W.html#weight">weights</a> of
+<a href="glossary-N.html#neural_network_(nn)">neural network</a>'s, <a href="glossary-C.html#classifier">classifier</a> <a href="glossary-S.html#strength">strengths</a>, or some other set
+of adjustable parameters is automatically modified so that some
+objective is more readily achieved.  The <a href="glossary-B.html#backpropagation">backpropagation</a> and
+<a href="glossary-B.html#bucket_brigade_algorithm">bucket brigade</a> <a href="glossary-A.html#algorithm">algorithms</a> are two types of learning
+procedures.  
+
+<p><b><a name="life">LIFE</a></b> &nbsp; &nbsp;
+See <a href="glossary-C.html#conways_game_of_life">Conway's Game of Life</a>.  
+
+<p><b><a name="limit_cycle">Limit Cycle</a></b> &nbsp; &nbsp;
+A <a href="glossary-P.html#periodic">periodic</a> cycle in a <a href="glossary-D.html#dynamical_system">dynamical system</a> such that previous
+states are returned to repeatedly.  
+
+<p><b><a name="linear">Linear</a></b> &nbsp; &nbsp;
+Having only a multiplicative factor.  If <i>f(x)</i> is a linear
+<a href="glossary-F.html#function">function</a>, then <i>f(a+b) = f(a) + f(b)</i>  and <i>c f(x) = f(cx)</i> must
+both be true for all values of <i>a</i>, <i>b</i>, <i>c</i>, and <i>x</i>.  Most things in
+nature are <a href="glossary-N.html#nonlinear">nonlinear</a>. 
+
+<p><b><a name="linearly_(in)separable">Linearly (In)separable</a></b> &nbsp; &nbsp;
+Two classes of points are linearly separable if a <a href="glossary-L.html#linear">linear</a>
+<a href="glossary-F.html#function">function</a> exists such that one class of points resides on one
+side of the hyperplane (defined by the linear function), and all
+points in the other class are on the other side.  The <a href="glossary-X.html#xor">XOR</a>
+mapping defines two <a href="glossary-S.html#set">sets</a> of points that are linearly inseparable. 
+
+<p><b><a name="lisp">Lisp</a></b> &nbsp; &nbsp;
+A programming language designed to manipulate lists that was inspired
+by
+<a href="glossary-L.html#lambda_calculus">Lambda Calculus</a> and was the inspiration for <a href="glossary-S.html#stutter">Stutter</a>. 
+
+<p><b><a name="local_minimum_(maximum)">Local Minimum (Maximum)</a></b> &nbsp; &nbsp;
+The bottom of a valley or the top of a peak; a point in a <a href="glossary-S.html#search_space">search
+space</a> such that all nearby points are either higher (for a minimum)
+or lower (for a maximum).  In a <a href="glossary-C.html#continuous">continuous</a> search space, local
+minima and maxima have a 0 <a href="glossary-G.html#gradient">gradient</a> <a href="glossary-V.html#vector">vector</a>.  Note that
+this particular valley (or peak) may not necessarily be the lowest (or
+highest) location in the space, which is referred to as the <a href="glossary-G.html#global minimum (maximum)">global
+minimum (maximum)</a>.  
+
+<p><b><a name="logistic_map">Logistic Map</a></b> &nbsp; &nbsp;
+The simplest <a href="glossary-C.html#chaos/chaotic">chaotic</a> <a href="glossary-S.html#system">system</a> that works in <a href="glossary-D.html#discrete">discrete</a> time
+and is defined by the <a href="glossary-M.html#map">map</a> <i>x(t) = 4r x(t) (1-x(t))</i>.
+<a href="glossary-F.html#feigenbaum_constant">Feigenbaum's constant</a> was first identified for this map.  
+
+<p><b><a name="lorenz_system">Lorenz System</a></b> &nbsp; &nbsp;
+A system of three <a href="glossary-D.html#differential_equation">differential equations</a> that was the first
+concrete example of <a href="glossary-C.html#chaos/chaotic">chaos</a> and a <a href="glossary-S.html#strange_attractor">strange attractor</a>.  
+
+<p><b><a name="lotka-volterra_system">Lotka-Volterra System</a></b> &nbsp; &nbsp;
+A two-species <a href="glossary-P.html#predator-prey_system">predator-prey system</a> that in its simplest form can
+display only <a href="glossary-F.html#fixed_point">fixed points</a> or <a href="glossary-L.html#limit_cycle">limit cycles</a>.  More complicated
+versions with three or more species can yield <a href="glossary-C.html#chaos/chaotic">chaos</a>.  
+
+<p><b><a name="l-system">L-System</a></b> &nbsp; &nbsp;
+A method of constructing a <a href="glossary-F.html#fractal">fractal</a> that is also a <a href="glossary-M.html#model">model</a> for
+plant growth.  L-systems use an <a href="glossary-A.html#axiom">axiom</a> as a starting
+<a href="glossary-S.html#string">string</a> and <a href="glossary-I.html#iterate/iterative">iteratively</a> apply a set of <a href="glossary-P.html#parallel/parallelism">parallel</a>
+string substitution rules to yield one long string that can be used
+as instructions for drawing the fractal.  One method of interpreting
+the resulting string is as an instruction to a <a href="glossary-T.html#turtle_graphics">turtle graphics</a>
+plotter.  Many fractals, including the <a href="glossary-C.html#cantor_set">Cantor set</a>, <a href="glossary-K.html#koch_curve">Koch
+curve</a>, and  <a href="glossary-P.html#peano_curve">Peano curve</a>, can be expressed as an L-system. 
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="M-section">M</a></h1>
+
+
+<p><b><a name="mackey-glass_system">Mackey-Glass System</a></b> &nbsp; &nbsp;
+A delay <a href="glossary-D.html#differential_equation">differential equation</a> (dx/dt = (ax(t-tau))/(1 +
+x^10(t-tau)) - bx(t)) that can display a wide variety of behaviors
+via an adjustable delay term, tau.  Even though this system
+generates a single <a href="glossary-S.html#scalar">scalar</a> <a href="glossary-T.html#time_series">time series</a>, it can be extremely
+<a href="glossary-C.html#chaos/chaotic">chaotic</a> because its value at any time may depend on its entire
+previous history.  
+
+<p><b><a name="mandelbrot_set">Mandelbrot Set</a></b> &nbsp; &nbsp;
+An extremely complex <a href="glossary-F.html#fractal">fractal</a> that is related to <a href="glossary-J.html#julia_set">Julia sets</a>
+in the way that it is constructed and by the fact that it acts as a
+sort of index to the Julia sets.  Like the Julia sets, the Mandelbrot
+set is calculated via an <a href="glossary-I.html#iterate/iterative">iterative</a> procedure.  Starting
+conditions that do not <a href="glossary-D.html#diverge">diverge</a> after an infinite number of
+iterations are considered to be inside the set.  If, and only if, a
+<a href="glossary-C.html#complex_number">complex number</a> is in the Mandelbrot set, then the Julia set that
+uses that complex number as a constant will be connected; otherwise,
+the corresponding Julia set will be unconnected.  
+
+<p><b><a name="map">Map</a></b> &nbsp; &nbsp;
+A <a href="glossary-F.html#function">function</a> that is usually understood to be <a href="glossary-I.html#iterate/iterative">iterated</a> in
+<a href="glossary-D.html#discrete">discrete</a> time steps.  
+
+<p><b><a name="matrix">Matrix</a></b> &nbsp; &nbsp;
+A rectangular two-dimensional array of numbers that can be thought of
+as a <a href="glossary-L.html#linear">linear</a> operator on <a href="glossary-V.html#vector">vectors</a>.  Matrix-vector
+multiplication can be used to describe geometric transformations such
+as scaling, rotation, reflection, and translation.  They can also
+describe the <a href="glossary-A.html#affine">affine</a> transformation used to construct <a href="glossary-I.html#ifs">IFS</a> and
+<a href="glossary-M.html#mrcm">MRCM</a> <a href="glossary-F.html#fractal">fractals</a>. 
+
+<p><b><a name="mean">Mean</a></b> &nbsp; &nbsp;
+The arithmetical average of a collection of numbers; the center of a
+<a href="glossary-G.html#gaussian">Gaussian</a> distribution. 
+
+<p><b><a name="meme">Meme</a></b> &nbsp; &nbsp;
+A unit of cultural information that represents a basic idea that can
+be transferred from one individual to another, and subjected to
+<a href="glossary-M.html#mutation">mutation</a>, <a href="glossary-C.html#crossover">crossover</a>, and <a href="glossary-A.html#adaptation">adaptation</a>. 
+
+<p><b><a name="message">Message</a></b> &nbsp; &nbsp;
+The basic unit of information in a <a href="glossary-C.html#classifier_system">classifier system</a> that is
+stored in the <a href="glossary-M.html#message_list">message list</a>.  A message may correspond to an
+external state of an <a href="glossary-E.html#environment">environment</a> or an internal state of the
+classifier system.  
+
+<p><b><a name="message_list">Message List</a></b> &nbsp; &nbsp;
+The portion of a <a href="glossary-C.html#classifier_system">classifier system</a> that retains information in
+the form of <a href="glossary-M.html#message">messages</a>.  
+
+<p><b><a name="mixed_strategy">Mixed Strategy</a></b> &nbsp; &nbsp;
+In <a href="glossary-G.html#game_theory">game theory</a>, a <a href="glossary-S.html#strategy">strategy</a> that uses <a href="glossary-R.html#random/randomness">randomness</a> by
+employing different actions in identical circumstances with different
+<a href="glossary-P.html#probability">probabilities</a>. 
+
+<p><b><a name="model">Model</a></b> &nbsp; &nbsp;
+In the sciences, a model is an estimate of how something works.  A
+model will usually have inputs and outputs that correspond to its
+real-world counterpart.  An <a href="glossary-A.html#adaptive">adaptive</a> <a href="glossary-S.html#system">system</a> also contains an
+implicit model of its <a href="glossary-E.html#environment">environment</a> that allows it to change its
+behavior in anticipation of what will happen in the environment.  
+
+<p><b><a name="model_of_computation">Model of Computation</a></b> &nbsp; &nbsp;
+An idealized version of a computing device that usually has some
+simplifications such as infinite memory.  A <a href="glossary-T.html#turing_machine">Turing machine</a>, the
+<a href="glossary-L.html#lambda_calculus">lambda calculus</a>, and <a href="glossary-P.html#post_production_system">Post production systems</a> are all models
+of computation.
+
+<p><b><a name="monotonic">Monotonic</a></b> &nbsp; &nbsp;
+The property of a <a href="glossary-F.html#function">function</a> that is always strictly increasing or
+strictly decreasing, but never both.  The <a href="glossary-S.html#sigmoidal">sigmoidal</a>
+<a href="glossary-A.html#activation">activation</a> function of a <a href="glossary-M.html#multilayer_perceptron_(mlp)">multilayer perceptron</a> is
+monotonically increasing. 
+
+<p><b><a name="mrcm">MRCM</a></b> &nbsp; &nbsp;
+The Multiple Reduction Copy Machine <a href="glossary-A.html#algorithm">algorithm</a>, which can be used
+to make <a href="glossary-A.html#affine">affine</a> <a href="glossary-F.html#fractal">fractals</a>.  MRCM fractals are related to
+<a href="glossary-I.html#ifs">IFS</a> fractals in that they both use the same types of affine
+transformations.  The MRCM algorithm performs several affine
+transformations of a seed image in <a href="glossary-P.html#parallel/parallelism">parallel</a> to yield a secondary
+seed image.  The output of the MRCM is <a href="glossary-R.html#recursive">recursively</a> passed back
+through to its input multiple times, to yield the fractal. 
+
+<p><b><a name="multilayer_perceptron_(mlp)">Multilayer Perceptron  (MLP)</a></b> &nbsp; &nbsp;
+A type of <a href="glossary-F.html#feedforward_neural_network">feedforward neural network</a> that is an extension of the
+<a href="glossary-P.html#perceptron">perceptron</a> in that it has at least one <a href="glossary-H.html#hidden_layer">hidden layer</a> of
+<a href="glossary-N.html#neuron">neurons</a>.  Layers are updated by starting at the inputs and ending
+with the outputs.  Each neuron computes a weighted sum of the incoming
+signals, to yield a <a href="glossary-N.html#net_input">net input</a>, and passes this value through its
+<a href="glossary-S.html#sigmoidal">sigmoidal</a> <a href="glossary-A.html#activation_function">activation function</a> to yield the neuron's
+<a href="glossary-A.html#activation">activation</a> value.  Unlike the perceptron, an MLP can solve
+<a href="glossary-L.html#linearly_(in)separable">linearly inseparable</a> problems.  
+
+<p><b><a name="mutation">Mutation</a></b> &nbsp; &nbsp;
+A <a href="glossary-R.html#random/randomness">random</a> change in any portion of genetic material.  For a
+<a href="glossary-G.html#genetic_algorithm_(ga)">genetic algorithm</a>, this means that a value in a <a href="glossary-B.html#bit">bit</a>
+<a href="glossary-S.html#string">string</a> is randomly set. 
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="N-section">N</a></h1>
+
+
+<p><b><a name="nash_equilibrium">Nash Equilibrium</a></b> &nbsp; &nbsp;
+In <a href="glossary-G.html#game_theory">game theory</a>, a pair of <a href="glossary-S.html#strategy">strategies</a> for a game such that
+neither player can improve his outcome by changing his strategy.  A
+Nash equilibrium sometimes takes the form of a <a href="glossary-S.html#saddle">saddle</a> structure.
+Under some cases, when a strategy is at a Nash equilibrium with
+itself, the strategy resembles an <a href="glossary-E.html#evolutionary_stable_strategy_(ess)">evolutionary stable strategy</a>. 
+
+<p><b><a name="natural_number">Natural Number</a></b> &nbsp; &nbsp;
+Any of the standard counting numbers; a positive integer.  
+
+<p><b><a name="natural_selection">Natural Selection</a></b> &nbsp; &nbsp;
+The natural filtering process by which individuals with higher
+<a href="glossary-F.html#fitness">fitness</a> are more likely to reproduce than individuals with lower
+fitness. 
+
+<p><b><a name="neo-darwinism">Neo-Darwinism</a></b> &nbsp; &nbsp;
+A synthesis of <a href="glossary-D.html#darwinism">Darwinism</a> with the mechanisms of genetics; the
+idea that <a href="glossary-A.html#adaptation">adaptation</a> equals a combination of <a href="glossary-V.html#variation">variation</a>,
+heredity, and selection.  See also <a href="glossary-E.html#evolution">evolution</a>, <a href="glossary-I.html#inheritable">inheritable</a>,
+and <a href="glossary-N.html#natural_selection">natural selection</a>.  
+
+<p><b><a name="net_input">Net Input</a></b> &nbsp; &nbsp;
+The weighted sum of incoming signals into a <a href="glossary-N.html#neuron">neuron</a> plus a
+neuron's
+<a href="glossary-T.html#threshold">threshold</a> value. 
+
+<p><b><a name="neural_network_(nn)">Neural Network (NN)</a></b> &nbsp; &nbsp;
+A network of <a href="glossary-N.html#neuron">neurons</a> that are connected through <a href="glossary-S.html#synapse">synapses</a> or
+<a href="glossary-W.html#weight">weights</a>.  In this book, the term is  used almost exclusively to
+denote an artificial neural network and not the real thing.  Each
+neuron performs a simple calculation that is a <a href="glossary-F.html#function">function</a> of the
+<a href="glossary-A.html#activation">activations</a> of the neurons that are connected to it.  Through
+<a href="glossary-F.html#feedback">feedback</a> mechanisms and/or the <a href="glossary-N.html#nonlinear">nonlinear</a> output
+response of neurons, the network as a whole is capable of performing
+extremely complicated tasks, including <a href="glossary-U.html#universal_computation">universal computation</a> and
+<a href="glossary-U.html#universal_approximation">universal approximation</a>.  Three different classes of neural
+networks are <a href="glossary-F.html#feedforward_neural_network">feedforward</a>, <a href="glossary-F.html#feedback">feedback</a>, and <a href="glossary-R.html#recurrent_neural_network">recurrent neural
+networks</a>, which differ in the degree and type of <a href="glossary-C.html#connectivity">connectivity</a>
+that they possess. 
+
+<p><b><a name="neuron">Neuron</a></b> &nbsp; &nbsp;
+A simple computational unit that performs a weighted sum on incoming
+signals, adds a <a href="glossary-T.html#threshold">threshold</a> or bias term to this value to yield a
+<a href="glossary-N.html#net_input">net input</a>, and maps this last value through an <a href="glossary-A.html#activation_function">activation
+function</a> to compute its own <a href="glossary-A.html#activation">activation</a>.  Some neurons, such as
+those found in <a href="glossary-F.html#feedback">feedback</a> or <a href="glossary-H.html#Hopfield Network">Hopfield networks</a>, will
+retain a portion of their previous activation. 
+
+<p><b><a name="newtons_method">Newton's Method</a></b> &nbsp; &nbsp;
+An <a href="glossary-I.html#iterate/iterative">iterative</a> method for finding 0 values of a <a href="glossary-F.html#function">function</a>. 
+
+<p><b><a name="niche">Niche</a></b> &nbsp; &nbsp;
+A way for an animal to make a living in an <a href="glossary-E.html#ecosystem">ecosystem</a>.  
+
+<p><b><a name="no_free_lunch_(nfl)">No Free Lunch (NFL)</a></b> &nbsp; &nbsp;
+A <a href="glossary-T.html#theorem">theorem</a> that states that in the worst case, and averaged over
+an infinite number of <a href="glossary-S.html#search_space">search spaces</a>, all <a href="glossary-S.html#search/search_method">search methods</a>
+perform equally well.  More than being a condemnation of any search
+method, the NFL theorem actually hints that most naturally occurring
+search spaces are, in fact, not <a href="glossary-R.html#random/randomness">random</a>.  
+
+<p><b><a name="nonlinear">Nonlinear</a></b> &nbsp; &nbsp;
+A <a href="glossary-F.html#function">function</a> that is not <a href="glossary-L.html#linear">linear</a>.  Most things in nature are
+nonlinear.  This means that in a very real way, the whole is at least
+different from the sum of the parts.  See also <a href="glossary-H.html#holism">holism</a>.  
+
+<p><b><a name="not_recursively_enumerable_(not-re)">Not Recursively Enumerable (not-RE)</a></b> &nbsp; &nbsp;
+An infinite <a href="glossary-S.html#set">set</a> that cannot be <a href="glossary-R.html#recursively_enumerable_(re)">recursively enumerated</a>.
+<a href="glossary-S.html#set">Sets</a> of this type that are also not <a href="glossary-C.html#co-recursively_enumerable_(co-re)">co-recursively enumerable</a>
+are effectively <a href="glossary-R.html#random/randomness">random</a>. 
+
+<p><b><a name="np">NP</a></b> &nbsp; &nbsp;
+Nondeterministic polynomial time problems; a class of computational
+problems that may or may not be solvable in <a href="glossary-P.html#polynomial">polynomial</a> time but
+are expressed in such a way that candidate solutions can be tested for
+correctness in polynomial time.  See also <a href="glossary-T.html#time_complexity">time complexity</a> and
+<a href="glossary-N.html#np-complete">NP-Complete</a>. 
+
+<p><b><a name="np-complete">NP-Complete</a></b> &nbsp; &nbsp;
+A problem type in which any instance of any other <a href="glossary-N.html#np">NP</a> class
+problem can be translated to in <a href="glossary-P.html#polynomial">polynomial</a> time.  This means that
+if a fast
+<a href="glossary-A.html#algorithm">algorithm</a> exists for an NP-complete problem, then any problem
+that is in NP can be solved with the same algorithm. 
+
+<p><b><a name="numerical_solution">Numerical Solution</a></b> &nbsp; &nbsp;
+A solution to a problem that is calculated through a <a href="glossary-S.html#simulate/simulation">simulation</a>.
+For example, solving the <a href="glossary-T.html#three_body_problem">Three Body Problem</a> is not possible in
+the worst case; however, with the <a href="glossary-D.html#differential_equation">differential equations</a> that
+describe the motions of three bodies in space, one could simulate
+their movements by simulating each time step.  Nevertheless, numerical
+solutions are usually error-prone due to <a href="glossary-S.html#sensitivity">sensitivity</a> and,
+therefore, can be used to estimate the future for only relatively
+short time spans, in the worst case.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="O-section">O</a></h1>
+
+
+<p><b><a name="occams_razor">Occam's Razor</a></b> &nbsp; &nbsp;
+The principle that when faced with multiple but equivalent
+interpretations of some phenomenon, one should always choose the
+simplest explanation that correctly fits the data.  Occam's Razor is
+useful for selecting competing <a href="glossary-M.html#model">models</a> for some phenomena.  
+
+<p><b><a name="one-to-one">One-to-One</a></b> &nbsp; &nbsp;
+A <a href="glossary-F.html#function">function</a> or <a href="glossary-M.html#map">map</a> that for every possible output has only
+one input that yields that particular output; if <i>f(a) = f(b)</i>, then
+<i>a = b</i>.  
+
+<p><b><a name="optimization">Optimization</a></b> &nbsp; &nbsp;
+The process of finding parameters that minimizes or maximizes a
+<a href="glossary-F.html#function">function</a>. 
+
+<p><b><a name="outer_product">Outer Product</a></b> &nbsp; &nbsp;
+An operation on two <a href="glossary-V.html#vector">vectors</a> that yields a <a href="glossary-M.html#matrix">matrix</a>.  Given two
+vectors with the same dimensionality, the outer product is a square
+symmetric matrix that contains the product of all pairs of elements
+from the two vectors, i.e., <i>A[i,j] = x[i] y[j]</i>.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="P-section">P</a></h1>
+
+
+<p><b><a name="parallel/parallelism">Parallel/Parallelism</a></b> &nbsp; &nbsp;
+Many things happening at once.  
+
+<p><b><a name="pattern_classification">Pattern Classification</a></b> &nbsp; &nbsp;
+A task that <a href="glossary-N.html#neural_network_(nn)">neural networks</a> are often trained to do.  Given some
+input pattern, the task is to make an accurate class assignment to the
+input.  For example, classifying many images of letters to one of the
+twenty-six letters of the alphabet is a pattern classification task. 
+
+<p><b><a name="payoff">Payoff</a></b> &nbsp; &nbsp;
+In <a href="glossary-G.html#game_theory">game theory</a>, the amount that a player wins, given the player's
+and his opponent's actions.  
+
+<p><b><a name="peano_curve">Peano Curve</a></b> &nbsp; &nbsp;
+A <a href="glossary-F.html#fractal">fractal</a> <a href="glossary-S.html#space-filling">space-filling</a> curve that can fill a plane even
+though it is a line of infinite length.  Oddly enough, it has an
+integer <a href="glossary-F.html#fractal_dimension">fractal dimension</a> of 2.  
+
+<p><b><a name="perceptron">Perceptron</a></b> &nbsp; &nbsp;
+The simplest type of <a href="glossary-F.html#feedforward_neural_network">feedforward neural network</a>.  It has only
+inputs and outputs, i.e., no <a href="glossary-H.html#hidden_layer">hidden layers</a>.  
+
+<p><b><a name="periodic">Periodic</a></b> &nbsp; &nbsp;
+Refers to motion that goes through a finite number of regions, returns
+to a previous state, and repeats the same fixed pattern forever.  
+
+<p><b><a name="perturbation">Perturbation</a></b> &nbsp; &nbsp;
+A slight nudge.  
+
+<p><b><a name="phase_space">Phase Space</a></b> &nbsp; &nbsp;
+In this book, another name for <a href="glossary-S.html#state_space">state space</a>.  In the scientific
+literature, ``phase space'' is used to denote the space of motion in a
+<a href="glossary-D.html#dynamical_system">dynamical system</a> that moves in <a href="glossary-C.html#continuous">continuous</a> time, while
+<a href="glossary-S.html#state_space">state space</a> is often used for <a href="glossary-D.html#discrete">discrete</a> time <a href="glossary-S.html#system">systems</a>. 
+
+<p><b><a name="phase_transition">Phase Transition</a></b> &nbsp; &nbsp;
+In physics, a change from one state of matter to another.  In
+<a href="glossary-D.html#dynamical_system">dynamical systems</a> theory, a change from one mode of behavior to
+another. 
+
+<p><b><a name="planning">Planning</a></b> &nbsp; &nbsp;
+In computer science, and particularly in <a href="glossary-A.html#artificial_intelligence">artificial intelligence</a>,
+the task of determining a stepwise plan to accomplish a very specific
+task.  
+
+<p><b><a name="polynomial">Polynomial</a></b> &nbsp; &nbsp;
+A <a href="glossary-F.html#function">function</a> in which the output is the sum of terms that are the
+products of constant values and the input raised to some integer
+power.  The polynomial of a polynomial is another polynomial.  From a
+<a href="glossary-T.html#time_complexity">time complexity</a> point of view, polynomials are well-behaved. 
+
+<p><b><a name="post_production_system">Post Production System</a></b> &nbsp; &nbsp;
+A <a href="glossary-M.html#model_of_computation">model of computation</a> that resembles a collection of ``if
+... then'' rules and is capable of <a href="glossary-U.html#universal_computation">universal computation</a>.  
+
+<p><b><a name="predator-prey_system">Predator-Prey System</a></b> &nbsp; &nbsp;
+An <a href="glossary-E.html#ecosystem">ecosystem</a> in which one portion of the population consumes
+another.  With three or more species, simple predator-prey
+interactions can lead to <a href="glossary-C.html#chaos/chaotic">chaos</a> and biological <a href="glossary-A.html#arms_race">arms races</a>.
+See also <a href="glossary-L.html#lotka-volterra_system">Lotka-Volterra system</a>.  
+
+<p><b><a name="prime_number">Prime Number</a></b> &nbsp; &nbsp;
+A <a href="glossary-N.html#natural_number">natural number</a> that can be evenly divided only by itself and 1. 
+
+<p><b><a name="prisoners_dilemma">Prisoner's Dilemma</a></b> &nbsp; &nbsp;
+A non-<a href="glossary-Z.html#zero-sum_game">zero-sum game</a> in which both players have incentive not to
+cooperate under any circumstances.  Thus, the optimal <a href="glossary-G.html#game_theory">game theory</a>
+<a href="glossary-S.html#strategy">strategy</a> of <a href="glossary-A.html#always_defect">always defect</a> has the paradoxical property that
+both players would have a higher <a href="glossary-P.html#payoff">payoff</a> if they ignored the
+advice of game theory. 
+
+<p><b><a name="probability">Probability</a></b> &nbsp; &nbsp;
+The likelihood that a <a href="glossary-R.html#random/randomness">random</a> event will occur.  
+
+<p><b><a name="program">Program</a></b> &nbsp; &nbsp;
+An <a href="glossary-A.html#algorithm">algorithm</a> that is written in a programming language for
+execution on a physical computer.  
+
+<p><b><a name="proof">Proof</a></b> &nbsp; &nbsp;
+A sequence of <a href="glossary-S.html#statement">statements</a> in which each subsequent statement is
+derivable from one of the previous statements or from an <a href="glossary-A.html#axiom">axiom</a> of
+a <a href="glossary-F.html#formal_system">formal system</a>.   The final statement of a proof is usually the
+<a href="glossary-T.html#theorem">theorem</a> that one has set out to prove.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="Q-section">Q</a></h1>
+
+
+<p><b><a name="quasiperiodic">Quasiperiodic</a></b> &nbsp; &nbsp;
+Refers to a form of motion that is regular but never exactly
+repeating.  Quasiperiodic motion is always composed of multiple but
+simpler <a href="glossary-P.html#periodic">periodic</a> motions.  In the general case, for motion that
+is the sum of simpler periodic motions, if there exists a length of
+time that evenly divides the frequencies of the underlying motions,
+then the composite motion will also be periodic; however, if no such
+length of time exists, then the motion will be quasiperiodic.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="R-section">R</a></h1>
+
+
+<p><b><a name="random/randomness">Random/Randomness</a></b> &nbsp; &nbsp;
+Without cause; not <a href="glossary-C.html#compressible">compressible</a>; obeying the statistics of a fair
+coin toss.  
+
+<p><b><a name="random_walk">Random Walk</a></b> &nbsp; &nbsp;
+A walk in one or more dimensions that is dictated by the outcome of a
+coin toss.  The direction of each step of the walk is specified by the
+coin toss.  The resulting <a href="glossary-R.html#random/randomness">random</a> motion is often referred to as
+<a href="glossary-B.html#brown_noise/brownian_motion">Brownian motion</a>.  
+
+<p><b><a name="rational_number">Rational Number</a></b> &nbsp; &nbsp;
+A number that can be expressed as a fraction.  
+
+<p><b><a name="real_number">Real Number</a></b> &nbsp; &nbsp;
+Any number that can be represented with a potentially infinite decimal
+expansion to the right of the decimal point.  <a href="glossary-N.html#natural_number">Natural</a>,
+<a href="glossary-R.html#rational_number">rational</a>, <a href="glossary-I.html#irrational_number">irrational</a>, and <a href="glossary-I.html#incomputable">incomputable</a> numbers are all
+real numbers. 
+
+<p><b><a name="recurrent_neural_network">Recurrent Neural Network</a></b> &nbsp; &nbsp;
+A network similar to a <a href="glossary-F.html#feedforward_neural_network">feedforward neural network</a> except that
+there may be connections from an output or <a href="glossary-H.html#hidden_layer">hidden layer</a> to the
+inputs.  Recurrent neural networks are capable of <a href="glossary-U.html#universal_computation">universal
+computation</a>.  
+
+<p><b><a name="recursive">Recursive</a></b> &nbsp; &nbsp;
+Strictly speaking, a <a href="glossary-S.html#set">set</a> or <a href="glossary-F.html#function">function</a> is recursive if it is
+<a href="glossary-C.html#computable">computable</a>; however, in the usual sense of the word, a
+function is said to be recursive if its definition make reference
+to itself.  For example, factorial can be defined as x! = x * (x -
+1)! with the base case of 1! equal to 1.  See also
+<a href="glossary-S.html#self-referential">self-referential</a>. 
+
+<p><b><a name="recursively_enumerable_(re)">Recursively Enumerable (RE)</a></b> &nbsp; &nbsp;
+A potentially infinite <a href="glossary-S.html#set">set</a> whose members can be enumerated by a
+<a href="glossary-U.html#universal_computer">universal computer</a>; however, a universal computer may not be able
+to determine that something is not a member of a recursively
+enumerable set.  The <a href="glossary-H.html#halting_set">halting set</a> is recursively enumerable but
+not <a href="glossary-R.html#recursive">recursive</a>. 
+
+<p><b><a name="reductionism">Reductionism</a></b> &nbsp; &nbsp;
+The idea that nature can be understood by dissection.  In other words,
+knowing the lowest-level details of how things work (at, say, the
+level of subatomic physics) reveals how higher-level phenomena come
+about.  This is a <a href="glossary-B.html#bottom-up">bottom-up</a> way of looking at the universe, and
+is the exact opposite of <a href="glossary-H.html#holism">holism</a>.  
+
+<p><b><a name="regular_expression">Regular Expression</a></b> &nbsp; &nbsp;
+A definition for a class of <a href="glossary-S.html#string">strings</a> that can be recognized by a
+<a href="glossary-F.html#finite-state_automaton_(fsa)">finite-state automaton</a>.  An example of a class of strings that is
+regular would be legal mathematical expressions using only ``+'' and
+digits.   An example that is not regular is the same legal
+mathematical expressions as before, but with properly nested
+parentheses. 
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="S-section">S</a></h1>
+
+
+<p><b><a name="saddle">Saddle</a></b> &nbsp; &nbsp;
+A type of surface that is neither a peak nor a valley but still has a
+0 <a href="glossary-G.html#gradient">gradient</a>.  Saddle points are situated such that moving in
+one direction takes one uphill, while moving in another direction
+would be downhill.  Hence, saddles look like the things that cowboys
+ride on.
+
+<p><b><a name="scalar">Scalar</a></b> &nbsp; &nbsp;
+A single number, as opposed to a multidimensional <a href="glossary-V.html#vector">vector</a> or
+<a href="glossary-M.html#matrix">matrix</a>. 
+
+<p><b><a name="schema/schemata">Schema/Schemata</a></b> &nbsp; &nbsp;
+A similarity template used to analyze <a href="glossary-G.html#genetic_algorithm_(ga)">genetic algorithms</a>.  By
+using wild-card characters, a schema defines an entire class of
+<a href="glossary-S.html#string">strings</a> that may be found in a population. 
+
+<p><b><a name="search/search_method">Search/Search Method</a></b> &nbsp; &nbsp;
+A method for finding a region of interest in a <a href="glossary-S.html#search_space">search space</a>.
+Usually, the interesting regions correspond to solutions to a specific
+problem.  <a href="glossary-H.html#hill-climbing">Hill-climbing</a>, <a href="glossary-S.html#steepest descent (ascent)">steepest descent (ascent)</a>,
+<a href="glossary-S.html#simulated_annealing">simulated annealing</a>, and <a href="glossary-G.html#genetic_algorithm_(ga)">genetic algorithms</a> are all search
+methods.  
+
+<p><b><a name="search_space">Search Space</a></b> &nbsp; &nbsp;
+A characterization of every possible solution to a problem instance.
+For a <a href="glossary-N.html#neural_network_(nn)">neural network</a> the search space is defined as all possible
+assignments to the network <a href="glossary-W.html#weight">weights</a>; for a <a href="glossary-G.html#genetic_algorithm_(ga)">genetic algorithm</a>,
+it is every conceivable value assignment to the <a href="glossary-S.html#string">strings</a> in the
+population.  
+
+<p><b><a name="selection">Selection</a></b> &nbsp; &nbsp;
+See <a href="glossary-N.html#natural_selection">natural selection</a>.  
+
+<p><b><a name="self-organization">Self-Organization</a></b> &nbsp; &nbsp;
+A spontaneously formed higher-level pattern of structure or
+<a href="glossary-F.html#function">function</a> that is <a href="glossary-E.html#emergent">emergent</a> through the interactions of
+lower-level objects.  
+
+<p><b><a name="self-organized_criticality_(soc)">Self-Organized Criticality (SOC)</a></b> &nbsp; &nbsp;
+A mathematical theory that describes how <a href="glossary-S.html#system">systems</a> composed of many
+interacting parts can tune themselves toward <a href="glossary-D.html#dynamics/dynamical">dynamical</a> behavior
+that is critical in the sense that it is neither <a href="glossary-S.html#stable">stable</a> nor
+<a href="glossary-U.html#unstable">unstable</a> but at a region near a <a href="glossary-P.html#phase_transition">phase transition</a>.  SOC
+systems display events in a power-law distribution and are never quite
+at <a href="glossary-E.html#equilibrium">equilibrium</a>.  See also <a href="glossary-E.html#edge_of_chaos">edge of chaos</a> and
+<a href="glossary-S.html#self-organization">self-organization</a>. 
+
+<p><b><a name="self-referential">Self-Referential</a></b> &nbsp; &nbsp;
+Referring directly back to oneself through information flow,
+influence, or cause and effect.  See <a href="glossary-S.html#self-referential">Self-Referential</a>.  
+
+<p><b><a name="self-similar">Self-Similar</a></b> &nbsp; &nbsp;
+An object that is structurally <a href="glossary-R.html#recursive">recursive</a> in that a part will look
+like the whole.  See also <a href="glossary-F.html#fractal">fractal</a>.  
+
+<p><b><a name="sensitivity">Sensitivity</a></b> &nbsp; &nbsp;
+The tendency of a <a href="glossary-S.html#system">system</a> (sometimes <a href="glossary-C.html#chaos/chaotic">chaotic</a>) to change
+dramatically with only small <a href="glossary-P.html#perturbation">perturbations</a>.  
+
+<p><b><a name="set">Set</a></b> &nbsp; &nbsp;
+A collection of things, usually numbers. Sets may be infinite in size. 
+
+<p><b><a name="shadowing_lemma">Shadowing Lemma</a></b> &nbsp; &nbsp;
+Implies that a numerical <a href="glossary-S.html#simulate/simulation">simulation</a> of <a href="glossary-C.html#chaos/chaotic">chaos</a> may ``shadow''
+a real trajectory of a real <a href="glossary-C.html#chaos/chaotic">chaotic</a> <a href="glossary-S.html#system">system</a>.  
+
+<p><b><a name="sigmoidal">Sigmoidal</a></b> &nbsp; &nbsp;
+An ``S'' shaped <a href="glossary-F.html#function">function</a> that is often used as an <a href="glossary-A.html#activation_function">activation
+function</a> in a <a href="glossary-N.html#neural_network_(nn)">neural network</a>.  
+
+<p><b><a name="simulate/simulation">Simulate/Simulation</a></b> &nbsp; &nbsp;
+<a href="glossary-E.html#experimentation">Experimentation</a> in the space of theories, or a combination
+of experimentation and <a href="glossary-T.html#theorization">theorization</a>.  Some numerical simulations
+are <a href="glossary-P.html#program">programs</a> that represent a <a href="glossary-M.html#model">model</a> for how nature works.
+Usually, the outcome of a simulation is as much a surprise as the
+outcome of a natural event, due to the richness and uncertainty of
+<a href="glossary-C.html#computation">computation</a>.  
+
+<p><b><a name="simulated_annealing">Simulated Annealing</a></b> &nbsp; &nbsp;
+A partially <a href="glossary-R.html#random/randomness">random</a> method of <a href="glossary-S.html#search/search_method">search</a> and <a href="glossary-O.html#optimization">optimization</a>
+usually used for <a href="glossary-C.html#combinatorial_optimization">combinatorial optimization</a> problems.  The
+technique is modeled on how the molecular structure of metals is
+disordered at high temperatures but very ordered and crystalline at
+low temperatures.  In simulated annealing, a problem instance is
+reformulated so that it loosely resembles disordered material.
+Gradually, the temperature is lowered such that the ordered states
+correspond to good solutions to a problem.  
+
+<p><b><a name="space_complexity">Space Complexity</a></b> &nbsp; &nbsp;
+A <a href="glossary-F.html#function">function</a> that describes the amount of memory required for a
+<a href="glossary-P.html#program">program</a> to run on a computer to perform a particular task.  The
+function is parameterized by the length of the program's input.  See
+also <a href="glossary-T.html#time_complexity">time complexity</a>. 
+
+<p><b><a name="space-filling">Space-Filling</a></b> &nbsp; &nbsp;
+Refers to a curve that manages to twist and turn in such a way that it
+actually fills a space or volume.  All space-filling curves are
+<a href="glossary-F.html#fractal">fractal</a>.  
+
+<p><b><a name="special_function">Special Function</a></b> &nbsp; &nbsp;
+In <a href="glossary-L.html#lisp">Lisp</a> or <a href="glossary-S.html#stutter">Stutter</a>, a built-in <a href="glossary-F.html#function">function</a> that may or may
+not fully evaluate its arguments, such as the <tt>if</tt> primitive.  
+
+<p><b><a name="stable">Stable</a></b> &nbsp; &nbsp;
+Having a <a href="glossary-B.html#basin_of_attraction">basin of attraction</a> that is non-zero in size; an
+<a href="glossary-A.html#attractor">attractor</a> that can withstand some form of <a href="glossary-P.html#perturbation">perturbation</a>. 
+
+<p><b><a name="standard_deviation">Standard Deviation</a></b> &nbsp; &nbsp;
+A measure of the spread of a <a href="glossary-S.html#set">set</a> of data.  For a <a href="glossary-G.html#gaussian">Gaussian</a>
+distribution, the standard deviation hints at the width of the tails
+of the distribution <a href="glossary-F.html#function">function</a>.  
+
+<p><b><a name="statement">Statement</a></b> &nbsp; &nbsp;
+In a <a href="glossary-F.html#formal_system">formal system</a>, a <a href="glossary-S.html#string">string</a> of characters that is formed
+according to well-defined rules such that it is legal for the language
+that is the formal system.  For example, in the formal system of
+arithmetic, the expression ``5 + 3 * (2 - 4)'' is a valid and
+well-formed statement, but ``5 + )3 * * (2 (- 4)'' is not. 
+
+<p><b><a name="state_space">State Space</a></b> &nbsp; &nbsp;
+In this book, another name for the <a href="glossary-P.html#phase_space">phase space</a> of a <a href="glossary-D.html#dynamical_system">dynamical
+system</a>.  Roughly speaking, if the <a href="glossary-D.html#dynamics/dynamical">dynamics</a> of a dynamical system
+can be described by <i>n</i> values, then the state space is the
+<i>n</i>-dimensional volume that the system moves through.  <a href="glossary-S.html#system">Systems</a>
+that are <a href="glossary-C.html#continuous">continuous</a> in time will form a smooth trajectory through
+this volume, while <a href="glossary-D.html#discrete">discrete</a> systems may jump to different
+locations on subsequent time steps.  In either case, if a system ever
+returns to a previously visited location in the state space, then the
+system is in either a <a href="glossary-F.html#fixed_point">fixed point</a> or a <a href="glossary-L.html#limit_cycle">limit cycle</a>.  For
+<a href="glossary-C.html#chaos/chaotic">chaotic</a> systems, or for <a href="glossary-P.html#program">programs</a> that never halt, the system
+will always be at a previously unvisited portion of the state space. 
+
+<p><b><a name="steepest_descent_(ascent)">Steepest Descent (Ascent)</a></b> &nbsp; &nbsp;
+A <a href="glossary-S.html#search/search_method">search method</a> that uses the <a href="glossary-G.html#gradient">gradient</a> information of a
+<a href="glossary-S.html#search_space">search space</a> and moves in the opposite direction from the gradient
+until no further downhill (or uphill) progress can be made.  See also
+<a href="glossary-H.html#hill-climbing">hill-climbing</a>. 
+
+<p><b><a name="stochastic">Stochastic</a></b> &nbsp; &nbsp;
+Something that is <a href="glossary-R.html#random/randomness">random</a>.  
+
+<p><b><a name="strange_attractor">Strange Attractor</a></b> &nbsp; &nbsp;
+An <a href="glossary-A.html#attractor">attractor</a> of a <a href="glossary-D.html#dynamical_system">dynamical system</a> that is usually
+<a href="glossary-F.html#fractal">fractal</a> in dimension and is indicative of <a href="glossary-C.html#chaos/chaotic">chaos</a>. 
+
+<p><b><a name="strategy">Strategy</a></b> &nbsp; &nbsp;
+In <a href="glossary-G.html#game_theory">game theory</a>, a policy for playing a game.  A strategy is a
+complete recipe for how a player should act in a game under all
+circumstances.  Some policies may employ <a href="glossary-R.html#random/randomness">randomness</a>, in which
+case they are referred to as <a href="glossary-M.html#mixed_strategy">mixed strategies</a>.  
+
+<p><b><a name="strength">Strength</a></b> &nbsp; &nbsp;
+For a <a href="glossary-C.html#classifier_system">classifier system</a>, a <a href="glossary-C.html#classifier">classifier</a>'s relative ability to
+win a bidding match for the right to post its <a href="glossary-M.html#message">message</a> on the
+<a href="glossary-M.html#message_list">message list</a>. 
+
+<p><b><a name="string">String</a></b> &nbsp; &nbsp;
+Any sequence of letters, numbers, digits, <a href="glossary-B.html#bit">bits</a>, or symbols.  
+
+<p><b><a name="stutter">Stutter</a></b> &nbsp; &nbsp;
+A silly programming language used in this book that is based on
+<a href="glossary-L.html#lisp">Lisp</a> and is capable of <a href="glossary-U.html#universal_computation">universal computation</a>. 
+
+<p><b><a name="symmetric_matrix">Symmetric Matrix</a></b> &nbsp; &nbsp;
+A <a href="glossary-M.html#matrix">matrix</a> with the lower-left half equal to the mirror image of
+the upper-right half.  
+
+<p><b><a name="synapse">Synapse</a></b> &nbsp; &nbsp;
+The junction between two <a href="glossary-N.html#neuron">neurons</a> in which neural activity is
+propagated from one neuron to another.  See also
+<a href="glossary-E.html#excitatory">excitatory</a>, <a href="glossary-I.html#inhibitory">inhibitory</a>, and <a href="glossary-W.html#weight">weight</a>. 
+
+<p><b><a name="synchronous">Synchronous</a></b> &nbsp; &nbsp;
+Acting in a lockstep fashion, with each event occurring in a precise
+order, or in such a way as to eliminate the notion of order entirely. 
+
+<p><b><a name="system">System</a></b> &nbsp; &nbsp;
+Something that can be studied as a whole.  Systems may consist of
+subsystems that are interesting in their own right.  Or they may exist
+in an <a href="glossary-E.html#environment">environment</a> that consists of other similar systems.
+Systems are generally understood to have an internal state, inputs
+from an environment, and methods for manipulating the environment or
+themselves.  Since cause and effect can flow in both directions of a
+system and environment, interesting systems often posses
+<a href="glossary-F.html#feedback">feedback</a>, which is <a href="glossary-S.html#self-referential">self-referential</a> in the strongest case. 
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="T-section">T</a></h1>
+
+
+<p><b><a name="theorem">Theorem</a></b> &nbsp; &nbsp;
+A <a href="glossary-S.html#statement">statement</a> in a <a href="glossary-F.html#formal_system">formal system</a> that has <a href="glossary-P.html#proof">proof</a>.  
+
+<p><b><a name="theorization">Theorization</a></b> &nbsp; &nbsp;
+A process by which scientists attempt to understand nature; it is the
+complement to <a href="glossary-E.html#experimentation">experimentation</a>.  Theorization is the process of
+building mathematical <a href="glossary-M.html#model">models</a> for how things work.  Scientists
+always desire theories that are simpler than the data they explain.
+See also <a href="glossary-O.html#occams_razor">Occam's Razor</a> and <a href="glossary-S.html#simulate/simulation">simulation</a>.  
+
+<p><b><a name="three_body_problem">Three Body Problem</a></b> &nbsp; &nbsp;
+The problem of determining the future positions and velocities of
+three gravitational bodies.  The problem was proved unsolvable in the
+general case by Henri Poincaré, which forshadowed the importance of
+<a href="glossary-C.html#chaos/chaotic">chaos</a>.  Although no <a href="glossary-A.html#analytical_solution">analytical solutions</a> are possible in the
+worst case, a <a href="glossary-N.html#numerical_solution">numerical solution</a> is sometimes sufficient for
+many tasks. 
+
+<p><b><a name="threshold">Threshold</a></b> &nbsp; &nbsp;
+A quantity added to (or subtracted from) the weighted sum of inputs
+into a <a href="glossary-N.html#neuron">neuron</a>, which forms the neuron's <a href="glossary-N.html#net_input">net input</a>.
+Intuitively, the net input (or bias) is proportional to the amount
+that the incoming neural <a href="glossary-A.html#activation">activations</a> must exceed in order for a
+neuron to fire.  
+
+<p><b><a name="time_complexity">Time Complexity</a></b> &nbsp; &nbsp;
+A <a href="glossary-F.html#function">function</a> that describes the amount of time required for a
+<a href="glossary-P.html#program">program</a> to run on a computer to perform a particular task.  The
+function is parameterized by the length of the program's input.  See
+also <a href="glossary-S.html#space_complexity">space complexity</a>. 
+
+<p><b><a name="time-reversible">Time-Reversible</a></b> &nbsp; &nbsp;
+A property of <a href="glossary-D.html#dynamical_system">dynamical systems</a> that can be run unambiguously
+both forward and backward in time.  The <a href="glossary-H.html#hénon_map">Hénon map</a>, <a href="glossary-L.html#lorenz_system">Lorenz
+system</a>, and <a href="glossary-V.html#vant">vant</a> <a href="glossary-C.html#cellular_automaton_(ca)">cellular automata</a> are all time-reversible,
+while the <a href="glossary-L.html#logistic_map">logistic map</a>, the <a href="glossary-M.html#mackey-glass_system">Mackey-Glass system</a>, and most
+other <a href="glossary-C.html#cellular_automaton_(ca)">cellular automata</a> are not.  Time-reversible systems are
+described by <a href="glossary-F.html#function">functions</a> that are <a href="glossary-I.html#invertible">invertible</a>.  
+
+<p><b><a name="time_series">Time Series</a></b> &nbsp; &nbsp;
+A sequence of values generated from a <a href="glossary-D.html#dynamical_system">dynamical system</a> over time.
+<a href="glossary-C.html#chaos/chaotic">Chaotic</a> <a href="glossary-S.html#system">systems</a> can be analyzed by examining the time series
+generated by a single portion of the <a href="glossary-S.html#system">system</a>.  See also
+<a href="glossary-E.html#embedding">embedding</a>. 
+
+<p><b><a name="tit-for-tat">Tit-for-Tat</a></b> &nbsp; &nbsp;
+An effective <a href="glossary-S.html#strategy">strategy</a> for playing the <a href="glossary-I.html#iterated_prisoners_dilemma">Iterated Prisoner's
+Dilemma</a>.  Tit-for-Tat starts by cooperating, and then does whatever
+its opponent did in the previous round of play.  
+
+<p><b><a name="top-down">Top-Down</a></b> &nbsp; &nbsp;
+A method of examining things that first looks at higher-level
+phenomena and then tries to explain lower-level patterns in terms of
+the higher-level observations.  This is the exact opposite of
+<a href="glossary-B.html#bottom-up">bottom-up</a>.  See also <a href="glossary-H.html#holism">holism</a> and <a href="glossary-R.html#reductionism">reductionism</a>. 
+
+<p><b><a name="transpose">Transpose</a></b> &nbsp; &nbsp;
+An operation that flips a <a href="glossary-M.html#matrix">matrix</a> about the main diagonal.  
+
+<p><b><a name="turing_machine">Turing Machine</a></b> &nbsp; &nbsp;
+A <a href="glossary-M.html#model_of_computation">model of computation</a> that uses an underlying <a href="glossary-F.html#finite-state_automaton_(fsa)">finite-state
+automaton</a> but also has an infinite tape to use as memory.  Turing
+machines are capable of <a href="glossary-U.html#universal_computation">universal computation</a>.  
+
+<p><b><a name="turtle_graphics">Turtle Graphics</a></b> &nbsp; &nbsp;
+A simple language for drawing graphics in which a ``turtle'' is used
+to make strokes on a plotting device.  Typical commands include ``move
+forward,'' ``draw forward,'' and ``turn left.''  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="U-section">U</a></h1>
+
+
+<p><b><a name="uncountable_infinity">Uncountable Infinity</a></b> &nbsp; &nbsp;
+An order of infinity that is larger than the number of <a href="glossary-N.html#natural_number">natural
+numbers</a>.  The number of <a href="glossary-R.html#real_number">real numbers</a> is uncountably infinite.  
+
+<p><b><a name="universal_approximation">Universal Approximation</a></b> &nbsp; &nbsp;
+Having the ability to approximate any <a href="glossary-F.html#function">function</a> to an arbitrary
+degree of accuracy.  <a href="glossary-N.html#neural_network_(nn)">Neural networks</a> are universal approximators. 
+
+<p><b><a name="universal_computation">Universal Computation</a></b> &nbsp; &nbsp;
+Capable of computing anything that can in principle be computed; being
+equivalent in computing power to a <a href="glossary-T.html#turing_machine">Turing machine</a>, the
+<a href="glossary-L.html#lambda_calculus">lambda calculus</a>, or a <a href="glossary-P.html#post_production_system">Post production system</a>. 
+
+<p><b><a name="universal_computer">Universal Computer</a></b> &nbsp; &nbsp;
+A computer that is capable of <a href="glossary-U.html#universal_computation">universal computation</a>, which means
+that given a description of any other computer or <a href="glossary-P.html#program">program</a> and
+some data, it can perfectly emulate this second computer or
+program. Strictly speaking, home PCs are not universal computers
+because they have only a finite amount of memory.  However, in
+practice, this is usually ignored.  
+
+<p><b><a name="unstable">Unstable</a></b> &nbsp; &nbsp;
+Having a <a href="glossary-B.html#basin_of_attraction">basin of attraction</a> that is 0 in size; being such
+that the slightest <a href="glossary-P.html#perturbation">perturbation</a> will forever change the state of
+a <a href="glossary-S.html#system">system</a>.  A pencil balanced on its point is unstable.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="V-section">V</a></h1>
+
+
+<p><b><a name="value_function">Value Function</a></b> &nbsp; &nbsp;
+A built-in <a href="glossary-F.html#function">function</a> in <a href="glossary-L.html#lisp">Lisp</a> or <a href="glossary-S.html#stutter">Stutter</a> that evaluates
+all of its arguments prior to being executed, e.g., <tt>car</tt>, 
+<tt>cdr</tt>, and <tt>cons</tt>.  
+
+<p><b><a name="vant">Vant</a></b> &nbsp; &nbsp;
+A virtual ant; a type of <a href="glossary-C.html#cellular_automaton_(ca)">cellular automaton</a> that vaguely emulates
+the activity of one or more ants.  
+
+<p><b><a name="variation">Variation</a></b> &nbsp; &nbsp;
+Genetic differences among individuals in a population.  
+
+<p><b><a name="vector">Vector</a></b> &nbsp; &nbsp;
+A one-dimensional array of numbers that can be used to represent a
+point in a multidimensional space.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="W-section">W</a></h1>
+
+
+<p><b><a name="weight">Weight</a></b> &nbsp; &nbsp;
+In a <a href="glossary-N.html#neural_network_(nn)">neural network</a>, the strength of a <a href="glossary-S.html#synapse">synapse</a> (or
+connection) between two <a href="glossary-N.html#neuron">neurons</a>.  Weights may be positive
+(<a href="glossary-E.html#excitatory">excitatory</a>) or negative (<a href="glossary-I.html#inhibitory">inhibitory</a>).  The <a href="glossary-T.html#threshold">thresholds</a>
+of a neuron are also considered weights, since they undergo
+<a href="glossary-A.html#adaptation">adaptation</a> by a <a href="glossary-L.html#learning">learning</a> <a href="glossary-A.html#algorithm">algorithm</a>.  
+
+<p><b><a name="white_noise">White Noise</a></b> &nbsp; &nbsp;
+Noise that uniformly distributed in the frequency domain;
+<a href="glossary-R.html#random/randomness">randomness</a> that is uniformly distributed; thus, a white noise
+process with a range of 0 to 1 would yield a random number in this
+range with <a href="glossary-P.html#probability">probability</a> equal for all possible values.  <a href="glossary-B.html#brown_noise/brownian_motion">Brown
+noise</a> is a result of cumulatively adding white noise. 
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="X-section">X</a></h1>
+
+
+<p><b><a name="xor">XOR</a></b> &nbsp; &nbsp;
+The exclusive-or <a href="glossary-F.html#function">function</a>; given two <a href="glossary-B.html#boolean">Boolean</a> inputs, the
+output of XOR is 1 if and only if the two inputs are different;
+otherwise, the output is 0.  
+
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+<p><hr align=left size=1 noshade width="100%"><p>
+<h1><a name="Z-section">Z</a></h1>
+
+
+<p><b><a name="zero-sum_game">Zero-Sum Game</a></b> &nbsp; &nbsp;
+In <a href="glossary-G.html#game_theory">game theory</a>, a game in which a win for one player results in
+an equal but opposite loss for the other players.  
+
+
+<p><hr align=left size=1 noshade width="100%">
+<p>
+<table width="100%" border=0  cellspacing=0 cellpadding=0>
+<tr align=center><td>
+<small>
+[ 
+<a href="glossary-A.html">A</a> |
+<a href="glossary-B.html">B</a> |
+<a href="glossary-C.html">C</a> |
+<a href="glossary-D.html">D</a> |
+<a href="glossary-E.html">E</a> |
+<a href="glossary-F.html">F</a> |
+<a href="glossary-G.html">G</a> |
+<a href="glossary-H.html">H</a> |
+<a href="glossary-I.html">I</a> |
+<a href="glossary-J.html">J</a> |
+<a href="glossary-K.html">K</a> |
+<a href="glossary-L.html">L</a> |
+<a href="glossary-M.html">M</a> |
+<a href="glossary-N.html">N</a> |
+<a href="glossary-O.html">O</a> |
+<a href="glossary-P.html">P</a> |
+<a href="glossary-Q.html">Q</a> |
+<a href="glossary-R.html">R</a> |
+<a href="glossary-S.html">S</a> |
+<a href="glossary-T.html">T</a> |
+<a href="glossary-U.html">U</a> |
+<a href="glossary-V.html">V</a> |
+<a href="glossary-W.html">W</a> |
+<a href="glossary-X.html">X</a> |
+Y |
+<a href="glossary-Z.html">Z</a>
+]
+</small>
+</td></tr></table>
+
+
+
+#include "bottom.inc"
