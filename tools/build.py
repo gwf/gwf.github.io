@@ -232,7 +232,7 @@ def build_home():
 
 def build_about():
     back = read_md("back") or ""
-    author = read_md("author") or ""
+    back = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", back)
     toc_html = ""
     for part in toc.get("parts", []):
         items = ""
@@ -246,7 +246,6 @@ def build_about():
     body = f"""<h1>About the book</h1>
 <div class="two">{md(back)}</div>
 <h2>Contents</h2><p class="muted">Chapters with a live program are linked.</p>{toc_html}
-<h2>The author</h2>{md(author)}
 <p><a href="reviews.html">Reviews and awards</a> &middot; <a href="themes.html">Three themes</a> &middot; <a href="parts.html">Part synopses</a> &middot; <a href="excerpts.html">Selected excerpts</a> &middot; <a href="errata.html">Errata</a> &middot; <a href="edu.html">For educators</a> &middot; <a href="bibliography.html">Bibliography</a> &middot; <a href="legacy-site.html">The 1998 site</a></p>"""
     write("about.html", page("About the book", body, "about.html", 1))
 
